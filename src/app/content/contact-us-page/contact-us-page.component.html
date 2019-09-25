@@ -6,7 +6,7 @@
         Maps Loading....
         <agm-map [latitude]='latitude' [longitude]='longitude' 
         [mapTypeId]='mapType'>
-        <agm-marker [latitude]="lat" [longitude]="lng">
+        <agm-marker [latitude]="latitude" [longitude]="longitude">
             </agm-marker> 
       </agm-map>
     </div>
@@ -22,7 +22,7 @@
         <h1>Pitch Us</h1>
             Hello,<br>
             <br>
-            <div style="float: left;">My name is&nbsp;</div>
+            <!-- <div style="float: left;">My name is&nbsp;</div>
             <div contenteditable="true" class="input-box"
                  [textContent]="userName" (input)="model=$event.target.textContent" 
                  (click)="clearText($event)" 
@@ -43,7 +43,7 @@
             <div class="clearfix"></div>
             <div class="btn" (click)="formSubmit()"  >
                 Submit
-            </div>
+            </div> -->
             
             
     </div>
