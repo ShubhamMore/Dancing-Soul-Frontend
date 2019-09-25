@@ -71,7 +71,7 @@ export class AdminShowBranchComponent implements OnInit {
   isWeekDays(): boolean {
     const n = this.batches.length;
     for(let i = 0; i < n; i++) {
-      if(this.batches[i].batchType === 'WeekDays') {
+      if(this.batches[i].batchType === '0') {
         return true;
       }
     }
@@ -81,7 +81,7 @@ export class AdminShowBranchComponent implements OnInit {
   isWeekEnds(): boolean {
     const n = this.batches.length;
     for(let i = 0; i < n; i++) {
-      if(this.batches[i].batchType === 'WeekEnds') {
+      if(this.batches[i].batchType === '1') {
         return true;
       }
     }

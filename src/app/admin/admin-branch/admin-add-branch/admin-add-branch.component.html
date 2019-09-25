@@ -87,8 +87,8 @@
                     <div class="form-group m-1">
                       <label for="week">Week Type : </label>
                       <select class="week" name="week" id="week" formControlName="week" (change)="scheduleChange()">
-                        <option value="WeekDays" selected>Week Day</option>
-                        <option value="WeekEnds">Week End</option>
+                        <option value="0" selected>Week Day</option>
+                        <option value="1">Week End</option>
                       </select>
                       <span *ngIf="!batchForm.get('week').valid && batchForm.get('week').touched">*Please Select Valid Week Type</span>
                     </div>

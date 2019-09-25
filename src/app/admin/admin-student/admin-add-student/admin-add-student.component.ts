@@ -26,7 +26,7 @@ export class AdminAddStudentComponent implements OnInit {
 
   batches: BatchModel[] = [];
 
-  weekType: string = "WeekDays";
+  weekType: string = "0";
 
   constructor(private httpPostService: HttpService,
               private formValidator: FormValidator,
@@ -100,7 +100,6 @@ export class AdminAddStudentComponent implements OnInit {
           this.batches.push(branch.batch[i])
         }
       }
-      console.log(this.batches)
     }
   }
 

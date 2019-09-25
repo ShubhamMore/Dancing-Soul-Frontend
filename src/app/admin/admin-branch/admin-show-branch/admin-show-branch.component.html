@@ -71,7 +71,7 @@
                           </thead>
                           <tbody>
                             <ng-container *ngFor="let batch of batches">
-                              <tr class="p-1 text-center" *ngIf="batch.batchType === 'WeekDays'">
+                              <tr class="p-1 text-center" *ngIf="batch.batchType === '0'">
                                 <td class="text-left">{{batch.batchName}}</td>
                                 <td>{{batch.time}}</td>
                                 <td>{{batch.fees}}</td>
@@ -100,7 +100,7 @@
                           </thead>
                           <tbody>
                             <ng-container *ngFor="let batch of batches">
-                              <tr class="p-1 text-center" *ngIf="batch.batchType === 'WeekEnds'">
+                              <tr class="p-1 text-center" *ngIf="batch.batchType === '1'">
                                 <td class="text-left">{{batch.batchName}}</td>
                                 <td>{{batch.time}}</td>
                                 <td>{{batch.fees}}</td>

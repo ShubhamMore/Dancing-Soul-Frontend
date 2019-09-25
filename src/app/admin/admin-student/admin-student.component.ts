@@ -11,7 +11,7 @@ import { HttpService } from '../../services/httpPost.service';
 })
 export class AdminStudentComponent implements OnInit {
 
-  weekType = "WeekDays";
+  weekType = "0";
 
   loading: boolean = true;
 
@@ -62,7 +62,8 @@ export class AdminStudentComponent implements OnInit {
     if(id !== '') {
       this.branch = id;
       this.batches = this.branches.find((branch) => (branch._id === id)).batch;
-      this.noStudent = 'Please Select ' + this.weekType + ' Batch';
+      const weekType = this.weekType === "0" ? "Week Day" : "Week End";
+      this.noStudent = 'Please Select ' + weekType + ' Batch';
     }
   }
 

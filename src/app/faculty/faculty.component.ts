@@ -13,7 +13,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class FacultyComponent implements OnInit {
 
-  weekType = "weekDays";
+  weekType = "0";
 
   form : FormGroup;
 

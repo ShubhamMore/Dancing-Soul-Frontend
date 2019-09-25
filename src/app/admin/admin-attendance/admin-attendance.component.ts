@@ -13,7 +13,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class AdminAttendanceComponent implements OnInit {
 
-  weekType = "WeekDays";
+  weekType = "0";
 
   form : FormGroup;
 
@@ -93,7 +93,8 @@ export class AdminAttendanceComponent implements OnInit {
       this.branch = id;
       this.batches = this.branches.find((branch) => (branch._id === id)).batch;
       console.log(this.batches)
-      this.noStudent = 'Please Select ' + this.weekType + ' Batch';
+      const weekType = this.weekType === "0" ? "Week Day" : "Week End";
+      this.noStudent = 'Please Select ' + weekType + ' Batch';
     }
   }
 

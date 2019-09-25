@@ -30,7 +30,7 @@ export class AdminEditBranchComponent implements OnInit {
 
   formError: string = null;
 
-  weekType: string = "WeekDays";
+  weekType: string = "0";
 
   images: string;
 

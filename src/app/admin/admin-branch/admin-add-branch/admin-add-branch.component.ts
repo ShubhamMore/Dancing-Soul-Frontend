@@ -26,7 +26,7 @@ export class AdminAddBranchComponent implements OnInit {
 
   formError: string = null;
 
-  weekType: string = "weekDays";
+  weekType: string = "0";
 
   images: string;
 

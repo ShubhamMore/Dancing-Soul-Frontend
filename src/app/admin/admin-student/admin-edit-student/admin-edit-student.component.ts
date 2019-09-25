@@ -32,7 +32,7 @@ export class AdminEditStudentComponent implements OnInit {
 
   batches: BatchModel[] = [];
 
-  weekType: string = "weekDays";
+  weekType: string = "0";
 
   constructor(private httpPostService: HttpService,
               private formValidator: FormValidator,

@@ -20,14 +20,14 @@
           <select class="batchName" type="text" name="batchName" id="batchName" formControlName="batch" (change)="onSelectBatchName()">
             <option value="">Select Batch Name</option>
             <ng-container *ngFor="let batch of batches">
-              <option [value]="batch.batchName" *ngIf="batch.batchType === weekType">{{batch.batchName}}</option>
+              <option [value]="batch._id" *ngIf="batch.batchType === weekType">{{batch.batchName}}</option>
             </ng-container>
           </select>
         </div>
         <div class="col-md-4 col-sm-12">
           <select class="batchType" type="text" name="batchType" id="batchType" formControlName="weekType" (change)="onSelectBatchType()">
-            <option value="WeekDays">Week Day</option>
-            <option value="WeekEnds">Week End</option>
+            <option value="0">Week Day</option>
+            <option value="1">Week End</option>
         </select>
         </div>
       </div>
