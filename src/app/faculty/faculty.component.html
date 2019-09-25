@@ -1,0 +1,80 @@
+<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
+
+<div class="row mt-2" *ngIf="!loading">
+  <div class="col-12 mx-auto">
+    <div class="row">
+      <div class="col-md-6 col-sm-12">
+        <h3>Attendance</h3>
+      </div>
+    </div>
+    <hr>
+    <form (submit)="addAttendance()" [formGroup]="form">
+      <div class="row">
+        <div class="col-md-4 col-sm-12">
+          <select class="branch" type="text" name="branch" id="branch" formControlName="branch" (change)="onSelectBranch()">
+            <option value="">Select Branch</option>
+            <option *ngFor="let branch of branches" [value]="branch._id">{{branch.branch}}</option>
+          </select>
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <select class="batchName" type="text" name="batchName" id="batchName" formControlName="batch" (change)="onSelectBatchName()">
+            <option value="">Select Batch Name</option>
+            <ng-container *ngFor="let batch of batches">
+              <option [value]="batch.batchName" *ngIf="batch.batchType === weekType">{{batch.batchName}}</option>
+            </ng-container>
+          </select>
+        </div>
+        <div class="col-md-4 col-sm-12">
+          <select class="batchType" type="text" name="batchType" id="batchType" formControlName="weekType" (change)="onSelectBatchType()">
+            <option value="weekDays">Week Day</option>
+            <option value="weekEnds">Week End</option>
+        </select>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-6 col-sm-12">
+          <div class="form-group m-1">
+            <label for="date">Select Date : </label>
+            <input class="date" type="date" name="date" id="date" formControlName="date">
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <br>
+          <button type="submit" class="btn-submit">Submit</button>
+        </div>
+      </div>
+    </form>
+    <br>
+    <div class="row" *ngIf="students.length > 0; else empty_students">
+      <div class="table-responsive">
+        <table class="table table-sm table-hover">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Student</th>
+              <th>Present</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="student-tr" *ngFor="let student of students, let i = index">
+              <td>{{ i+1 }}</td>
+              <td>
+                  {{ student.name }}
+              </td>
+              <td>
+                <div class="attendance-selector">
+                    <input type="checkbox" [id]="student._id" class="attendance" (change)="markAttendance($event, student._id, i)">
+                    <label [for]="student._id">{{attendance[i]}}</label>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <ng-template #empty_students>
+      <h5 class="pl-3">{{noStudent}}</h5>
+    </ng-template>
+  </div>
+</div>

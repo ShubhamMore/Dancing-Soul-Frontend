@@ -1,0 +1,50 @@
+<div class="flex-container">
+    <div class="image-box">
+        
+    </div>
+    <div class="map-box">
+        Maps Loading....
+        <agm-map [latitude]='latitude' [longitude]='longitude' 
+        [mapTypeId]='mapType'>
+        <agm-marker [latitude]="lat" [longitude]="lng">
+            </agm-marker> 
+      </agm-map>
+    </div>
+    <div class="details-box">
+        <h1>Contact Us</h1>
+        <ul>
+            <li><i class="fa fa-phone" aria-hidden="true"></i>{{contactDetailsJson.phone}}</li>
+            <li> <i class="fa fa-envelope" aria-hidden="true"></i>{{contactDetailsJson.email}}</li>
+            <li><i class="fa fa-map-marker" aria-hidden="true"></i>{{contactDetailsJson.address}}</li>
+        </ul>
+    </div>
+    <div class="form-box">
+        <h1>Pitch Us</h1>
+            Hello,<br>
+            <br>
+            <div style="float: left;">My name is&nbsp;</div>
+            <div contenteditable="true" class="input-box"
+                 [textContent]="userName" (input)="model=$event.target.textContent" 
+                 (click)="clearText($event)" 
+                 (focusout)="checkIfEmpty($event,'userName')">
+            </div>
+            <div>&nbsp;and my email address is&nbsp;</div>
+            <div contenteditable="true" class="input-box"
+                 [textContent]="emailId" (input)="model=$event.target.textContent"
+                 (click)="clearText($event)"
+                 (focusout)="checkIfEmpty($event,'emailId')">
+            </div>
+            <div>&nbsp;and i would like to discuss about&nbsp;</div>
+            <div contenteditable="true" class="input-box"
+                 [textContent]="message" (input)="model=$event.target.textContent" 
+                 (click)="clearText($event)"
+                 (focusout)="checkIfEmpty($event,'message')">
+            </div>
+            <div class="clearfix"></div>
+            <div class="btn" (click)="formSubmit()"  >
+                Submit
+            </div>
+            
+            
+    </div>
+</div>

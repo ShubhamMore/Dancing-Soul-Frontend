@@ -1,0 +1,28 @@
+  <img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
+
+  <div class="row mt-2" *ngIf="!loading">
+    <div class="col-10 mx-auto">
+      <h4 class="text-center mb-3">Add New Exam</h4>
+      <form class="add_title" (submit)="addExam()" [formGroup]="form">
+        <div class="form-group">
+          <label for="title">Title : </label>
+          <input class="title" type="text" name="title" id="title" formControlName="title" placeholder="Title">
+          <span *ngIf="!form.get('title').valid && form.get('title').touched">*Please enter Title</span>
+        </div>
+        
+        <div class="form-group">
+          <label for="body">Description : </label>
+          <textarea class="body" name="body" id="body" rows="8" formControlName="body" placeholder="Description"></textarea>
+          <span *ngIf="!form.get('body').valid && form.get('body').touched">*Please enter Exam Description</span>
+        </div>
+
+        <div class="row mt-1" *ngIf="formError">
+          <span>*Please Fill All Exam Fields</span>
+        </div>
+        
+        <hr>
+        <button type="submit" class="btn-add">Save</button>
+        <button type="button" class="btn-cancel float-right" (click)="cancel()">Cancel</button>
+      </form>
+    </div>
+  </div>

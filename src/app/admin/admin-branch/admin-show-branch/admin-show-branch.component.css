@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+}
+
+h3 {
+    font-size: 150%;
+}
+
+hr {
+    border: 1px solid #e67e22;
+    margin: 5px 0;
+}
+
+.branch {
+    background-color: #f4f4f4;
+    padding: 10px;
+}
+
+span {
+    color: #000;
+    font-size: 80%;
+}
+
+p {
+    font-size: 80%;
+}

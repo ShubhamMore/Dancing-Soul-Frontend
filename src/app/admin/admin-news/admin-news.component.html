@@ -1,0 +1,44 @@
+  <img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
+
+  <div class="row mt-2" *ngIf="!loading">
+    <div class="col-12 mx-auto">
+      <div class="row">
+        <div class="col-6">
+          <h3>News</h3>
+        </div>
+        <div class="col-6">
+          <button class="new-btn float-right" (click)="onNewNews()">Add News</button>
+        </div>
+      </div>
+      <hr>
+      <div class="table-responsive" *ngIf="news.length > 0; else empty_news">
+        <table class="table table-sm">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="curNews" *ngFor="let curNews of news, let i = index">
+            <td>{{ i+1 }}</td>
+            <td>
+              <a class="title" [routerLink]="curNews._id" skipLocationChange>{{curNews.title}} </a>
+            </td>
+            <td>
+              <button type="button" [routerLink]="[curNews._id, 'edit']" class="btn-edit float-left" skipLocationChange>Edit</button>
+            </td>
+            <td>
+              <button type="button" class="btn-delete" (click)="deleteNews(curNews._id)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    <ng-template #empty_news>
+      <h5 class="pl-3">No News Available..</h5>
+    </ng-template>
+  </div>
+</div>

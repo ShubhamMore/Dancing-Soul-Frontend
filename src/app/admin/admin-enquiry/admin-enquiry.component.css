@@ -1,0 +1,19 @@
+h3 {
+    font-size: 150%;
+}
+
+hr {
+    border: 1px solid #e67e22;
+    margin: 5px 0;
+}
+
+.enquiry {
+    cursor: pointer;
+    outline: none;
+    background-color: transparent;
+    transition: background-color 0.2s;
+}
+
+.enquiry:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}

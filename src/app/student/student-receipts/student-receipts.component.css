@@ -1,0 +1,12 @@
+* {
+    margin: 0;
+}
+
+h3 {
+    font-size: 150%;
+}
+
+hr {
+    border: 1px solid #e67e22;
+    margin: 5px 0;
+}

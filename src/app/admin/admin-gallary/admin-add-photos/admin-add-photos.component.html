@@ -1,0 +1,67 @@
+<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
+
+<div class="row mt-2" *ngIf="!loading">
+  <div class="col-12">
+    <div class="row">
+      <div class="col-6">
+        <h3>Add Images</h3>
+      </div>
+      <div class="col-6">
+        <button class="btn-cancel float-right" (click)="cancel()">Cancel</button>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-12">
+        <form [formGroup]="form" (submit)="onSavePost()">
+          <div class="row">
+            <div class="col-md-6 cpl-sm-12">
+              <div class="form-group">
+                  <label for="title">Enter Title for an Images : </label>
+                  <input type="text" formControlName="title" id="title" placeholder="Title">
+              </div>
+              <span *ngIf="form.get('title').invalid && form.get('title').touched">*Please enter a Title for an Image</span>
+            </div>
+          </div>
+          <div class="row">
+
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group">
+                <label for="images">Pick Images to Upload : </label><br>
+                <input type="file" #filePicker (change)="onImagePicked($event)" multiple>
+                <button class="btn-add" type="button" id="images" (click)="filePicker.click()">Click Here to Pick Image</button>
+              </div>
+              <span *ngIf="invalidImage">*Please Select a Valid Image File</span>
+            </div>
+            
+            <div class="col-md-6 col-sm-12">
+              <button class="btn-save float-right" type="submit">Upload Images</button>
+            </div>
+
+          </div>
+        </form>       
+      </div>
+
+      <hr>
+      
+      <div class="row">
+        <div class="col-12">
+          <div *ngIf="imagePreview.length > 0; else noImagePicked">
+              <h4>Image To Upload : </h4>
+
+              <div class="row">
+                  <span class="m-2" *ngFor="let image of imagePreview; let i = index;">
+                      <div class="preview-image">
+                          <img [src]="image" alt="Preview">
+                          <a class="remove-image"(click)="cancelImage(i)"><i class="fa fa-remove remove"></i></a>
+                      </div>
+                  </span>
+              </div>
+          
+          </div>
+          <ng-template #noImagePicked><p>No Image Picked yet</p></ng-template>
+        </div>
+      </div> 
+    </div>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+.article {
+    background-color: #f4f4f4;
+    padding: 5px;
+}
+
+h3{
+    font-size: 150%;
+    text-decoration: underline;
+    text-decoration-color: #ffd000;
+}
+
+hr {
+    border: 1px solid #e67e22;
+    margin: 5px 0;
+}

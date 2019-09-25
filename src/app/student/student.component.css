@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+}
+
+h3 {
+    font-size: 150%;
+}
+
+hr {
+    border: 1px solid #e67e22;
+    margin: 5px 0;
+}
+
+a {
+    color : #000;
+    transition: all 0.2s;
+}
+
+a:hover {
+    background-color: #e67e22;
+    color: #fff;
+}
+
+.nav-item .active {
+    background-color: #e67e22;
+    color: #fff;
+}

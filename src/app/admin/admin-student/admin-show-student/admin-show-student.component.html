@@ -1,0 +1,213 @@
+  <img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
+
+  <div class="row mt-2" *ngIf="!loading">
+    <div class="col-10 mx-auto">
+
+      <div class="student">
+        <div class="row">
+          <div class="col-12">
+            <button class="btn-close float-right" (click)="cancel()">X</button>
+            <h3>Student Details</h3>
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+
+          <div class="col-md-4 col-sm-10 mx-auto">
+
+            <div>
+              <div class="student-name">
+                <h4>{{student.name}}</h4>
+              </div>
+  
+              <div class="student-image">
+                  <img [src]="student.image" [alt]="student.name" width="100%">
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="col-md-8 col-sm-10 mx-auto">
+
+            <div class="table-responsive">
+              <table class="table table-sm">
+                <tbody>
+                  <tr>
+                    <td>
+                      <strong>Birth Date : </strong>
+                    </td>
+                    <td>
+                      <p>{{student.birthDate}}</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      
+                      <strong>Address : </strong>
+                    </td>
+                    <td>
+                      <p>{{student.address}}</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>First Guardian Name : </strong>
+                    </td>
+                    <td>
+                      <p>{{student.firstGuardianName}}</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>First Guardian Relation : </strong>
+                    </td>
+                    <td>  
+                      <p>{{student.firstGuardianRelation}}</p>
+                    </td>
+                  </tr>
+                  <tr *ngIf="student.secondGuardianName != ''">
+                    <td>
+                      <strong>Second Guardian Name : </strong>
+                    </td>
+                    <td>
+                      <p>{{student.secondGuardianName}}</p>
+                    </td>
+                  </tr>
+                  <tr *ngIf="student.secondGuardianRelation != ''">
+                    <td>
+                      <strong>Second Guardian Relation : </strong>
+                    </td>
+                    <td>
+                      <p>{{student.secondGuardianRelation}}</p>
+                    </td>
+                  </tr>
+                  <tr *ngIf="student.workPlace != ''">
+                    <td>
+                      <strong>School/ College/ Office : </strong>
+                    </td>
+                    <td>
+                      <p>{{student.workPlace}}</p>
+                    </td>
+                  </tr>
+                  <tr *ngIf="student.bloodGroup != ''">
+                    <td>
+                      <strong>Blood Group : </strong>
+                    </td>
+                    <td>
+                      <p>{{student.bloodGroup}}</p>                      
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>Medical History : </strong>
+                    </td>
+                    <td>
+                      <p>{{student.medicalHistory}}</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong><em>E-</em>mail : </strong>
+                    </td>
+                    <td>
+                      <p><a href="mailto:{{student.email}}">{{student.email}}</a></p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>Phone : </strong>
+                    </td>
+                    <td>
+                      <p>+91 {{student.phone}}</p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div> 
+
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-12">
+            <h4>CLASS DETAILS</h4>
+            <div class="row">
+              <div class="col-10 mx-auto">
+                <table class="table table-sm">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <strong>Branch : </strong>
+                      </td>
+                      <td>
+                        <p>{{branch.branch}}</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>Batch : </strong>
+                      </td>
+                      <td>
+                        <p>{{student.batch}}</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>Batch Name : </strong>
+                      </td>
+                      <td>
+                        <p>{{batch.batchName}}</p> 
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>Fees : </strong>
+                      </td>
+                      <td>
+                        <p>Rs. {{batch.fees}}.00/-</p>      
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>Time : </strong>
+                      </td>
+                      <td>
+                        <p>{{batch.time}}</p>                
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>Status : </strong>
+                      </td>
+                      <td>
+                        <p>{{student.status | uppercase}}</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+
+          <div class="col-6">
+            <button routerLink="edit" class="btn-edit" skipLocationChange>Edit</button>
+          </div>
+
+          <div class="col-6">
+              <button class="btn-deactivate float-right" (click)="changeStatus(student._id, 'deactivated')" *ngIf="student.status === 'activated'">Deactivate</button>
+              <button class="btn-activate float-right" (click)="changeStatus(student._id, 'activated')" *ngIf="student.status === 'deactivated'">Activate</button>
+          </div>
+
+        </div>
+      </div>
+       
+    </div>
+</div>

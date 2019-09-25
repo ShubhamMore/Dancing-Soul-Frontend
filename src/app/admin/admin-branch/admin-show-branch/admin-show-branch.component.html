@@ -1,0 +1,140 @@
+  <img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
+
+  <div class="row mt-2" *ngIf="!loading">
+    <div class="col-10 mx-auto">
+      <div class="branch">
+        <div class="row">
+          <div class="col-12">
+            <button class="btn-close float-right" (click)="cancel()">&#215;</button>
+            <h3 class="text-center"><strong>{{branch.branch}}</strong> - {{branch.city}}</h3>
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-12">
+            <div class="table-responsive">
+              <table class="table table-sm">
+                <tbody>
+                  <tr>
+                    <td>
+                      <strong>Description : </strong>
+                    </td>
+                    <td>
+                      <p>{{branch.description}}</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>Address : </strong>
+                    </td>
+                    <td>
+                      <p>{{branch.address}}</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong><em>e</em>-mail : </strong>
+                    </td>
+                    <td>
+                      <p><a href="mailto:{{branch.email}}">{{branch.email}}</a></p>   
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>Phone : </strong>
+                    </td>
+                    <td>
+                      <p>+91 {{branch.phone}}</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2">
+                      <strong>Schedule : </strong>
+                    </td>
+                  </tr>
+                  <tr *ngIf="isWeekDays()">
+                    <td>
+                    </td>
+                    <td>
+                      <div class="row">
+                        <strong>Week Day : </strong>
+                      </div>
+                      <div class="row table-responsive p-1">
+                        <table class="table table-sm">
+                          <thead class="text-center">
+                            <th>Batch</th>
+                            <th>Timming</th>
+                            <th>Fees</th>
+                            <th>Days</th>
+                          </thead>
+                          <tbody>
+                            <ng-container *ngFor="let batch of batches">
+                              <tr class="p-1 text-center" *ngIf="batch.batchType === 'WeekDays'">
+                                <td class="text-left">{{batch.batchName}}</td>
+                                <td>{{batch.time}}</td>
+                                <td>{{batch.fees}}</td>
+                                <td>{{batch.days}}</td>
+                              </tr>
+                            </ng-container>
+                          </tbody>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr *ngIf="isWeekEnds()">
+                    <td>
+                    </td>
+                    <td>
+                      <div class="row">
+                        <strong>Week End : </strong>
+                      </div>
+                      <div class="row table-responsive p-1">
+                        <table class="table table-sm">
+                          <thead class="text-center">
+                            <th>Batch</th>
+                            <th>Timming</th>
+                            <th>Fees</th>
+                            <th>Days</th>
+                          </thead>
+                          <tbody>
+                            <ng-container *ngFor="let batch of batches">
+                              <tr class="p-1 text-center" *ngIf="batch.batchType === 'WeekEnds'">
+                                <td class="text-left">{{batch.batchName}}</td>
+                                <td>{{batch.time}}</td>
+                                <td>{{batch.fees}}</td>
+                                <td>{{batch.days}}</td>
+                              </tr>
+                            </ng-container>
+                          </tbody>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>Status : </strong>
+                    </td>
+                    <td>
+                      <p>{{branch.status | uppercase}}</p>              
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        
+        <hr>
+        
+        <div class=".row">
+          <div class="col-12">
+            <button class="btn-edit" (click)="editAddress()">Edit</button>
+            <button class="btn-deactivate float-right" (click)="changeStatus(branch._id, 'deactivated')" *ngIf="branch.status === 'activated'">Deactivate</button>
+            <button class="btn-activate float-right" (click)="changeStatus(branch._id, 'activated')" *ngIf="branch.status === 'deactivated'">Activate</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

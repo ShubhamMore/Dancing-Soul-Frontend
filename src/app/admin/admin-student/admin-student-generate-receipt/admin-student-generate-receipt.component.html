@@ -1,0 +1,129 @@
+<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
+
+<div class="row mt-2" *ngIf="!loading">
+  <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-12 mx-auto">
+    <h4 class="text-center mb-3">Pay Fees</h4>
+    <div class="row">
+      <div class="col-12">
+        <form class="" (submit)="payFees()" [formGroup]="form">
+          
+          <div class="row">
+            <div class="col-12">
+              <div class="table-responsive">
+                <table class="table table-sm table-borderless">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <strong>Student Name : </strong>
+                      </td>
+                      <td>
+                        <p>{{student.name}}</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>Branch : </strong>
+                      </td>
+                      <td>
+                        <p>{{branch.branch}}</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>Batch : </strong>
+                      </td>
+                      <td>
+                        <p>{{student.batch}}</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>Batch Name : </strong>
+                      </td>
+                      <td>
+                        <p>{{batch.batchName}}</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>Fees : </strong>
+                      </td>
+                      <td>
+                        <p>Rs. {{batch.fees}}.00/-</p>      
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <hr>
+
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label>Select Months : </label>
+                <div class="months-selector">
+                  <div formArrayName="months">
+                    <label *ngFor="let m of form.get('months').controls; let i = index">
+                      <input type="checkbox" [id]="month[i]" class="month" [formControlName]="i" (change)="addMonth($event, i)">
+                      <label [for]="month[i]">{{month[i]}}</label>
+                    </label>
+                  </div>
+                </div>  
+                <span *ngIf="!form.get('months').valid && monthsTouched">*Please Select Months</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-2">
+            <div class="row">
+              <div class="col-md-6 col-sm-12">
+                <label for="paymentMode">Payment Mode : </label>
+              </div>
+              <div class="col-md-6 col-sm-12">
+                <select class="paymentMode" type="text" name="paymentMode" id="paymentMode" formControlName="payment_mode">
+                  <option value="">Select Payment Mode</option>
+                  <option value="cash">Cash</option>
+                  <option value="cheque">Cheque</option>
+                  <option value="card">Card</option>
+                  <option value="ewallet">E-Wallet</option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <span *ngIf="!form.get('payment_mode').valid && form.get('payment_mode').touched">*Please Select Payment Mode</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row pt-2">
+            <div class="col-12">
+              <label>Amount : Rs. {{amount}}.00/-</label>
+            </div>
+          </div>
+
+          <div class="row mt-1" *ngIf="formError">
+            <div class="col-12">
+              <span>*Please Fill All Receipt Fields</span>
+            </div>
+          </div>
+            
+          <hr>
+    
+          <div class="row">
+            <div class="col-6">
+              <button type="submit" class="btn-pay">Pay</button>
+            </div>
+            <div class="col-6">
+              <button type="button" class="btn-cancel float-right" (click)="cancel()">Cancel</button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

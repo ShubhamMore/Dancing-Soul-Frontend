@@ -1,0 +1,47 @@
+.active {
+    border-bottom: 2px solid #e67e22;
+  }
+
+  .pointer {
+      cursor: pointer;
+  }
+
+  .header-bg{
+    position: sticky;
+    background-color:rgba(230, 230, 230,1.0);
+    color: black;
+}
+.main-nav{
+    margin-left: auto;
+    list-style: none;
+}
+
+.main-nav li{
+    display: inline-block;
+    margin-left: 40px;
+}
+
+.main-nav li a:link,
+.main-nav li a:visited{
+    padding: 8px 0px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 90%;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom 0.2s;
+}
+.main-nav li a:hover,
+.main-nav li a:active{
+    border-bottom: 2px solid #e67e22;
+}
+.logo{
+    height:50px;
+    width: 50px;
+    margin: 0  0  0 50px;
+}
+.mr-auto, .mx-auto{
+    margin-right: 20px!important;
+}
+.navbar-light .navbar-nav .nav-link {
+     color: rgba(0,0,0); 
+}

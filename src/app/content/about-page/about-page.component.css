@@ -1,0 +1,134 @@
+.about-image{
+  background-image: url('/assets/images/back.jpg');
+  background-position: 50% 70%;
+  background-repeat: no-repeat; 
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4),rgba(0, 0, 0, 0.4)),url(src/assets/images/historyBackground.jpg);
+  background-size: cover;
+  height: 65vh;
+  width: 100%;
+  background-attachment: fixed;
+}
+
+.info-box {
+ flex:1;
+ background-color:#fff;
+ margin-left: auto;
+ margin-right: auto;
+ text-align: center;
+ color: #000;
+ padding-top: 20px;
+ line-height: 160%;
+ font-weight: 350;
+ padding: 30px 50px;
+}
+/*---------------Faculty------------*/
+.faculty-container{
+ background-color:#f4f4f4;
+ padding: 40px 0;
+}
+.faculty-card{
+ margin: 20px;
+ background-color: #fff;
+ flex-basis: 300px;
+ height: 450px;
+ box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+ transition: box-shadow 0.5s;
+}
+.faculty-card:hover,
+.faculty-card:active{
+ box-shadow: 0 .1rem 3rem rgba(0,0,0,0.175)!important;
+}
+.faculty-pic{
+ height: 170px;
+ padding:10px;
+ text-align: center;
+}
+.faculty-pic img{
+ vertical-align: middle;
+ margin-top: 10px;
+ height:150px;
+ width: 150px;
+ border-radius: 50%;
+}
+.faculty-desc{
+ margin-top: 10px;
+ text-align: center;
+ padding: 10px;
+}
+.faculty-desc h5{
+ color:#e67e22
+}
+.faculty-desc h5:after{
+ display: block;
+ height: 2px;
+ background-color: #e67e22;
+ content: " ";
+ width: 100px;
+ margin: 0 auto;
+ margin-top: 10px;
+}
+
+
+
+
+ @media (min-width: 768px) {
+  /* show 3 items */
+  .carousel-inner .active,
+  .carousel-inner .active + .carousel-item,
+  .carousel-inner .active + .carousel-item + .carousel-item {
+    display: block;
+  }
+
+  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left),
+  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item,
+  .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item {
+    transition: none;
+  }
+
+  .carousel-inner .carousel-item-next,
+  .carousel-inner .carousel-item-prev {
+    position: relative;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .carousel-inner .active.carousel-item + .carousel-item + .carousel-item + .carousel-item {
+    position: absolute;
+    top: 0;
+    right: -33.3333%;
+    z-index: -1;
+    display: block;
+    visibility: visible;
+  }
+
+  /* left or forward direction */
+  .active.carousel-item-left + .carousel-item-next.carousel-item-left,
+  .carousel-item-next.carousel-item-left + .carousel-item,
+  .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item,
+  .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item {
+    position: relative;
+    transform: translate3d(-100%, 0, 0);
+    visibility: visible;
+  }
+
+  /* farthest right hidden item must be abso position for animations */
+  .carousel-inner .carousel-item-prev.carousel-item-right {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    display: block;
+    visibility: visible;
+  }
+
+  /* right or prev direction */
+  .active.carousel-item-right + .carousel-item-prev.carousel-item-right,
+  .carousel-item-prev.carousel-item-right + .carousel-item,
+  .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item,
+  .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item {
+    position: relative;
+    transform: translate3d(100%, 0, 0);
+    visibility: visible;
+    display: block;
+    visibility: visible;
+  }
+}

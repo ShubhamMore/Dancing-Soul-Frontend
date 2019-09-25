@@ -1,0 +1,61 @@
+  * {
+    margin: 0;
+  }
+
+  .receipt {
+    background-color: #f4f4f4;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  form hr {
+    border: 1px solid #e67e22;
+    margin: 10px 0;
+  }
+
+  .months-selector input {
+    display: none!important;
+  }
+  
+  .months-selector input[type=checkbox] + label {
+    display: inline-block;
+    font-size: 70%;
+    border: 1px solid #e67e22;
+    border-radius: 50%;
+    background: #fff;
+    height: 35px;
+    width: 35px;
+    padding: 2px;
+    margin: 2px;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  
+  .months-selector input[type=checkbox]:checked + label {
+    background: #e67e22;
+    color: #fff;
+  }
+
+  .month {
+      padding-right: 10px;
+  }
+
+  .btn-pay {
+    outline: none;
+    border: 1px solid #e67e22;
+    border-radius: 50px;
+    background-color: #e67e22;
+    padding: 3px 12px;
+    color: #fff;
+    margin: 0 auto;
+    transition: background-color 0.2s, color 0.2s;
+  }
+  
+  .btn-pay:hover {
+    background-color: #e67e22;
+    color: #fff;
+  }

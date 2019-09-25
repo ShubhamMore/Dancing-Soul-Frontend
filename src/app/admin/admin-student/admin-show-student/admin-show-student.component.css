@@ -1,0 +1,33 @@
+* {
+    margin: 0;
+}
+
+h3 {
+    font-size: 150%;
+}
+
+hr {
+    border: 1px solid #e67e22;
+    margin: 5px 0;
+}
+
+.student {
+    background-color: #f4f4f4;
+    padding: 10px;
+}
+
+p {
+    font-size: 80%;
+}
+
+.student-image {
+    width: 80%;
+    margin: auto;
+}
+
+.student-name {
+    text-align: center;
+    margin-bottom: 3px;
+    text-decoration: underline;
+    text-decoration-color: #ffd000;
+}

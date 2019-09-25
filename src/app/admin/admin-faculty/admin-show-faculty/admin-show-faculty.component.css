@@ -1,0 +1,33 @@
+* {
+    margin: 0;
+}
+
+h3 {
+    margin-left: 10px;
+}
+
+.faculty {
+    background-color: #F4F4F4;
+    padding: 10px;
+}
+
+.faculty-image {
+    width: 80%;
+    margin: auto;
+}
+
+.faculty-name {
+    text-align: center;
+    margin-bottom: 3px;
+    text-decoration: underline;
+    text-decoration-color: #e67e22;
+}
+
+p {
+    font-size: 80%;
+}
+
+hr {
+    border: 1px solid #e67e22;
+    margin: 5px 0;
+}

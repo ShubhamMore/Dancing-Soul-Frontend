@@ -1,0 +1,27 @@
+  <img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
+
+  <div class="row mt-2" *ngIf="!loading">
+    <div class="edit-philosophy col-md-8 col-sm-10 mx-auto">
+      <form (submit)="savePhilisophy()" [formGroup]="form">
+        <div class="header">
+          <h3>philosophy</h3>
+        </div>
+        <hr>
+        <div class="body">
+          <textarea class="philosophy" name="philosophy" id="philosophy" rows="6" formControlName="philosophy" placeholder="Enter philosophy"></textarea>
+          <span *ngIf="!form.get('philosophy').valid && form.get('philosophy').touched">*Please Enter Philosophy</span>
+        </div>
+        <hr>
+        <div class="footer">
+          <div class="row">
+            <div class="col-6">
+              <button type="submit" class="btn-save">Save</button>
+            </div>
+            <div class="col-6">
+              <button type="button" class="btn-cancel float-right" (click)="cancel()">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>

@@ -1,0 +1,19 @@
+<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
+
+<div class="row mt-2" *ngIf="!loading">
+
+  <div class="col-10 mx-auto">
+    <div class="about">
+      <div class="row">
+        <div class="col-12">
+          <button type="button" routerLink="edit" class="btn-edit float-right" skipLocationChange>Edit</button>
+          <h3>History</h3>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="about-body">
+      <p>{{ about.history }}</p>
+    </div>
+  </div>
+</div>

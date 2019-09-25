@@ -1,0 +1,198 @@
+  <img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
+
+  <div class="row mt-2" *ngIf="!loading">
+    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-12 mx-auto">
+      <h4 class="text-center mb-3">Edit Branch - {{branchData.branch}}</h4>
+      <form class="" (submit)="editAddress()" [formGroup]="form">
+  
+        <div class="row">
+  
+          <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+              <label for="city">City : </label>
+              <input class="city" type="text" name="city" id="city" formControlName="city" placeholder="City">
+              <span *ngIf="!form.get('city').valid && form.get('city').touched">*Please enter City</span>
+            </div>
+          </div>
+  
+          <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+              <label for="branch">Branch Name : </label>
+              <input class="branch" type="text" name="branch" id="branch" formControlName="branch" placeholder="Branch">
+              <span *ngIf="!form.get('branch').valid && form.get('branch').touched">*Please enter Branch</span>
+            </div>
+          </div>
+  
+        </div>
+
+        <div class="row">
+          <div class="col-12"> 
+            <div class="form-group">
+              <label for="address">Address : </label>
+              <textarea class="address" name="address" id="address" rows="3" formControlName="address" placeholder="Address"></textarea>
+              <span *ngIf="!form.get('address').valid && form.get('address').touched">*Please enter Address</span>
+            </div>
+          </div>
+        </div>
+        
+  
+        <div class="row">
+  
+          <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+              <label for="email">Email : </label>
+              <input class="email" type="email" name="email" id="email" formControlName="email" placeholder="example@email.com">
+              <span *ngIf="!form.get('email').valid && form.get('email').touched">*Please enter valid Email</span>
+            </div>
+          </div>
+  
+          <div class="col-md-6 col-sm-12">
+            <div class="form-group">
+              <label for="phone">Phone : </label>
+              <input class="phone" type="text" pattern="\d*" name="phone" id="phone" maxlength="10" minlength="10" formControlName="phone" placeholder="9876543210">
+              <span *ngIf="!form.get('phone').valid && form.get('phone').touched">*Please enter valid phone number</span>
+            </div>
+          </div>
+  
+        </div>
+
+        <div class="row">
+          <div class="col-12">  
+            <div class="form-group">
+              <label for="description">Description : </label>
+              <textarea class="description" name="description" id="description" rows="5" formControlName="description" placeholder="Description"></textarea>
+              <span *ngIf="!form.get('description').valid && form.get('description').touched">*Please enter Description</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12"> 
+            <div class="form-group">
+              <label for="image">Select Branch Images : </label>
+              <input type="file" id="image" name="image" formControlName="image" (change)="onImagePicked($event)" multiple>
+              <span *ngIf="!form.get('image').valid && form.get('image').touched">*Please Select Valid Image File</span>
+            </div>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <label for="batch">Add Batches : </label>
+              <div class="batches-border" id="batch">
+                <form (submit)="addBatch()" [formGroup]="batchForm">
+                  <div class="row">
+                    <div class="col-md-4 col-sm-12 p-0">
+                      <div class="form-group m-1">
+                        <label for="week">Week Type : </label>
+                        <select class="week" name="week" id="week" formControlName="week" (change)="scheduleChange()">
+                          <option value="WeekDays" selected>Week Day</option>
+                          <option value="WeekEnds">Week End</option>
+                        </select>
+                        <span *ngIf="!batchForm.get('week').valid && batchForm.get('week').touched">*Please Select Valid Week Type</span>
+                      </div>
+                    </div>
+                    <div class="col-md-8 col-sm-12 p-0">
+                      <div class="form-group m-1">
+                        <label>Select Days : </label>
+                        <div class="weekDays-selector batches-border">
+                          <div formArrayName="weekDays">
+                            <label *ngFor="let day of batchForm.get('weekDays').controls; let i = index">
+                              <input type="checkbox" [id]="week[i]" class="weekday" [formControlName]="i" (change)="weekDay($event, i)">
+                              <label [for]="week[i]">{{week[i]}}</label>
+                            </label>
+                          </div>
+                        </div>
+                        <span *ngIf="!batchForm.get('weekDays').valid && weekdaysTouched">*Please Select Week Days</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-12 p-0">
+                      <div class="form-group m-1">
+                        <label for="batchName">Batch Name : </label>
+                        <input class="batchName" type="text" name="batchName" id="batchName" formControlName="batchName" placeholder="Batch Name">
+                        <span *ngIf="!batchForm.get('batchName').valid && batchForm.get('batchName').touched">*Please Enter Batch Name</span>
+                      </div>  
+                    </div>
+                    <div class="col-md-6 col-sm-12 p-0">
+                      <div class="form-group m-1">
+                        <label for="fees">Fees : </label>
+                        <input class="fees" type="fees" name="fees" id="fees" formControlName="fees" placeholder="Fees">
+                        <span *ngIf="!batchForm.get('fees').valid && batchForm.get('fees').touched">*Please Enter Fees</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-12 p-0">
+                      <div class="form-group m-1">
+                        <label for="start_timming">Time : </label>
+                        <div class="row">
+                            <div class="col-5 p-0">
+                              <input type="text" name="start_timming" id="start_timming" formControlName="start_timming" placeholder="From">
+                            </div>
+                            <div class="col-2 text-center">
+                              <p>-</p>
+                            </div>
+                            <div class="col-5 p-0">					
+                              <input type="text" name="end_timming" id="end_timming" formControlName="end_timming" placeholder="To">
+                            </div>
+                          </div> 
+                        <span *ngIf="(!batchForm.get('start_timming').valid && batchForm.get('start_timming').touched) || (!batchForm.get('end_timming').valid && batchForm.get('end_timming').touched)">*Please Enter Timming</span>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                      <br>
+                      <button type="submit" class="btn-add">Add</button>            
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="row" *ngIf="isWeekType(weekType)">
+          <div class="col-12">
+            <label for="batches">Batches : </label>
+            <div class="table-responsive batches-border" id="batches">
+              <table class="table table-sm">
+                <thead class="text-center">
+                  <th>Batch</th>
+                  <th>Timming</th>
+                  <th>Fees</th>
+                  <th>Days</th>
+                  <th>Delete</th>
+                </thead>
+                <tbody>
+                  <ng-container *ngFor="let batch of batches; let i = index">
+                    <tr class="p-1 text-center" *ngIf="batch.batchType === weekType">
+                      <td class="text-left">{{batch.batchName}}</td>
+                      <td>{{batch.time}}</td>
+                      <td>{{batch.fees}}</td>
+                      <td>{{batch.days}}</td>
+                      <td>
+                        <button type="button" class="btn-delete" (click)="deleteBatch(i)">Delete</button>
+                      </td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+          
+        <hr>
+        
+        <div class="row">
+          <div class="col-12">
+            <button type="submit" class="btn-save">Save</button>
+      
+            <button type="button" class="btn-cancel float-right" (click)="cancel()">Cancel</button>
+          </div>
+        </div>
+  
+      </form>
+    </div>
+</div>

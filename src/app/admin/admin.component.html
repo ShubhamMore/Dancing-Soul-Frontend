@@ -1,0 +1,76 @@
+<div class="wrapper">
+  <!-- Sidebar  -->
+  <nav class="sidebar" [ngClass]="{'hide' : sidenav}">
+    
+    <ul class="list-unstyled components">
+
+      <li>
+        <a routerLink="/admin/dashboard" routerLinkActive="active" skipLocationChange>Dashboard</a>
+      </li>
+      
+      <li>
+        <a href="#aboutSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">About</a>
+        <ul class="collapse list-unstyled" id="aboutSubmenu">
+          <li>
+            <a routerLink="/admin/about/aim" routerLinkActive="active" skipLocationChange>Aim</a>
+          </li>
+           <li>
+            <a routerLink="/admin/about/history" routerLinkActive="active" skipLocationChange>History</a>
+          </li>
+          <li>
+            <a routerLink="/admin/about/philosophy" routerLinkActive="active" skipLocationChange>Philosophy</a>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <a routerLink="/admin/faculty" routerLinkActive="active" skipLocationChange>Faculty</a>
+      </li>
+      
+      <li>
+        <a routerLink="/admin/branch" routerLinkActive="active" skipLocationChange>Branch</a>
+      </li>
+      
+      <li>
+        <a routerLink="/admin/student" routerLinkActive="active" skipLocationChange>Student</a>
+      </li>
+      <li>
+
+        <a routerLink="/admin/attendance" routerLinkActive="active" skipLocationChange>Attendance</a>
+      </li>
+
+      <li>
+        <a routerLink="/admin/gallery" routerLinkActive="active" skipLocationChange>Gallery</a>
+      </li>
+
+      <li>
+        <a routerLink="/admin/exams" routerLinkActive="active" skipLocationChange>Exams</a>
+      </li>
+
+      <li>
+        <a routerLink="/admin/news" routerLinkActive="active" skipLocationChange>News</a>
+      </li>
+
+      <li>
+        <a routerLink="/admin/article" routerLinkActive="active" skipLocationChange>Article</a>
+      </li>
+
+      <li>
+        <a routerLink="/admin/enquiry" routerLinkActive="active" skipLocationChange>Enquiries</a>
+      </li>
+    </ul>
+
+  </nav>
+  
+  <!-- Page Content  -->
+  <button type="button" class="toggle-btn m-1" (click)="toggle()">
+    <i class="fa fa-align-justify"></i>
+  </button>
+  <div class="container">
+    <div class="row m-2">
+      <div class="col-12">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

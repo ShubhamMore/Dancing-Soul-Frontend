@@ -1,0 +1,36 @@
+/* .flex-container, .image-box, .map-box,.details-box,.form-box{
+    border:1px #ccc solid;
+    padding:10px;
+  } */
+
+  .image-box{
+    background-image: url('/assets/images/contactUsImage.jpg');
+    height: 40vh;
+    background-position: center;
+    flex-basis: 100%;
+}
+.map-box{
+    flex: 1;
+    height: 50vh;
+}
+.details-box{
+    padding: 10px;
+    flex: 1;
+}
+.flex-container .details-box li{
+    list-style: none;
+    padding: 10px;
+}
+.flex-container .details-box i{
+    margin-right: 25px;
+}
+.form-box{
+    position: relative;
+    background: #f4f4f4;
+    flex: 1;
+    padding: 10px;
+}
+.form-box .input-box{
+    float: left;
+    color: #e67e22;
+}

@@ -1,0 +1,32 @@
+<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
+
+<div class="row mt-2" *ngIf="!loading">
+  <div class="col-10 mx-auto">
+
+    <div class="news p-3">
+
+      <div class="row">
+        <div class="col-12">
+          <button type="button" class="btn-close float-right" (click)="cancel()">X</button>
+          <h3>{{news.title}}</h3>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="row">
+        <div class="col-12">
+          <p>{{news.body}}</p>    
+        </div>
+      </div>
+
+      <hr>
+      <div class="row">
+        <div class="col-11 mx-auto">
+          <button type="button" class="btn-edit ml-3" (click)= "edit()">Edit</button>
+          <button type="button" class="btn-delete mr-3 float-right" (click)="delete()">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

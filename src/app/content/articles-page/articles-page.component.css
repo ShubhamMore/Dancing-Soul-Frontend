@@ -1,0 +1,11 @@
+.articles-page{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    
+}
+.article-box{
+    flex: 1 0 33%;
+    text-align: center;
+    padding: 20px;
+}
