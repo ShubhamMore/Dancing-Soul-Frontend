@@ -43,8 +43,11 @@ export class AdminShowBranchComponent implements OnInit {
 
   changeStatus(_id:string, status: string) {
     let statusConfirm: any = true;
-    if(status === "deactivated") {
+    if(status === "0") {
       statusConfirm = confirm("do you really want to Deactivate Branch??");
+    }  
+    else if(status === "1") {
+      statusConfirm = confirm("do you want to Activate this Branch again??");
     }  
     if(statusConfirm) {
       this.loading = true;

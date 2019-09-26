@@ -33,7 +33,7 @@
               +91 {{ branch.phone }}
             </td>
             <td>
-              {{ branch.status | uppercase }}
+              {{ branch.status == "1" ? "ACTIVATED" : "DEACTIVATED" }}
             </td>
           </tr>
         </tbody>

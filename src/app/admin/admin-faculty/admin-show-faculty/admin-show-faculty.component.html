@@ -59,7 +59,7 @@
                       <strong>Status : </strong>
                     </td>
                     <td>
-                      <p>{{faculty.status | uppercase}}</p>
+                      <p>{{ faculty.status == "1" ? "ACTIVATED" : "DEACTIVATED" }}</p>
                     </td>
                   </tr>
                 </tbody>
@@ -73,8 +73,8 @@
             <button routerLink="edit" class="btn-edit" skipLocationChange>Edit</button>
           </div>
           <div class="col-6">
-            <button class=" btn-deactivate float-right pointer" (click)="changeStatus(faculty._id, 'deactivated')" *ngIf="faculty.status === 'activated'">Deactivate</button>
-            <button class="btn-activate float-right pointer" (click)="changeStatus(faculty._id, 'activated')" *ngIf="faculty.status === 'deactivated'">Activate</button>
+            <button class=" btn-deactivate float-right pointer" (click)="changeStatus(faculty._id, '0')" *ngIf="faculty.status === '1'">Deactivate</button>
+            <button class="btn-activate float-right pointer" (click)="changeStatus(faculty._id, '1')" *ngIf="faculty.status === '0'">Activate</button>
           </div>
         </div>
       </div>

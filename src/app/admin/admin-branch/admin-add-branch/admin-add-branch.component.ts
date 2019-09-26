@@ -174,7 +174,7 @@ export class AdminAddBranchComponent implements OnInit {
         description: this.form.value.descripton, 
         images: this.images,
         batch: this.batches,
-        status: "activated"
+        status: "1"
       }
 
       const data = { api : "addBranch", data : branch}

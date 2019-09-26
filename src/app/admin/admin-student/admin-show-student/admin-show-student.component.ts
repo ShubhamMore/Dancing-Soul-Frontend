@@ -35,7 +35,7 @@ export class AdminShowStudentComponent implements OnInit {
          const branchData = { api : "getBranch", data : { _id : this.student.branch }}
          this.httpPostService.httpPost(branchData).subscribe((val) => {
            this.branch = val;
-           this.batch = this.branch.batch.find(batch => (batch.batchName === this.student.batchName && batch.batchType === this.student.batch));
+           this.batch = this.branch.batch.find(batch => (batch._id === this.student.batchName && batch.batchType === this.student.batch));
            this.loading = false;
          },
          (error) => {
@@ -49,8 +49,11 @@ export class AdminShowStudentComponent implements OnInit {
 
   changeStatus(_id:string, status: string) {
     let statusConfirm: any = true;
-    if(status === "deactivated") {
-      statusConfirm = confirm("do you really want to Deactivate Branch??");
+    if(status === "0") {
+      statusConfirm = confirm("do you really want to Deactivate Student??");
+    }  
+    else if(status === "1") {
+      statusConfirm = confirm("do you want to Activate this Student again??");
     }  
     if(statusConfirm) {
       this.loading = true;

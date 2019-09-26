@@ -71,7 +71,7 @@ export class AdminAddFacultyComponent implements OnInit {
         image : this.image,
         email: this.form.value.email, 
         phone : this.form.value.phone, 
-        status : "activated"
+        status : "1"
       }
 
       const user = {

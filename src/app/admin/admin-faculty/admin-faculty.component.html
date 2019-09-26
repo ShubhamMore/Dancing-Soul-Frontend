@@ -32,7 +32,7 @@
                 </a>
               </td>
               <td>
-                {{ faculty.status | uppercase }}
+                {{ faculty.status == "1" ? "ACTIVATED" : "DEACTIVATED" }}
               </td>
             </tr>
           </tbody>

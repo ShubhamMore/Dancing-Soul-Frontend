@@ -153,7 +153,7 @@ export class AdminAddStudentComponent implements OnInit {
         branch: this.form.value.branch, 
         batch: this.form.value.batch, 
         batchName: this.form.value.batchName, 
-        status: "activated"
+        status: "1"
       }
 
       const user = {

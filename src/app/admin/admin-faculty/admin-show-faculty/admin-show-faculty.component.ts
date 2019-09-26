@@ -36,8 +36,11 @@ export class AdminShowFacultyComponent implements OnInit {
 
   changeStatus(_id:string, status:string) {
     let statusConfirm: any = true;
-    if(status === "deactivated") {
+    if(status === "0") {
       statusConfirm = confirm("do you really want to Deactivate Faculty??");
+    }
+    else if(status === "1") {
+      statusConfirm = confirm("do you want to Activate this Faculty again??");
     }
 
     if(statusConfirm) {

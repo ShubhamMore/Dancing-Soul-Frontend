@@ -151,7 +151,7 @@
                         <strong>Batch : </strong>
                       </td>
                       <td>
-                        <p>{{student.batch}}</p>
+                        <p>{{student.batch == "0" ? "Week Day Batch" : "Weel End Batch"}}</p>
                       </td>
                     </tr>
                     <tr>
@@ -183,7 +183,7 @@
                         <strong>Status : </strong>
                       </td>
                       <td>
-                        <p>{{student.status | uppercase}}</p>
+                        <p>{{ student.status == "1" ? "ACTIVATED" : "DEACTIVATED" }}</p>
                       </td>
                     </tr>
                   </tbody>
@@ -202,8 +202,8 @@
           </div>
 
           <div class="col-6">
-              <button class="btn-deactivate float-right" (click)="changeStatus(student._id, 'deactivated')" *ngIf="student.status === 'activated'">Deactivate</button>
-              <button class="btn-activate float-right" (click)="changeStatus(student._id, 'activated')" *ngIf="student.status === 'deactivated'">Activate</button>
+              <button class="btn-deactivate float-right" (click)="changeStatus(student._id, '0')" *ngIf="student.status === '1'">Deactivate</button>
+              <button class="btn-activate float-right" (click)="changeStatus(student._id, '1')" *ngIf="student.status === '0'">Activate</button>
           </div>
 
         </div>

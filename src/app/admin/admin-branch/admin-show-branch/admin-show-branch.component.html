@@ -117,7 +117,7 @@
                       <strong>Status : </strong>
                     </td>
                     <td>
-                      <p>{{branch.status | uppercase}}</p>              
+                      <p>{{ branch.status == "1" ? "ACTIVATED" : "DEACTIVATED" }}</p>              
                     </td>
                   </tr>
                 </tbody>
@@ -131,8 +131,8 @@
         <div class=".row">
           <div class="col-12">
             <button class="btn-edit" (click)="editAddress()">Edit</button>
-            <button class="btn-deactivate float-right" (click)="changeStatus(branch._id, 'deactivated')" *ngIf="branch.status === 'activated'">Deactivate</button>
-            <button class="btn-activate float-right" (click)="changeStatus(branch._id, 'activated')" *ngIf="branch.status === 'deactivated'">Activate</button>
+            <button class="btn-deactivate float-right" (click)="changeStatus(branch._id, '0')" *ngIf="branch.status === '1'">Deactivate</button>
+            <button class="btn-activate float-right" (click)="changeStatus(branch._id, '1')" *ngIf="branch.status === '0'">Activate</button>
           </div>
         </div>
       </div>
