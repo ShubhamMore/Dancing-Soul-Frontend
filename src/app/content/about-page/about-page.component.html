@@ -1,44 +1,46 @@
 <img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
 
-<div class="row mt-2" *ngIf="!loading">
-  <div class="about-page">
-      <div class="about-image">
-      </div>
-      <div class="flex-container">
-        <div class="info-box">
-            <h2>AIM</h2>
-            <p>
-                {{aboutUs.aim}}
-            </p>
+<div class="row" *ngIf="!loading">
+  <div class="col-12">
+    <div class="about-page">
+        <div class="about-image">
         </div>
-        <div class="info-box">
-            <h2>Our History</h2>
-            <p>
-              {{aboutUs.history}}
-            </p>
-        </div>
-        <div class="info-box">
-            <h2>Philosophy</h2>
-            <p>
-              {{aboutUs.philosophy}}
-            </p>
-          </div>
-          
-      </div>
-      <div class="faculty-container">
-        <h2>Our faculty</h2>
         <div class="flex-container">
-          <div class="faculty-card" *ngFor="let faculty of faculties">
-              <div class="faculty-pic">
-                <img class="shadow-lg" src="faculty.facultyImage" onerror="this.src='/assets/images/faculty.png'">
-              </div>
-              <div class="faculty-desc">
-                <h5>{{faculty.name}}</h5>
-                {{faculty.description}}
-              </div>
+          <div class="info-box">
+              <h2>AIM</h2>
+              <p>
+                  {{aboutUs.aim}}
+              </p>
+          </div>
+          <div class="info-box">
+              <h2>Our History</h2>
+              <p>
+                {{aboutUs.history}}
+              </p>
+          </div>
+          <div class="info-box">
+              <h2>Philosophy</h2>
+              <p>
+                {{aboutUs.philosophy}}
+              </p>
+            </div>
+            
+        </div>
+        <div class="faculty-container">
+          <h2>Our faculty</h2>
+          <div class="flex-container">
+            <div class="faculty-card" *ngFor="let faculty of faculties">
+                <div class="faculty-pic">
+                  <img class="shadow-lg" src="faculty.facultyImage" onerror="this.src='/assets/images/faculty.png'">
+                </div>
+                <div class="faculty-desc">
+                  <h5>{{faculty.name}}</h5>
+                  {{faculty.description}}
+                </div>
+            </div>
           </div>
         </div>
-      </div>
-      
+        
+    </div>
   </div>
 </div>
