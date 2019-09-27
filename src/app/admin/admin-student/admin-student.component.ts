@@ -32,13 +32,13 @@ export class AdminStudentComponent implements OnInit {
 
   ngOnInit() {
     const branchData = { api : "getBranches", data : { }}
-    this.httpPostService.httpPost(branchData).subscribe((val) => {
+    this.httpPostService.httpPostAuth(branchData).subscribe((val) => {
 
      this.branches = val;
      console.log(this.branches)
      if(this.branches.length > 0) {
        const studentData = { api : "getStudents", data : { }}
-       this.httpPostService.httpPost(studentData).subscribe((val) => {
+       this.httpPostService.httpPostAuth(studentData).subscribe((val) => {
          this.allStudents = val;
          this.loading = false;
         },

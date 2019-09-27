@@ -24,7 +24,7 @@ export class AboutPageComponent implements OnInit {
     const aboutData = { api : "getAbout", data : {}}
     this.httpPostService.httpPost(aboutData).subscribe((val) => {
       this.aboutUs = val[0];
-      const facultyData = { api : "getFaculties", data : {}}
+      const facultyData = { api : "getActivateFaculties", data : {}}
       this.httpPostService.httpPost(facultyData).subscribe((val: any) => {
         this.faculties = val;
         console.log(this.faculties);

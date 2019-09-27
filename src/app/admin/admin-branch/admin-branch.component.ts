@@ -21,7 +21,7 @@ export class AdminBranchComponent implements OnInit {
 
     ngOnInit() {
         const data = { api : "getBranches", data : { }}
-        this.httpPostService.httpPost(data).subscribe((val) => {
+        this.httpPostService.httpPostAuth(data).subscribe((val) => {
          this.branches = val;
          this.loading = false;
         },

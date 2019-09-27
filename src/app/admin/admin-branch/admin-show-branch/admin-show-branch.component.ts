@@ -30,7 +30,7 @@ export class AdminShowBranchComponent implements OnInit {
       (params:Params) => {
         const _id = params['id'];
         const data = { api : "getBranch", data : { _id }}
-        this.httpPostService.httpPost(data).subscribe((val) => {
+        this.httpPostService.httpPostAuth(data).subscribe((val) => {
           this.branch = val;
           this.batches = this.branch.batch;
           this.loading = false;

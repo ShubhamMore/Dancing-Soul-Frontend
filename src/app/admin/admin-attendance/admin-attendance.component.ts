@@ -62,11 +62,11 @@ export class AdminAttendanceComponent implements OnInit {
     });
 
     const branchData = { api : "getBranches", data : { }}
-    this.httpPostService.httpPost(branchData).subscribe((val) => {
+    this.httpPostService.httpPostAuth(branchData).subscribe((val) => {
      this.branches = val;
      if(this.branches.length > 0) {
        const studentData = { api : "getStudents", data : { }}
-       this.httpPostService.httpPost(studentData).subscribe((val) => {
+       this.httpPostService.httpPostAuth(studentData).subscribe((val) => {
          this.allStudents = val;
          this.loading = false;
        },

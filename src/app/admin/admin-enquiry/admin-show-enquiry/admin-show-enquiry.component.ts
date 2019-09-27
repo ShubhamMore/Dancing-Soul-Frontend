@@ -26,7 +26,7 @@ export class AdminShowEnquiryComponent implements OnInit {
         const _id = params['id'];
         
         const data = { api : "getEnquiry", data : { _id }}
-        this.httpPostService.httpPost(data).subscribe((val) => {
+        this.httpPostService.httpPostAuth(data).subscribe((val) => {
          this.enquiry = val;
          this.loading = false;
         },

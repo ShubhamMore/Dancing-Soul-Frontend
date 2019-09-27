@@ -95,7 +95,7 @@ export class AdminEditBranchComponent implements OnInit {
       (params:Params) => {
         const _id = params['id']; 
         const data = { api : "getBranch", data : { _id }}
-        this.httpPostService.httpPost(data).subscribe(
+        this.httpPostService.httpPostAuth(data).subscribe(
           (val) => {
             this.branchData = val;
             this.images = this.branchData.images;

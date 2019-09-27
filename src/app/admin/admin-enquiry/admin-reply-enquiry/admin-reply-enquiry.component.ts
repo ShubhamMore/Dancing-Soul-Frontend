@@ -38,7 +38,8 @@ export class AdminReplyEnquiryComponent implements OnInit {
     .subscribe(
       (params:Params) => {
         this.id = params['id'];
-        this.httpPostService.httpPost(this.id).subscribe((val) => {
+        const data = { api : "getEnquiry", data : { _id : this.id }}
+        this.httpPostService.httpPostAuth(data).subscribe((val) => {
          this.enquiry = val;
          this.loading = false;
         },
@@ -52,7 +53,7 @@ export class AdminReplyEnquiryComponent implements OnInit {
     if(this.form.valid) {
       this.loading = true;
       const reply = { email : this.enquiry.email, subject : this.form.value.subject, body : this.form.value.body }
-      const data = { api : "sendEnquiryReply", data : reply }
+      const data = { api : "replyEnquiry", data : reply }
       this.httpPostService.httpPostAuth(data).subscribe((val) => {
        this.form.reset();
        this.loading = false;

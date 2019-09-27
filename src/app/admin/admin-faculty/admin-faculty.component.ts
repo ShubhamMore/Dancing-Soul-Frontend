@@ -20,7 +20,7 @@ export class AdminFacultyComponent implements OnInit {
 
   ngOnInit() {
     const data = { api : "getFaculties", data : {}}
-    this.httpPostService.httpPost(data).subscribe((val: any) => {
+    this.httpPostService.httpPostAuth(data).subscribe((val: any) => {
       this.faculties = val;
       console.log(this.faculties);
       this.loading = false;

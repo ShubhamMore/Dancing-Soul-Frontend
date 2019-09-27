@@ -16,7 +16,7 @@ export class BranchesPageComponent implements OnInit {
 
 
     ngOnInit() {
-        const data = { api : "getBranches", data : { }}
+        const data = { api : "getActivateBranches", data : { }}
         this.httpPostService.httpPost(data).subscribe((val) => {
          this.branches = val;
          this.loading = false;

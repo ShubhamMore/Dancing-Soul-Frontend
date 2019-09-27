@@ -56,7 +56,7 @@ export class AdminEditFacultyComponent implements OnInit {
       (params: Params) => {
         const _id = params['id'];
         const data = { api : "getFaculty", data : { _id }}
-        this.httpPostService.httpPost(data).subscribe((val) => {
+        this.httpPostService.httpPostAuth(data).subscribe((val) => {
           this.faculty = val;
           this.image = this.faculty.image;
 

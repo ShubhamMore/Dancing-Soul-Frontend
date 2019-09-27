@@ -57,10 +57,10 @@ export class AdminStudentGenerateReceiptComponent implements OnInit {
       (params: Params) => {
         const _id = params['id'];
         const studentData = { api : "getStudent", data : { _id }}
-        this.httpPostService.httpPost(studentData).subscribe((val) => {
+        this.httpPostService.httpPostAuth(studentData).subscribe((val) => {
          this.student = val;
          const branchData = { api : "getBranch", data : { _id : this.student.branch }}
-         this.httpPostService.httpPost(branchData).subscribe((val) => {
+         this.httpPostService.httpPostAuth(branchData).subscribe((val) => {
            this.branch = val; 
            this.batch = this.branch.batch.find(batch => ((batch.batchName === this.student.batchName) && (batch.batchType === this.student.batch)));
            this.loading = false;

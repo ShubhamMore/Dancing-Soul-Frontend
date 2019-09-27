@@ -33,13 +33,14 @@ export class HttpService {
   }
 
   public httpPostAuth(data: any) : any {
-
-    let token = "Bearer "+JSON.parse(localStorage.getItem('userData'))._token;
-    return this.http.post(EnvVar.url+data.api, data.data, {
-      headers: new HttpHeaders({
-        'Authorization': token
-      })
-    })
+    let token = "";
+    console.log(localStorage.getItem('userData'))
+    if(localStorage.getItem('userData')) {
+      token = 'Bearer '+JSON.parse(localStorage.getItem('userData'))._token;
+    }
+    console.log(token)
+    const headers = new HttpHeaders().set('Authorization', token);
+    return this.http.post(EnvVar.url+data.api, data.data, { headers })
     .pipe(
       map((response: any)=>{
           return response;

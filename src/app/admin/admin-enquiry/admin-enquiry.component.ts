@@ -21,7 +21,7 @@ export class AdminEnquiryComponent implements OnInit {
 
   ngOnInit() {
     const data = { api : "getEnquiries", data : { }}
-    this.httpPostService.httpPost(data).subscribe((val) => {
+    this.httpPostService.httpPostAuth(data).subscribe((val) => {
      this.enquiries = val;
      this.loading = false;
     },

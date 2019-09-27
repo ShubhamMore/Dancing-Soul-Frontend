@@ -24,7 +24,7 @@ export class AdminShowFacultyComponent implements OnInit {
       (params: Params) => {
         const _id = params['id'];
         const data = { api : "getFaculty", data : { _id }}
-        this.httpPostService.httpPost(data).subscribe((val) => {
+        this.httpPostService.httpPostAuth(data).subscribe((val) => {
           this.faculty = val;
           this.loading = false;
         },
