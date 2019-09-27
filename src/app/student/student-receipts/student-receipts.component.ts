@@ -25,6 +25,7 @@ export class StudentReceiptsComponent implements OnInit {
     subscribe(
       (params: Params) => {
         const _id = params["id"];
+        console.log(_id)
         this.loading = false;
       }
     );

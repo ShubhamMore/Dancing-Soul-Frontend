@@ -3,13 +3,16 @@ import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { EnvVar } from '../shared/config';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private router : Router,
+              private route : ActivatedRoute) { }
 
   public httpPost(data: any) : any {
     return this.http.post(EnvVar.url+data.api, data.data)
@@ -48,8 +51,11 @@ export class HttpService {
       catchError(err => {
           let msg = "SOMETHING BAD HAPPENED";
           if(err.error) {
-            console.log(err)
-            if(typeof(err.error) === "object") {
+            if(err.error.error === "Please authenticate.") {
+              console.log(err.error)
+              this.router.navigate(["/login"], {relativeTo: this.route, queryParams: { status: 'false'}});
+            }
+            else if(typeof(err.error) === "object") {
               msg = "Can't Reach Server.., Please Try Again";
             }
             else{

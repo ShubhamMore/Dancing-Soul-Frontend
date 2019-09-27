@@ -121,11 +121,25 @@ export class LoginAuthGuard implements CanActivate {
       return this.authService.user.pipe(
         take(1),
         map(user => {
+          if(!localStorage.getItem("userData")) {
+            this.authService.removeUser();
+          }
           const isAuth = !!user;
           if (!isAuth) {
             return true;
           }
-          return this.router.createUrlTree(['/']);
+          else if(user.userType === "admin") {
+            return this.router.createUrlTree(['/admin/dashboard']);
+          }
+          else if(user.userType === "student") {
+            return this.router.createUrlTree(['/student'], { queryParams: {id : user._id} });
+          }
+          else if(user.userType === "faculty") {
+            return this.router.createUrlTree(['/faculty']);
+          }
+          else {
+            return this.router.createUrlTree(['/']);
+          }
         })
         // tap(isAuth => {
         //   if (!isAuth) {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { catchError, tap, map } from 'rxjs/operators';
 import { throwError, BehaviorSubject } from 'rxjs';
 
@@ -15,12 +15,20 @@ export interface AuthResponseData {
   expiresIn: string;
 }
 
+export class UserData {
+    email: string;
+    _id: string;
+    userType : string;
+    _token: string;
+    _tokenExpirationDate: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   user = new BehaviorSubject<User>(null);
   private tokenExpirationTimer: any;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private route : ActivatedRoute) {}
 
   login(email: string, password: string) {
     const data = {
@@ -43,21 +51,12 @@ export class AuthService {
       );
   }
 
-  autoLogin() {
-    const userData: {
-      email: string;
-      id: string;
-      userType : string;
-      _token: string;
-      _tokenExpirationDate: string;
-    } = JSON.parse(localStorage.getItem('userData'));
-    if (!userData) {
-      return;
-    }
-
+  // autoLogin(userData : UserData) {
+  loadUser(userData : UserData) {
+    
     const loadedUser = new User(
       userData.email,
-      userData.id,
+      userData._id,
       userData.userType,
       userData._token,
       new Date(userData._tokenExpirationDate)
@@ -69,7 +68,50 @@ export class AuthService {
         new Date(userData._tokenExpirationDate).getTime() -
         new Date().getTime();
       this.autoLogout(expirationDuration);
+      
+      if(loadedUser.userType === "admin") {
+        this.router.navigate(['/admin/dashboard'], {relativeTo: this.route});
+      }
+      else if(loadedUser.userType === "student") {
+        this.router.navigate(['/student'], {relativeTo: this.route, queryParams: {id : loadedUser._id} });
+      }
+      else if(loadedUser.userType === "faculty") {
+        this.router.navigate(['/faculty'], {relativeTo: this.route});
+      }
+      else {
+        this.router.navigate(['/'], {relativeTo: this.route});
+      }
+      return;
     }
+  }
+
+  autoLogin() {
+
+    let token = "";
+    console.log(localStorage.getItem('userData'))
+    if(localStorage.getItem('userData')) {
+      token = 'Bearer '+JSON.parse(localStorage.getItem('userData'))._token;
+    }
+    console.log(token)
+    const headers = new HttpHeaders().set('Authorization', token);
+    return this.http.post(EnvVar.url+"autoLogin", {}, { headers })
+    .pipe(
+      map((response: any)=>{
+          return response;
+      }),
+      catchError(err => {
+          let msg = "SOMETHING BAD HAPPENED";
+          if(err.error) {
+            if(typeof(err.error) === "object") {
+              msg = "Can't Reach Server.., Please Try Again";
+            }
+            else{
+              msg = err.error;
+            }
+          }
+          return throwError(msg);
+      })
+    );
   }
 
   logout() {
@@ -96,6 +138,10 @@ export class AuthService {
         console.log(errorMessage)
       }
     );
+  }
+
+  removeUser() {
+    this.user.next(null);
   }
 
   logoutAll() {

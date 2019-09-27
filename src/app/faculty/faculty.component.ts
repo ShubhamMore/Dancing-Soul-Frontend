@@ -62,11 +62,11 @@ export class FacultyComponent implements OnInit {
     });
 
     const branchData = { api : "getBranches", data : { }}
-    this.httpPostService.httpPost(branchData).subscribe((val) => {
+    this.httpPostService.httpPostAuth(branchData).subscribe((val) => {
      this.branches = val;
      if(this.branches.length > 0) {
        const studentData = { api : "getStudents", data : { }}
-       this.httpPostService.httpPost(studentData).subscribe((val) => {
+       this.httpPostService.httpPostAuth(studentData).subscribe((val) => {
          this.allStudents = val;
          this.loading = false;
        },
@@ -148,7 +148,7 @@ export class FacultyComponent implements OnInit {
       }
       console.log(attendance);
       const data = { api : "saveAttendance", data : attendance}
-      this.httpPostService.httpPost(data).subscribe((val) => {
+      this.httpPostService.httpPostAuth(data).subscribe((val) => {
         this.loading = false;
       },(error) => {
         this.loading = false;

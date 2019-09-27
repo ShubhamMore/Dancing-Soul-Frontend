@@ -25,7 +25,8 @@ export class LoginComponent implements OnInit {
 
     this.roure.queryParams
     .subscribe((params: Params) => {
-      if(params.status == 'false') {
+      if(params.auth == 'false') {
+        this.error = "Please Authenticate";
         this.loginAuth = false;
       }
     });
@@ -51,6 +52,7 @@ export class LoginComponent implements OnInit {
 
       let authObs: Observable<AuthResponseData>;
       this.loginAuth = true;
+      this.error = null;
 
       authObs = this.authService.login(this.form.value.username, this.form.value.password);
       
@@ -59,33 +61,28 @@ export class LoginComponent implements OnInit {
         resData => {
           console.log(resData);
 
-            // if(email === "admin" && password === "admin") {
             if(resData.userType === "admin") {
               this.router.navigate(['/admin'], {relativeTo: this.route});
             }
-            // else if(email === "student" && password === "student") {
             else if(resData.userType === "student") {
 
               this.router.navigate(['/student'], {relativeTo: this.route, queryParams: {id : resData._id}});
             }
-            // else if(email === "faculty" && password === "faculty") {
             else if(resData.userType === "faculty") {
               this.router.navigate(['/faculty'], {relativeTo: this.route});
               // this.router.navigate(['/faculty'], {relativeTo: this.route, queryParams: {id : user._id}});
             }
           else {
-            this.router.navigate(['/login'], {relativeTo: this.route, queryParams: { status: 'false'}, skipLocationChange: true});  
+            this.router.navigate(['/login'], {relativeTo: this.route, queryParams: { auth: 'false'}, skipLocationChange: true});
           }
+          this.form.reset();
         },
         errorMessage => {
           console.log(errorMessage);
           this.error = errorMessage;
-          // this.isLoading = false;
+          this.loginAuth = false;
         }
       );
-    
-      // this.form.reset();
-
     }
   }
 

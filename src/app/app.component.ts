@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from './auth/auth.service';
+import { AuthService, UserData } from './auth/auth.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,10 +9,32 @@ import { AuthService } from './auth/auth.service';
 })
 export class AppComponent implements OnInit {
   title = 'Dancing Soul';
+
+  loading = true;
   
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,
+              private router : Router, 
+              private route : ActivatedRoute) {}
 
   ngOnInit() {
-    this.authService.autoLogin();
+    const userData: UserData = JSON.parse(localStorage.getItem('userData'));
+    if (!userData) {
+      this.loading = false;
+      return;
+    }
+
+    this.authService.autoLogin()
+    .subscribe(
+      resData => {
+        console.log(resData)
+        this.loading = false;
+        this.authService.loadUser(userData);
+      },
+      errorMessage => {
+        console.log(errorMessage);
+        this.loading = false;
+        this.router.navigate(["/login"], {relativeTo: this.route, queryParams: { auth: 'false'}});
+      }
+    );
   }
 }

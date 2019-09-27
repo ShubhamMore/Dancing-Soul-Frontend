@@ -28,11 +28,12 @@ export class StudentDashboardComponent implements OnInit {
     subscribe(
       (params: Params) => {
         const _id = params["id"];
+        console.log(_id)
         const studentData = { api : "getStudent", data : { _id }}
-        this.httpPostService.httpPost(studentData).subscribe((val) => {
+        this.httpPostService.httpPostAuth(studentData).subscribe((val) => {
          this.student = val;
          const branchData = { api : "getBranch", data : { _id : this.student.branch }}
-         this.httpPostService.httpPost(branchData).subscribe((val) => {
+         this.httpPostService.httpPostAuth(branchData).subscribe((val) => {
            this.branch = val;
            this.loading = false;
          },

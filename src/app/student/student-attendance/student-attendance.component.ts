@@ -32,7 +32,7 @@ export class StudentAttendanceComponent implements OnInit {
       (params: Params) => {
         const _id = params['id'];
         const studentData = { api : "getStudent", data : { _id }}
-        this.httpPostService.httpPost(studentData).subscribe((val) => {
+        this.httpPostService.httpPostAuth(studentData).subscribe((val) => {
           this.student = val;
 
           const studentData = {
@@ -42,7 +42,7 @@ export class StudentAttendanceComponent implements OnInit {
           }
           
           const data = { api : "getAttendance", data : studentData}
-          this.httpPostService.httpPost(data).subscribe((val) => {
+          this.httpPostService.httpPostAuth(data).subscribe((val) => {
             this.attendance = val;
             this.loading = false;
           },(error) => {
