@@ -15,8 +15,8 @@ export class ExamsPageComponent implements OnInit {
   constructor(private httpPostService: HttpService) { }
 
   ngOnInit() {
-      const facultyData = { api : "getExams", data : {}}
-      this.httpPostService.httpPost(facultyData).subscribe((val: any) => {
+      const examsData = { api : "getExams", data : {}}
+      this.httpPostService.httpPost(examsData).subscribe((val: any) => {
         this.exams = val;
         this.loading = false;
       },
