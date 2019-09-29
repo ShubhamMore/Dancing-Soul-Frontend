@@ -1,1 +1,13 @@
-<h3>COMMING SOON...</h3>
+<div class="col-12">
+    <div class="exams-container">
+        <h2>Exams</h2>
+        <div class="flex-container">
+        <div class="exams-card" *ngFor="let exam of exams">
+            <div class="exams-desc">
+                <h5>{{exam.title}}</h5>
+                {{exam.body}}
+            </div>
+        </div>
+        </div>
+    </div>
+</div>

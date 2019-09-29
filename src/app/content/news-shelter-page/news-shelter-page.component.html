@@ -1,1 +1,13 @@
-<h3>COMMING SOON...</h3>
+<div class="col-12">
+    <div class="news-container">
+        <h2>News Shelter</h2>
+        <div class="flex-container">
+        <div class="news-card" *ngFor="let news of newsList">
+            <div class="news-desc">
+                <h5>{{news.title}}</h5>
+                {{news.body}}
+            </div>
+        </div>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ExamModule } from '../../models/exams.model';
+import { HttpService } from '../../services/httpPost.service';
 
 @Component({
   selector: 'app-exams-page',
@@ -7,9 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ExamsPageComponent implements OnInit {
 
-  constructor() { }
+  exams : ExamModule[] = [];
+  loading : boolean = true;
+
+  constructor(private httpPostService: HttpService) { }
 
   ngOnInit() {
+      const examsData = { api : "getExams", data : {}}
+      this.httpPostService.httpPost(examsData).subscribe((val: any) => {
+        this.exams = val;
+        this.loading = false;
+      },
+      (error) => {
+      });
+   
   }
 
 }
