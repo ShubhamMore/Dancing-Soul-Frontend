@@ -22,9 +22,9 @@
               <div class="row">
                   <span class="m-2" *ngFor="let image of images; let i = index;">
                       <div class="image-container" >
-                          <img [src]="image" class="image" [alt]="i">
+                          <img [src]="image.secure_url" class="image" [alt]="image.image_name">
                           <div class="middle">
-                              <a class="delete" (click)="deleteImage(i)"><i class="fa fa-trash-o trash"></i></a>
+                              <a class="delete" (click)="deleteImage(image.public_id)"><i class="fa fa-trash-o trash"></i></a>
                           </div>
                       </div>
                   </span>

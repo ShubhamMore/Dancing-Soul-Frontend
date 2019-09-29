@@ -1,4 +1,4 @@
-import { BuiltinTypeName } from '@angular/compiler';
+import { ImageModel } from './image.model';
 
 export class Branch {
 
@@ -9,11 +9,11 @@ export class Branch {
     public email:string;
     public phone:string;
     public description:string;
-    public images: string;
+    public images: ImageModel[];
     public batch: BatchModel[];
     public status: string;
 
-    constructor(id: string, branch:string, city: string ,address:string , email:string , phone:string, description: string, images: string, batch: BatchModel[], status: string) {
+    constructor(id: string, branch:string, city: string ,address:string , email:string , phone:string, description: string, images: ImageModel[], batch: BatchModel[], status: string) {
         this._id = id;
         this.city = city;
         this.branch = branch;

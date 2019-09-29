@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../services/httpPost.service';
-import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-admin-gallary',
@@ -17,8 +16,9 @@ export class AdminGallaryComponent implements OnInit {
   ngOnInit() {
     const data = { api : "getImages", data : {}}    
     this.httpPostService.httpPost(data)
-    .subscribe(responseData => {
-      this.images = responseData.imagePath;
+    .subscribe(response => {
+      console.log(response)
+      this.images = response;
       this.loading = false;
     },
     (error) => {
@@ -29,23 +29,13 @@ export class AdminGallaryComponent implements OnInit {
     this.loading = false;
   }
 
-  deleteImage(index : number) {
-    const changeImgs  = this.images;
-    const image = changeImgs[index].substring(changeImgs[index].lastIndexOf('/') + 1);
-    changeImgs.splice(index, 1);
-
-    const imgData = {
-      image,
-      imagePath : changeImgs
-    };
-    
-    const postData = new FormData();
-    postData.append("data", JSON.stringify(imgData));
+  deleteImage(public_id : string) {
 
     this.loading = true;
-    const data = { api : "deleteImage", data : imgData}
+    const data = { api : "removeImage", data : {public_id}}
     this.httpPostService.httpPostAuth(data)
     .subscribe(res => {
+      console.log(res)
       this.ngOnInit();
     },
     (error) => {
