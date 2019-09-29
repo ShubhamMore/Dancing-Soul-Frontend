@@ -15,7 +15,7 @@
               <h4>{{faculty.name}}</h4>
             </div>
             <div class="faculty-image">
-              <img [src]="faculty.image" [alt]="faculty.name" width="100%">
+              <img [src]="faculty.image.secure_url" [alt]="faculty.name" width="100%">
             </div>
           </div>
           <div class="col-md-8 col-sm-10 mx-auto">
@@ -75,6 +75,13 @@
           <div class="col-6">
             <button class=" btn-deactivate float-right pointer" (click)="changeStatus(faculty._id, '0')" *ngIf="faculty.status === '1'">Deactivate</button>
             <button class="btn-activate float-right pointer" (click)="changeStatus(faculty._id, '1')" *ngIf="faculty.status === '0'">Activate</button>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-12">
+            <button class="btn-delete float-right" (click)="deleteFaculty()">Delete</button>
+            <h6>Delete this Faculty</h6>
           </div>
         </div>
       </div>

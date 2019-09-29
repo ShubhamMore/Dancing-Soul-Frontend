@@ -60,9 +60,6 @@ export class AdminAddBranchComponent implements OnInit {
       }),
       description: new FormControl(null, {
         validators:[Validators.required]
-      }),
-      image: new FormControl(null, {
-        validators:[this.formValidator.imageValidate.bind(this)]
       })
     });
 

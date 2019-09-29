@@ -60,12 +60,32 @@
         <div class="row">
           <div class="col-12">
             <div class="form-group">
-              <label for="image">Select Profile Image : </label>
-              <input type="file" id="image" name="image" formControlName="image" (change)="onImagePicked($event)">
-              <span *ngIf="!form.get('image').valid && form.get('image').touched">*Please Select Image File</span>
+              <label for="images">Pick Profile Image to Upload : </label><br>
+              <input type="file" #filePicker (change)="onImagePicked($event)">
+              <button class="btn-add" type="button" id="images" (click)="filePicker.click()">Click Here to Pick Image</button>
             </div>
+            <span *ngIf="invalidImage">*Please Select a Valid Image File</span>
           </div>
         </div>
+  
+        <div class="row">
+          <div class="col-12">
+            <div *ngIf="imagePreview; else noImagePicked">
+              <h5>Image To Upload : </h5>
+              
+              <div class="row">
+                  <span class="m-2">
+                    <div class="preview-image">
+                      <img [src]="imagePreview" alt="Preview">
+                      <a class="remove-image"(click)="cancelImage()"><i class="fa fa-remove remove"></i></a>
+                    </div>
+                  </span>
+              </div>
+            
+            </div>
+            <ng-template #noImagePicked><p>No Image Picked yet</p></ng-template>
+          </div>
+        </div> 
 
         <div class="row mt-1" *ngIf="formError">
           <div class="col-12">

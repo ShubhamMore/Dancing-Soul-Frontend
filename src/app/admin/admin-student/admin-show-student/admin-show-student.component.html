@@ -23,7 +23,7 @@
               </div>
   
               <div class="student-image">
-                  <img [src]="student.image" [alt]="student.name" width="100%">
+                  <img [src]="student.image.secure_url" [alt]="student.name" width="100%">
               </div>
             </div>
 
@@ -206,6 +206,14 @@
               <button class="btn-activate float-right" (click)="changeStatus(student._id, '1')" *ngIf="student.status === '0'">Activate</button>
           </div>
 
+        </div>
+
+        <hr>
+        <div class="row">
+          <div class="col-12">
+            <button class="btn-delete float-right" (click)="deleteStudent()">Delete</button>
+            <h6>Delete this Student</h6>
+          </div>
         </div>
       </div>
        

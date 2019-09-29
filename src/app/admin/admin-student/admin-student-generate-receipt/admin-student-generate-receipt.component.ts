@@ -62,7 +62,7 @@ export class AdminStudentGenerateReceiptComponent implements OnInit {
          const branchData = { api : "getBranch", data : { _id : this.student.branch }}
          this.httpPostService.httpPostAuth(branchData).subscribe((val) => {
            this.branch = val; 
-           this.batch = this.branch.batch.find(batch => ((batch.batchName === this.student.batchName) && (batch.batchType === this.student.batch)));
+           this.batch = this.branch.batch.find(batch => ((batch._id === this.student.batchName) && (batch.batchType === this.student.batch)));
            this.loading = false;
          },
          (error) => {
@@ -113,10 +113,10 @@ export class AdminStudentGenerateReceiptComponent implements OnInit {
 
       const data = { api : "addReceipt", data : receipt }
       this.httpPostService.httpPostAuth(data).subscribe((val) => {
-       this.monthsTouched = false;
-       this.amount = 0;
-       this.form.reset({payment_mode: ""});
-       this.loading = false;
+        this.monthsTouched = false;
+        this.amount = 0;
+        this.form.reset({payment_mode: ""});
+        this.cancel();
       },
       (error) => {
        this.loading = false;

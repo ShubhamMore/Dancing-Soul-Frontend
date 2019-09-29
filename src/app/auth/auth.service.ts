@@ -141,6 +141,9 @@ export class AuthService {
   }
 
   removeUser() {
+    if(localStorage.getItem('userData')) {
+      localStorage.removeItem('userData');
+    }
     this.user.next(null);
   }
 

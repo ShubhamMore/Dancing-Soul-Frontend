@@ -17,11 +17,15 @@ export class AdminEditFacultyComponent implements OnInit {
 
   loading: boolean = true;
 
+  imagePreview: string = null;
+  uploadImage: File = null;
+
+  invalidImage : boolean = false;
+
   formError: boolean = false;
 
   imgExt: string[] = ['jpg', 'png'];
 
-  image: string;
   
   constructor(private httpPostService: HttpService,
               private formValidator: FormValidator,
@@ -45,9 +49,6 @@ export class AdminEditFacultyComponent implements OnInit {
       }),
       description: new FormControl(null, {
         validators: [Validators.required]
-      }),
-      image: new FormControl(null, {
-        validators:[this.formValidator.imageValidate.bind(this)]
       })
     });
 
@@ -58,15 +59,13 @@ export class AdminEditFacultyComponent implements OnInit {
         const data = { api : "getFaculty", data : { _id }}
         this.httpPostService.httpPostAuth(data).subscribe((val) => {
           this.faculty = val;
-          this.image = this.faculty.image;
 
           this.form.setValue({
             name: this.faculty.name,
             birthDate: this.faculty.birthDate,
             email: this.faculty.email,
             phone: this.faculty.phone,
-            description: this.faculty.description,
-            image: null
+            description: this.faculty.description
           });
 
           this.loading = false;
@@ -77,25 +76,33 @@ export class AdminEditFacultyComponent implements OnInit {
     ); 
   }
 
-  onImagePicked(event: any) {
-    const file: File = event.target.files[0];
-    if (file) {
-
-      const ext : string = file.name.substring(file.name.lastIndexOf('.') + 1);
-      if(!(this.imgExt.indexOf(ext)!=-1)) {
-        return;
+  onImagePicked(event: Event) {
+    const files = (event.target as HTMLInputElement).files;
+    const imgExt : string[] = ["jpg", "png"];
+    let ext : string = null;
+    for(let i = 0; i < files.length; i++) {
+      ext = files[i].name.substring(files[i].name.lastIndexOf('.') + 1);
+      if(!(imgExt.indexOf(ext)!=-1)) {
+        return this.invalidImage = true;
       }
-
-      let reader = new FileReader();
-
-      reader.onload = (event: any) => {
-        this.image = event.target.result; 
-      }
-
-      reader.readAsDataURL(file);
+    }
+    this.invalidImage = false;
+    for(let i = 0; i < files.length; i++) {
+      this.uploadImage = files[i];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = <string>reader.result;
+      };
+      reader.readAsDataURL(files[i]);
     }
   }
-  
+
+  cancelImage() {
+    this.imagePreview = null;
+    this.uploadImage = null;
+    this.invalidImage = false;
+  }
+
   editFaculty() {
     if(this.form.invalid) {
       this.formError = true;
@@ -104,15 +111,18 @@ export class AdminEditFacultyComponent implements OnInit {
     if(this.form.valid) {
       this.formError = false;
       this.loading = true;
-      const faculty: Faculty = {
-        _id: this.faculty._id, 
-        name: this.form.value.name, 
-        birthDate: this.form.value.birthDate, 
-        description: this.form.value.description, 
-        image: this.image,
-        email: this.form.value.email, 
-        phone: this.form.value.phone, 
-        status: this.faculty.status
+      
+      const faculty = new FormData();
+      faculty.append("_id", this.faculty._id);
+      faculty.append("name", this.form.value.name);
+      faculty.append("birthDate", this.form.value.birthDate);
+      faculty.append("description", this.form.value.description);
+      faculty.append("email", this.form.value.email);
+      faculty.append("phone", this.form.value.phone);
+      faculty.append("status", this.faculty.status);
+
+      if(this.uploadImage) {
+        faculty.append("image", this.uploadImage, "faculty");
       }
 
       this.loading = true;

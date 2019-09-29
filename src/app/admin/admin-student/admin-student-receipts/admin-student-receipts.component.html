@@ -2,6 +2,7 @@
 
   <div class="row mt-2" *ngIf="!loading"> 
     <div class="col-md-10 col-sm-12 mx-auto">
+      <button class="btn-close float-right" (click)="cancel()">X</button>
       <h3>Receipts</h3>
       <hr>
       <div class="row" *ngIf="receipts.length > 0; else empty_receipts">
@@ -27,7 +28,7 @@
                   {{ receipt.paymentMode | uppercase }}
                 </td>
                 <td>
-                  <button type="button" class="btn-delete" (click)="delete(receipt.id)">Delete</button>                
+                  <button type="button" class="btn-delete" (click)="delete(receipt._id)">Delete</button>                
                 </td>
               </tr>
             </tbody>

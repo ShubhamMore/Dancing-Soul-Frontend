@@ -17,6 +17,8 @@ export class AdminShowStudentComponent implements OnInit {
 
   branch : Branch;
 
+  error : string;
+
   batch: BatchModel;
 
   constructor(private httpPostService: HttpService,
@@ -63,6 +65,22 @@ export class AdminShowStudentComponent implements OnInit {
       },
       (error) => {
        this.loading = false;
+      });
+    }
+  }
+
+  deleteStudent() {
+    const password = prompt("Please enter your Password");
+    if(password) {
+      this.loading = true;
+      const data = { api : "deleteFaculty", data : { _id: this.student._id, password }}
+      this.httpPostService.httpPostAuth(data).subscribe((val) => {
+        this.cancel();
+      },
+      (error) => {
+        this.error = error;
+        console.log(error);
+        this.loading = false;     
       });
     }
   }

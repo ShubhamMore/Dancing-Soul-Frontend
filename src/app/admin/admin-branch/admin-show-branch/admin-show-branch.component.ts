@@ -127,8 +127,6 @@ export class AdminShowBranchComponent implements OnInit {
   deleteBranch(_id : string) {
     const password = prompt("Please enter your Password");
     if(password) {
-      console.log(password)
-      console.log(_id)
       this.loading = true;
       const data = { api : "deleteBranch", data : { _id, password }}
       this.httpPostService.httpPostAuth(data).subscribe((val) => {

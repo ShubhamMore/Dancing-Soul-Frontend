@@ -26,7 +26,7 @@ export class AdminStudentReceiptsComponent implements OnInit {
       (params: Params) => {
         this.studentId = params['id'];
         const data = { api : "getReceipts", data : { student : this.studentId }}
-        this.httpPostService.httpPost(data).subscribe((val) => {
+        this.httpPostService.httpPostAuth(data).subscribe((val) => {
          this.receipts = val;
          this.loading = false;
         },
@@ -41,15 +41,9 @@ export class AdminStudentReceiptsComponent implements OnInit {
     if(dltConfirm) {
       this.loading = true;
       const data = { api : "deleteReceipt", data : { _id }}
+      console.log(data)
       this.httpPostService.httpPostAuth(data).subscribe((val) => {
         this.ngOnInit();
-        // const data = { api : "getReceipts", data : { student : this.studentId }}
-        // this.httpPostService.httpPost(data).subscribe((val) => {
-        //   this.receipts = val;
-        //   this.loading = false;
-      //   },
-      //   (error) => {              
-      //   });
       },
       (error) => {
        this.loading = false;

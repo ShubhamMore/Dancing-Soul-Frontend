@@ -4,6 +4,7 @@ import { throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { EnvVar } from '../shared/config';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class HttpService {
 
   constructor(private http: HttpClient,
               private router : Router,
+              private authService : AuthService,
               private route : ActivatedRoute) { }
 
   public httpPost(data: any) : any {
@@ -50,10 +52,10 @@ export class HttpService {
       }),
       catchError(err => {
           let msg = "SOMETHING BAD HAPPENED";
-          console.log(err.error)
           if(err.error) {
             if(err.error.error === "Please authenticate.") {
               console.log(err.error)
+              this.authService.removeUser();
               this.router.navigate(["/login"], {relativeTo: this.route, queryParams: { status: 'false'}});
             }
             else if(typeof(err.error) === "object") {
@@ -63,6 +65,7 @@ export class HttpService {
               msg = err.error;
             }
           }
+          console.log(msg)
           return throwError(msg);
       })
     );
