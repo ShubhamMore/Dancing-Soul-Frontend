@@ -17,8 +17,9 @@ export class AdminGallaryComponent implements OnInit {
   ngOnInit() {
     const data = { api : "getImages", data : {}}    
     this.httpPostService.httpPost(data)
-    .subscribe(responseData => {
-      this.images = responseData.imagePath;
+    .subscribe(response => {
+      console.log(response)
+      this.images = response;
       this.loading = false;
     },
     (error) => {
@@ -29,23 +30,15 @@ export class AdminGallaryComponent implements OnInit {
     this.loading = false;
   }
 
-  deleteImage(index : number) {
+  deleteImage(public_id : string) {
     const changeImgs  = this.images;
-    const image = changeImgs[index].substring(changeImgs[index].lastIndexOf('/') + 1);
-    changeImgs.splice(index, 1);
-
-    const imgData = {
-      image,
-      imagePath : changeImgs
-    };
     
-    const postData = new FormData();
-    postData.append("data", JSON.stringify(imgData));
 
     this.loading = true;
-    const data = { api : "deleteImage", data : imgData}
-    this.httpPostService.httpPostAuth(data)
+    const data = { api : "removeImage", data : {public_id}}
+    this.httpPostService.httpPost(data)
     .subscribe(res => {
+      console.log(res)
       this.ngOnInit();
     },
     (error) => {
