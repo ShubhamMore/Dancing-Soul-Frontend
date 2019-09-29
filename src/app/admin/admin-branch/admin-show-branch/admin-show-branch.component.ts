@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Branch, BatchModel } from '../../../models/branch.model';
 import { HttpService } from '../../../services/httpPost.service';
+import { ImageModel } from '../../../models/image.model';
 
 @Component({
   selector: 'app-admin-show-branch',
@@ -12,9 +13,15 @@ export class AdminShowBranchComponent implements OnInit {
   
   branch: Branch;
 
+  images : ImageModel[] = [];
+
   batches : BatchModel[] = [];
 
   loading : boolean = true;
+
+  _id : string;
+
+  error : string;
 
   week: string[] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -25,14 +32,16 @@ export class AdminShowBranchComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.clear();
     this.route.params
     .subscribe(
       (params:Params) => {
-        const _id = params['id'];
-        const data = { api : "getBranch", data : { _id }}
+        this._id = params['id'];
+        const data = { api : "getBranch", data : { _id: this._id }}
         this.httpPostService.httpPostAuth(data).subscribe((val) => {
           this.branch = val;
           this.batches = this.branch.batch;
+          this.images = this.branch.images;
           this.loading = false;
         },
         (error) => {
@@ -53,7 +62,7 @@ export class AdminShowBranchComponent implements OnInit {
       this.loading = true;
       const data = { api : "changeBranchStatus", data : { _id, status }}
       this.httpPostService.httpPostAuth(data).subscribe((val) => {
-       this.cancel();
+        this.cancel();
       },
       (error) => {
       this.loading = false;     
@@ -61,13 +70,37 @@ export class AdminShowBranchComponent implements OnInit {
     }
   }
   
-  editAddress() {
+  editBranch() {
     this.loading = true;
     this.router.navigate(['edit'], {relativeTo: this.route, skipLocationChange:true});
+  }
+
+  deleteImage(public_id: string) {
+    this.loading = true;
+    this.loading = true;
+    const data = { api : "deleteBranchImage", data : {_id: this._id, public_id}}
+    this.httpPostService.httpPostAuth(data)
+    .subscribe(res => {
+      console.log(res)
+      this.ngOnInit();
+    },
+    (error) => {
+      this.loading = false;
+      console.log(error);
+    });
+  }
+
+  clear() {
+    this.branch = null;
+    this.error = null;
+    this.images = [];
+    this.batches = [];
+    this._id = null;
   }
   
   cancel() {
     this.loading = true;
+    this.clear();
     this.router.navigate(['/admin', 'branch'], {relativeTo: this.route, skipLocationChange:true});
   }
 
@@ -89,5 +122,27 @@ export class AdminShowBranchComponent implements OnInit {
       }
     }
     return false;
+  }
+
+  deleteBranch(_id : string) {
+    const password = prompt("Please enter your Password");
+    if(password) {
+      console.log(password)
+      console.log(_id)
+      this.loading = true;
+      const data = { api : "deleteBranch", data : { _id, password }}
+      this.httpPostService.httpPostAuth(data).subscribe((val) => {
+        this.cancel();
+      },
+      (error) => {
+        this.error = error;
+        console.log(error);
+        this.loading = false;     
+      });
+    }
+  }
+
+  alertDismiss() {
+    this.error = null;
   }
 }

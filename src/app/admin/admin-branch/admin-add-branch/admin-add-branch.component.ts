@@ -14,7 +14,12 @@ export class AdminAddBranchComponent implements OnInit {
   form: FormGroup;
   batchForm: FormGroup;
 
-  loading : boolean = true;
+  loading: boolean = true;
+
+  imagePreview: string[] = [];
+  uploadImages: File[] = [];
+
+  invalidImage : boolean = false;
 
   week : string [] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -28,8 +33,6 @@ export class AdminAddBranchComponent implements OnInit {
 
   weekType: string = "0";
 
-  images: string;
-
   imgExt: string[] = ['jpg', 'png'];
 
   constructor(private httpPostService: HttpService,
@@ -38,8 +41,6 @@ export class AdminAddBranchComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-
-    this.images = "https://img.icons8.com/color/1600/circled-user-male-skin-type-1-2.png";
 
     this.form = new FormGroup({
       city: new FormControl(null, {
@@ -57,7 +58,7 @@ export class AdminAddBranchComponent implements OnInit {
       phone: new FormControl(null, {
         validators:[Validators.required]
       }),
-      descripton: new FormControl(null, {
+      description: new FormControl(null, {
         validators:[Validators.required]
       }),
       image: new FormControl(null, {
@@ -102,25 +103,31 @@ export class AdminAddBranchComponent implements OnInit {
     return false;
   }
 
-  onImagePicked(event: any) {
-    const file: File = event.target.files[0];
-    if (file) {
-
-      const ext : string = file.name.substring(file.name.lastIndexOf('.') + 1);
-      if(!(this.imgExt.indexOf(ext)!=-1)) {
-        return;
-      }
-      
-      const filesAmount = event.target.files.length;
-      for (let i = 0; i < filesAmount; i++) {
-        let reader = new FileReader();
-
-        reader.onload = (event:any) => {
-          this.images = event.target.result; 
-        }
-        reader.readAsDataURL(event.target.files[i]);
+  onImagePicked(event: Event) {
+    const files = (event.target as HTMLInputElement).files;
+    const imgExt : string[] = ["jpg", "png"];
+    let ext : string = null;
+    for(let i = 0; i < files.length; i++) {
+      ext = files[i].name.substring(files[i].name.lastIndexOf('.') + 1);
+      if(!(imgExt.indexOf(ext)!=-1)) {
+        return this.invalidImage = true;
       }
     }
+    this.invalidImage = false;
+    for(let i = 0; i < files.length; i++) {
+      this.uploadImages.push(files[i]);
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview.push(<string>reader.result);
+      };
+      reader.readAsDataURL(files[i]);
+    }
+    this.form.patchValue({image: null});
+  }
+
+  cancelImage(index : number) {
+    this.imagePreview.splice(index, 1);
+    this.uploadImages.splice(index, 1);
   }
 
   addBatch() {
@@ -164,17 +171,21 @@ export class AdminAddBranchComponent implements OnInit {
     if(this.form.valid) {
       this.loading = true;
       this.formError = null;
-      
-      const branch = {
-        city: this.form.value.city, 
-        branch: this.form.value.branch, 
-        address: this.form.value.address, 
-        email: this.form.value.email, 
-        phone: this.form.value.phone, 
-        description: this.form.value.descripton, 
-        images: this.images,
-        batch: this.batches,
-        status: "1"
+
+      const branch = new FormData();
+      branch.append("city", this.form.value.city);
+      branch.append("branch", this.form.value.branch);
+      branch.append("address", this.form.value.address);
+      branch.append("email", this.form.value.email);
+      branch.append("phone", this.form.value.phone);
+      branch.append("description", this.form.value.description);
+      branch.append("batch", JSON.stringify(this.batches));
+      branch.append("status", "1");
+
+      if(this.uploadImages.length > 0) {
+        for(let i = 0; i < this.uploadImages.length; i++) {
+          branch.append("image", this.uploadImages[i], "branch"+i);
+        }
       }
 
       const data = { api : "addBranch", data : branch}
@@ -190,6 +201,9 @@ export class AdminAddBranchComponent implements OnInit {
 
   cancel() {
     this.loading = true;
+    this.imagePreview = [];
+    this.uploadImages = [];
+    this.invalidImage = false;
     this.router.navigate(["/admin", "branch"], {relativeTo: this.route, skipLocationChange:true});    
   }
 

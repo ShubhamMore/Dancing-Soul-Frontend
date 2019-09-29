@@ -60,12 +60,13 @@ export class AdminAddPhotosComponent implements OnInit {
     
     const title = this.form.value.title;
     const postData = new FormData();
+    console.log(this.uploadImages)
     for(let i = 0; i < this.uploadImages.length; i++) {
       postData.append("image", this.uploadImages[i], title+i);
     }
     const data = { api : "addImages", data : postData }
     
-    this.httpPostService.httpPost(data)
+    this.httpPostService.httpPostAuth(data)
     .subscribe(responseData => {
       this.imagePreview = [];
       this.uploadImages = [];

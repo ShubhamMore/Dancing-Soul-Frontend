@@ -18,6 +18,11 @@ export class AdminEditBranchComponent implements OnInit {
 
   batchForm: FormGroup;
 
+  imagePreview: string[] = [];
+  uploadImages: File[] = [];
+
+  invalidImage : boolean = false;
+
   loading : boolean = true;
 
   week : string [] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -98,7 +103,6 @@ export class AdminEditBranchComponent implements OnInit {
         this.httpPostService.httpPostAuth(data).subscribe(
           (val) => {
             this.branchData = val;
-            this.images = this.branchData.images;
             this.batches = this.branchData.batch;
             this.form.patchValue({
               city: this.branchData.city,
@@ -118,25 +122,31 @@ export class AdminEditBranchComponent implements OnInit {
     );
   }
 
-  onImagePicked(event: any) {
-    const file: File = event.target.files[0];
-    if (file) {
-
-      const ext : string = file.name.substring(file.name.lastIndexOf('.') + 1);
-      if(!(this.imgExt.indexOf(ext)!=-1)) {
-        return;
-      }
-
-      const filesAmount = event.target.files.length;
-      for (let i = 0; i < filesAmount; i++) {
-        let reader = new FileReader();
-
-        reader.onload = (event:any) => {
-          this.images = event.target.result; 
-        }
-        reader.readAsDataURL(event.target.files[i]);
+  onImagePicked(event: Event) {
+    const files = (event.target as HTMLInputElement).files;
+    const imgExt : string[] = ["jpg", "png"];
+    let ext : string = null;
+    for(let i = 0; i < files.length; i++) {
+      ext = files[i].name.substring(files[i].name.lastIndexOf('.') + 1);
+      if(!(imgExt.indexOf(ext)!=-1)) {
+        return this.invalidImage = true;
       }
     }
+    this.invalidImage = false;
+    for(let i = 0; i < files.length; i++) {
+      this.uploadImages.push(files[i]);
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview.push(<string>reader.result);
+      };
+      reader.readAsDataURL(files[i]);
+    }
+    this.form.patchValue({image: null});
+  }
+
+  cancelImage(index : number) {
+    this.imagePreview.splice(index, 1);
+    this.uploadImages.splice(index, 1);
   }
 
   addBatch() {
@@ -180,17 +190,21 @@ export class AdminEditBranchComponent implements OnInit {
       this.loading = true;
       this.formError = null;
   
-      const editedBranch : Branch = {
-        _id: this.branchData._id, 
-        city: this.form.value.city, 
-        branch: this.form.value.branch, 
-        address: this.form.value.address, 
-        email: this.form.value.email, 
-        phone: this.form.value.phone, 
-        description: this.form.value.description, 
-        images: this.images,
-        batch: this.batches,
-        status: this.branchData.status
+      const  editedBranch = new FormData();
+      editedBranch.append("_id", this.branchData._id);
+      editedBranch.append("city", this.form.value.city);
+      editedBranch.append("branch", this.form.value.branch);
+      editedBranch.append("address", this.form.value.address);
+      editedBranch.append("email", this.form.value.email);
+      editedBranch.append("phone", this.form.value.phone);
+      editedBranch.append("description", this.form.value.description);
+      editedBranch.append("batch", JSON.stringify(this.batches));
+      editedBranch.append("status", this.branchData.status);
+
+      if(this.uploadImages.length > 0) {
+        for(let i = 0; i < this.uploadImages.length; i++) {
+          editedBranch.append("image", this.uploadImages[i], "branch"+i);
+        }
       }
       
       const data = { api : "editBranch", data : editedBranch }
@@ -207,6 +221,9 @@ export class AdminEditBranchComponent implements OnInit {
 
   cancel() {
     this.loading = true;
+    this.imagePreview = [];
+    this.uploadImages = [];
+    this.invalidImage = false;
     this.router.navigate(["/admin", "branch", this.branchData._id], {relativeTo: this.route, skipLocationChange:true});
   }
 

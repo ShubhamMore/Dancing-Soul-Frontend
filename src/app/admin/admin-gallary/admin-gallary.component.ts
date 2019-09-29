@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../services/httpPost.service';
-import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-admin-gallary',
@@ -31,12 +30,10 @@ export class AdminGallaryComponent implements OnInit {
   }
 
   deleteImage(public_id : string) {
-    const changeImgs  = this.images;
-    
 
     this.loading = true;
     const data = { api : "removeImage", data : {public_id}}
-    this.httpPostService.httpPost(data)
+    this.httpPostService.httpPostAuth(data)
     .subscribe(res => {
       console.log(res)
       this.ngOnInit();

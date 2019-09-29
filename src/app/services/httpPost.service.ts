@@ -50,6 +50,7 @@ export class HttpService {
       }),
       catchError(err => {
           let msg = "SOMETHING BAD HAPPENED";
+          console.log(err.error)
           if(err.error) {
             if(err.error.error === "Please authenticate.") {
               console.log(err.error)
