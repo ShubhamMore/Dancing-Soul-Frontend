@@ -23,7 +23,6 @@ export class AdminDashboardComponent implements OnInit {
     const data = { api : "getUnseenEnquiries", data : { }}
     this.httpPostService.httpPostAuth(data).subscribe((val) => {
       this.enquiries = val.unseenEnquiries;
-      console.log(this.enquiries)
       this.loading = false;
     },
     (error) => {
