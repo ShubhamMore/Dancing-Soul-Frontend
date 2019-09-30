@@ -15,7 +15,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="enquiry" *ngFor="let enquiry of enquiries, let i = index" [routerLink]="enquiry._id" routerLinkActive="active" skipLocationChange>
+          <tr class="enquiry" [ngClass]="{'unseen-enquiry': enquiry.seen == '0'}" *ngFor="let enquiry of enquiries, let i = index" [routerLink]="enquiry._id" routerLinkActive="active" skipLocationChange>
             <td>{{ i+1 }}</td>
             <td>{{ enquiry.name }}</td>
             <td class="email">{{ enquiry.email }}</td>

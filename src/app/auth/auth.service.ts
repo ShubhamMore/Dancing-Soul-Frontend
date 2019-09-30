@@ -40,7 +40,6 @@ export class AuthService {
       .pipe(
         catchError(this.handleError),
         tap(resData => {
-          console.log(resData)
           this.handleAuthentication(
             resData.email,
             resData._id,
@@ -52,7 +51,6 @@ export class AuthService {
       );
   }
 
-  // autoLogin(userData : UserData) {
   loadUser(userData : UserData) {
     
     const loadedUser = new User(
@@ -164,6 +162,7 @@ export class AuthService {
         this.tokenExpirationTimer = null;
       },
       errorMessage => {
+        console.log(errorMessage)
       }
     );
   }

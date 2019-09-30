@@ -26,6 +26,7 @@ export class AdminEnquiryComponent implements OnInit {
      this.loading = false;
     },
     (error) => {
+      this.loading = false;
     });
   }
 

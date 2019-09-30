@@ -27,10 +27,18 @@ export class AdminShowEnquiryComponent implements OnInit {
         
         const data = { api : "getEnquiry", data : { _id }}
         this.httpPostService.httpPostAuth(data).subscribe((val) => {
-         this.enquiry = val;
-         this.loading = false;
+          this.enquiry = val;
+
+          const data = { api : "enquirySeen", data : { _id }}
+          this.httpPostService.httpPostAuth(data).subscribe((val) => {
+            this.loading = false;
+          },
+          (error) => {
+            this.loading = false;
+          });
         },
         (error) => {
+          this.loading = false;
         });
       }
     );

@@ -17,13 +17,11 @@ export class AdminGallaryComponent implements OnInit {
     const data = { api : "getImages", data : {}}    
     this.httpPostService.httpPost(data)
     .subscribe(response => {
-      console.log(response)
       this.images = response;
       this.loading = false;
     },
     (error) => {
       this.loading = false;
-      console.log(error);
     });
     
     this.loading = false;

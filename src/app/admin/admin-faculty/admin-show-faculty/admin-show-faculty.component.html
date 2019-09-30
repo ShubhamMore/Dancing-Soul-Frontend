@@ -6,16 +6,18 @@
         <div class="row">
           <div class="col-12">
             <button class="btn-close float-right" (click)="cancel()">X</button>
+            <h3>Faculty</h3>
           </div>
         </div>
         <hr>
         <div class="row">
-          <div class="col-md-4 col-sm-10 mx-auto">
-            <div class="faculty-name">
-              <h4>{{faculty.name}}</h4>
-            </div>
+          <div class="col-md-4 col-sm-10 mx-auto text-center">
             <div class="faculty-image">
-              <img [src]="faculty.image.secure_url" [alt]="faculty.name" width="100%">
+              <img class="faculty-image" [src]="faculty.image.secure_url" [alt]="faculty.name">
+            </div>
+            
+            <div class="faculty-name">
+              <h4>{{faculty.name | uppercase}}</h4>
             </div>
           </div>
           <div class="col-md-8 col-sm-10 mx-auto">

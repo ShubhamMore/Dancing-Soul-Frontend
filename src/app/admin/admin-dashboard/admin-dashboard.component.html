@@ -1,24 +1,46 @@
 <div class="row">
   <div class="col-12">
     <div class="row">
-      <h3>ADMIN DASHBOARD</h3>
+      <div class="col-12">
+        <p class="float-right">
+          <a class="notification" routerLink="/admin/enquiry" skipLocationChange>
+            <span>
+              <i class="fa fa-bell-o" style="font-size:36px; color:#e67e22"></i>      
+            </span>
+            <span class="badge" *ngIf="enquiries > 0">{{enquiries}}</span>
+          </a>
+        </p>
+        <h3>ADMIN DASHBOARD</h3>
+      </div>
     </div>
     <div class="row">
       <div class="col-md-4 col-sm-10 mx-auto">
         <div class="card m-3 shadow">
-          <div class="card-header">Branches</div>
+          <div class="card-header">
+            <h5>
+              <a routerLink="/admin/branch" skipLocationChange>Branches</a>
+            </h5>
+          </div>
           <div class="card-body">Basic card</div>            
         </div>
       </div>
       <div class="col-md-4 col-sm-10 mx-auto">
         <div class="card m-3 shadow">
-          <div class="card-header">Faculties</div>
+          <div class="card-header">
+            <h5>
+              <a routerLink="/admin/student" skipLocationChange>Students</a>
+            </h5>
+          </div>
           <div class="card-body">Basic card</div>
         </div>
       </div>
       <div class="col-md-4 col-sm-10 mx-auto">
         <div class="card m-3 shadow">
-          <div class="card-header">Students</div>
+          <div class="card-header">
+            <h5>
+              <a routerLink="/admin/faculty" skipLocationChange>Faculties</a>
+            </h5>
+          </div>
           <div class="card-body">Basic card</div>
         </div>
       </div>
