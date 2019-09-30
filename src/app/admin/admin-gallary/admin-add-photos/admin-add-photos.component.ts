@@ -14,6 +14,7 @@ export class AdminAddPhotosComponent implements OnInit {
   imagePreview: string[] = [];
   uploadImages: File[] = [];
   loading: boolean = true;
+  error : string = null;
   invalidImage : boolean = false;
 
   constructor(private httpPostService: HttpService,
@@ -73,7 +74,7 @@ export class AdminAddPhotosComponent implements OnInit {
       this.cancel();
     },
     (error) => {
-      this.loading = false;
+      this.setError(error)
     });
   }
 
@@ -86,4 +87,13 @@ export class AdminAddPhotosComponent implements OnInit {
     this.loading = true;
     this.router.navigate(['/admin', 'gallery'], {relativeTo:this.route, skipLocationChange:true});
   }
+
+  setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

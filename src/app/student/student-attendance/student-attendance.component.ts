@@ -17,6 +17,7 @@ export class StudentAttendanceComponent implements OnInit {
   attendance: Attendance[] = [];
 
   loading : boolean = true;
+  error : string = null;
 
   branch : Branch;
 
@@ -46,11 +47,11 @@ export class StudentAttendanceComponent implements OnInit {
             this.attendance = val;
             this.loading = false;
           },(error) => {
-            this.loading = false;
+            this.setError(error)
           });
         },
         (error) => {
-          this.loading = false;
+          this.setError(error)
         });
       }
     );
@@ -68,4 +69,13 @@ export class StudentAttendanceComponent implements OnInit {
       return "Absent";
     }
   }
+
+	setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

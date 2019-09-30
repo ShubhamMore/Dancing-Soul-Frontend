@@ -14,7 +14,7 @@ export class ResetPasswordComponent implements OnInit {
   form: FormGroup;
 
   loading : boolean = true;
-
+  error : string = null;
   token: string;
   user: string;
 
@@ -53,7 +53,7 @@ export class ResetPasswordComponent implements OnInit {
          }
         },
         (error) => {
-        
+          this.setError(error);
         });
       }
     });
@@ -77,8 +77,17 @@ export class ResetPasswordComponent implements OnInit {
        this.router.navigate(["/login"], {relativeTo: this.roure});
       },
       (error) => {
-       this.loading = false;
+        this.setError(error);
       });
     }
+  }
+
+  setError(err : string) {
+    this.error = err;
+    this.loading = false;
+  }
+
+  clearErr() {
+    this.error = null;
   }
 }

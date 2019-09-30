@@ -11,6 +11,8 @@ export class AdminDashboardComponent implements OnInit {
 
   loading : boolean = true;
 
+  error : string = null;
+
   enquiries : string;
 
   constructor(private httpPostService: HttpService,
@@ -24,8 +26,17 @@ export class AdminDashboardComponent implements OnInit {
       this.loading = false;
     },
     (error) => {
-      this.loading = false;
+      this.setError(error);
     });
   }
+	
+	setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 
 }

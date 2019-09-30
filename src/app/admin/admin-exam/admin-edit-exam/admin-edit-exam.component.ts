@@ -1,4 +1,4 @@
- import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { FormValidator } from '../../../validators/form.validator';
@@ -16,6 +16,8 @@ export class AdminEditExamComponent implements OnInit {
   id:string;
 
   loading : boolean = true;
+
+  error : string = null;
 
   imgExt: string[] = ['jpg', 'png'];
   
@@ -53,6 +55,7 @@ export class AdminEditExamComponent implements OnInit {
           this.loading = false;
         },
         (error) => {
+          this.setError(error)
         });
       }
     );
@@ -76,7 +79,7 @@ export class AdminEditExamComponent implements OnInit {
        this.cancel();
       },
       (error) => {
-      this.loading = false;   
+        this.setError(error)  
       });
     }
   }
@@ -86,4 +89,13 @@ export class AdminEditExamComponent implements OnInit {
 
     this.router.navigate(['/admin', 'exams', this.exam._id], {relativeTo: this.route, skipLocationChange:true});
   }
+  
+	setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

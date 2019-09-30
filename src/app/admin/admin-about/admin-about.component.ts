@@ -11,7 +11,8 @@ export class AdminAboutComponent implements OnInit {
   about: AboutModel;
 
   loading: boolean = true;
-
+  error : string = null;
+	
   constructor(private httpPostService: HttpService) { }
 
   ngOnInit() {
@@ -21,6 +22,16 @@ export class AdminAboutComponent implements OnInit {
       this.loading = false;
     },
     (error) => {
+      this.setError(error)
     });
   }
+
+	setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

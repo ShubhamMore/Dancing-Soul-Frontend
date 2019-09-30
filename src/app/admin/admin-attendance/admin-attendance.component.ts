@@ -17,7 +17,9 @@ export class AdminAttendanceComponent implements OnInit {
 
   form : FormGroup;
 
-  loading: boolean = true;  
+  loading: boolean = true;
+
+  error : string = null;
 
   allStudents : StudentModel[] = [];
   students : StudentModel[] = [];
@@ -71,11 +73,11 @@ export class AdminAttendanceComponent implements OnInit {
          this.loading = false;
        },
        (error) => {
-        this.loading = false;
-       });
-     }
-    },
+        this.setError(error)
+      });
+    }},
     (error) => {
+      this.setError(error)
     });
   }
 
@@ -161,7 +163,7 @@ export class AdminAttendanceComponent implements OnInit {
         this.absent = [];
         this.present = [];
       },(error) => {
-        this.loading = false;
+        this.setError(error)    
       });
     }
   }
@@ -184,4 +186,13 @@ export class AdminAttendanceComponent implements OnInit {
       }
     }
   }
+	
+	setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

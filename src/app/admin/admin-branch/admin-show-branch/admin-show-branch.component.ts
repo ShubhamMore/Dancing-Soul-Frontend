@@ -21,7 +21,7 @@ export class AdminShowBranchComponent implements OnInit {
 
   _id : string;
 
-  error : string;
+  error : string = null;
 
   week: string[] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -45,6 +45,7 @@ export class AdminShowBranchComponent implements OnInit {
           this.loading = false;
         },
         (error) => {
+          this.setError(error)    
         });
       }
     );
@@ -65,7 +66,7 @@ export class AdminShowBranchComponent implements OnInit {
         this.cancel();
       },
       (error) => {
-      this.loading = false;     
+        this.setError(error)            
       });
     }
   }
@@ -84,7 +85,7 @@ export class AdminShowBranchComponent implements OnInit {
       this.ngOnInit();
     },
     (error) => {
-      this.loading = false;
+      this.setError(error)          
     });
   }
 
@@ -131,8 +132,7 @@ export class AdminShowBranchComponent implements OnInit {
         this.cancel();
       },
       (error) => {
-        this.error = error;
-        this.loading = false;     
+        this.setError(error)    
       });
     }
   }
@@ -140,4 +140,13 @@ export class AdminShowBranchComponent implements OnInit {
   alertDismiss() {
     this.error = null;
   }
+
+	setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

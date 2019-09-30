@@ -15,9 +15,9 @@ export class AdminShowStudentComponent implements OnInit {
 
   loading : boolean = true;
 
-  branch : Branch;
+  error : string = null;
 
-  error : string;
+  branch : Branch;
 
   batch: BatchModel;
 
@@ -41,9 +41,11 @@ export class AdminShowStudentComponent implements OnInit {
            this.loading = false;
          },
          (error) => {
+           this.setError(error)
          });
         },
         (error) => {
+          this.setError(error)
         });
         }
       );
@@ -64,7 +66,7 @@ export class AdminShowStudentComponent implements OnInit {
        this.cancel();
       },
       (error) => {
-       this.loading = false;
+        this.setError(error)
       });
     }
   }
@@ -78,8 +80,7 @@ export class AdminShowStudentComponent implements OnInit {
         this.cancel();
       },
       (error) => {
-        this.error = error;
-        this.loading = false;     
+        this.setError(error)
       });
     }
   }
@@ -88,4 +89,13 @@ export class AdminShowStudentComponent implements OnInit {
     this.loading = true;
     this.router.navigate(['/admin', 'student'], {relativeTo: this.route, skipLocationChange:true});
   }
+
+  setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

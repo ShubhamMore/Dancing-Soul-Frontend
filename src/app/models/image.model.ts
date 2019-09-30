@@ -1,4 +1,3 @@
-
 export class ImageModel {
     public _id : string;
     public image_name: string;

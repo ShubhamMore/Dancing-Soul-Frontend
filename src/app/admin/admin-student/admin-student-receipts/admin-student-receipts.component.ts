@@ -14,6 +14,8 @@ export class AdminStudentReceiptsComponent implements OnInit {
 
   loading: boolean = true;
 
+  error : string = null;
+
   studentId : string;
 
   constructor(private httpPostService: HttpService,
@@ -31,6 +33,7 @@ export class AdminStudentReceiptsComponent implements OnInit {
          this.loading = false;
         },
         (error) => {
+          this.setError(error)
         });
       }
     );
@@ -45,7 +48,7 @@ export class AdminStudentReceiptsComponent implements OnInit {
         this.ngOnInit();
       },
       (error) => {
-       this.loading = false;
+        this.setError(error)
       });
     }
   }
@@ -54,4 +57,13 @@ export class AdminStudentReceiptsComponent implements OnInit {
     this.loading = true;
     this.router.navigate(['/admin', 'student'], {relativeTo: this.route, skipLocationChange:true});
   }
+
+  setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

@@ -17,6 +17,8 @@ export class AdminEditFacultyComponent implements OnInit {
 
   loading: boolean = true;
 
+  error : string = null;
+
   imagePreview: string = null;
   uploadImage: File = null;
 
@@ -71,6 +73,7 @@ export class AdminEditFacultyComponent implements OnInit {
           this.loading = false;
         },
         (error) => {
+          this.setError(error)
         });
       }
     ); 
@@ -133,7 +136,7 @@ export class AdminEditFacultyComponent implements OnInit {
         this.cancel();
       },
       (error) => {
-        this.loading = false;
+        this.setError(error)
       });
     }
   }
@@ -142,4 +145,13 @@ export class AdminEditFacultyComponent implements OnInit {
     this.loading = true;
     this.router.navigate(['/admin', 'faculty', this.faculty._id], {relativeTo:this.route, skipLocationChange:true});
   }
+
+  setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

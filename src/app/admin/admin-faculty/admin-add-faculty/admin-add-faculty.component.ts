@@ -15,6 +15,8 @@ export class AdminAddFacultyComponent implements OnInit {
 
   loading: boolean = true;
 
+  error : string = null;
+
   formError: boolean = false;
 
   imagePreview: string = null;
@@ -79,7 +81,7 @@ export class AdminAddFacultyComponent implements OnInit {
         this.form.reset();
         this.cancel();
       },(error) => {
-        this.loading = false;
+        this.setError(error)
       });
     }
   }
@@ -115,5 +117,14 @@ export class AdminAddFacultyComponent implements OnInit {
     this.loading = true;
     this.router.navigate(['/admin', 'faculty'], {relativeTo:this.route, skipLocationChange:true});
   }
+
+  setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 
 }

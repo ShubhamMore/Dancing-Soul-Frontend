@@ -17,6 +17,8 @@ export class AdminEditHistoryComponent implements OnInit {
 
   loading: boolean = true;
 
+  error : string = null;
+
   constructor(private httpPostService: HttpService,
     private router: Router,
     private route: ActivatedRoute) { }
@@ -35,6 +37,7 @@ export class AdminEditHistoryComponent implements OnInit {
      this.loading = false;
     },
     (error) => {
+      this.setError(error)
     });
   }
 
@@ -53,7 +56,7 @@ export class AdminEditHistoryComponent implements OnInit {
        this.cancel();
       },
       (error) => {
-       this.loading = true;
+        this.setError(error)
       });
 
     }
@@ -63,5 +66,14 @@ export class AdminEditHistoryComponent implements OnInit {
     this.loading = true;
     this.router.navigate(['/admin', 'about', 'history'], {relativeTo: this.route, skipLocationChange:true});
   }
+
+	setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 
 }

@@ -14,7 +14,7 @@ export class AdminShowFacultyComponent implements OnInit {
 
   loading: boolean = true;
 
-  error : string;
+  error : string = null;
 
   constructor(private httpPostService: HttpService,
               private route: ActivatedRoute,
@@ -31,6 +31,7 @@ export class AdminShowFacultyComponent implements OnInit {
           this.loading = false;
         },
         (error) => {
+          this.setError(error)
         });
       }
     );
@@ -53,7 +54,7 @@ export class AdminShowFacultyComponent implements OnInit {
        this.cancel();
       },
       (error) => {
-        this.loading = false;
+        this.setError(error)
       });
     }
   }
@@ -67,8 +68,7 @@ export class AdminShowFacultyComponent implements OnInit {
         this.cancel();
       },
       (error) => {
-        this.error = error;
-        this.loading = false;     
+        this.setError(error)     
       });
     }
   }
@@ -77,4 +77,13 @@ export class AdminShowFacultyComponent implements OnInit {
     this.loading = true;
     this.router.navigate(['/admin', 'faculty'], {relativeTo: this.route, skipLocationChange:true});
   }
+
+  setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 } 

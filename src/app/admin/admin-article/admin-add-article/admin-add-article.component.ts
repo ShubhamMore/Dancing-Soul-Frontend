@@ -16,6 +16,8 @@ export class AdminAddArticleComponent implements OnInit {
   loading : boolean = true;
 
   formError: boolean = false;
+  
+  error : string = null;
 
   imgExt: string[] = ['jpg', 'png'];
 
@@ -53,7 +55,7 @@ export class AdminAddArticleComponent implements OnInit {
        this.cancel();
       },
       (error) => {
-      this.loading = false;
+        this.setError(error)
       });
     }
   }
@@ -62,4 +64,13 @@ export class AdminAddArticleComponent implements OnInit {
     this.loading = true;
     this.router.navigate(["/admin", "article"], {relativeTo: this.route, skipLocationChange:true});        
   }
+
+	setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

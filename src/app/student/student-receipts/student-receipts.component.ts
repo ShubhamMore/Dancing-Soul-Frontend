@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { HttpService } from '../../services/httpPost.service';
 import { ReceiptModule } from '../../models/receipt.model';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-student-receipts',
@@ -13,7 +14,7 @@ export class StudentReceiptsComponent implements OnInit {
   receipts: ReceiptModule[] = [];
 
   loading: boolean = true;
-
+  error : string = null;
   studentId : string;
 
   constructor(private httpPostService: HttpService,
@@ -31,8 +32,18 @@ export class StudentReceiptsComponent implements OnInit {
          this.loading = false;
         },
         (error) => {
+          this.setError(error);
         });
       }
     );
   }
+	
+	setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

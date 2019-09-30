@@ -14,6 +14,7 @@ export class AdminArticleComponent implements OnInit {
 
   loading: boolean = true;
 
+  error : string = null;
   constructor(private httpPostService: HttpService,
               private router:Router,
               private route:ActivatedRoute) { }
@@ -46,4 +47,13 @@ export class AdminArticleComponent implements OnInit {
     this.loading = true;
     this.router.navigate(['new'], {relativeTo:this.route, skipLocationChange:true});
   }
+
+	setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

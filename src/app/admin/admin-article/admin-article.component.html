@@ -1,44 +1,56 @@
   <img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
 
-  <div class="row mt-2" *ngIf="!loading">
-    <div class="col-12 mx-auto">
-      <div class="row">
-        <div class="col-6">
-          <h3>Articles</h3>
+  <div class="row" *ngIf="!loading">
+    <div class="col-12">
+      <div class="row mt-2" *ngIf="!!error">
+        <div class="col-10 mx-auto">
+        <div class="alert alert-danger alert-dismissible">
+          <button type="button" class="close" (click)="clearError()" data-dismiss="alert">&times;</button>
+          <span>{{error}}</span>
         </div>
-        <div class="col-6">
-          <button class="new-btn float-right" (click)="onNewArticle()">Create New Article</button>
         </div>
       </div>
-      <hr>
-      <div class="table-responsive" *ngIf="articles.length > 0; else empty_articles">
-        <table class="table table-sm">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="article" *ngFor="let article of articles, let i = index">
-            <td>{{ i+1 }}</td>
-            <td>
-              <a class="title" [routerLink]="article._id" skipLocationChange>{{article.title}} </a>
-            </td>
-            <td>
-              <button type="button" [routerLink]="[article._id, 'edit']" class="btn-edit float-left" skipLocationChange>Edit</button>
-            </td>
-            <td>
-              <button type="button" class="btn-delete" (click)="deleteArticle(article._id)">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="row mt-2">
+        <div class="col-12 mx-auto">
+          <div class="row">
+            <div class="col-6">
+              <h3>Articles</h3>
+            </div>
+            <div class="col-6">
+              <button class="new-btn float-right" (click)="onNewArticle()">Create New Article</button>
+            </div>
+          </div>
+          <hr>
+          <div class="table-responsive" *ngIf="articles.length > 0; else empty_articles">
+            <table class="table table-sm">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="article" *ngFor="let article of articles, let i = index">
+                <td>{{ i+1 }}</td>
+                <td>
+                  <a class="title" [routerLink]="article._id" skipLocationChange>{{article.title}} </a>
+                </td>
+                <td>
+                  <button type="button" [routerLink]="[article._id, 'edit']" class="btn-edit float-left" skipLocationChange>Edit</button>
+                </td>
+                <td>
+                  <button type="button" class="btn-delete" (click)="deleteArticle(article._id)">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+        <ng-template #empty_articles>
+          <h5 class="pl-3">No Articles Available..</h5>
+        </ng-template>
+        </div>
       </div>
-    <ng-template #empty_articles>
-      <h5 class="pl-3">No Articles Available..</h5>
-    </ng-template>
+    </div>
   </div>
-</div>

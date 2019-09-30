@@ -15,6 +15,8 @@ export class AdminAddExamComponent implements OnInit {
 
   loading : boolean = true;
 
+  error : string = null;
+
   formError: boolean = false;
 
   constructor(private httpPostService: HttpService,
@@ -51,7 +53,7 @@ export class AdminAddExamComponent implements OnInit {
        this.cancel();
       },
       (error) => {
-      this.loading = false;
+        this.setError(error)
       });
     }
   }
@@ -60,4 +62,13 @@ export class AdminAddExamComponent implements OnInit {
     this.loading = true;
     this.router.navigate(["/admin", "exams"], {relativeTo: this.route, skipLocationChange:true});        
   }
+  
+	setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

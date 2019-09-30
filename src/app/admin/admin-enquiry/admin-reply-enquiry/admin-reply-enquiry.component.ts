@@ -15,6 +15,8 @@ export class AdminReplyEnquiryComponent implements OnInit {
 
   loading : boolean = true;
 
+  error : string = null;
+
   enquiry: Enquiry;
 
   constructor(private httpPostService: HttpService,
@@ -44,6 +46,7 @@ export class AdminReplyEnquiryComponent implements OnInit {
          this.loading = false;
         },
         (error) => {
+          this.setError(error)
         });
       }
     );
@@ -59,7 +62,7 @@ export class AdminReplyEnquiryComponent implements OnInit {
        this.loading = false;
       },
       (error) => {
-      this.loading = false;    
+        this.setError(error)  
       });
     }
   }
@@ -68,4 +71,13 @@ export class AdminReplyEnquiryComponent implements OnInit {
     this.loading = true;
     this.router.navigate(['/admin', 'enquiry', this.id], {relativeTo:this.route, skipLocationChange: true});
   }
+
+	setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

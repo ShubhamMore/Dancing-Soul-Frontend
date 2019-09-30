@@ -18,6 +18,7 @@ export class StudentShowReceiptComponent implements OnInit {
   batch : BatchModel;
 
   loading : boolean = true;
+  error : string = null;
 
   constructor(private httpPostService: HttpService,
               private route: ActivatedRoute,
@@ -41,19 +42,28 @@ export class StudentShowReceiptComponent implements OnInit {
               this.loading = false;
             },
             (error) => {
-              this.loading = false;
+              this.setError(error);
             });
           },
           (error) => {
-            this.loading = false;
+            this.setError(error);            
           });
         },
         (error) => {
-          this.loading = false;
+          this.setError(error);          
         });
       }
     );
   }
+
+  setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 
   print() {
     window.print();

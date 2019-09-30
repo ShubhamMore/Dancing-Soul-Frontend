@@ -25,6 +25,8 @@ export class AdminEditBranchComponent implements OnInit {
 
   loading : boolean = true;
 
+  error : string = null;
+
   week : string [] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
   weekDays: number[] = [];
@@ -113,6 +115,7 @@ export class AdminEditBranchComponent implements OnInit {
             this.loading = false;
           },
           (error) => {
+            this.setError(error)
           }
         );
       }
@@ -210,7 +213,7 @@ export class AdminEditBranchComponent implements OnInit {
        this.cancel();
       },
       (error) => {
-       this.loading = false;
+        this.setError(error)
       });
       
     }
@@ -246,5 +249,14 @@ export class AdminEditBranchComponent implements OnInit {
     }
     return false;
   }
+	
+	setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 
 }

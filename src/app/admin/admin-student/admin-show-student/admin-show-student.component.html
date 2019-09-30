@@ -1,8 +1,20 @@
   <img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
 
-  <div class="row mt-2" *ngIf="!loading">
+  <div class="row" *ngIf="!loading">
+    <div class="col-12">
+      <div class="row mt-2" *ngIf="!!error">
+        <div class="col-10 mx-auto">
+        <div class="alert alert-danger alert-dismissible">
+          <button type="button" class="close" (click)="clearError()" data-dismiss="alert">&times;</button>
+          <span>{{error}}</span>
+        </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+      </div>
+    </div>
     <div class="col-10 mx-auto">
-
+    
       <div class="student">
         <div class="row">
           <div class="col-12">
@@ -10,13 +22,13 @@
             <h3>Student Details</h3>
           </div>
         </div>
-
+    
         <hr>
-
+    
         <div class="row">
-
+    
           <div class="col-md-4 col-sm-10 mx-auto text-center">
-
+    
             <div>
               <div class="student-image">
                 <img class="student-image" [src]="student.image.secure_url" [alt]="student.name" width="100%">
@@ -26,12 +38,12 @@
                 <h4>{{student.name | uppercase}}</h4>
               </div>
             </div>
-
-
+    
+    
           </div>
-
+    
           <div class="col-md-8 col-sm-10 mx-auto">
-
+    
             <div class="table-responsive">
               <table class="table table-sm">
                 <tbody>
@@ -128,7 +140,7 @@
               </table>
             </div>
           </div> 
-
+    
         </div>
         <hr>
         <div class="row">
@@ -192,22 +204,22 @@
             </div>
           </div>
         </div>
-
+    
         <hr>
-
+    
         <div class="row">
-
+    
           <div class="col-6">
             <button routerLink="edit" class="btn-edit" skipLocationChange>Edit</button>
           </div>
-
+    
           <div class="col-6">
               <button class="btn-deactivate float-right" (click)="changeStatus(student._id, '0')" *ngIf="student.status === '1'">Deactivate</button>
               <button class="btn-activate float-right" (click)="changeStatus(student._id, '1')" *ngIf="student.status === '0'">Activate</button>
           </div>
-
+    
         </div>
-
+    
         <hr>
         <div class="row">
           <div class="col-12">
@@ -218,4 +230,4 @@
       </div>
        
     </div>
-</div>
+  </div>

@@ -14,7 +14,7 @@ export class ChangePasswordComponent implements OnInit {
   form: FormGroup;
 
   loading : boolean = true;
-
+  error : string = null;
   user: string;
 
   constructor(private httpPostService: HttpService,
@@ -60,8 +60,17 @@ export class ChangePasswordComponent implements OnInit {
         this.form.reset();
       },
       (error) => {
-        this.loading = false;
+        this.setError(error);
       });
     }
   }
+
+  setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

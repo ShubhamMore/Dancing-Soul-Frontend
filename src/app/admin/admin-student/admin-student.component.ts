@@ -15,6 +15,8 @@ export class AdminStudentComponent implements OnInit {
 
   loading: boolean = true;
 
+  error : string = null;
+
   allStudents : StudentModel[] = [];
   students : StudentModel[] = [];
 
@@ -42,6 +44,7 @@ export class AdminStudentComponent implements OnInit {
          this.loading = false;
         },
         (error) => {
+          this.setError(error)
         });
       }
       else {
@@ -49,6 +52,7 @@ export class AdminStudentComponent implements OnInit {
      }
     },
     (error) => {
+      this.setError(error)
     });
   }
 
@@ -100,4 +104,13 @@ export class AdminStudentComponent implements OnInit {
     }
     this.loading = false;
   }
+
+  setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 } 

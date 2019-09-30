@@ -18,6 +18,8 @@ export class AdminEditStudentComponent implements OnInit {
 
   loading : boolean = true;
 
+  error : string = null;
+
   formError: boolean = false;
 
   imagePreview: string = null;
@@ -99,7 +101,7 @@ export class AdminEditStudentComponent implements OnInit {
           this.httpPostService.httpPostAuth(data).subscribe((val) => {
             this.student = val;
             this.branch = this.branches.find((branch) => branch._id === this.student.branch);
-            // this.image = this.student.image;
+
             this.form.patchValue({
               name : this.student.name,
               birthDate : this.student.birthDate,
@@ -121,10 +123,12 @@ export class AdminEditStudentComponent implements OnInit {
             this.branchChanged();
             this.loading = false;
           },
-          (error) => {          
+          (error) => { 
+            this.setError(error)         
           });
         },
         (error) => {
+          this.setError(error)
         });
       }
     );
@@ -212,7 +216,7 @@ export class AdminEditStudentComponent implements OnInit {
        this.cancel();
       },
       (error) => {
-       this.loading = false;
+        this.setError(error)
       });
     }
     
@@ -222,4 +226,13 @@ export class AdminEditStudentComponent implements OnInit {
     this.loading = true;
     this.router.navigate(['/admin', 'student', this.student._id],{relativeTo:this.route, skipLocationChange:true});
   }
+
+  setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

@@ -17,6 +17,8 @@ export class AdminEditAimComponent implements OnInit {
 
   loading: boolean = true;
 
+  error : string = null;
+	
   constructor(private httpPostService: HttpService,
               private router: Router,
               private route: ActivatedRoute) { }
@@ -63,4 +65,13 @@ export class AdminEditAimComponent implements OnInit {
     this.loading = true;
     this.router.navigate(['/admin', 'about', 'aim'], {relativeTo: this.route, skipLocationChange:true});
   }
+  
+	setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

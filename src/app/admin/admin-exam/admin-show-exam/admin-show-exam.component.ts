@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { HttpService } from '../../../services/httpPost.service';
+import { ExamModule } from '../../../models/exams.model';
 
 @Component({
   selector: 'app-admin-show-exam',
@@ -8,9 +9,11 @@ import { HttpService } from '../../../services/httpPost.service';
   styleUrls: ['./admin-show-exam.component.css']
 })
 export class AdminShowExamComponent implements OnInit {
-  exam: any;
+  exam: ExamModule;
 
   loading : boolean = true;
+
+  error : string = null;
 
   constructor(private httpPostService: HttpService,
               private router: Router,
@@ -27,6 +30,7 @@ export class AdminShowExamComponent implements OnInit {
           this.loading = false;
         },
         (error) => {
+          this.setError(error)
         });
         
       }
@@ -48,7 +52,7 @@ export class AdminShowExamComponent implements OnInit {
         this.cancel();
       },
       (error) => {
-      this.loading = false;
+        this.setError(error)
       });
     }
   }
@@ -57,4 +61,13 @@ export class AdminShowExamComponent implements OnInit {
     this.loading = true;
     this.router.navigate(['/admin', 'exams'], {relativeTo: this.route, skipLocationChange:true});
   }
+  
+	setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

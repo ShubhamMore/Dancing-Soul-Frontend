@@ -16,6 +16,8 @@ export class AdminAddBranchComponent implements OnInit {
 
   loading: boolean = true;
 
+  error : string = null;
+
   imagePreview: string[] = [];
   uploadImages: File[] = [];
 
@@ -191,7 +193,7 @@ export class AdminAddBranchComponent implements OnInit {
        this.cancel();
       },
       (error) => {
-       this.loading = false;
+        this.setError(error)
       });
     }
   }
@@ -216,5 +218,14 @@ export class AdminAddBranchComponent implements OnInit {
     }
     this.weekDays.splice(this.weekDays.findIndex((day) => day === index), 1);
   }
+	
+	setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 
 }

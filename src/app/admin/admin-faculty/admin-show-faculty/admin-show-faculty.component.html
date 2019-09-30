@@ -1,89 +1,101 @@
   <img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
 
-  <div class="row mt-2" *ngIf="!loading">
-    <div class="col-10 mx-auto">
-      <div class="faculty" *ngIf="faculty !== null">
-        <div class="row">
-          <div class="col-12">
-            <button class="btn-close float-right" (click)="cancel()">X</button>
-            <h3>Faculty</h3>
-          </div>
+  <div class="row" *ngIf="!loading">
+    <div class="col-12">
+      <div class="row mt-2" *ngIf="!!error">
+        <div class="col-10 mx-auto">
+        <div class="alert alert-danger alert-dismissible">
+          <button type="button" class="close" (click)="clearError()" data-dismiss="alert">&times;</button>
+          <span>{{error}}</span>
         </div>
-        <hr>
-        <div class="row">
-          <div class="col-md-4 col-sm-10 mx-auto text-center">
-            <div class="faculty-image">
-              <img class="faculty-image" [src]="faculty.image.secure_url" [alt]="faculty.name">
-            </div>
-            
-            <div class="faculty-name">
-              <h4>{{faculty.name | uppercase}}</h4>
-            </div>
-          </div>
-          <div class="col-md-8 col-sm-10 mx-auto">
-            <div class="table-responsive">
-              <table class="table table-sm">
-                <tbody>
-                  <tr>
-                    <td>
-                      <strong>Birth Date : </strong>
-                    </td>
-                    <td>
-                      <p>{{faculty.birthDate}}</p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <strong>Description : </strong>
-                    </td>
-                    <td>
-                      <p>{{faculty.description}}</p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <strong><em>E</em>-mail : </strong>
-                    </td>
-                    <td>
-                      <p><a href="mailto:{{faculty.email}}">{{faculty.email}}</a></p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <strong>Phone : </strong>
-                    </td>
-                    <td>
-                      <p>+91 {{faculty.phone}}</p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <strong>Status : </strong>
-                    </td>
-                    <td>
-                      <p>{{ faculty.status == "1" ? "ACTIVATED" : "DEACTIVATED" }}</p>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
         </div>
-        <hr>
-        <div class="row">
-          <div class="col-6">
-            <button routerLink="edit" class="btn-edit" skipLocationChange>Edit</button>
-          </div>
-          <div class="col-6">
-            <button class=" btn-deactivate float-right pointer" (click)="changeStatus(faculty._id, '0')" *ngIf="faculty.status === '1'">Deactivate</button>
-            <button class="btn-activate float-right pointer" (click)="changeStatus(faculty._id, '1')" *ngIf="faculty.status === '0'">Activate</button>
-          </div>
-        </div>
-        <hr>
-        <div class="row">
-          <div class="col-12">
-            <button class="btn-delete float-right" (click)="deleteFaculty()">Delete</button>
-            <h6>Delete this Faculty</h6>
+      </div>
+      <div class="row mt-2">
+        <div class="col-10 mx-auto">
+          <div class="faculty" *ngIf="faculty !== null">
+            <div class="row">
+              <div class="col-12">
+                <button class="btn-close float-right" (click)="cancel()">X</button>
+                <h3>Faculty</h3>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-md-4 col-sm-10 mx-auto text-center">
+                <div class="faculty-image">
+                  <img class="faculty-image" [src]="faculty.image.secure_url" [alt]="faculty.name">
+                </div>
+                
+                <div class="faculty-name">
+                  <h4>{{faculty.name | uppercase}}</h4>
+                </div>
+              </div>
+              <div class="col-md-8 col-sm-10 mx-auto">
+                <div class="table-responsive">
+                  <table class="table table-sm">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <strong>Birth Date : </strong>
+                        </td>
+                        <td>
+                          <p>{{faculty.birthDate}}</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <strong>Description : </strong>
+                        </td>
+                        <td>
+                          <p>{{faculty.description}}</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <strong><em>E</em>-mail : </strong>
+                        </td>
+                        <td>
+                          <p><a href="mailto:{{faculty.email}}">{{faculty.email}}</a></p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <strong>Phone : </strong>
+                        </td>
+                        <td>
+                          <p>+91 {{faculty.phone}}</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <strong>Status : </strong>
+                        </td>
+                        <td>
+                          <p>{{ faculty.status == "1" ? "ACTIVATED" : "DEACTIVATED" }}</p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-6">
+                <button routerLink="edit" class="btn-edit" skipLocationChange>Edit</button>
+              </div>
+              <div class="col-6">
+                <button class=" btn-deactivate float-right pointer" (click)="changeStatus(faculty._id, '0')" *ngIf="faculty.status === '1'">Deactivate</button>
+                <button class="btn-activate float-right pointer" (click)="changeStatus(faculty._id, '1')" *ngIf="faculty.status === '0'">Activate</button>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-12">
+                <button class="btn-delete float-right" (click)="deleteFaculty()">Delete</button>
+                <h6>Delete this Faculty</h6>
+              </div>
+            </div>
           </div>
         </div>
       </div>

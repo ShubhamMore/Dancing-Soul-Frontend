@@ -27,6 +27,8 @@ export class FacultyComponent implements OnInit {
   present : string[] = [];
   absent : string[] = [];
 
+  error : string = null;
+
   noStudent = 'Please Select Branch';
 
   branches: Branch[] = [];
@@ -71,11 +73,12 @@ export class FacultyComponent implements OnInit {
          this.loading = false;
        },
        (error) => {
-        this.loading = false;
+        this.setError(error)
        });
      }
     },
     (error) => {
+      this.setError(error)
     });
   }
 
@@ -150,7 +153,7 @@ export class FacultyComponent implements OnInit {
       this.httpPostService.httpPostAuth(data).subscribe((val) => {
         this.loading = false;
       },(error) => {
-        this.loading = false;
+        this.setError(error)
       });
     }
   }
@@ -173,4 +176,13 @@ export class FacultyComponent implements OnInit {
       }
     }
   }
+
+	setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }
