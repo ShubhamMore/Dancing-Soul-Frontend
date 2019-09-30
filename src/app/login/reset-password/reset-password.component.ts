@@ -43,7 +43,6 @@ export class ResetPasswordComponent implements OnInit {
         this.token = params.token;
         localStorage.setItem("access_token", this.token);
         const data = { api : "validateToken", data : { token : this.token }}
-        console.log(data)
         this.httpPostService.httpPost(data).subscribe((val) => {
           
           if(val.valid_token) {
@@ -73,7 +72,6 @@ export class ResetPasswordComponent implements OnInit {
       }
 
       const data = { api : "resetPassword", data : resetPassword }
-      console.log(data)
       this.httpPostService.httpPost(data).subscribe((val) => {
        this.form.reset();
        this.router.navigate(["/login"], {relativeTo: this.roure});

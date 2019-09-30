@@ -40,6 +40,7 @@ export class AuthService {
       .pipe(
         catchError(this.handleError),
         tap(resData => {
+          console.log(resData)
           this.handleAuthentication(
             resData.email,
             resData._id,
@@ -88,11 +89,9 @@ export class AuthService {
   autoLogin() {
 
     let token = "";
-    console.log(localStorage.getItem('userData'))
     if(localStorage.getItem('userData')) {
       token = 'Bearer '+JSON.parse(localStorage.getItem('userData'))._token;
     }
-    console.log(token)
     const headers = new HttpHeaders().set('Authorization', token);
     return this.http.post(EnvVar.url+"autoLogin", {}, { headers })
     .pipe(
@@ -120,12 +119,10 @@ export class AuthService {
     if(localStorage.getItem('userData')) {
       token = 'Bearer '+JSON.parse(localStorage.getItem('userData'))._token;
     }
-    console.log(token)
     const headers = new HttpHeaders().set('Authorization', token);
     this.http.post(EnvVar.url+"logout", {}, { headers })
     .subscribe(
       resData => {
-        console.log(resData)
         this.user.next(null);
         this.router.navigate(['/login']);
         localStorage.removeItem('userData');

@@ -13,6 +13,7 @@
               <th>Amount</th>
               <th>Month</th>
               <th>Payment Mode</th>
+              <th>Show</th>
             </tr>
             <tr class="receipt" *ngFor="let receipt of receipts; let i = index" routerLinkActive="active">
               <td>{{ i+1 }}</td>
@@ -24,6 +25,9 @@
               </td>
               <td>
                 {{ receipt.paymentMode | uppercase }}
+              </td>
+              <td>
+                <a class="btn-edit" routerLink="/student/receipt/{{receipt._id}}" queryParamsHandling="preserve">Show</a>
               </td>
             </tr>
           </tbody>

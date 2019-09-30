@@ -59,26 +59,22 @@ export class LoginComponent implements OnInit {
       
       authObs.subscribe(
         resData => {
-          console.log(resData);
-
-            if(resData.userType === "admin") {
-              this.router.navigate(['/admin'], {relativeTo: this.route});
-            }
-            else if(resData.userType === "student") {
-
-              this.router.navigate(['/student'], {relativeTo: this.route, queryParams: {id : resData._id}});
-            }
-            else if(resData.userType === "faculty") {
-              this.router.navigate(['/faculty'], {relativeTo: this.route});
-              // this.router.navigate(['/faculty'], {relativeTo: this.route, queryParams: {id : user._id}});
-            }
+          
+          if(resData.userType === "admin") {
+            this.router.navigate(['/admin'], {relativeTo: this.route});
+          }
+          else if(resData.userType === "student") {
+            this.router.navigate(['/student'], {relativeTo: this.route, queryParams: {id : resData._id}});
+          }
+          else if(resData.userType === "faculty") {
+            this.router.navigate(['/faculty'], {relativeTo: this.route});
+          }
           else {
             this.router.navigate(['/login'], {relativeTo: this.route, queryParams: { auth: 'false'}, skipLocationChange: true});
           }
           this.form.reset();
         },
         errorMessage => {
-          console.log(errorMessage);
           this.error = errorMessage;
           this.loginAuth = false;
         }

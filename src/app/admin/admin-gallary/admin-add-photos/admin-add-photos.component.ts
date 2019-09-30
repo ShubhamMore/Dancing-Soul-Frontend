@@ -60,7 +60,6 @@ export class AdminAddPhotosComponent implements OnInit {
     
     const title = this.form.value.title;
     const postData = new FormData();
-    console.log(this.uploadImages)
     for(let i = 0; i < this.uploadImages.length; i++) {
       postData.append("image", this.uploadImages[i], title+i);
     }
@@ -75,7 +74,6 @@ export class AdminAddPhotosComponent implements OnInit {
     },
     (error) => {
       this.loading = false;
-      console.log(error);
     });
   }
 

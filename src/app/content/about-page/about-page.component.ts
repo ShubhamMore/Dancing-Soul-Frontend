@@ -41,4 +41,12 @@ export class AboutPageComponent implements OnInit {
   ngOnDestroy(){
     document.body.classList.remove('bg-about');
   }
+
+  limitFacultyDescription(desc: string) {
+    const descLen = desc.length;
+    if(descLen > 120) {
+      return desc.substr(0,118) + "..";
+    }
+    return desc;
+  }
 }

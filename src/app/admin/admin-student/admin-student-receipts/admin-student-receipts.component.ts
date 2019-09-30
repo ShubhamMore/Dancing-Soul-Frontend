@@ -41,7 +41,6 @@ export class AdminStudentReceiptsComponent implements OnInit {
     if(dltConfirm) {
       this.loading = true;
       const data = { api : "deleteReceipt", data : { _id }}
-      console.log(data)
       this.httpPostService.httpPostAuth(data).subscribe((val) => {
         this.ngOnInit();
       },

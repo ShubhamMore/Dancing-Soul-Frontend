@@ -73,13 +73,12 @@ export class AdminShowStudentComponent implements OnInit {
     const password = prompt("Please enter your Password");
     if(password) {
       this.loading = true;
-      const data = { api : "deleteFaculty", data : { _id: this.student._id, password }}
+      const data = { api : "deleteStudent", data : { _id: this.student._id, password }}
       this.httpPostService.httpPostAuth(data).subscribe((val) => {
         this.cancel();
       },
       (error) => {
         this.error = error;
-        console.log(error);
         this.loading = false;     
       });
     }

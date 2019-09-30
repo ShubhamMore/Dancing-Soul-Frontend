@@ -5,14 +5,14 @@
     <div class="student">
       <div class="row">
         <div class="col-12">
-          <h3>Profile</h3>
+          <h2>
+            <strong>Profile</strong>
+          </h2>
         </div>
       </div>
 
-      <hr>
-
       <div class="row">
-
+        
         <div class="col-md-4 col-sm-10 mx-auto">
 
           <div>
@@ -21,7 +21,7 @@
             </div>
 
             <div class="student-image">
-                <img [src]="student.image" [alt]="student.name" width="100%">
+                <img [src]="student.image.secure_url" [alt]="student.name" width="100%">
             </div>
           </div>
 
@@ -111,7 +111,7 @@
                     <strong><em>E-</em>mail : </strong>
                   </td>
                   <td>
-                    <p>{{student.email}}</p>
+                    <p><a href="mailto:{{student.email}}">{{student.email}}</a></p>
                   </td>
                 </tr>
                 <tr>
@@ -149,7 +149,7 @@
                       <strong>Batch : </strong>
                     </td>
                     <td>
-                      <p>{{student.batch}}</p>
+                      <p>{{student.batch == "0" ? "Week Day Batch" : "Weel End Batch"}}</p>
                     </td>
                   </tr>
                   <tr>
@@ -181,7 +181,7 @@
                       <strong>Status : </strong>
                     </td>
                     <td>
-                      <p>{{student.status | uppercase}}</p>
+                      <p>{{ student.status == "1" ? "ACTIVATED" : "DEACTIVATED" }}</p>
                     </td>
                   </tr>
                 </tbody>

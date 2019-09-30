@@ -206,7 +206,6 @@ export class AdminAddBranchComponent implements OnInit {
 
   scheduleChange() {
     this.weekType = this.batchForm.value.week;
-    console.log(this.weekType)
   }
   
   weekDay(event: any, index:number) {

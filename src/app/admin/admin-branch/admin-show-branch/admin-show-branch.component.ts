@@ -81,12 +81,10 @@ export class AdminShowBranchComponent implements OnInit {
     const data = { api : "deleteBranchImage", data : {_id: this._id, public_id}}
     this.httpPostService.httpPostAuth(data)
     .subscribe(res => {
-      console.log(res)
       this.ngOnInit();
     },
     (error) => {
       this.loading = false;
-      console.log(error);
     });
   }
 
@@ -134,7 +132,6 @@ export class AdminShowBranchComponent implements OnInit {
       },
       (error) => {
         this.error = error;
-        console.log(error);
         this.loading = false;     
       });
     }

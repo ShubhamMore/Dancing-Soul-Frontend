@@ -146,7 +146,6 @@ export class FacultyComponent implements OnInit {
         present : this.present,
         absent : this.absent
       }
-      console.log(attendance);
       const data = { api : "saveAttendance", data : attendance}
       this.httpPostService.httpPostAuth(data).subscribe((val) => {
         this.loading = false;

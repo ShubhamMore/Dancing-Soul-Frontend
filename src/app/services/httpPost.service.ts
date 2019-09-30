@@ -39,11 +39,9 @@ export class HttpService {
 
   public httpPostAuth(data: any) : any {
     let token = "";
-    console.log(localStorage.getItem('userData'))
     if(localStorage.getItem('userData')) {
       token = 'Bearer '+JSON.parse(localStorage.getItem('userData'))._token;
     }
-    console.log(token)
     const headers = new HttpHeaders().set('Authorization', token);
     return this.http.post(EnvVar.url+data.api, data.data, { headers })
     .pipe(
@@ -51,22 +49,21 @@ export class HttpService {
           return response;
       }),
       catchError(err => {
-          let msg = "SOMETHING BAD HAPPENED";
-          if(err.error) {
-            if(err.error.error === "Please authenticate.") {
-              console.log(err.error)
-              this.authService.removeUser();
-              this.router.navigate(["/login"], {relativeTo: this.route, queryParams: { status: 'false'}});
-            }
-            else if(typeof(err.error) === "object") {
-              msg = "Can't Reach Server.., Please Try Again";
-            }
-            else{
-              msg = err.error;
-            }
+        console.log(err)
+        let msg = "SOMETHING BAD HAPPENED";
+        if(err.error) {
+          if(err.error.error === "Please authenticate.") {
+            this.authService.removeUser();
+            this.router.navigate(["/login"], {relativeTo: this.route, queryParams: { status: 'false'}});
           }
-          console.log(msg)
-          return throwError(msg);
+          else if(typeof(err.error) === "object") {
+            msg = "Can't Reach Server.., Please Try Again";
+          }
+          else{
+            msg = err.error;
+          }
+        }
+        return throwError(msg);
       })
     );
   }

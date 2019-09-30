@@ -163,7 +163,7 @@ const appRoutes : Routes = [
       {path:'dashboard', component: StudentDashboardComponent, canActivate: [ StudentAuthGuard ]},
       {path:'attendance', component: StudentAttendanceComponent, canActivate: [ StudentAuthGuard ]},
       {path:'receipts', component: StudentReceiptsComponent, canActivate: [ StudentAuthGuard ]},
-      {path:'receipt', component: StudentShowReceiptComponent, canActivate: [ StudentAuthGuard ]},
+      {path:'receipt/:id', component: StudentShowReceiptComponent, canActivate: [ StudentAuthGuard ]},
     ]},
     
     {path:'faculty', component: FacultyComponent, canActivate: [ FacultuAuthGuard ]},

@@ -92,7 +92,6 @@ export class AdminAttendanceComponent implements OnInit {
     if(id !== '') {
       this.branch = id;
       this.batches = this.branches.find((branch) => (branch._id === id)).batch;
-      console.log(this.batches)
       const weekType = this.weekType === "0" ? "Week Day" : "Week End";
       this.noStudent = 'Please Select ' + weekType + ' Batch';
     }
@@ -148,7 +147,7 @@ export class AdminAttendanceComponent implements OnInit {
         present : this.present,
         absent : this.absent
       }
-      console.log(attendance);
+      
       const data = { api : "saveAttendance", data : attendance}
       this.httpPostService.httpPostAuth(data).subscribe((val) => {
         this.loading = false;
