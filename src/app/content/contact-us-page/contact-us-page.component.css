@@ -13,6 +13,9 @@
     flex: 1;
     height: 50vh;
 }
+agm-map {
+    height: 45vh;
+}
 .details-box{
     padding: 10px;
     flex: 1;
