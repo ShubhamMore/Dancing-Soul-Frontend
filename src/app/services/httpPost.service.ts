@@ -12,11 +12,11 @@ import { AuthService } from '../auth/auth.service';
 export class HttpService {
 
   constructor(private http: HttpClient,
-              private router : Router,
-              private authService : AuthService,
-              private route : ActivatedRoute) { }
+              private router: Router,
+              private authService: AuthService,
+              private route: ActivatedRoute) { }
 
-  public httpPost(data: any) : any {
+  public httpPost(data: any): any {
     return this.http.post(EnvVar.url+data.api, data.data)
     .pipe(
       map((response: any)=>{
@@ -37,7 +37,7 @@ export class HttpService {
     );
   }
 
-  public httpPostAuth(data: any) : any {
+  public httpPostAuth(data: any): any {
     let token = "";
     if(localStorage.getItem('userData')) {
       token = 'Bearer '+JSON.parse(localStorage.getItem('userData'))._token;

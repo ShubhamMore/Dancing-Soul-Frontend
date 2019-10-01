@@ -13,8 +13,8 @@ export class ChangePasswordComponent implements OnInit {
 
   form: FormGroup;
 
-  loading : boolean = true;
-  error : string = null;
+  loading: boolean = true;
+  error: string = null;
   user: string;
 
   constructor(private httpPostService: HttpService,
@@ -25,14 +25,14 @@ export class ChangePasswordComponent implements OnInit {
   ngOnInit() {
 
     this.form = new FormGroup({
-      currentPassword : new FormControl(null, {
-        validators:[Validators.required]
+      currentPassword: new FormControl(null, {
+        validators: [Validators.required]
       }),
-      newPassword : new FormControl(null, {
-        validators:[Validators.required]
+      newPassword: new FormControl(null, {
+        validators: [Validators.required]
       }),
-      confirmPassword : new FormControl(null, {
-        validators:[Validators.required]
+      confirmPassword: new FormControl(null, {
+        validators: [Validators.required]
       })
     });
 
@@ -48,10 +48,10 @@ export class ChangePasswordComponent implements OnInit {
 
       const data = {
         api: "changePassword",
-        data :{
+        data : {
           email: JSON.parse(localStorage.getItem('userData')).email,
-          password : this.form.value.currentPassword,
-          newPassword : this.form.value.newPassword
+          password: this.form.value.currentPassword,
+          newPassword: this.form.value.newPassword
         }
       }
 
@@ -65,7 +65,7 @@ export class ChangePasswordComponent implements OnInit {
     }
   }
 
-  setError(err : string) {
+  setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}

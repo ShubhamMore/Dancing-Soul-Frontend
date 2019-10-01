@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
       },
       errorMessage => {
         this.loading = false;
-        this.router.navigate(["/login"], {relativeTo: this.route, queryParams: { auth: 'false'}});
+        this.router.navigate(["/login"], {relativeTo: this.route, queryParams: { auth: 'false' }});
       }
     );
   }

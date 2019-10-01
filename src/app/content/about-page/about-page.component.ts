@@ -3,7 +3,7 @@ import { AboutModel } from '../../models/about.model';
 import { HttpService } from '../../services/httpPost.service';
 import { Faculty } from '../../models/faculty.model';
 
-declare var $:any;
+declare var $: any;
 
 @Component({
   selector: 'app-about-page',
@@ -12,19 +12,19 @@ declare var $:any;
 }) 
 export class AboutPageComponent implements OnInit {
 
-  faculties : Faculty[] = [];
+  faculties: Faculty[] = [];
   
   aboutUs: AboutModel;
 
-  loading : boolean = true;
+  loading: boolean = true;
 
   constructor(private httpPostService: HttpService) { }
 
   ngOnInit() {
-    const aboutData = { api : "getAbout", data : {}}
+    const aboutData = { api: "getAbout", data: {}}
     this.httpPostService.httpPost(aboutData).subscribe((val) => {
       this.aboutUs = val[0];
-      const facultyData = { api : "getActivateFaculties", data : {}}
+      const facultyData = { api: "getActivateFaculties", data: {}}
       this.httpPostService.httpPost(facultyData).subscribe((val: any) => {
         this.faculties = val;
         console.log(this.faculties);

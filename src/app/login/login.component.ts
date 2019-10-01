@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
 
   form: FormGroup;
   loginAuth: boolean = true;
-  loading : boolean = true;
+  loading: boolean = true;
   error: string = null;
 
   constructor(private authService: AuthService,
@@ -32,11 +32,11 @@ export class LoginComponent implements OnInit {
     });
 
     this.form = new FormGroup({
-      username : new FormControl(null, {
-        validators:[Validators.required]
+      username: new FormControl(null, {
+        validators: [ Validators.required ]
       }),
-      password : new FormControl(null, {
-        validators:[Validators.required]
+      password: new FormControl(null, {
+        validators: [ Validators.required ]
       })
     });
 
@@ -61,16 +61,16 @@ export class LoginComponent implements OnInit {
         resData => {
           
           if(resData.userType === "admin") {
-            this.router.navigate(['/admin'], {relativeTo: this.route});
+            this.router.navigate(['/admin'], { relativeTo: this.route });
           }
           else if(resData.userType === "student") {
-            this.router.navigate(['/student'], {relativeTo: this.route, queryParams: {id : resData._id}});
+            this.router.navigate(['/student'], { relativeTo: this.route, queryParams: { id: resData._id } });
           }
           else if(resData.userType === "faculty") {
-            this.router.navigate(['/faculty'], {relativeTo: this.route});
+            this.router.navigate(['/faculty'], { relativeTo: this.route });
           }
           else {
-            this.router.navigate(['/login'], {relativeTo: this.route, queryParams: { auth: 'false'}, skipLocationChange: true});
+            this.router.navigate(['/login'], { relativeTo: this.route, queryParams: { auth: 'false' }, skipLocationChange: true });
           }
           this.form.reset();
         },

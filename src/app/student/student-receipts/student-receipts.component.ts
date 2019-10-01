@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { HttpService } from '../../services/httpPost.service';
 import { ReceiptModule } from '../../models/receipt.model';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-student-receipts',
@@ -14,8 +13,8 @@ export class StudentReceiptsComponent implements OnInit {
   receipts: ReceiptModule[] = [];
 
   loading: boolean = true;
-  error : string = null;
-  studentId : string;
+  error: string = null;
+  studentId: string;
 
   constructor(private httpPostService: HttpService,
               private route: ActivatedRoute,
@@ -26,7 +25,7 @@ export class StudentReceiptsComponent implements OnInit {
     subscribe(
       (params: Params) => {
         this.studentId = params['id'];
-        const data = { api : "getReceipts", data : { student : this.studentId }}
+        const data = { api: "getReceipts", data: { student: this.studentId }}
         this.httpPostService.httpPostAuth(data).subscribe((val) => {
          this.receipts = val;
          this.loading = false;
@@ -38,7 +37,7 @@ export class StudentReceiptsComponent implements OnInit {
     );
   }
 	
-	setError(err : string) {
+	setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}

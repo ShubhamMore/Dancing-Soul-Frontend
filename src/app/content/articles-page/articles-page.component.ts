@@ -11,12 +11,12 @@ export class ArticlesPageComponent implements OnInit {
 
   articles: Article[] = [];
 
-  loading : boolean = true;
+  loading: boolean = true;
 
   constructor(private httpPostService: HttpService) { }
 
   ngOnInit() {
-    const data = { api : "getArticles", data : {}}
+    const data = { api: "getArticles", data: {}}
     this.httpPostService.httpPost(data).subscribe((val) => {
      this.articles = val;
      this.loading = false;

@@ -13,11 +13,11 @@ export class StudentDashboardComponent implements OnInit {
 
   student: StudentModel;
 
-  loading : boolean = true;
+  loading: boolean = true;
 
-  error : string = null;
+  error: string = null;
 
-  branch : Branch;
+  branch: Branch;
 
   batch: BatchModel;
 
@@ -30,10 +30,10 @@ export class StudentDashboardComponent implements OnInit {
     subscribe(
       (params: Params) => {
         const _id = params["id"];
-        const studentData = { api : "getStudent", data : { _id }}
+        const studentData = { api: "getStudent", data: { _id }}
         this.httpPostService.httpPostAuth(studentData).subscribe((val) => {
          this.student = val;
-         const branchData = { api : "getBranch", data : { _id : this.student.branch }}
+         const branchData = { api: "getBranch", data: { _id: this.student.branch }}
          this.httpPostService.httpPostAuth(branchData).subscribe((val) => {
            this.branch = val;
            this.batch = this.branch.batch.find(batch => (batch._id === this.student.batchName && batch.batchType === this.student.batch));
@@ -50,7 +50,7 @@ export class StudentDashboardComponent implements OnInit {
     );
   }
 
-	setError(err : string) {
+	setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}

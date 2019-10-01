@@ -9,7 +9,7 @@ import { AuthService } from './auth.service';
 export class AdminAuthGuard implements CanActivate, CanActivateChild {
   constructor(private authService: AuthService, private router: Router) {}
  
-  canActivate(route: ActivatedRouteSnapshot, router: RouterStateSnapshot):| boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> {
+  canActivate(route: ActivatedRouteSnapshot, router: RouterStateSnapshot): | boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> {
     return this.authService.user.pipe(
       take(1),
       map(user => {
@@ -27,7 +27,7 @@ export class AdminAuthGuard implements CanActivate, CanActivateChild {
     );
   }
 
-  canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) :| boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> {
+  canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): | boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> {
     return this.canActivate(route, state);
   }
 }
@@ -36,7 +36,7 @@ export class AdminAuthGuard implements CanActivate, CanActivateChild {
 export class StudentAuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
-  canActivate(route: ActivatedRouteSnapshot, router: RouterStateSnapshot):| boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> {
+  canActivate(route: ActivatedRouteSnapshot, router: RouterStateSnapshot): | boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> {
     return this.authService.user.pipe(
       take(1),
       map(user => {
@@ -54,7 +54,7 @@ export class StudentAuthGuard implements CanActivate {
     );
   }
 
-  canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) :| boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> {
+  canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): | boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> {
     return this.canActivate(route, state);
   }
 }
@@ -63,7 +63,7 @@ export class StudentAuthGuard implements CanActivate {
 export class FacultuAuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
-  canActivate(route: ActivatedRouteSnapshot, router: RouterStateSnapshot):| boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> {
+  canActivate(route: ActivatedRouteSnapshot, router: RouterStateSnapshot): | boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> {
     return this.authService.user.pipe(
       take(1),
       map(user => {
@@ -81,7 +81,7 @@ export class FacultuAuthGuard implements CanActivate {
     );
   }
 
-  canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) :| boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> {
+  canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): | boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> {
     return this.canActivate(route, state);
   }
 }
@@ -90,7 +90,7 @@ export class FacultuAuthGuard implements CanActivate {
 export class ChangePassswordGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
-  canActivate(route: ActivatedRouteSnapshot, router: RouterStateSnapshot):| boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> {
+  canActivate(route: ActivatedRouteSnapshot, router: RouterStateSnapshot): | boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> {
     return this.authService.user.pipe(
       take(1),
       map(user => {
@@ -108,7 +108,7 @@ export class ChangePassswordGuard implements CanActivate {
     );
   }
 
-  canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) :| boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> {
+  canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): | boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> {
     return this.canActivate(route, state);
   }
 }
@@ -117,7 +117,7 @@ export class ChangePassswordGuard implements CanActivate {
 export class LoginAuthGuard implements CanActivate {
     constructor(private authService: AuthService, private router: Router) {}
   
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):| boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> {
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): | boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> {
       return this.authService.user.pipe(
         take(1),
         map(user => {
@@ -132,7 +132,7 @@ export class LoginAuthGuard implements CanActivate {
             return this.router.createUrlTree(['/admin/dashboard']);
           }
           else if(user.userType === "student") {
-            return this.router.createUrlTree(['/student'], { queryParams: {id : user._id} });
+            return this.router.createUrlTree(['/student'], { queryParams: {id: user._id} });
           }
           else if(user.userType === "faculty") {
             return this.router.createUrlTree(['/faculty']);
@@ -149,7 +149,8 @@ export class LoginAuthGuard implements CanActivate {
       );
     }
 
-    canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) :| boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> {
+    canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): | boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> {
       return this.canActivate(route, state);
     }
   }
+  

@@ -12,13 +12,13 @@ import { StudentModel } from '../../../models/student.model';
 })
 export class StudentShowReceiptComponent implements OnInit {
 
-  receipt : ReceiptModule;
-  branch : Branch;
+  receipt: ReceiptModule;
+  branch: Branch;
   student: StudentModel;
-  batch : BatchModel;
+  batch: BatchModel;
 
-  loading : boolean = true;
-  error : string = null;
+  loading: boolean = true;
+  error: string = null;
 
   constructor(private httpPostService: HttpService,
               private route: ActivatedRoute,
@@ -29,13 +29,13 @@ export class StudentShowReceiptComponent implements OnInit {
     subscribe(
       (params: Params) => {
         const _id = params['id'];
-        const data = { api : "getReceipt", data : { _id }}
+        const data = { api: "getReceipt", data: { _id }}
         this.httpPostService.httpPostAuth(data).subscribe((val) => {
           this.receipt = val;
-          const data = { api : "getStudent", data : { _id : this.receipt.student }}
+          const data = { api: "getStudent", data: { _id: this.receipt.student }}
           this.httpPostService.httpPostAuth(data).subscribe((val) => {
             this.student = val;
-            const data = { api : "getBranch", data : { _id : this.student.branch }}
+            const data = { api: "getBranch", data: { _id: this.student.branch }}
             this.httpPostService.httpPostAuth(data).subscribe((val) => {
               this.branch = val;
               this.batch = this.branch.batch.find(batch => (batch._id === this.student.batchName && batch.batchType === this.student.batch));
@@ -56,7 +56,7 @@ export class StudentShowReceiptComponent implements OnInit {
     );
   }
 
-  setError(err : string) {
+  setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}

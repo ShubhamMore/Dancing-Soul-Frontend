@@ -7,7 +7,5 @@ export class ExamModule {
         this._id = _id;
         this.title = title;
         this.body = body;
-
     }
-
 }

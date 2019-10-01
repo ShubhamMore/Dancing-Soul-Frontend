@@ -9,9 +9,9 @@ import { HttpService } from '../../services/httpPost.service';
 export class ContactUsPageComponent implements OnInit {
 
   contactDetailsJson = {
-    "phone":"9876543210",
-    "email":"dancingSoul@gmail.com",
-    "address":"kasarvadavali,Thane"
+    "phone": "9876543210",
+    "email": "dancingSoul@gmail.com",
+    "address": "kasarvadavali,Thane"
   };
 
   yourName = "your name";
@@ -99,7 +99,7 @@ export class ContactUsPageComponent implements OnInit {
       seen: "0"
     }
 
-    const data = { api : "sendEnquiry", data : sendEmailData}
+    const data = { api: "sendEnquiry", data: sendEmailData}
     this.httpPostService.httpPost(data).subscribe((val) => {
       console.log(val)
     },

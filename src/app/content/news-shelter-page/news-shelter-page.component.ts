@@ -9,12 +9,12 @@ import { HttpService } from '../../services/httpPost.service';
 })
 export class NewsShelterPageComponent implements OnInit {
 
-  newsList : NewsModule[] = [];
-  loading : boolean = true;
+  newsList: NewsModule[] = [];
+  loading: boolean = true;
   constructor(private httpPostService: HttpService) { }
 
   ngOnInit() {
-    const newsData = { api : "getAllNews", data : {}}
+    const newsData = { api: "getAllNews", data: {}}
     this.httpPostService.httpPost(newsData).subscribe((val: any) => {
       this.newsList = val;
       this.loading = false;

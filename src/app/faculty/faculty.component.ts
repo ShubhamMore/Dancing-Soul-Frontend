@@ -15,29 +15,29 @@ export class FacultyComponent implements OnInit {
 
   weekType = "0";
 
-  form : FormGroup;
+  form: FormGroup;
 
   loading: boolean = true;  
 
-  allStudents : StudentModel[] = [];
-  students : StudentModel[] = [];
+  allStudents: StudentModel[] = [];
+  students: StudentModel[] = [];
 
-  attendance : string[] = [] ;
+  attendance: string[] = [] ;
 
-  present : string[] = [];
-  absent : string[] = [];
+  present: string[] = [];
+  absent: string[] = [];
 
-  error : string = null;
+  error: string = null;
 
   noStudent = 'Please Select Branch';
 
   branches: Branch[] = [];
-  branch : string = '';
+  branch: string = '';
 
   batches: BatchModel[] = [];
   batch: string = '';
 
-  date : string;
+  date: string;
 
   constructor(private httpPostService: HttpService,
               private router: Router,
@@ -49,25 +49,25 @@ export class FacultyComponent implements OnInit {
     this.date = date.getFullYear()+"-"+this.zeroAppend(date.getMonth() + 1)+"-"+this.zeroAppend(date.getDate());
 
     this.form = new FormGroup({
-      branch : new FormControl("", {
+      branch: new FormControl("", {
         validators: [Validators.required]
       }),
-      batch : new FormControl("", {
+      batch: new FormControl("", {
         validators: [Validators.required]
       }),
-      weekType : new FormControl(this.weekType, {
+      weekType: new FormControl(this.weekType, {
         validators: [Validators.required]
       }),
-      date : new FormControl(this.date, {
+      date: new FormControl(this.date, {
         validators: [Validators.required]
       })
     });
 
-    const branchData = { api : "getBranches", data : { }}
+    const branchData = { api: "getBranches", data: { }}
     this.httpPostService.httpPostAuth(branchData).subscribe((val) => {
      this.branches = val;
      if(this.branches.length > 0) {
-       const studentData = { api : "getStudents", data : { }}
+       const studentData = { api: "getStudents", data: { }}
        this.httpPostService.httpPostAuth(studentData).subscribe((val) => {
          this.allStudents = val;
          this.loading = false;
@@ -82,7 +82,7 @@ export class FacultyComponent implements OnInit {
     });
   }
 
-  zeroAppend(n : number) : string {
+  zeroAppend(n: number): string {
     if(n < 10) {
       return ("0" + n).toString();
     }
@@ -117,7 +117,7 @@ export class FacultyComponent implements OnInit {
 
   searchStudent() {
     this.loading = true;
-    const students : StudentModel[] = [];
+    const students: StudentModel[] = [];
     this.allStudents.forEach((student) => {
       if((student.branch === this.branch) && (student.batchName === this.batch) && (student.batch === this.weekType)) {
         students.push(student);
@@ -142,14 +142,14 @@ export class FacultyComponent implements OnInit {
     if(this.form.valid) {
       this.loading = true;
       const attendance = {
-        date : this.form.value.date,
-        branch : this.form.value.branch,
-        batch : this.form.value.batch,
-        batchType : this.form.value.weekType,
-        present : this.present,
-        absent : this.absent
+        date: this.form.value.date,
+        branch: this.form.value.branch,
+        batch: this.form.value.batch,
+        batchType: this.form.value.weekType,
+        present: this.present,
+        absent: this.absent
       }
-      const data = { api : "saveAttendance", data : attendance}
+      const data = { api: "saveAttendance", data: attendance}
       this.httpPostService.httpPostAuth(data).subscribe((val) => {
         this.loading = false;
       },(error) => {
@@ -158,9 +158,9 @@ export class FacultyComponent implements OnInit {
     }
   }
 
-  markAttendance(event: any, student : string, index: number) {
+  markAttendance(event: any, student: string, index: number) {
     if(event.target.checked) {
-      const i : number = this.absent.findIndex((absentStudent) => absentStudent === student);
+      const i: number = this.absent.findIndex((absentStudent) => absentStudent === student);
       if(i !== undefined) {
         this.absent.splice(i, 1);
         this.present.push(student);
@@ -168,7 +168,7 @@ export class FacultyComponent implements OnInit {
       }
     }
     else {
-      const i : number = this.present.findIndex((presentStudent) => presentStudent === student);
+      const i: number = this.present.findIndex((presentStudent) => presentStudent === student);
       if(i !== undefined) {
         this.present.splice(i, 1);
         this.absent.push(student);
@@ -177,7 +177,7 @@ export class FacultyComponent implements OnInit {
     }
   }
 
-	setError(err : string) {
+	setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}
