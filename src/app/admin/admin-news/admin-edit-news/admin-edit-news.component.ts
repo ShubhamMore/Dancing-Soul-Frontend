@@ -17,6 +17,8 @@ export class AdminEditNewsComponent implements OnInit {
 
   loading : boolean = true;
 
+  error : string = null;
+
   imgExt: string[] = ['jpg', 'png'];
   
   form: FormGroup;
@@ -53,6 +55,7 @@ export class AdminEditNewsComponent implements OnInit {
           this.loading = false;
         },
         (error) => {
+          this.setError(error)
         });
       }
     );
@@ -76,7 +79,7 @@ export class AdminEditNewsComponent implements OnInit {
        this.cancel();
       },
       (error) => {
-      this.loading = false;   
+        this.setError(error) 
       });
     }
   }
@@ -85,4 +88,13 @@ export class AdminEditNewsComponent implements OnInit {
     this.loading = true;
     this.router.navigate(['/admin', 'news', this.news._id],{relativeTo: this.route, skipLocationChange:true});
   }
+
+  setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

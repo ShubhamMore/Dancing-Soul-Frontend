@@ -1,46 +1,58 @@
   <img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
 
-  <div class="row mt-2" *ngIf="!loading">
-    <div class="col-12 mx-auto">
-      <div class="row">
-        <div class="col-6">
-          <h3>Faculty</h3>
+  <div class="row" *ngIf="!loading">
+    <div class="col-12">
+      <div class="row mt-2" *ngIf="!!error">
+        <div class="col-10 mx-auto">
+        <div class="alert alert-danger alert-dismissible">
+          <button type="button" class="close" (click)="clearError()" data-dismiss="alert">&times;</button>
+          <span>{{error}}</span>
         </div>
-        <div class="col-6">
-          <button class="new-btn float-right" (click)="onNewFaculty()">Add New Faculty</button>
         </div>
       </div>
-      <hr>
-
-      <div class="table-responsive" *ngIf="faculties.length > 0; else empty_faculties">
-        <table class="table table-sm table-hover">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Faculty Name</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="faculty" *ngFor="let faculty of faculties, let i = index" routerLinkActive="active">
-              <td>{{ i+1 }}</td>
-              <td>
-                <img class="faculty-image" [src]="faculty.image" [alt]="faculty.name" width="40px">              
-                &nbsp;
-                <a [routerLink]="faculty._id" class="faculty-name" skipLocationChange>
-                  {{ faculty.name }}
-                </a>
-              </td>
-              <td>
-                {{ faculty.status == "1" ? "ACTIVATED" : "DEACTIVATED" }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="row mt-2">
+        <div class="col-12 mx-auto">
+          <div class="row">
+            <div class="col-6">
+              <h3>Faculty</h3>
+            </div>
+            <div class="col-6">
+              <button class="new-btn float-right" (click)="onNewFaculty()">Add New Faculty</button>
+            </div>
+          </div>
+          <hr>
+    
+          <div class="table-responsive" *ngIf="faculties.length > 0; else empty_faculties">
+            <table class="table table-sm table-hover">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Faculty Name</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="faculty" *ngFor="let faculty of faculties, let i = index" routerLinkActive="active">
+                  <td>{{ i+1 }}</td>
+                  <td>
+                    <img class="faculty-image" [src]="faculty.image.secure_url" [alt]="faculty.name" width="30px" height="30px">              
+                    &nbsp;
+                    <a [routerLink]="faculty._id" class="faculty-name" skipLocationChange>
+                      {{ faculty.name }}
+                    </a>
+                  </td>
+                  <td>
+                    {{ faculty.status == "1" ? "ACTIVATED" : "DEACTIVATED" }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <ng-template #empty_faculties>
+            <h5 class="pl-3">No Faculties Available..</h5>
+          </ng-template>
+    
+        </div>
       </div>
-      <ng-template #empty_faculties>
-        <h5 class="pl-3">No Faculties Available..</h5>
-      </ng-template>
-
     </div>
   </div>

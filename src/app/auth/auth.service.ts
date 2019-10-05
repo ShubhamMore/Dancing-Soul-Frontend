@@ -10,7 +10,7 @@ import { EnvVar } from '../shared/config';
 export interface AuthResponseData {
   _id: string;
   email: string;
-  userType : string;
+  userType: string;
   token: string;
   expiresIn: string;
 }
@@ -18,7 +18,7 @@ export interface AuthResponseData {
 export class UserData {
     email: string;
     _id: string;
-    userType : string;
+    userType: string;
     _token: string;
     _tokenExpirationDate: string;
 }
@@ -28,7 +28,7 @@ export class AuthService {
   user = new BehaviorSubject<User>(null);
   private tokenExpirationTimer: any;
 
-  constructor(private http: HttpClient, private router: Router, private route : ActivatedRoute) {}
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {}
 
   login(email: string, password: string) {
     const data = {
@@ -51,8 +51,7 @@ export class AuthService {
       );
   }
 
-  // autoLogin(userData : UserData) {
-  loadUser(userData : UserData) {
+  loadUser(userData: UserData) {
     
     const loadedUser = new User(
       userData.email,
@@ -73,7 +72,7 @@ export class AuthService {
         this.router.navigate(['/admin/dashboard'], {relativeTo: this.route});
       }
       else if(loadedUser.userType === "student") {
-        this.router.navigate(['/student'], {relativeTo: this.route, queryParams: {id : loadedUser._id} });
+        this.router.navigate(['/student'], {relativeTo: this.route, queryParams: {id: loadedUser._id} });
       }
       else if(loadedUser.userType === "faculty") {
         this.router.navigate(['/faculty'], {relativeTo: this.route});
@@ -88,11 +87,9 @@ export class AuthService {
   autoLogin() {
 
     let token = "";
-    console.log(localStorage.getItem('userData'))
     if(localStorage.getItem('userData')) {
       token = 'Bearer '+JSON.parse(localStorage.getItem('userData'))._token;
     }
-    console.log(token)
     const headers = new HttpHeaders().set('Authorization', token);
     return this.http.post(EnvVar.url+"autoLogin", {}, { headers })
     .pipe(
@@ -120,12 +117,10 @@ export class AuthService {
     if(localStorage.getItem('userData')) {
       token = 'Bearer '+JSON.parse(localStorage.getItem('userData'))._token;
     }
-    console.log(token)
     const headers = new HttpHeaders().set('Authorization', token);
     this.http.post(EnvVar.url+"logout", {}, { headers })
     .subscribe(
       resData => {
-        console.log(resData)
         this.user.next(null);
         this.router.navigate(['/login']);
         localStorage.removeItem('userData');
@@ -141,6 +136,9 @@ export class AuthService {
   }
 
   removeUser() {
+    if(localStorage.getItem('userData')) {
+      localStorage.removeItem('userData');
+    }
     this.user.next(null);
   }
 
@@ -164,6 +162,7 @@ export class AuthService {
         this.tokenExpirationTimer = null;
       },
       errorMessage => {
+        console.log(errorMessage)
       }
     );
   }
@@ -177,7 +176,7 @@ export class AuthService {
   private handleAuthentication(
     email: string,
     userId: string,
-    userType : string,
+    userType: string,
     token: string,
     expiresIn: number
   ) {

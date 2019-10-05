@@ -21,7 +21,7 @@ export class AdminShowBranchComponent implements OnInit {
 
   _id : string;
 
-  error : string;
+  error : string = null;
 
   week: string[] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -45,6 +45,7 @@ export class AdminShowBranchComponent implements OnInit {
           this.loading = false;
         },
         (error) => {
+          this.setError(error)    
         });
       }
     );
@@ -65,7 +66,7 @@ export class AdminShowBranchComponent implements OnInit {
         this.cancel();
       },
       (error) => {
-      this.loading = false;     
+        this.setError(error)            
       });
     }
   }
@@ -81,12 +82,10 @@ export class AdminShowBranchComponent implements OnInit {
     const data = { api : "deleteBranchImage", data : {_id: this._id, public_id}}
     this.httpPostService.httpPostAuth(data)
     .subscribe(res => {
-      console.log(res)
       this.ngOnInit();
     },
     (error) => {
-      this.loading = false;
-      console.log(error);
+      this.setError(error)          
     });
   }
 
@@ -127,17 +126,13 @@ export class AdminShowBranchComponent implements OnInit {
   deleteBranch(_id : string) {
     const password = prompt("Please enter your Password");
     if(password) {
-      console.log(password)
-      console.log(_id)
       this.loading = true;
       const data = { api : "deleteBranch", data : { _id, password }}
       this.httpPostService.httpPostAuth(data).subscribe((val) => {
         this.cancel();
       },
       (error) => {
-        this.error = error;
-        console.log(error);
-        this.loading = false;     
+        this.setError(error)    
       });
     }
   }
@@ -145,4 +140,13 @@ export class AdminShowBranchComponent implements OnInit {
   alertDismiss() {
     this.error = null;
   }
+
+	setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

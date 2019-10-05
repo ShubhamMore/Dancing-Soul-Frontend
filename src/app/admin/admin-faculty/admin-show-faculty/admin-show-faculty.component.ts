@@ -14,6 +14,8 @@ export class AdminShowFacultyComponent implements OnInit {
 
   loading: boolean = true;
 
+  error : string = null;
+
   constructor(private httpPostService: HttpService,
               private route: ActivatedRoute,
               private router: Router) { }
@@ -29,6 +31,7 @@ export class AdminShowFacultyComponent implements OnInit {
           this.loading = false;
         },
         (error) => {
+          this.setError(error)
         });
       }
     );
@@ -51,7 +54,21 @@ export class AdminShowFacultyComponent implements OnInit {
        this.cancel();
       },
       (error) => {
-        this.loading = false;
+        this.setError(error)
+      });
+    }
+  }
+
+  deleteFaculty() {
+    const password = prompt("Please enter your Password");
+    if(password) {
+      this.loading = true;
+      const data = { api : "deleteFaculty", data : { _id: this.faculty._id, password }}
+      this.httpPostService.httpPostAuth(data).subscribe((val) => {
+        this.cancel();
+      },
+      (error) => {
+        this.setError(error)     
       });
     }
   }
@@ -60,4 +77,13 @@ export class AdminShowFacultyComponent implements OnInit {
     this.loading = true;
     this.router.navigate(['/admin', 'faculty'], {relativeTo: this.route, skipLocationChange:true});
   }
+
+  setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 } 

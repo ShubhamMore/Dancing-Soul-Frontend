@@ -16,9 +16,10 @@ export class StudentAttendanceComponent implements OnInit {
 
   attendance: Attendance[] = [];
 
-  loading : boolean = true;
+  loading: boolean = true;
+  error: string = null;
 
-  branch : Branch;
+  branch: Branch;
 
   batch: BatchModel;
   
@@ -31,32 +32,32 @@ export class StudentAttendanceComponent implements OnInit {
     subscribe(
       (params: Params) => {
         const _id = params['id'];
-        const studentData = { api : "getStudent", data : { _id }}
+        const studentData = { api: "getStudent", data: { _id }}
         this.httpPostService.httpPostAuth(studentData).subscribe((val) => {
           this.student = val;
 
           const studentData = {
-            branch : this.student.branch,
-            batch : this.student.batchName,
-            batchType : this.student.batch
+            branch: this.student.branch,
+            batch: this.student.batchName,
+            batchType: this.student.batch
           }
           
-          const data = { api : "getAttendance", data : studentData}
+          const data = { api: "getAttendance", data: studentData}
           this.httpPostService.httpPostAuth(data).subscribe((val) => {
             this.attendance = val;
             this.loading = false;
           },(error) => {
-            this.loading = false;
+            this.setError(error)
           });
         },
         (error) => {
-          this.loading = false;
+          this.setError(error)
         });
       }
     );
   }
 
-  checkAttendance(index : number) : string {
+  checkAttendance(index: number): string {
     const attendance = this.attendance[index];
     if(attendance.present.indexOf(this.student._id)!=-1) {
       return "Present";
@@ -68,4 +69,13 @@ export class StudentAttendanceComponent implements OnInit {
       return "Absent";
     }
   }
+
+	setError(err: string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

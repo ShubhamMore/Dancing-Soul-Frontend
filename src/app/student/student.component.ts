@@ -12,7 +12,7 @@ export class StudentComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-    let id : string;
+    let id: string;
     this.route.queryParams.
     subscribe(
     (params: Params) => {

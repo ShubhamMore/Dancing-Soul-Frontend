@@ -1,23 +1,22 @@
 import { NgModule } from '@angular/core';
 
-//MODULES
+// MODULES
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AgmCoreModule } from '@agm/core';
 import { Angular2ImageGalleryModule } from 'angular2-image-gallery';
 
-//ROUTES
+// ROUTES
 import { AppRoutes } from './app.routes.module';
 
-//GUARDS
+// GUARDS
 import { AdminAuthGuard, LoginAuthGuard, StudentAuthGuard, FacultuAuthGuard, ChangePassswordGuard } from './auth/auth.guard';
 
-//SERVICES
-
+// SERVICES
 import { AuthService } from './auth/auth.service';
 
-//COMPONENTS
+// COMPONENTS
 import { AppComponent } from './app.component';
 
 import { HeaderComponent } from './header/header.component';
@@ -108,13 +107,14 @@ import { HttpService } from './services/httpPost.service';
 
 @NgModule({
   declarations: [
+    // APP COMPONENT
     AppComponent,
-
+    // HEADER AND FOOTER COMPONENT
     HeaderComponent,
     FooterComponent,
-
+    // CONTENT COMPONENT
     ContentComponent,
-    
+    // MAIN PAGE COMPONENT
     HomePageComponent,
     AboutPageComponent,
     ContactUsPageComponent,
@@ -123,69 +123,69 @@ import { HttpService } from './services/httpPost.service';
     ArticlesPageComponent,
     NewsShelterPageComponent,
     ExamsPageComponent,
-    
+    // AUTH COMPONENTS
     LoginComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
     ChangePasswordComponent,
-    
+    // ADMIN COMPONENT
     AdminComponent,
-
+    // ADMIN DASHBOARD COMPONENT
     AdminDashboardComponent,
-    
+    // ADMIN ABOUT COMPONENT
     AdminAboutComponent,
     AdminEditAimComponent,
     AdminHistoryComponent,
     AdminEditHistoryComponent,
     AdminPhilosophyComponent,
     AdminEditPhilosophyComponent,
-
+    // ADMIN ARTICLE COMPONENT
     AdminArticleComponent,
     AdminAddArticleComponent,
     AdminEditArticleComponent,
     AdminShowArticleComponent,
-    
+    // ADMIN BRANCH COMPONENT
     AdminBranchComponent,
     AdminAddBranchComponent,
     AdminEditBranchComponent,
     AdminShowBranchComponent,
-    
+    // ADMIN ENQUIRY COMPONENT
     AdminEnquiryComponent,
     AdminShowEnquiryComponent,
     AdminReplyEnquiryComponent,
-    
+    // ADMIN EXAM COMPONENT
     AdminExamComponent,
     AdminAddExamComponent,
     AdminEditExamComponent,
     AdminShowExamComponent,
-
+    // ADMIN NEWS COMPONENT
     AdminNewsComponent,
     AdminAddNewsComponent,
     AdminEditNewsComponent,
     AdminShowNewsComponent,
-
+    // ADMIN GALLERY COMPONENT
     AdminGallaryComponent,
     AdminAddPhotosComponent,
-
+    // ADMIN ATTENDANCE COMPONENT
     AdminAttendanceComponent,
-
+    // ADMIN FACULTY COMPONENT
     AdminFacultyComponent,
     AdminAddFacultyComponent,
     AdminShowFacultyComponent,
     AdminEditFacultyComponent,
-
+    // ADMIN STUDENT COMPONENT
     AdminStudentComponent,
     AdminAddStudentComponent,
     AdminShowStudentComponent,
     AdminEditStudentComponent,
     AdminStudentReceiptsComponent,
     AdminStudentGenerateReceiptComponent,
-
+    // ERROR COMPONENT
     PageNotFoundComponent,
     ServerErrorComponent,
-        
+    // FACULTY COMPONENT
     FacultyComponent,
-        
+    // STUDENT COMPONENT
     StudentComponent,
     StudentDashboardComponent,
     StudentReceiptsComponent,
@@ -206,17 +206,17 @@ import { HttpService } from './services/httpPost.service';
   ],
 
   providers: [
-    
+    // HTTP SERVICE
     HttpService,
-  
+    // AUTH GUARDS
     LoginAuthGuard,
     AdminAuthGuard,
     FacultuAuthGuard,
     StudentAuthGuard,
     ChangePassswordGuard,
-
+    // AUTH SERVICE
     AuthService,
-
+    // FORM VALIDATOR
     FormValidator
   ],
 

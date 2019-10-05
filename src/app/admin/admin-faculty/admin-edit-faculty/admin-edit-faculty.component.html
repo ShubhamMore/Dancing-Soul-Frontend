@@ -1,89 +1,121 @@
   <img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
 
-  <div class="row mt-2" *ngIf="!loading">
-    <div class="col-md-8 col-sm-10 mx-auto">
-
-      <div *ngIf="faculty !== null">
-        <h4 class="text-center mb-3">Edit Faculty <strong>{{faculty.name}}</strong></h4>    
-        <form class="add_new-faulty" (submit)="editFaculty()" [formGroup]="form">
-          
-          <div class="row">
+  <div class="row" *ngIf="!loading">
+    <div class="col-12">
+      <div class="row mt-2" *ngIf="!!error">
+        <div class="col-10 mx-auto">
+        <div class="alert alert-danger alert-dismissible">
+          <button type="button" class="close" (click)="clearError()" data-dismiss="alert">&times;</button>
+          <span>{{error}}</span>
+        </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-md-8 col-sm-10 mx-auto">
     
-            <div class="col-md-6 col-sm-12">
-              <div class="form-group">
-                <label for="name">Name : </label>
-                <input class="name" type="text" name="name" id="name" formControlName="name" placeholder="Name">
-                <span *ngIf="!form.get('name').valid && form.get('name').touched">*Please enter Faculty Name</span>
+          <div *ngIf="faculty !== null">
+            <h4 class="text-center mb-3">Edit Faculty <strong>{{faculty.name}}</strong></h4>    
+            <form class="add_new-faulty" (submit)="editFaculty()" [formGroup]="form">
+              
+              <div class="row">
+        
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-group">
+                    <label for="name">Name : </label>
+                    <input class="name" type="text" name="name" id="name" formControlName="name" placeholder="Name">
+                    <span *ngIf="!form.get('name').valid && form.get('name').touched">*Please enter Faculty Name</span>
+                  </div>
+                </div>
+        
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-group">
+                    <label for="birthDate">Birth Date : </label>
+                    <input class="birth-date" type="date" name="birthDate" id="birthDate" formControlName="birthDate">
+                    <span *ngIf="!form.get('birthDate').valid && form.get('birthDate').touched">*Please enter Birth Date</span>
+                  </div>
+                </div>
+        
               </div>
-            </div>
-    
-            <div class="col-md-6 col-sm-12">
-              <div class="form-group">
-                <label for="birthDate">Birth Date : </label>
-                <input class="birth-date" type="date" name="birthDate" id="birthDate" formControlName="birthDate">
-                <span *ngIf="!form.get('birthDate').valid && form.get('birthDate').touched">*Please enter Birth Date</span>
+        
+              <div class="row">
+        
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-group">
+                    <label for="email">Email : </label>
+                    <input class="email" type="email" name="email" id="email" formControlName="email" placeholder="example@email.com">
+                    <span *ngIf="!form.get('email').valid && form.get('email').touched">*Please enter valid Email</span>
+                  </div>
+                </div>
+                
+                <div class="col-md-6 col-sm-12">
+                  <div class="form-group">
+                    <label for="phone">Phone : </label>
+                    <input class="phone" type="text" pattern="\d*" name="phone" id="phone" formControlName="phone" placeholder="9876543210">
+                    <span *ngIf="!form.get('phone').valid && form.get('phone').touched">*Please enter valid Phone Number</span>
+                  </div>
+                </div>
+        
               </div>
-            </div>
-    
-          </div>
-    
-          <div class="row">
-    
-            <div class="col-md-6 col-sm-12">
-              <div class="form-group">
-                <label for="email">Email : </label>
-                <input class="email" type="email" name="email" id="email" formControlName="email" placeholder="example@email.com">
-                <span *ngIf="!form.get('email').valid && form.get('email').touched">*Please enter valid Email</span>
+              
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-group">
+                    <label for="description">Description : </label>
+                    <textarea type="text" class="description" name="description" id="description" rows="5" formControlName="description" placeholder="Description"></textarea>
+                    <span *ngIf="!form.get('description').valid && form.get('description').touched">*Please enter Faculty Description</span>
+                  </div>
+                </div>
               </div>
-            </div>
-            
-            <div class="col-md-6 col-sm-12">
-              <div class="form-group">
-                <label for="phone">Phone : </label>
-                <input class="phone" type="text" pattern="\d*" name="phone" id="phone" formControlName="phone" placeholder="9876543210">
-                <span *ngIf="!form.get('phone').valid && form.get('phone').touched">*Please enter valid Phone Number</span>
+        
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-group">
+                    <label for="images">Pick Profile Image to Upload : </label><br>
+                    <input type="file" #filePicker (change)="onImagePicked($event)">
+                    <button class="btn-add" type="button" id="images" (click)="filePicker.click()">Click Here to Pick Image</button>
+                  </div>
+                  <span *ngIf="invalidImage">*Please Select a Valid Image File</span>
+                </div>
               </div>
-            </div>
-    
-          </div>
-          
-          <div class="row">
-            <div class="col-12">
-              <div class="form-group">
-                <label for="description">Description : </label>
-                <textarea type="text" class="description" name="description" id="description" rows="5" formControlName="description" placeholder="Description"></textarea>
-                <span *ngIf="!form.get('description').valid && form.get('description').touched">*Please enter Faculty Description</span>
+        
+              <div class="row">
+                <div class="col-12">
+                  <div *ngIf="imagePreview; else noImagePicked">
+                    <h5>Image To Upload : </h5>
+                    
+                    <div class="row">
+                      <span class="m-2">
+                        <div class="preview-image">
+                          <img [src]="imagePreview" alt="Preview">
+                          <a class="remove-image"(click)="cancelImage()"><i class="fa fa-remove remove"></i></a>
+                        </div>
+                      </span>
+                    </div>
+                  
+                  </div>
+                  <ng-template #noImagePicked><p>No Image Picked yet</p></ng-template>
+                </div>
+              </div> 
+        
+              <div class="row mt-1" *ngIf="formError">
+                <div class="col-12">
+                  <span>*Please Fill All Article Fields</span>
+                </div>
               </div>
-            </div>
-          </div>
-    
-          <div class="row">
-            <div class="col-12">
-              <div class="form-group">
-                <label for="image">Select Profile Image : </label>
-                <input type="file" id="image" name="image" formControlName="image" (change)="onImagePicked($event)">
-                <span *ngIf="!form.get('image').valid && form.get('image').touched">*Please Select Image File</span>
+                
+              <hr>
+        
+              <div class="row">
+                <div class="col-6">
+                  <button type="submit" class="btn-edit">Save</button>
+                </div>
+                <div class="col-6">
+                  <button type="button" class="btn-cancel float-right" (click)="cancel()">Cancel</button>
+                </div>
               </div>
-            </div>
+            </form>
           </div>
-    
-          <div class="row mt-1" *ngIf="formError">
-            <div class="col-12">
-              <span>*Please Fill All Article Fields</span>
-            </div>
-          </div>
-            
-          <hr>
-    
-          <div class="row">
-            <div class="col-6">
-              <button type="submit" class="btn-edit">Save</button>
-            </div>
-            <div class="col-6">
-              <button type="button" class="btn-cancel float-right" (click)="cancel()">Cancel</button>
-            </div>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
   </div>

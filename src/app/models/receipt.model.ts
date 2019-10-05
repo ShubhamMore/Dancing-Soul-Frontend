@@ -14,5 +14,4 @@ export class ReceiptModule {
         this.receiptDate = receiptDate;
         this.paymentMode = paymentMode;
     }
-
 }

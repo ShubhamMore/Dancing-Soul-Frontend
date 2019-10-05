@@ -17,6 +17,8 @@ export class AdminStudentGenerateReceiptComponent implements OnInit {
 
   loading: boolean = true;
 
+  error : string = null;
+
   student: StudentModel;
 
   branch : Branch;
@@ -62,13 +64,15 @@ export class AdminStudentGenerateReceiptComponent implements OnInit {
          const branchData = { api : "getBranch", data : { _id : this.student.branch }}
          this.httpPostService.httpPostAuth(branchData).subscribe((val) => {
            this.branch = val; 
-           this.batch = this.branch.batch.find(batch => ((batch.batchName === this.student.batchName) && (batch.batchType === this.student.batch)));
+           this.batch = this.branch.batch.find(batch => ((batch._id === this.student.batchName) && (batch.batchType === this.student.batch)));
            this.loading = false;
          },
          (error) => {
+           this.setError(error)
          });
         },
         (error) => {
+          this.setError(error)
         });
       }
     );
@@ -113,13 +117,13 @@ export class AdminStudentGenerateReceiptComponent implements OnInit {
 
       const data = { api : "addReceipt", data : receipt }
       this.httpPostService.httpPostAuth(data).subscribe((val) => {
-       this.monthsTouched = false;
-       this.amount = 0;
-       this.form.reset({payment_mode: ""});
-       this.loading = false;
+        this.monthsTouched = false;
+        this.amount = 0;
+        this.form.reset({payment_mode: ""});
+        this.cancel();
       },
       (error) => {
-       this.loading = false;
+        this.setError(error)
       });
     }
   }
@@ -139,4 +143,13 @@ export class AdminStudentGenerateReceiptComponent implements OnInit {
     this.amount -= parseInt(this.batch.fees);
     this.months.splice(this.months.findIndex((month) => month === index), 1);
   }
+
+  setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

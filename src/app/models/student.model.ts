@@ -1,23 +1,25 @@
+import { ImageModel } from './image.model';
+
 export class StudentModel {
     public _id: string;
     public name: string;
-    public birthDate : string;
-    public bloodGroup : string;
-    public workPlace : string;
-    public image: string;
-    public firstGuardianName : string;
-    public firstGuardianRelation : string;
-    public secondGuardianName : string;
-    public secondGuardianRelation : string;
-    public medicalHistory : string;
-    public phone : string;
-    public email : string;
-    public address : string;
-    public branch : string;
-    public batch : string;
-    public batchName : string;
-    public status : string;
-    constructor (id:string, name: string, birthDate : string, bloodGroup : string, workPlace : string, image: string, firstGuardianName : string, firstGuardianRelation : string, secondGuardianName : string, secondGuardianRelation : string, medicalHistory: string, phone : string, email : string, address : string, branch : string, batch : string, batchName : string, status : string) {
+    public birthDate: string;
+    public bloodGroup: string;
+    public workPlace: string;
+    public image: ImageModel;
+    public firstGuardianName: string;
+    public firstGuardianRelation: string;
+    public secondGuardianName: string;
+    public secondGuardianRelation: string;
+    public medicalHistory: string;
+    public phone: string;
+    public email: string;
+    public address: string;
+    public branch: string;
+    public batch: string;
+    public batchName: string;
+    public status: string;
+    constructor (id: string, name: string, birthDate: string, bloodGroup: string, workPlace: string, image: ImageModel, firstGuardianName: string, firstGuardianRelation: string, secondGuardianName: string, secondGuardianRelation: string, medicalHistory: string, phone: string, email: string, address: string, branch: string, batch: string, batchName: string, status: string) {
         this._id = id;
         this.name = name;
         this.birthDate = birthDate;

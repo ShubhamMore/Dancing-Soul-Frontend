@@ -15,6 +15,8 @@ export class AdminEnquiryComponent implements OnInit {
 
   loading : boolean = true;
 
+  error : string = null;  
+
   constructor(private httpPostService: HttpService,
               private router: Router,
               private route: ActivatedRoute) { }
@@ -26,6 +28,7 @@ export class AdminEnquiryComponent implements OnInit {
      this.loading = false;
     },
     (error) => {
+      this.setError(error)      
     });
   }
 
@@ -42,4 +45,13 @@ export class AdminEnquiryComponent implements OnInit {
     }
     return data;
   }
+  
+	setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

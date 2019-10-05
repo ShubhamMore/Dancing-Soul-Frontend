@@ -16,6 +16,8 @@ export class AdminAddBranchComponent implements OnInit {
 
   loading: boolean = true;
 
+  error : string = null;
+
   imagePreview: string[] = [];
   uploadImages: File[] = [];
 
@@ -60,9 +62,6 @@ export class AdminAddBranchComponent implements OnInit {
       }),
       description: new FormControl(null, {
         validators:[Validators.required]
-      }),
-      image: new FormControl(null, {
-        validators:[this.formValidator.imageValidate.bind(this)]
       })
     });
 
@@ -194,7 +193,7 @@ export class AdminAddBranchComponent implements OnInit {
        this.cancel();
       },
       (error) => {
-       this.loading = false;
+        this.setError(error)
       });
     }
   }
@@ -209,7 +208,6 @@ export class AdminAddBranchComponent implements OnInit {
 
   scheduleChange() {
     this.weekType = this.batchForm.value.week;
-    console.log(this.weekType)
   }
   
   weekDay(event: any, index:number) {
@@ -220,5 +218,14 @@ export class AdminAddBranchComponent implements OnInit {
     }
     this.weekDays.splice(this.weekDays.findIndex((day) => day === index), 1);
   }
+	
+	setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 
 }

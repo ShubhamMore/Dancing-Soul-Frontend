@@ -9,7 +9,8 @@ import { HttpService } from '../../services/httpPost.service';
 export class AdminGallaryComponent implements OnInit {
 
   images : string[] = [];
-  loading = true;
+  loading : boolean = true;
+  error : string = null;
 
   constructor(private httpPostService: HttpService) {}
 
@@ -17,16 +18,12 @@ export class AdminGallaryComponent implements OnInit {
     const data = { api : "getImages", data : {}}    
     this.httpPostService.httpPost(data)
     .subscribe(response => {
-      console.log(response)
       this.images = response;
       this.loading = false;
     },
     (error) => {
-      this.loading = false;
-      console.log(error);
+      this.setError(error)
     });
-    
-    this.loading = false;
   }
 
   deleteImage(public_id : string) {
@@ -35,12 +32,19 @@ export class AdminGallaryComponent implements OnInit {
     const data = { api : "removeImage", data : {public_id}}
     this.httpPostService.httpPostAuth(data)
     .subscribe(res => {
-      console.log(res)
       this.ngOnInit();
     },
     (error) => {
-      this.loading = false;
-      console.log(error);
+      this.setError(error)
     });
   }
+
+  setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

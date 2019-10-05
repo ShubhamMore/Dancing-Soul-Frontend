@@ -1,192 +1,225 @@
 <img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
 
-<div class="row mt-2" *ngIf="!loading">
-  <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-12 mx-auto">
-    <h4 class="text-center mb-3">Add New Student</h4>
-    <form class="" (submit)="addStudent()" [formGroup]="form">
-
-      <div class="row">
-
-        <div class="col-md-6 col-sm-12">
-          <div class="form-group">
-            <label for="name">Name : </label>
-            <input class="name" type="text" name="name" id="name" formControlName="name" placeholder="Name">
-            <span *ngIf="!form.get('name').valid && form.get('name').touched">*Please enter Name</span>
-          </div>
-        </div>
-
-        <div class="col-md-6 col-sm-12">
-          <div class="form-group">
-            <label for="birthDate">Birth Date : </label>
-            <input class="birthDate" type="date" name="birthDate" id="birthDate" formControlName="birthDate">
-            <span *ngIf="!form.get('birthDate').valid && form.get('birthDate').touched">*Please enter Birth Date</span>
-          </div>
-        </div>
-
+<div class="row" *ngIf="!loading">
+  <div class="col-12">
+    <div class="row mt-2" *ngIf="!!error">
+      <div class="col-10 mx-auto">
+      <div class="alert alert-danger alert-dismissible">
+        <button type="button" class="close" (click)="clearError()" data-dismiss="alert">&times;</button>
+        <span>{{error}}</span>
       </div>
-
-      
-      <div class="row">
-
-        <div class="col-md-6 col-sm-12">
-          <div class="form-group">
-            <label for="firstGuardianName">First Guardian Name : </label>
-            <input class="firstGuardianName" type="text" name="firstGuardianName" id="firstGuardianName" formControlName="firstGuardianName" placeholder="First Guardian Name">
-            <span *ngIf="!form.get('firstGuardianName').valid && form.get('firstGuardianName').touched">*Please enter first Guardian Name</span>
-          </div>
-        </div>
-
-        <div class="col-md-6 col-sm-12">
-          <div class="form-group">
-            <label for="firstGuardianRelation">First Guardian Relation : </label>
-            <input class="firstGuardianRelation" type="text" name="firstGuardianRelation" id="firstGuardianRelation" formControlName="firstGuardianRelation" placeholder="First Guardian Relation">
-            <span *ngIf="!form.get('firstGuardianRelation').valid && form.get('firstGuardianRelation').touched">*Please enter first Guardian Relation</span>
-          </div>
-        </div>
-
       </div>
-
-      <div class="row">
-
-        <div class="col-md-6 col-sm-12">
-          <div class="form-group">
-            <label for="secondGuardianName">Second Guardian Name : </label>
-            <input class="secondGuardianName" type="text" name="secondGuardianName" id="secondGuardianName" formControlName="secondGuardianName" placeholder="Second Guardian Name">
+    </div>
+    <div class="row mt-2">
+      <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-12 mx-auto">
+        <h4 class="text-center mb-3">Add New Student</h4>
+        <form class="" (submit)="addStudent()" [formGroup]="form">
+    
+          <div class="row">
+    
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group">
+                <label for="name">Name : </label>
+                <input class="name" type="text" name="name" id="name" formControlName="name" placeholder="Name">
+                <span *ngIf="!form.get('name').valid && form.get('name').touched">*Please enter Name</span>
+              </div>
+            </div>
+    
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group">
+                <label for="birthDate">Birth Date : </label>
+                <input class="birthDate" type="date" name="birthDate" id="birthDate" formControlName="birthDate">
+                <span *ngIf="!form.get('birthDate').valid && form.get('birthDate').touched">*Please enter Birth Date</span>
+              </div>
+            </div>
+    
           </div>
-        </div>
-
-        <div class="col-md-6 col-sm-12">
-          <div class="form-group">
-            <label for="secondGuardianRelation">Second Guardian Relation : </label>
-            <input class="secondGuardianRelation" type="text" name="secondGuardianRelation" id="secondGuardianRelation" formControlName="secondGuardianRelation" placeholder="Second Guardian Relation">
+    
+          
+          <div class="row">
+    
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group">
+                <label for="firstGuardianName">First Guardian Name : </label>
+                <input class="firstGuardianName" type="text" name="firstGuardianName" id="firstGuardianName" formControlName="firstGuardianName" placeholder="First Guardian Name">
+                <span *ngIf="!form.get('firstGuardianName').valid && form.get('firstGuardianName').touched">*Please enter first Guardian Name</span>
+              </div>
+            </div>
+    
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group">
+                <label for="firstGuardianRelation">First Guardian Relation : </label>
+                <input class="firstGuardianRelation" type="text" name="firstGuardianRelation" id="firstGuardianRelation" formControlName="firstGuardianRelation" placeholder="First Guardian Relation">
+                <span *ngIf="!form.get('firstGuardianRelation').valid && form.get('firstGuardianRelation').touched">*Please enter first Guardian Relation</span>
+              </div>
+            </div>
+    
           </div>
-        </div>
-
-      </div>
-      
-      <div class="row">
-        <div class="col-md-6 col-sm-12">
-          <div class="form-group">
-            <label for="workPlace">School /College /Office (Optional) : </label>
-            <input class="workPlace" type="text" name="workPlace" id="workPlace" formControlName="workPlace" placeholder="Work Place">
+    
+          <div class="row">
+    
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group">
+                <label for="secondGuardianName">Second Guardian Name : </label>
+                <input class="secondGuardianName" type="text" name="secondGuardianName" id="secondGuardianName" formControlName="secondGuardianName" placeholder="Second Guardian Name">
+              </div>
+            </div>
+    
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group">
+                <label for="secondGuardianRelation">Second Guardian Relation : </label>
+                <input class="secondGuardianRelation" type="text" name="secondGuardianRelation" id="secondGuardianRelation" formControlName="secondGuardianRelation" placeholder="Second Guardian Relation">
+              </div>
+            </div>
+    
           </div>
-        </div>
-
-        <div class="col-md-6 col-sm-12">
-          <div class="form-group">
-            <label for="bloodGroup">Blood Group (Optional) : </label>
-            <input class="bloodGroup" type="text" name="bloodGroup" id="bloodGroup" formControlName="bloodGroup" placeholder="Blood Group">
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-12">
-          <div class="form-group">
-            <label for="medicalHistory">Medical History : </label>
-            <textarea class="medicalHistory" name="medicalHistory" id="medicalHistory" rows="3" formControlName="medicalHistory" placeholder="Medicle History"></textarea>
-            <span *ngIf="!form.get('medicalHistory').valid && form.get('medicalHistory').touched">*Please enter Medical History</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-
-        <div class="col-md-6 col-sm-12">
-          <div class="form-group">
-            <label for="email">Email : </label>
-            <input class="email" type="email" name="email" id="email" formControlName="email" placeholder="example@email.com">
-            <span *ngIf="!form.get('email').valid && form.get('email').touched">*Please enter valid Email</span>
-          </div>
-        </div>
-
-        <div class="col-md-6 col-sm-12">
-          <div class="form-group">
-            <label for="phone">Phone : </label>
-            <input class="phone" type="text" pattern="\d*" name="phone" id="phone" maxlength="10" minlength="10" formControlName="phone" placeholder="Phone">
-            <span *ngIf="!form.get('phone').valid && form.get('phone').touched">*Please enter valid phone number</span>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="row">
-          <div class="col-12">
-            <div class="form-group">
-              <label for="address">Address : </label>
-              <textarea class="address" name="address" id="address" rows="3" formControlName="address" placeholder="Name"></textarea>
-              <span *ngIf="!form.get('address').valid && form.get('address').touched">*Please enter Address</span>
+          
+          <div class="row">
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group">
+                <label for="workPlace">School /College /Office (Optional) : </label>
+                <input class="workPlace" type="text" name="workPlace" id="workPlace" formControlName="workPlace" placeholder="Work Place">
+              </div>
+            </div>
+    
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group">
+                <label for="bloodGroup">Blood Group (Optional) : </label>
+                <input class="bloodGroup" type="text" name="bloodGroup" id="bloodGroup" formControlName="bloodGroup" placeholder="Blood Group">
+              </div>
             </div>
           </div>
-        </div>
-
-      <div class="row">
-
-        <div class="col-md-6 col-sm-12">
-          <div class="form-group">
-            <label for="branch">Select Branch : </label>
-            <select class="branch" type="text" name="branch" id="branch" formControlName="branch" placeholder="Branch" (change)="branchChanged()">
-              <option value="">Select Branch</option>
-              <option *ngFor="let branch of branches" [value]="branch._id">{{branch.branch}}</option>
-            </select>
-            <span *ngIf="!form.get('branch').valid && form.get('branch').touched">*Please Select Branch</span>
-          </div>
-        </div>
-
-        <div class="col-md-6 col-sm-12">
-          <div class="form-group">
-            <label for="batch">Select Batch : </label>
-            <select class="batch" type="text" name="batch" id="batch" formControlName="batch" (change)="changeWeekType()">
-              <option value="0">Week Day</option>
-              <option value="1">Week End</option>
-            </select>
-            <span *ngIf="!form.get('batch').valid && form.get('batch').touched">*Please Select Batch</span>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="row">
-
-        <div class="col-md-6 col-sm-12">
-          <div class="form-group">
-            <label for="Class">Select Batch Name : </label>
-            <select class="batchName" type="text" name="batchName" id="batchName" formControlName="batchName">
-              <option value="">Select Batch</option>
-              <option *ngFor="let batch of batches" [value]="batch._id">{{batch.batchName}}</option>
-            </select>
-            <span *ngIf="!form.get('batchName').valid && form.get('batchName').touched">*Please Select Batch Name</span>
-          </div>
-        </div>
-  
-        <div class="col-md-6 col-sm-12">
-          <div class="form-group">
-            <label for="image">Select Profile Image : </label>
-            <input type="file" id="image" name="image" formControlName="image" (change)="onImagePicked($event)">
-            <span *ngIf="!form.get('image').valid && form.get('image').touched">*Please Select Valid Image File</span>
-          </div>
-        </div>
-  
-      </div>
-
-      <div class="row mt-1" *ngIf="formError">
-        <div class="col-12">
-          <span>*Please Fill All Student Fields</span>
-        </div>
-      </div>
-        
-      <hr>
-
-      <div class="row">
-        <div class="col-12">
-          <button type="submit" class="btn-add">ADD</button>
     
-          <button type="button" class="btn-cancel float-right" (click)="cancel()">Cancel</button>
-        </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="medicalHistory">Medical History : </label>
+                <textarea class="medicalHistory" name="medicalHistory" id="medicalHistory" rows="3" formControlName="medicalHistory" placeholder="Medicle History"></textarea>
+                <span *ngIf="!form.get('medicalHistory').valid && form.get('medicalHistory').touched">*Please enter Medical History</span>
+              </div>
+            </div>
+          </div>
+    
+          <div class="row">
+    
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group">
+                <label for="email">Email : </label>
+                <input class="email" type="email" name="email" id="email" formControlName="email" placeholder="example@email.com">
+                <span *ngIf="!form.get('email').valid && form.get('email').touched">*Please enter valid Email</span>
+              </div>
+            </div>
+    
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group">
+                <label for="phone">Phone : </label>
+                <input class="phone" type="text" pattern="\d*" name="phone" id="phone" maxlength="10" minlength="10" formControlName="phone" placeholder="Phone">
+                <span *ngIf="!form.get('phone').valid && form.get('phone').touched">*Please enter valid phone number</span>
+              </div>
+            </div>
+    
+          </div>
+    
+          <div class="row">
+              <div class="col-12">
+                <div class="form-group">
+                  <label for="address">Address : </label>
+                  <textarea class="address" name="address" id="address" rows="3" formControlName="address" placeholder="Name"></textarea>
+                  <span *ngIf="!form.get('address').valid && form.get('address').touched">*Please enter Address</span>
+                </div>
+              </div>
+            </div>
+    
+          <div class="row">
+    
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group">
+                <label for="branch">Select Branch : </label>
+                <select class="branch" type="text" name="branch" id="branch" formControlName="branch" placeholder="Branch" (change)="branchChanged()">
+                  <option value="">Select Branch</option>
+                  <option *ngFor="let branch of branches" [value]="branch._id">{{branch.branch}}</option>
+                </select>
+                <span *ngIf="!form.get('branch').valid && form.get('branch').touched">*Please Select Branch</span>
+              </div>
+            </div>
+    
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group">
+                <label for="batch">Select Batch : </label>
+                <select class="batch" type="text" name="batch" id="batch" formControlName="batch" (change)="changeWeekType()">
+                  <option value="0">Week Day</option>
+                  <option value="1">Week End</option>
+                </select>
+                <span *ngIf="!form.get('batch').valid && form.get('batch').touched">*Please Select Batch</span>
+              </div>
+            </div>
+    
+          </div>
+    
+          <div class="row">
+    
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group">
+                <label for="Class">Select Batch Name : </label>
+                <select class="batchName" type="text" name="batchName" id="batchName" formControlName="batchName">
+                  <option value="">Select Batch</option>
+                  <option *ngFor="let batch of batches" [value]="batch._id">{{batch.batchName}}</option>
+                </select>
+                <span *ngIf="!form.get('batchName').valid && form.get('batchName').touched">*Please Select Batch Name</span>
+              </div>
+            </div>
+      
+          </div>
+    
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="images">Pick Profile Image to Upload : </label><br>
+                <input type="file" #filePicker (change)="onImagePicked($event)">
+                <button class="btn-add" type="button" id="images" (click)="filePicker.click()">Click Here to Pick Image</button>
+              </div>
+              <span *ngIf="invalidImage">*Please Select a Valid Image File</span>
+            </div>
+          </div>
+    
+          <div class="row">
+            <div class="col-12">
+              <div *ngIf="imagePreview; else noImagePicked">
+                <h5>Image To Upload : </h5>
+                
+                <div class="row">
+                  <span class="m-2">
+                    <div class="preview-image">
+                      <img [src]="imagePreview" alt="Preview">
+                      <a class="remove-image"(click)="cancelImage()"><i class="fa fa-remove remove"></i></a>
+                    </div>
+                  </span>
+                </div>
+              
+              </div>
+              <ng-template #noImagePicked><p>No Image Picked yet</p></ng-template>
+            </div>
+          </div>
+    
+          <div class="row mt-1" *ngIf="formError">
+            <div class="col-12">
+              <span>*Please Fill All Student Fields</span>
+            </div>
+          </div>
+            
+          <hr>
+    
+          <div class="row">
+            <div class="col-12">
+              <button type="submit" class="btn-add">ADD</button>
+        
+              <button type="button" class="btn-cancel float-right" (click)="cancel()">Cancel</button>
+            </div>
+          </div>
+    
+    
+        </form>
       </div>
-
-
-    </form>
+    </div>
   </div>
-
 </div>

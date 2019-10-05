@@ -26,14 +26,12 @@ export class AppComponent implements OnInit {
     this.authService.autoLogin()
     .subscribe(
       resData => {
-        console.log(resData)
         this.loading = false;
         this.authService.loadUser(userData);
       },
       errorMessage => {
-        console.log(errorMessage);
         this.loading = false;
-        this.router.navigate(["/login"], {relativeTo: this.route, queryParams: { auth: 'false'}});
+        this.router.navigate(["/login"], {relativeTo: this.route, queryParams: { auth: 'false' }});
       }
     );
   }

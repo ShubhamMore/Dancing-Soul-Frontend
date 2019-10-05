@@ -9,14 +9,14 @@ import { Branch } from '../../models/branch.model';
 })
 export class BranchesPageComponent implements OnInit {
 
-  branches : Branch[] = [];
-  loading : boolean = true;
+  branches: Branch[] = [];
+  loading: boolean = true;
 
     constructor(private httpPostService: HttpService) { }
 
 
     ngOnInit() {
-        const data = { api : "getActivateBranches", data : { }}
+        const data = { api: "getActivateBranches", data: { }}
         this.httpPostService.httpPost(data).subscribe((val) => {
          this.branches = val;
          this.loading = false;

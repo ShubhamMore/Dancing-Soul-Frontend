@@ -18,7 +18,12 @@ export class AdminAddStudentComponent implements OnInit {
 
   loading : boolean = true;
 
-  image: string;
+  error : string = null;
+
+  imagePreview: string = null;
+  uploadImage: File = null;
+
+  invalidImage : boolean = false;
 
   imgExt: string[] = ['jpg', 'png'];
 
@@ -34,8 +39,6 @@ export class AdminAddStudentComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-
-    this.image = "https://img.icons8.com/color/1600/circled-user-male-skin-type-1-2.png";
 
     this.form = new FormGroup({
       name: new FormControl(null, {
@@ -74,18 +77,16 @@ export class AdminAddStudentComponent implements OnInit {
       }),
       batchName: new FormControl("", {
         validators: [Validators.required]
-      }),
-      image: new FormControl(null, {
-        validators:[this.formValidator.imageValidate.bind(this)]
       })
     });
 
     const data = { api : "getBranches", data : { }}
-    this.httpPostService.httpPost(data).subscribe((val) => {
+    this.httpPostService.httpPostAuth(data).subscribe((val) => {
       this.branches = val;
       this.loading = false;
     },
     (error) => {
+      this.setError(error)
     });
 
   }
@@ -108,23 +109,31 @@ export class AdminAddStudentComponent implements OnInit {
     this.branchChanged();
   }
 
-  onImagePicked(event: any) {
-    const file: File = event.target.files[0];
-    if (file) {
-
-      const ext : string = file.name.substring(file.name.lastIndexOf('.') + 1);
-      if(!(this.imgExt.indexOf(ext)!=-1)) {
-        return;
+  onImagePicked(event: Event) {
+    const files = (event.target as HTMLInputElement).files;
+    const imgExt : string[] = ["jpg", "png"];
+    let ext : string = null;
+    for(let i = 0; i < files.length; i++) {
+      ext = files[i].name.substring(files[i].name.lastIndexOf('.') + 1);
+      if(!(imgExt.indexOf(ext)!=-1)) {
+        return this.invalidImage = true;
       }
-
-      let reader = new FileReader();
-
-      reader.onload = (event: any) => {
-        this.image = event.target.result; 
-      }
-
-      reader.readAsDataURL(file);
     }
+    this.invalidImage = false;
+    for(let i = 0; i < files.length; i++) {
+      this.uploadImage = files[i];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = <string>reader.result;
+      };
+      reader.readAsDataURL(files[i]);
+    }
+  }
+
+  cancelImage() {
+    this.imagePreview = null;
+    this.uploadImage = null;
+    this.invalidImage = false;
   }
 
   addStudent() {
@@ -136,38 +145,34 @@ export class AdminAddStudentComponent implements OnInit {
       this.formError = false;
       this.loading = true;
 
-      const student = {
-        name: this.form.value.name, 
-        birthDate: this.form.value.birthDate, 
-        bloodGroup: this.form.value.bloodGroup, 
-        workPlace: this.form.value.workPlace, 
-        image: this.image, 
-        firstGuardianName: this.form.value.firstGuardianName, 
-        firstGuardianRelation: this.form.value.firstGuardianRelation, 
-        secondGuardianName: this.form.value.secondGuardianName, 
-        secondGuardianRelation: this.form.value.secondGuardianRelation, 
-        medicalHistory: this.form.value.medicalHistory, 
-        phone: this.form.value.phone, 
-        email: this.form.value.email, 
-        address: this.form.value.address, 
-        branch: this.form.value.branch, 
-        batch: this.form.value.batch, 
-        batchName: this.form.value.batchName, 
-        status: "1"
+      const student = new FormData();
+      student.append("name", this.form.value.name);
+      student.append("birthDate", this.form.value.birthDate);
+      student.append("bloodGroup", this.form.value.bloodGroup);
+      student.append("workPlace", this.form.value.workPlace);
+      student.append("firstGuardianName", this.form.value.firstGuardianName);
+      student.append("firstGuardianRelation", this.form.value.firstGuardianRelation);
+      student.append("secondGuardianName", this.form.value.secondGuardianName);
+      student.append("secondGuardianRelation", this.form.value.secondGuardianRelation);
+      student.append("medicalHistory", this.form.value.medicalHistory);
+      student.append("phone", this.form.value.phone);
+      student.append("email", this.form.value.email);
+      student.append("address", this.form.value.address);
+      student.append("branch", this.form.value.branch);
+      student.append("batch", this.form.value.batch);
+      student.append("batchName", this.form.value.batchName);
+      student.append("status", "1");
+
+      if(this.uploadImage) {
+        student.append("image", this.uploadImage, "student");
       }
 
-      const user = {
-        email : student.email,
-        password : student.phone,
-        userType : "student"
-      }
-
-      const data = { api : "addStudent", data : {student, user} }
+      const data = { api : "addStudent", data : student }
       this.httpPostService.httpPostAuth(data).subscribe((val) => {
        this.cancel();
       },
       (error) => {
-       this.loading = false;
+        this.setError(error)
       });
     }
   }
@@ -176,4 +181,13 @@ export class AdminAddStudentComponent implements OnInit {
     this.loading = true;
     this.router.navigate(['/admin', 'student'],{relativeTo:this.route, skipLocationChange:true})
   }
+
+  setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

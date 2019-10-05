@@ -81,96 +81,96 @@ import { NewsShelterPageComponent } from './content/news-shelter-page/news-shelt
 import { ArticlesPageComponent } from './content/articles-page/articles-page.component';
 import { ExamsPageComponent } from './content/exams-page/exams-page.component';
 
-const appRoutes : Routes = [
+const appRoutes: Routes = [
   
-    {path:'', redirectTo:'/home', pathMatch:'full'},
+    {path: '', redirectTo: '/home', pathMatch: 'full'},
     
-    {path:'home', component : HomePageComponent, canActivate: [ LoginAuthGuard ]},
-    {path:'about', component : AboutPageComponent, canActivate: [ LoginAuthGuard ]},
-    {path:'contactUs', component : ContactUsPageComponent, canActivate: [ LoginAuthGuard ]},
-    {path:'branches', component : BranchesPageComponent, canActivate: [ LoginAuthGuard ]},
-    {path:'gallery', component : GalleryPageComponent, canActivate: [ LoginAuthGuard ]},
-    {path:'articles', component : ArticlesPageComponent, canActivate: [ LoginAuthGuard ]},
-    {path:'newsShelter', component : NewsShelterPageComponent, canActivate: [ LoginAuthGuard ]},
-    {path:'exams', component : ExamsPageComponent, canActivate: [ LoginAuthGuard ]},
+    {path: 'home', component: HomePageComponent, canActivate: [ LoginAuthGuard ]},
+    {path: 'about', component: AboutPageComponent, canActivate: [ LoginAuthGuard ]},
+    {path: 'contactUs', component: ContactUsPageComponent, canActivate: [ LoginAuthGuard ]},
+    {path: 'branches', component: BranchesPageComponent, canActivate: [ LoginAuthGuard ]},
+    {path: 'gallery', component: GalleryPageComponent, canActivate: [ LoginAuthGuard ]},
+    {path: 'articles', component: ArticlesPageComponent, canActivate: [ LoginAuthGuard ]},
+    {path: 'newsShelter', component: NewsShelterPageComponent, canActivate: [ LoginAuthGuard ]},
+    {path: 'exams', component: ExamsPageComponent, canActivate: [ LoginAuthGuard ]},
     
-    {path:'login', component : LoginComponent, canActivate: [ LoginAuthGuard ]},
+    {path: 'login', component: LoginComponent, canActivate: [ LoginAuthGuard ]},
 
-    {path:'forgot_password', component : ForgotPasswordComponent, canActivate: [ LoginAuthGuard ]},
-    {path:'reset_password', component : ResetPasswordComponent, canActivate: [ LoginAuthGuard ]},
+    {path: 'forgot_password', component: ForgotPasswordComponent, canActivate: [ LoginAuthGuard ]},
+    {path: 'reset_password', component: ResetPasswordComponent, canActivate: [ LoginAuthGuard ]},
     
-    {path:'change_password', component : ChangePasswordComponent, canActivate: [ ChangePassswordGuard ]},
+    {path: 'change_password', component: ChangePasswordComponent, canActivate: [ ChangePassswordGuard ]},
 
-    {path:'admin', component : AdminComponent, canActivate: [ AdminAuthGuard ], canActivateChild: [ AdminAuthGuard ], children: [
+    {path: 'admin', component: AdminComponent, canActivate: [ AdminAuthGuard ], canActivateChild: [ AdminAuthGuard ], children: [
 
-      {path:'', redirectTo: "dashboard", pathMatch: 'full'},
+      {path: '', redirectTo: "dashboard", pathMatch: 'full'},
 
-      {path:'dashboard', component : AdminDashboardComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'dashboard', component: AdminDashboardComponent, canActivate: [ AdminAuthGuard ]},
 
-      {path:'about', redirectTo: "about/aim", pathMatch: 'full'},
-      {path:'about/aim', component : AdminAboutComponent, canActivate: [ AdminAuthGuard ]},
-      {path:'about/aim/edit', component : AdminEditAimComponent, canActivate: [ AdminAuthGuard ]},
-      {path:'about/history', component : AdminHistoryComponent, canActivate: [ AdminAuthGuard ]},
-      {path:'about/history/edit', component : AdminEditHistoryComponent, canActivate: [ AdminAuthGuard ]},
-      {path:'about/philosophy', component : AdminPhilosophyComponent, canActivate: [ AdminAuthGuard ]},
-      {path:'about/philosophy/edit', component : AdminEditPhilosophyComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'about', redirectTo: "about/aim", pathMatch: 'full'},
+      {path: 'about/aim', component: AdminAboutComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'about/aim/edit', component: AdminEditAimComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'about/history', component: AdminHistoryComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'about/history/edit', component: AdminEditHistoryComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'about/philosophy', component: AdminPhilosophyComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'about/philosophy/edit', component: AdminEditPhilosophyComponent, canActivate: [ AdminAuthGuard ]},
       
-      {path:'faculty', component : AdminFacultyComponent, canActivate: [ AdminAuthGuard ]},
-      {path:'faculty/new', component : AdminAddFacultyComponent, canActivate: [ AdminAuthGuard ]},
-      {path:'faculty/:id', component : AdminShowFacultyComponent, canActivate: [ AdminAuthGuard ]},
-      {path:'faculty/:id/edit', component : AdminEditFacultyComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'faculty', component: AdminFacultyComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'faculty/new', component: AdminAddFacultyComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'faculty/:id', component: AdminShowFacultyComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'faculty/:id/edit', component: AdminEditFacultyComponent, canActivate: [ AdminAuthGuard ]},
       
-      {path:'branch', component : AdminBranchComponent, canActivate: [ AdminAuthGuard ]},
-      {path:'branch/new', component : AdminAddBranchComponent, canActivate: [ AdminAuthGuard ]},
-      {path:'branch/:id', component : AdminShowBranchComponent, canActivate: [ AdminAuthGuard ]},
-      {path:'branch/:id/edit', component : AdminEditBranchComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'branch', component: AdminBranchComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'branch/new', component: AdminAddBranchComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'branch/:id', component: AdminShowBranchComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'branch/:id/edit', component: AdminEditBranchComponent, canActivate: [ AdminAuthGuard ]},
       
-      {path:'exams', component : AdminExamComponent, canActivate: [ AdminAuthGuard ]},
-      {path:'exams/new', component : AdminAddExamComponent, canActivate: [ AdminAuthGuard ]},
-      {path:'exams/:id', component : AdminShowExamComponent, canActivate: [ AdminAuthGuard ]},
-      {path:'exams/:id/edit', component : AdminEditExamComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'exams', component: AdminExamComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'exams/new', component: AdminAddExamComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'exams/:id', component: AdminShowExamComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'exams/:id/edit', component: AdminEditExamComponent, canActivate: [ AdminAuthGuard ]},
 
-      {path:'news', component : AdminNewsComponent, canActivate: [ AdminAuthGuard ]},
-      {path:'news/new', component : AdminAddNewsComponent, canActivate: [ AdminAuthGuard ]},
-      {path:'news/:id', component : AdminShowNewsComponent, canActivate: [ AdminAuthGuard ]},
-      {path:'news/:id/edit', component : AdminEditNewsComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'news', component: AdminNewsComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'news/new', component: AdminAddNewsComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'news/:id', component: AdminShowNewsComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'news/:id/edit', component: AdminEditNewsComponent, canActivate: [ AdminAuthGuard ]},
   
-      {path:'gallery', component : AdminGallaryComponent, canActivate: [ AdminAuthGuard ]},
-      {path:'gallery/new', component : AdminAddPhotosComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'gallery', component: AdminGallaryComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'gallery/new', component: AdminAddPhotosComponent, canActivate: [ AdminAuthGuard ]},
       
-      {path:'article', component : AdminArticleComponent, canActivate: [ AdminAuthGuard ]},
-      {path:'article/new', component : AdminAddArticleComponent, canActivate: [ AdminAuthGuard ]},
-      {path:'article/:id', component : AdminShowArticleComponent, canActivate: [ AdminAuthGuard ]},
-      {path:'article/:id/edit', component : AdminEditArticleComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'article', component: AdminArticleComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'article/new', component: AdminAddArticleComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'article/:id', component: AdminShowArticleComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'article/:id/edit', component: AdminEditArticleComponent, canActivate: [ AdminAuthGuard ]},
   
-      {path:'student', component : AdminStudentComponent, canActivate: [ AdminAuthGuard ]},
-      {path:'student/new', component : AdminAddStudentComponent, canActivate: [ AdminAuthGuard ]},
-      {path:'student/:id', component : AdminShowStudentComponent, canActivate: [ AdminAuthGuard ]},
-      {path:'student/:id/edit', component : AdminEditStudentComponent, canActivate: [ AdminAuthGuard ]},
-      {path:'student/:id/generate', component : AdminStudentGenerateReceiptComponent, canActivate: [ AdminAuthGuard ]},
-      {path:'student/:id/receipts', component : AdminStudentReceiptsComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'student', component: AdminStudentComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'student/new', component: AdminAddStudentComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'student/:id', component: AdminShowStudentComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'student/:id/edit', component: AdminEditStudentComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'student/:id/generate', component: AdminStudentGenerateReceiptComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'student/:id/receipts', component: AdminStudentReceiptsComponent, canActivate: [ AdminAuthGuard ]},
       
-      {path:'attendance', component : AdminAttendanceComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'attendance', component: AdminAttendanceComponent, canActivate: [ AdminAuthGuard ]},
   
-      {path:'enquiry', component : AdminEnquiryComponent, canActivate: [ AdminAuthGuard ]},
-      {path:'enquiry/:id', component: AdminShowEnquiryComponent, canActivate: [ AdminAuthGuard ]},
-      {path:'enquiry/:id/reply', component: AdminReplyEnquiryComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'enquiry', component: AdminEnquiryComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'enquiry/:id', component: AdminShowEnquiryComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'enquiry/:id/reply', component: AdminReplyEnquiryComponent, canActivate: [ AdminAuthGuard ]},
       
     ]},
 
-    {path:'student', component: StudentComponent, canActivate: [ StudentAuthGuard ], canActivateChild: [ StudentAuthGuard ], children: [
-      {path:'', redirectTo: "dashboard", pathMatch: 'full'},      
-      {path:'dashboard', component: StudentDashboardComponent, canActivate: [ StudentAuthGuard ]},
-      {path:'attendance', component: StudentAttendanceComponent, canActivate: [ StudentAuthGuard ]},
-      {path:'receipts', component: StudentReceiptsComponent, canActivate: [ StudentAuthGuard ]},
-      {path:'receipt', component: StudentShowReceiptComponent, canActivate: [ StudentAuthGuard ]},
+    {path: 'student', component: StudentComponent, canActivate: [ StudentAuthGuard ], canActivateChild: [ StudentAuthGuard ], children: [
+      {path: '', redirectTo: "dashboard", pathMatch: 'full'},      
+      {path: 'dashboard', component: StudentDashboardComponent, canActivate: [ StudentAuthGuard ]},
+      {path: 'attendance', component: StudentAttendanceComponent, canActivate: [ StudentAuthGuard ]},
+      {path: 'receipts', component: StudentReceiptsComponent, canActivate: [ StudentAuthGuard ]},
+      {path: 'receipt/:id', component: StudentShowReceiptComponent, canActivate: [ StudentAuthGuard ]},
     ]},
     
-    {path:'faculty', component: FacultyComponent, canActivate: [ FacultuAuthGuard ]},
+    {path: 'faculty', component: FacultyComponent, canActivate: [ FacultuAuthGuard ]},
 
-    {path:'page-not-found', component: PageNotFoundComponent},
-    {path:'server-not-found', component: ServerErrorComponent},
-    {path:'**', redirectTo:'page-not-found'}
+    {path: 'page-not-found', component: PageNotFoundComponent},
+    {path: 'server-not-found', component: ServerErrorComponent},
+    {path: '**', redirectTo: 'page-not-found'}
   ];
   
   @NgModule({

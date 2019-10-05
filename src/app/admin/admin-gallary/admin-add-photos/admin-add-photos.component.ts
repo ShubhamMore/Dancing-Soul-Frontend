@@ -14,6 +14,7 @@ export class AdminAddPhotosComponent implements OnInit {
   imagePreview: string[] = [];
   uploadImages: File[] = [];
   loading: boolean = true;
+  error : string = null;
   invalidImage : boolean = false;
 
   constructor(private httpPostService: HttpService,
@@ -60,7 +61,6 @@ export class AdminAddPhotosComponent implements OnInit {
     
     const title = this.form.value.title;
     const postData = new FormData();
-    console.log(this.uploadImages)
     for(let i = 0; i < this.uploadImages.length; i++) {
       postData.append("image", this.uploadImages[i], title+i);
     }
@@ -74,8 +74,7 @@ export class AdminAddPhotosComponent implements OnInit {
       this.cancel();
     },
     (error) => {
-      this.loading = false;
-      console.log(error);
+      this.setError(error)
     });
   }
 
@@ -88,4 +87,13 @@ export class AdminAddPhotosComponent implements OnInit {
     this.loading = true;
     this.router.navigate(['/admin', 'gallery'], {relativeTo:this.route, skipLocationChange:true});
   }
+
+  setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

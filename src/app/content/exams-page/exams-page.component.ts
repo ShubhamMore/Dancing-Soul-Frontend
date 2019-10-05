@@ -9,20 +9,19 @@ import { HttpService } from '../../services/httpPost.service';
 })
 export class ExamsPageComponent implements OnInit {
 
-  exams : ExamModule[] = [];
-  loading : boolean = true;
+  exams: ExamModule[] = [];
+  loading: boolean = true;
 
   constructor(private httpPostService: HttpService) { }
 
   ngOnInit() {
-      const examsData = { api : "getExams", data : {}}
+      const examsData = { api: "getExams", data: {}}
       this.httpPostService.httpPost(examsData).subscribe((val: any) => {
         this.exams = val;
         this.loading = false;
       },
       (error) => {
       });
-   
   }
 
 }

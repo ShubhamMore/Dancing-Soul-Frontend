@@ -15,6 +15,8 @@ export class AdminStudentComponent implements OnInit {
 
   loading: boolean = true;
 
+  error : string = null;
+
   allStudents : StudentModel[] = [];
   students : StudentModel[] = [];
 
@@ -35,7 +37,6 @@ export class AdminStudentComponent implements OnInit {
     this.httpPostService.httpPostAuth(branchData).subscribe((val) => {
 
      this.branches = val;
-     console.log(this.branches)
      if(this.branches.length > 0) {
        const studentData = { api : "getStudents", data : { }}
        this.httpPostService.httpPostAuth(studentData).subscribe((val) => {
@@ -43,6 +44,7 @@ export class AdminStudentComponent implements OnInit {
          this.loading = false;
         },
         (error) => {
+          this.setError(error)
         });
       }
       else {
@@ -50,6 +52,7 @@ export class AdminStudentComponent implements OnInit {
      }
     },
     (error) => {
+      this.setError(error)
     });
   }
 
@@ -62,27 +65,29 @@ export class AdminStudentComponent implements OnInit {
     if(id !== '') {
       this.branch = id;
       this.batches = this.branches.find((branch) => (branch._id === id)).batch;
-      const weekType = this.weekType === "0" ? "Week Day" : "Week End";
-      this.noStudent = 'Please Select ' + weekType + ' Batch';
+      this.onSelectBatchName('');
     }
   }
 
   onSelectBatchName(batch:string) {
+    this.batch = batch;
     if(batch !== '') {
-      this.batch = batch;
       this.searchStudent();
+    }
+    else {
+      this.students = [];
+      this.noStudent = 'Please Select ' + (this.weekType === "0" ? "Week Day" : "Week End") + ' Batch';
     }
   }
 
   onSelectBatchType(weekType:string) {
     if(this.batch !== '') {
       this.weekType = weekType;
-      this.searchStudent();
+      this.onSelectBatchName('');
     }
   }
 
   searchStudent() {
-    console.log(this.allStudents)
     this.loading = true;
     const students : StudentModel[] = [];
     this.allStudents.forEach((student) => {
@@ -99,4 +104,13 @@ export class AdminStudentComponent implements OnInit {
     }
     this.loading = false;
   }
+
+  setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 } 

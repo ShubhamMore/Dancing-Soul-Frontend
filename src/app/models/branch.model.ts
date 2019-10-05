@@ -2,18 +2,18 @@ import { ImageModel } from './image.model';
 
 export class Branch {
 
-    public _id:string; 
-    public branch:string;
-    public city:string;
-    public address:string;
-    public email:string;
-    public phone:string;
-    public description:string;
+    public _id: string; 
+    public branch: string;
+    public city: string;
+    public address: string;
+    public email: string;
+    public phone: string;
+    public description: string;
     public images: ImageModel[];
     public batch: BatchModel[];
     public status: string;
 
-    constructor(id: string, branch:string, city: string ,address:string , email:string , phone:string, description: string, images: ImageModel[], batch: BatchModel[], status: string) {
+    constructor(id: string, branch: string, city: string ,address: string , email: string , phone: string, description: string, images: ImageModel[], batch: BatchModel[], status: string) {
         this._id = id;
         this.city = city;
         this.branch = branch;
@@ -28,14 +28,14 @@ export class Branch {
 }
 
 export class BatchModel {
-    public _id : string;
+    public _id: string;
     public batchType: string;
     public days: string;
     public batchName: string;
     public time: string;
     public fees: string;
     
-    constructor(_id : string, batchType : string, days: string, batchname: string, time: string, fees: string) {
+    constructor(_id: string, batchType: string, days: string, batchname: string, time: string, fees: string) {
         this._id = _id;
         this.batchType = batchType;
         this.days = days;

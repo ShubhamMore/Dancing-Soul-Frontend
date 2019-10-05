@@ -11,6 +11,8 @@ export class AdminHistoryComponent implements OnInit {
   about: AboutModel;
 
   loading: boolean = true;
+  
+  error : string = null;
 
   constructor(private httpPostService: HttpService) { }
 
@@ -21,6 +23,16 @@ export class AdminHistoryComponent implements OnInit {
       this.loading = false;
     },
     (error) => {
+      this.setError(error)
     });  
   }
+  
+	setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

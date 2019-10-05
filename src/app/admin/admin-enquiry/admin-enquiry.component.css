@@ -14,6 +14,10 @@ hr {
     transition: background-color 0.2s;
 }
 
+.unseen-enquiry {
+    background-color: #dbd7d7;
+}
+
 .enquiry:hover {
     background-color: rgba(255, 255, 255, 0.2);
 }

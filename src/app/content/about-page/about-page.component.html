@@ -31,11 +31,11 @@
           <div class="flex-container">
             <div class="faculty-card" *ngFor="let faculty of faculties">
                 <div class="faculty-pic">
-                  <img class="shadow-lg" src="faculty.facultyImage" onerror="this.src='/assets/images/faculty.png'">
+                  <img class="shadow-lg" [src]="faculty.image.secure_url" onerror="this.src='/assets/images/faculty.png'">
                 </div>
                 <div class="faculty-desc">
                   <h5>{{faculty.name}}</h5>
-                  {{faculty.description}}
+                  {{ limitFacultyDescription(faculty.description) }}
                 </div>
             </div>
           </div>

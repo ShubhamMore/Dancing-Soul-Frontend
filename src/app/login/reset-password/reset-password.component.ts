@@ -13,8 +13,8 @@ export class ResetPasswordComponent implements OnInit {
 
   form: FormGroup;
 
-  loading : boolean = true;
-
+  loading: boolean = true;
+  error: string = null;
   token: string;
   user: string;
 
@@ -26,11 +26,11 @@ export class ResetPasswordComponent implements OnInit {
   ngOnInit() {
 
     this.form = new FormGroup({
-      newPassword : new FormControl(null, {
-        validators:[Validators.required]
+      newPassword: new FormControl(null, {
+        validators: [Validators.required]
       }),
-      confirmPassword : new FormControl(null, {
-        validators:[Validators.required]
+      confirmPassword: new FormControl(null, {
+        validators: [Validators.required]
       })
     }); 
 
@@ -42,8 +42,7 @@ export class ResetPasswordComponent implements OnInit {
       else {
         this.token = params.token;
         localStorage.setItem("access_token", this.token);
-        const data = { api : "validateToken", data : { token : this.token }}
-        console.log(data)
+        const data = { api: "validateToken", data: { token: this.token }}
         this.httpPostService.httpPost(data).subscribe((val) => {
           
           if(val.valid_token) {
@@ -54,7 +53,7 @@ export class ResetPasswordComponent implements OnInit {
          }
         },
         (error) => {
-        
+          this.setError(error);
         });
       }
     });
@@ -67,20 +66,28 @@ export class ResetPasswordComponent implements OnInit {
       this.loading = true;
 
       const resetPassword = {
-        // user : this.user,
-        password : this.form.value.newPassword,
-        token : this.token
+        // user: this.user,
+        password: this.form.value.newPassword,
+        token: this.token
       }
 
-      const data = { api : "resetPassword", data : resetPassword }
-      console.log(data)
+      const data = { api: "resetPassword", data: resetPassword }
       this.httpPostService.httpPost(data).subscribe((val) => {
        this.form.reset();
        this.router.navigate(["/login"], {relativeTo: this.roure});
       },
       (error) => {
-       this.loading = false;
+        this.setError(error);
       });
     }
+  }
+
+  setError(err: string) {
+    this.error = err;
+    this.loading = false;
+  }
+
+  clearErr() {
+    this.error = null;
   }
 }

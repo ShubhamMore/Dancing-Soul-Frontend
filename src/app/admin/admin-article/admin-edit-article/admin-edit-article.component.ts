@@ -17,6 +17,8 @@ export class AdminEditArticleComponent implements OnInit {
   id:string;
 
   loading : boolean = true;
+  
+  error : string = null;
 
   imgExt: string[] = ['jpg', 'png'];
   
@@ -54,6 +56,7 @@ export class AdminEditArticleComponent implements OnInit {
           this.loading = false;
         },
         (error) => {
+          this.setError(error)
         });
       }
     );
@@ -77,7 +80,7 @@ export class AdminEditArticleComponent implements OnInit {
        this.cancel();
       },
       (error) => {
-      this.loading = false;   
+        this.setError(error)          
       });
     }
   }
@@ -86,4 +89,13 @@ export class AdminEditArticleComponent implements OnInit {
     this.loading = true;
     this.router.navigate(['/admin', 'article', this.article._id],{relativeTo: this.route, skipLocationChange:true});
   }
+
+	setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

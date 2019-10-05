@@ -1,31 +1,43 @@
 <img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
 
-<div class="row mt-2" *ngIf="!loading">
-  <div class="col-12 mx-auto">
-    <h3>Enquiries..</h3>
-    <hr>
-    <div class="table-responsive" *ngIf="enquiries.length > 0; else empty_enquiries">
-      <table class="table table-sm">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Message</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="enquiry" *ngFor="let enquiry of enquiries, let i = index" [routerLink]="enquiry._id" routerLinkActive="active" skipLocationChange>
-            <td>{{ i+1 }}</td>
-            <td>{{ enquiry.name }}</td>
-            <td class="email">{{ enquiry.email }}</td>
-            <td>{{ limitData(enquiry.message) }}</td>
-          </tr>
-        </tbody>
-      </table>
+<div class="row" *ngIf="!loading">
+  <div class="col-12">
+    <div class="row mt-2" *ngIf="!!error">
+      <div class="col-10 mx-auto">
+      <div class="alert alert-danger alert-dismissible">
+        <button type="button" class="close" (click)="clearError()" data-dismiss="alert">&times;</button>
+        <span>{{error}}</span>
+      </div>
+      </div>
     </div>
-    <ng-template #empty_enquiries>
-      <h5 class="pl-3">No Enquiries Available..</h5>
-    </ng-template>
+    <div class="row mt-2">
+      <div class="col-12 mx-auto">
+        <h3>Enquiries..</h3>
+        <hr>
+        <div class="table-responsive" *ngIf="enquiries.length > 0; else empty_enquiries">
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Message</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="enquiry" [ngClass]="{'unseen-enquiry': enquiry.seen == '0'}" *ngFor="let enquiry of enquiries, let i = index" [routerLink]="enquiry._id" routerLinkActive="active" skipLocationChange>
+                <td>{{ i+1 }}</td>
+                <td>{{ enquiry.name }}</td>
+                <td class="email">{{ enquiry.email }}</td>
+                <td>{{ limitData(enquiry.message) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <ng-template #empty_enquiries>
+          <h5 class="pl-3">No Enquiries Available..</h5>
+        </ng-template>
+      </div>
+    </div>
   </div>
 </div>

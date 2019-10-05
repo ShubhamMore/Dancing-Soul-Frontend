@@ -13,21 +13,36 @@ export class StudentReceiptsComponent implements OnInit {
   receipts: ReceiptModule[] = [];
 
   loading: boolean = true;
-
-  studentId : string;
+  error: string = null;
+  studentId: string;
 
   constructor(private httpPostService: HttpService,
               private route: ActivatedRoute,
               private router: Router) { }
-
+                         
   ngOnInit() {
     this.route.queryParams.
     subscribe(
       (params: Params) => {
-        const _id = params["id"];
-        console.log(_id)
-        this.loading = false;
+        this.studentId = params['id'];
+        const data = { api: "getReceipts", data: { student: this.studentId }}
+        this.httpPostService.httpPostAuth(data).subscribe((val) => {
+         this.receipts = val;
+         this.loading = false;
+        },
+        (error) => {
+          this.setError(error);
+        });
       }
     );
   }
+	
+	setError(err: string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

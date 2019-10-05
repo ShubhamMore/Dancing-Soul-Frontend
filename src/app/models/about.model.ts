@@ -1,6 +1,6 @@
 export class AboutModel {
-    public _id : string;
-    public aim : string;
+    public _id: string;
+    public aim: string;
     public history: string;
     public philosophy: string;
     constructor(_id: string, aim: string, history: string, philosophy: string) {

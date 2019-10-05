@@ -15,11 +15,16 @@ export class AdminAddFacultyComponent implements OnInit {
 
   loading: boolean = true;
 
+  error : string = null;
+
   formError: boolean = false;
 
-  imgExt: string[] = ['jpg', 'png'];
+  imagePreview: string = null;
+  uploadImage: File = null;
 
-  image: string;
+  invalidImage : boolean = false;
+
+  imgExt: string[] = ['jpg', 'png'];
 
   constructor(private httpPostService: HttpService,
               private formValidator: FormValidator,
@@ -27,8 +32,6 @@ export class AdminAddFacultyComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-
-    this.image = "https://img.icons8.com/color/1600/circled-user-male-skin-type-1-2.png";
 
     this.form = new FormGroup({
       name: new FormControl(null, {
@@ -45,9 +48,6 @@ export class AdminAddFacultyComponent implements OnInit {
       }),
       description: new FormControl(null, {
         validators: [Validators.required]
-      }),
-      image: new FormControl(null, {
-        validators:[this.formValidator.imageValidate.bind(this)]
       })
     });
 
@@ -63,54 +63,68 @@ export class AdminAddFacultyComponent implements OnInit {
     if(this.form.valid) {
       this.formError = false;
       this.loading = true;
-      
-      const faculty = {
-        name : this.form.value.name, 
-        birthDate : this.form.value.birthDate, 
-        description : this.form.value.description, 
-        image : this.image,
-        email: this.form.value.email, 
-        phone : this.form.value.phone, 
-        status : "1"
-      }
 
-      const user = {
-        email : faculty.email,
-        password : faculty.phone,
-        userType : "faculty"
+      const faculty = new FormData();
+      faculty.append("name", this.form.value.name);
+      faculty.append("birthDate", this.form.value.birthDate);
+      faculty.append("description", this.form.value.description);
+      faculty.append("email", this.form.value.email);
+      faculty.append("phone", this.form.value.phone);
+      faculty.append("status", "1");
+
+      if(this.uploadImage) {
+        faculty.append("image", this.uploadImage, "faculty");
       }
       
-      const data = { api : "addFaculty", data : {faculty, user} }
+      const data = { api : "addFaculty", data : faculty }
       this.httpPostService.httpPostAuth(data).subscribe((val) => {
         this.form.reset();
         this.cancel();
       },(error) => {
-        this.loading = false;
+        this.setError(error)
       });
     }
   }
 
-  onImagePicked(event: any) {
-    const file: File = event.target.files[0];
-    if (file) {
-
-      const ext : string = file.name.substring(file.name.lastIndexOf('.') + 1);
-      if(!(this.imgExt.indexOf(ext)!=-1)) {
-        return;
+  onImagePicked(event: Event) {
+    const files = (event.target as HTMLInputElement).files;
+    const imgExt : string[] = ["jpg", "png"];
+    let ext : string = null;
+    for(let i = 0; i < files.length; i++) {
+      ext = files[i].name.substring(files[i].name.lastIndexOf('.') + 1);
+      if(!(imgExt.indexOf(ext)!=-1)) {
+        return this.invalidImage = true;
       }
-
-      let reader = new FileReader();
-
-      reader.onload = (event: any) => {
-        this.image = event.target.result; 
-      }
-      reader.readAsDataURL(file);
     }
+    this.invalidImage = false;
+    for(let i = 0; i < files.length; i++) {
+      this.uploadImage = files[i];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = <string>reader.result;
+      };
+      reader.readAsDataURL(files[i]);
+    }
+  }
+
+  cancelImage() {
+    this.imagePreview = null;
+    this.uploadImage = null;
+    this.invalidImage = false;
   }
   
   cancel() {
     this.loading = true;
     this.router.navigate(['/admin', 'faculty'], {relativeTo:this.route, skipLocationChange:true});
   }
+
+  setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 
 }

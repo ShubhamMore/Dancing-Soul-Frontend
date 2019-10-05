@@ -14,7 +14,7 @@ export class ForgotPasswordComponent implements OnInit {
 
   loginAuth: boolean = true;
 
-  loading : boolean = true;
+  loading: boolean = true;
 
   linkSend: boolean = false;
 
@@ -24,8 +24,8 @@ export class ForgotPasswordComponent implements OnInit {
   ngOnInit() {
 
     this.form = new FormGroup({
-      forgotPassword : new FormControl(null, {
-        validators:[Validators.required]
+      forgotPassword: new FormControl(null, {
+        validators: [Validators.required]
       })
     }); 
 
@@ -40,7 +40,7 @@ export class ForgotPasswordComponent implements OnInit {
     if(this.form.valid) {
       this.loginAuth = true;
       this.loading = true;
-      const data = { api : "forgotPassword", data : { email : this.form.value.forgotPassword }}
+      const data = { api: "forgotPassword", data: { email: this.form.value.forgotPassword }}
       this.httpPostService.httpPost(data).subscribe((val) => {
        this.linkSend = true;
        this.loading = false;

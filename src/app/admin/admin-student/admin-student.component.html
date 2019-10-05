@@ -1,87 +1,91 @@
 <img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
 
-<div class="row mt-2" *ngIf="!loading">
-  <div class="col-12 mx-auto">
-    <div class="row">
-      <div class="col-md-6 col-sm-12">
-        <h3>Students</h3>
+<div class="row" *ngIf="!loading">
+  <div class="col-12">
+    <div class="row mt-2" *ngIf="!!error">
+      <div class="col-10 mx-auto">
+      <div class="alert alert-danger alert-dismissible">
+        <button type="button" class="close" (click)="clearError()" data-dismiss="alert">&times;</button>
+        <span>{{error}}</span>
       </div>
-      <div class="col-md-6 col-sm-12">
-        <button class="new-btn float-right" (click)="onNewStudent()">Add New student</button>
       </div>
     </div>
-    <hr>
-    <div class="row">
-      <div class="col-md-4 col-sm-12">
-        <select class="branch" type="text" name="branch" id="branch" ngModel #branch="ngModel" required (change)="onSelectBranch(branch.value)">
-          <option value="">Select Branch</option>
-          <option *ngFor="let branch of branches" [value]="branch._id">{{branch.branch}}</option>
-      </select>
-      </div>
-      <div class="col-md-4 col-sm-12">
-        <select class="batchName" type="text" name="batchName" id="batchName" ngModel #batchName="ngModel" required (change)="onSelectBatchName(batchName.value)">
-          <option value="">Select Batch Name</option>
-          <ng-container *ngFor="let batch of batches">
-            <option [value]="batch._id" *ngIf="batch.batchType === weekType">{{batch.batchName}}</option>
-          </ng-container>
-      </select>
-      </div>
-      <div class="col-md-4 col-sm-12">
-        <select class="batchType" type="text" name="batchType" id="batchType" [(ngModel)]="weekType" #batchType="ngModel" (change)="onSelectBatchType(batchType.value)">
-          <option value="0">Week Day</option>
-          <option value="1">Week End</option>
-      </select>
-      </div>
-      <!-- <div class="col-md-3 col-sm-12">
-        <div class="input-group mb-3">
-          <input type="text" placeholder="Search" id="search" name="search" ngModel #search="ngModel" (input)="onSearch(search.value)">
-          <div class="input-group-append">
-            <button class="btn-search" type="submit" [disabled]="search == ''" (click)="onSearch(search.value)">Go</button> 
+    <div class="row mt-2">
+      <div class="col-12 mx-auto">
+        <div class="row">
+          <div class="col-md-6 col-sm-12">
+            <h3>Students</h3>
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <button class="new-btn float-right" (click)="onNewStudent()">Add New student</button>
           </div>
         </div>
-      </div> -->
-    </div>
-    <br>
-    <div class="row" *ngIf="students.length > 0; else empty_students">
-      <div class="table-responsive">
-        <table class="table table-sm table-hover">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Student</th>
-              <th>Contact</th>
-              <th>Status</th>
-              <th>Pay Fees</th>
-              <th>Receipts</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="student-tr" *ngFor="let student of students, let i = index" routerLinkActive="active">
-              <td>{{ i+1 }}</td>
-              <td>
-                <a [routerLink]="student._id" class="student" skipLocationChange>
-                  {{ student.name }}
-                </a>
-              </td>
-              <td>
-                +91 {{ student.phone }}
-              </td>
-              <td>
-                {{ student.status == "1" ? "ACTIVATED" : "DEACTIVATED" }}
-              </td>
-              <td>
-                <button type="button" [routerLink]="[student._id, 'generate']" class="btn-edit" skipLocationChange>Pay Fees</button>                
-              </td>
-              <td>
-                <button type="button" [routerLink]="[student._id, 'receipts']" class="btn-edit" skipLocationChange>Receipts</button>                
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <hr>
+        <div class="row">
+          <div class="col-md-4 col-sm-12">
+            <select class="branch" type="text" name="branch" id="branch" ngModel #branch="ngModel" required (change)="onSelectBranch(branch.value)">
+              <option value="">Select Branch</option>
+              <option *ngFor="let branch of branches" [value]="branch._id">{{branch.branch}}</option>
+          </select>
+          </div>
+          <div class="col-md-4 col-sm-12">
+            <select class="batchName" type="text" name="batchName" id="batchName" ngModel #batchName="ngModel" required (change)="onSelectBatchName(batchName.value)">
+              <option value="">Select Batch Name</option>
+              <ng-container *ngFor="let batch of batches">
+                <option [value]="batch._id" *ngIf="batch.batchType === weekType">{{batch.batchName}}</option>
+              </ng-container>
+          </select>
+          </div>
+          <div class="col-md-4 col-sm-12">
+            <select class="batchType" type="text" name="batchType" id="batchType" [(ngModel)]="weekType" #batchType="ngModel" (change)="onSelectBatchType(batchType.value)">
+              <option value="0">Week Day</option>
+              <option value="1">Week End</option>
+          </select>
+          </div>
+        </div>
+        <br>
+        <div class="row" *ngIf="students.length > 0; else empty_students">
+          <div class="table-responsive">
+            <table class="table table-sm table-hover">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Student</th>
+                  <th>Contact</th>
+                  <th>Status</th>
+                  <th>Pay Fees</th>
+                  <th>Receipts</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="student-tr" *ngFor="let student of students, let i = index" routerLinkActive="active">
+                  <td>{{ i+1 }}</td>
+                  <td>
+                    <a [routerLink]="student._id" class="student" skipLocationChange>
+                      {{ student.name }}
+                    </a>
+                  </td>
+                  <td>
+                    +91 {{ student.phone }}
+                  </td>
+                  <td>
+                    {{ student.status == "1" ? "ACTIVATED" : "DEACTIVATED" }}
+                  </td>
+                  <td>
+                    <button type="button" [routerLink]="[student._id, 'generate']" class="btn-edit" skipLocationChange>Pay Fees</button>                
+                  </td>
+                  <td>
+                    <button type="button" [routerLink]="[student._id, 'receipts']" class="btn-edit" skipLocationChange>Receipts</button>                
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <ng-template #empty_students>
+          <h5 class="pl-3">{{noStudent}}</h5>
+        </ng-template>
       </div>
     </div>
-    <ng-template #empty_students>
-      <h5 class="pl-3">{{noStudent}}</h5>
-    </ng-template>
   </div>
 </div>

@@ -15,6 +15,8 @@ export class AdminShowEnquiryComponent implements OnInit {
 
   loading : boolean = true;
 
+  error : string = null;
+
   constructor(private httpPostService: HttpService,
               private router: Router,
               private route: ActivatedRoute) { }
@@ -27,10 +29,18 @@ export class AdminShowEnquiryComponent implements OnInit {
         
         const data = { api : "getEnquiry", data : { _id }}
         this.httpPostService.httpPostAuth(data).subscribe((val) => {
-         this.enquiry = val;
-         this.loading = false;
+          this.enquiry = val;
+
+          const data = { api : "enquirySeen", data : { _id }}
+          this.httpPostService.httpPostAuth(data).subscribe((val) => {
+            this.loading = false;
+          },
+          (error) => {
+            this.setError(error)            
+          });
         },
         (error) => {
+          this.setError(error)
         });
       }
     );
@@ -40,4 +50,13 @@ export class AdminShowEnquiryComponent implements OnInit {
     this.loading = true;
     this.router.navigate(['/admin', 'enquiry'], {relativeTo: this.route, skipLocationChange: true});
   }
+  
+	setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

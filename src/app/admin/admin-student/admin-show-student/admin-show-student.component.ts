@@ -15,6 +15,8 @@ export class AdminShowStudentComponent implements OnInit {
 
   loading : boolean = true;
 
+  error : string = null;
+
   branch : Branch;
 
   batch: BatchModel;
@@ -39,9 +41,11 @@ export class AdminShowStudentComponent implements OnInit {
            this.loading = false;
          },
          (error) => {
+           this.setError(error)
          });
         },
         (error) => {
+          this.setError(error)
         });
         }
       );
@@ -62,7 +66,21 @@ export class AdminShowStudentComponent implements OnInit {
        this.cancel();
       },
       (error) => {
-       this.loading = false;
+        this.setError(error)
+      });
+    }
+  }
+
+  deleteStudent() {
+    const password = prompt("Please enter your Password");
+    if(password) {
+      this.loading = true;
+      const data = { api : "deleteStudent", data : { _id: this.student._id, password }}
+      this.httpPostService.httpPostAuth(data).subscribe((val) => {
+        this.cancel();
+      },
+      (error) => {
+        this.setError(error)
       });
     }
   }
@@ -71,4 +89,13 @@ export class AdminShowStudentComponent implements OnInit {
     this.loading = true;
     this.router.navigate(['/admin', 'student'], {relativeTo: this.route, skipLocationChange:true});
   }
+
+  setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

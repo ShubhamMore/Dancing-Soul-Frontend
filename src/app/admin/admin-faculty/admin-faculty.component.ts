@@ -13,6 +13,8 @@ export class AdminFacultyComponent implements OnInit {
   faculties : Faculty[] = [];
 
   loading: boolean = true;
+
+  error : string = null;
   
   constructor(private httpPostService: HttpService,
               private router: Router,
@@ -22,11 +24,10 @@ export class AdminFacultyComponent implements OnInit {
     const data = { api : "getFaculties", data : {}}
     this.httpPostService.httpPostAuth(data).subscribe((val: any) => {
       this.faculties = val;
-      console.log(this.faculties);
       this.loading = false;
     },
     (error) => {
-      // this.router.navigate(["/server-not-found"], {relativeTo:this.route});
+      this.setError(error)
     });
   }
 
@@ -34,4 +35,13 @@ export class AdminFacultyComponent implements OnInit {
     this.loading = true;
     this.router.navigate(['new'], {relativeTo:this.route, skipLocationChange:true});
   }
+
+  setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

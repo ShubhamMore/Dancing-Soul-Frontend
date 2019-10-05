@@ -1,178 +1,190 @@
   <img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
 
-  <div class="row mt-2" *ngIf="!loading">
-    <div class="col-10 mx-auto">
-
-      <div class="error" *ngIf="error">
-        <div class="row">
-          <div class="col-12">
-            <div class="alert alert-danger alert-dismissible">
-              <button type="button" class="close" (click)="alertDismiss()" data-dismiss="alert">&times;</button>
-              <span>{{error}}</span>
-            </div>
-          </div>
+  <div class="row" *ngIf="!loading">
+    <div class="col-12">
+      <div class="row mt-2" *ngIf="!!error">
+        <div class="col-10 mx-auto">
+        <div class="alert alert-danger alert-dismissible">
+          <button type="button" class="close" (click)="clearError()" data-dismiss="alert">&times;</button>
+          <span>{{error}}</span>
+        </div>
         </div>
       </div>
-
-      <div class="branch">
-        <div class="row">
-          <div class="col-12">
-            <button class="btn-close float-right" (click)="cancel()">&#215;</button>
-            <h3 class="text-center"><strong>{{branch.branch}}</strong> - {{branch.city}}</h3>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-12">
-            <div *ngIf="images.length > 0; else noImages">
-                <strong>Images : </strong>
-                <div class="row">
-                    <span class="m-2" *ngFor="let image of images; let i = index;">
-                        <div class="image-container" >
-                            <img [src]="image.secure_url" class="image" [alt]="image.image_name">
-                            <div class="middle" *ngIf="image.public_id !== 'shared/1569750534235'">
-                                <a class="delete" (click)="deleteImage(image.public_id)"><i class="fa fa-trash-o trash"></i></a>
-                            </div>
-                        </div>
-                    </span>
+      <div class="row mt-2">
+        <div class="col-10 mx-auto">
+    
+          <div class="error" *ngIf="error">
+            <div class="row">
+              <div class="col-12">
+                <div class="alert alert-danger alert-dismissible">
+                  <button type="button" class="close" (click)="alertDismiss()" data-dismiss="alert">&times;</button>
+                  <span>{{error}}</span>
                 </div>
-            </div>
-            <ng-template #noImages><p>No Images Available</p></ng-template>   
-          </div>
-        </div>
-
-        <hr>
-
-        <div class="row">
-          <div class="col-12">
-            <div class="table-responsive">
-              <table class="table table-sm">
-                <tbody>
-                  <tr>
-                    <td>
-                      <strong>Description : </strong>
-                    </td>
-                    <td>
-                      <p>{{branch.description}}</p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <strong>Address : </strong>
-                    </td>
-                    <td>
-                      <p>{{branch.address}}</p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <strong><em>e</em>-mail : </strong>
-                    </td>
-                    <td>
-                      <p><a href="mailto:{{branch.email}}">{{branch.email}}</a></p>   
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <strong>Phone : </strong>
-                    </td>
-                    <td>
-                      <p>+91 {{branch.phone}}</p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colspan="2">
-                      <strong>Schedule : </strong>
-                    </td>
-                  </tr>
-                  <tr *ngIf="isWeekDays()">
-                    <td>
-                    </td>
-                    <td>
-                      <div class="row">
-                        <strong>Week Day : </strong>
-                      </div>
-                      <div class="row table-responsive p-1">
-                        <table class="table table-sm">
-                          <thead class="text-center">
-                            <th>Batch</th>
-                            <th>Timming</th>
-                            <th>Fees</th>
-                            <th>Days</th>
-                          </thead>
-                          <tbody>
-                            <ng-container *ngFor="let batch of batches">
-                              <tr class="p-1 text-center" *ngIf="batch.batchType === '0'">
-                                <td class="text-left">{{batch.batchName}}</td>
-                                <td>{{batch.time}}</td>
-                                <td>{{batch.fees}}</td>
-                                <td>{{batch.days}}</td>
-                              </tr>
-                            </ng-container>
-                          </tbody>
-                        </table>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr *ngIf="isWeekEnds()">
-                    <td>
-                    </td>
-                    <td>
-                      <div class="row">
-                        <strong>Week End : </strong>
-                      </div>
-                      <div class="row table-responsive p-1">
-                        <table class="table table-sm">
-                          <thead class="text-center">
-                            <th>Batch</th>
-                            <th>Timming</th>
-                            <th>Fees</th>
-                            <th>Days</th>
-                          </thead>
-                          <tbody>
-                            <ng-container *ngFor="let batch of batches">
-                              <tr class="p-1 text-center" *ngIf="batch.batchType === '1'">
-                                <td class="text-left">{{batch.batchName}}</td>
-                                <td>{{batch.time}}</td>
-                                <td>{{batch.fees}}</td>
-                                <td>{{batch.days}}</td>
-                              </tr>
-                            </ng-container>
-                          </tbody>
-                        </table>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <strong>Status : </strong>
-                    </td>
-                    <td>
-                      <p>{{ branch.status == "1" ? "ACTIVATED" : "DEACTIVATED" }}</p>              
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              </div>
             </div>
           </div>
-        </div>
-        
-        <hr>
-        
-        <div class=".row">
-          <div class="col-12">
-            <button class="btn-edit" (click)="editBranch()">Edit</button>
-            <button class="btn-deactivate float-right" (click)="changeStatus(branch._id, '0')" *ngIf="branch.status === '1'">Deactivate</button>
-            <button class="btn-activate float-right" (click)="changeStatus(branch._id, '1')" *ngIf="branch.status === '0'">Activate</button>
-          </div>
-        </div>
-
-        <hr>
-        
-        <div class="row">
-          <div class="col-12">
-            <button class="btn-delete float-right" (click)="deleteBranch(branch._id)">Delete</button>
-            <h6>Delete this Branch</h6>
+    
+          <div class="branch">
+            <div class="row">
+              <div class="col-12">
+                <button class="btn-close float-right" (click)="cancel()">&#215;</button>
+                <h3 class="text-center"><strong>{{branch.branch}}</strong> - {{branch.city}}</h3>
+              </div>
+            </div>
+    
+            <div class="row">
+              <div class="col-12">
+                <div *ngIf="images.length > 0; else noImages">
+                    <strong>Images : </strong>
+                    <div class="row">
+                        <span class="m-2" *ngFor="let image of images; let i = index;">
+                            <div class="image-container" >
+                                <img [src]="image.secure_url" class="image" [alt]="image.image_name">
+                                <div class="middle" *ngIf="image.public_id !== 'shared/1569750534235'">
+                                    <a class="delete" (click)="deleteImage(image.public_id)"><i class="fa fa-trash-o trash"></i></a>
+                                </div>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+                <ng-template #noImages><p>No Images Available</p></ng-template>   
+              </div>
+            </div>
+    
+            <hr>
+    
+            <div class="row">
+              <div class="col-12">
+                <div class="table-responsive">
+                  <table class="table table-sm">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <strong>Description : </strong>
+                        </td>
+                        <td>
+                          <p>{{branch.description}}</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <strong>Address : </strong>
+                        </td>
+                        <td>
+                          <p>{{branch.address}}</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <strong><em>e</em>-mail : </strong>
+                        </td>
+                        <td>
+                          <p><a href="mailto:{{branch.email}}">{{branch.email}}</a></p>   
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <strong>Phone : </strong>
+                        </td>
+                        <td>
+                          <p>+91 {{branch.phone}}</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="2">
+                          <strong>Schedule : </strong>
+                        </td>
+                      </tr>
+                      <tr *ngIf="isWeekDays()">
+                        <td>
+                        </td>
+                        <td>
+                          <div class="row">
+                            <strong>Week Day : </strong>
+                          </div>
+                          <div class="row table-responsive p-1">
+                            <table class="table table-sm">
+                              <thead class="text-center">
+                                <th>Batch</th>
+                                <th>Timming</th>
+                                <th>Fees</th>
+                                <th>Days</th>
+                              </thead>
+                              <tbody>
+                                <ng-container *ngFor="let batch of batches">
+                                  <tr class="p-1 text-center" *ngIf="batch.batchType === '0'">
+                                    <td class="text-left">{{batch.batchName}}</td>
+                                    <td>{{batch.time}}</td>
+                                    <td>{{batch.fees}}</td>
+                                    <td>{{batch.days}}</td>
+                                  </tr>
+                                </ng-container>
+                              </tbody>
+                            </table>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr *ngIf="isWeekEnds()">
+                        <td>
+                        </td>
+                        <td>
+                          <div class="row">
+                            <strong>Week End : </strong>
+                          </div>
+                          <div class="row table-responsive p-1">
+                            <table class="table table-sm">
+                              <thead class="text-center">
+                                <th>Batch</th>
+                                <th>Timming</th>
+                                <th>Fees</th>
+                                <th>Days</th>
+                              </thead>
+                              <tbody>
+                                <ng-container *ngFor="let batch of batches">
+                                  <tr class="p-1 text-center" *ngIf="batch.batchType === '1'">
+                                    <td class="text-left">{{batch.batchName}}</td>
+                                    <td>{{batch.time}}</td>
+                                    <td>{{batch.fees}}</td>
+                                    <td>{{batch.days}}</td>
+                                  </tr>
+                                </ng-container>
+                              </tbody>
+                            </table>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <strong>Status : </strong>
+                        </td>
+                        <td>
+                          <p>{{ branch.status == "1" ? "ACTIVATED" : "DEACTIVATED" }}</p>              
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            
+            <hr>
+            
+            <div class=".row">
+              <div class="col-12">
+                <button class="btn-edit" (click)="editBranch()">Edit</button>
+                <button class="btn-deactivate float-right" (click)="changeStatus(branch._id, '0')" *ngIf="branch.status === '1'">Deactivate</button>
+                <button class="btn-activate float-right" (click)="changeStatus(branch._id, '1')" *ngIf="branch.status === '0'">Activate</button>
+              </div>
+            </div>
+    
+            <hr>
+            
+            <div class="row">
+              <div class="col-12">
+                <button class="btn-delete float-right" (click)="deleteBranch(branch._id)">Delete</button>
+                <h6>Delete this Branch</h6>
+              </div>
+            </div>
           </div>
         </div>
       </div>

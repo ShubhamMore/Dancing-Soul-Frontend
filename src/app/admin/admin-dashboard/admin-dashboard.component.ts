@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpService } from '../../services/httpPost.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -7,9 +9,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminDashboardComponent implements OnInit {
 
-  constructor() { }
+  loading : boolean = true;
+
+  error : string = null;
+
+  enquiries : number;
+
+  constructor(private httpPostService: HttpService,
+              private router: Router,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
+    const data = { api : "getUnseenEnquiries", data : { }}
+    this.httpPostService.httpPostAuth(data).subscribe((val) => {
+      this.enquiries = val.unseenEnquiries;
+      this.loading = false;
+    },
+    (error) => {
+      this.setError(error);
+    });
   }
+	
+	setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 
 }

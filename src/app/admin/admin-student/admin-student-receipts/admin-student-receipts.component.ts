@@ -14,6 +14,8 @@ export class AdminStudentReceiptsComponent implements OnInit {
 
   loading: boolean = true;
 
+  error : string = null;
+
   studentId : string;
 
   constructor(private httpPostService: HttpService,
@@ -26,11 +28,12 @@ export class AdminStudentReceiptsComponent implements OnInit {
       (params: Params) => {
         this.studentId = params['id'];
         const data = { api : "getReceipts", data : { student : this.studentId }}
-        this.httpPostService.httpPost(data).subscribe((val) => {
+        this.httpPostService.httpPostAuth(data).subscribe((val) => {
          this.receipts = val;
          this.loading = false;
         },
         (error) => {
+          this.setError(error)
         });
       }
     );
@@ -43,16 +46,9 @@ export class AdminStudentReceiptsComponent implements OnInit {
       const data = { api : "deleteReceipt", data : { _id }}
       this.httpPostService.httpPostAuth(data).subscribe((val) => {
         this.ngOnInit();
-        // const data = { api : "getReceipts", data : { student : this.studentId }}
-        // this.httpPostService.httpPost(data).subscribe((val) => {
-        //   this.receipts = val;
-        //   this.loading = false;
-      //   },
-      //   (error) => {              
-      //   });
       },
       (error) => {
-       this.loading = false;
+        this.setError(error)
       });
     }
   }
@@ -61,4 +57,13 @@ export class AdminStudentReceiptsComponent implements OnInit {
     this.loading = true;
     this.router.navigate(['/admin', 'student'], {relativeTo: this.route, skipLocationChange:true});
   }
+
+  setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

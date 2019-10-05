@@ -14,6 +14,8 @@ export class AdminBranchComponent implements OnInit {
 
     loading : boolean = true;
 
+    error : string = null;
+
     constructor(private httpPostService: HttpService,
                 private router: Router,
                 private route: ActivatedRoute) { }
@@ -25,7 +27,8 @@ export class AdminBranchComponent implements OnInit {
          this.branches = val;
          this.loading = false;
         },
-        (error) => {        
+        (error) => { 
+            this.setError(error)       
         });
     }
 
@@ -33,4 +36,13 @@ export class AdminBranchComponent implements OnInit {
         this.loading = true;
         this.router.navigate(['new'], {relativeTo:this.route, skipLocationChange: true});
     }
+    
+	setError(err : string) {
+		this.error = err;
+		this.loading = false;
+	}
+
+	clearErr() {
+		this.error = null;
+	}
 }

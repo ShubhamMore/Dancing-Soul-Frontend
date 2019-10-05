@@ -1,3 +1,38 @@
-<p>
-  student-show-receipt works!
-</p>
+<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
+
+<div class="row" *ngIf="!loading">
+  <div class="col-12">
+    <div class="row mt-2" *ngIf="!!error">
+      <div class="col-10 mx-auto">
+        <div class="alert alert-danger alert-dismissible">
+          <button type="button" class="close" (click)="clearError()" data-dismiss="alert">&times;</button>
+            <span>{{error}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-10 mx-auto">
+        <div class="student">
+          <div class="row">
+            <div class="col-12">
+              <h2 class="text-center">
+                <strong>Receipt</strong>
+              </h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="receipt">
+                <p>We Dancing Soul Acadamy received Rs. {{receipt.amount}} payment of {{receipt.months}} month/s, from our student Mr/Ms. {{student.name}}, {{student.weekType === "0" ? "Week Days":"Week Ends" }} {{batch.batchName}} Batch of {{branch.branch}} Branch.</p>
+                <hr>
+                <button class="btn-print float-right" type="button" (click)="print()">Print</button>
+              </div>
+            </div>
+          </div>
+    
+        </div>
+         
+      </div>
+    </div>
+  </div>
+</div>
