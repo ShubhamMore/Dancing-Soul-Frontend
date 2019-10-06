@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { StudentModel } from '../../models/student.model';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Branch, BatchModel } from '../../models/branch.model';
-import { HttpService } from '../../services/httpPost.service';
+import { BranchModel, BatchModel } from '../../models/branch.model';
+import { BranchService } from '../../services/branch.service';
+import { StudentService } from '../../services/student.service';
 
 @Component({
   selector: 'app-admin-student',
@@ -14,103 +15,89 @@ export class AdminStudentComponent implements OnInit {
   weekType = "0";
 
   loading: boolean = true;
+  error: string = null;
 
-  error : string = null;
-
-  allStudents : StudentModel[] = [];
-  students : StudentModel[] = [];
+  students: StudentModel[] = [];
 
   noStudent = 'Please Select Branch';
 
-  branches: Branch[] = [];
-  branch : string = '';
+  branches: BranchModel[] = [];
+  branch: string = '';
 
   batches: BatchModel[] = [];
   batch: string = '';
 
-  constructor(private httpPostService: HttpService,
+  constructor(private branchService: BranchService,
+              private studentService: StudentService,
               private router: Router,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    const branchData = { api : "getBranches", data : { }}
-    this.httpPostService.httpPostAuth(branchData).subscribe((val) => {
-
-     this.branches = val;
-     if(this.branches.length > 0) {
-       const studentData = { api : "getStudents", data : { }}
-       this.httpPostService.httpPostAuth(studentData).subscribe((val) => {
-         this.allStudents = val;
-         this.loading = false;
-        },
-        (error) => {
-          this.setError(error)
-        });
+    this.branchService.getBranches()
+    .subscribe((responce: BranchModel[]) => {
+      this.branches = responce;
+      if (this.branches.length > 0) {
+      } else {
       }
-      else {
-        this.loading = false;
-     }
+      this.loading = false;
     },
-    (error) => {
-      this.setError(error)
+    (error: any) => {
+      this.setError(error);
     });
   }
 
   onNewStudent() {
     this.loading = true;
-      this.router.navigate(['new'], {relativeTo:this.route, skipLocationChange: true});
+      this.router.navigate(['new'], {relativeTo: this.route, skipLocationChange: true});
   }
 
-  onSelectBranch(id:string) {
-    if(id !== '') {
-      this.branch = id;
-      this.batches = this.branches.find((branch) => (branch._id === id)).batch;
+  onSelectBranch(_id: string) {
+    this.branch = _id;
+    if (_id !== '') {
+      this.batches = this.branches.find((branch) => (branch._id === _id)).batch;
       this.onSelectBatchName('');
     }
   }
 
-  onSelectBatchName(batch:string) {
+  onSelectBatchName(batch: string) {
     this.batch = batch;
-    if(batch !== '') {
-      this.searchStudent();
-    }
-    else {
+    if (batch !== '') {
+      this.searchStudent(this.branch, this.batch, this.weekType);
+    } else {
       this.students = [];
       this.noStudent = 'Please Select ' + (this.weekType === "0" ? "Week Day" : "Week End") + ' Batch';
     }
   }
 
-  onSelectBatchType(weekType:string) {
-    if(this.batch !== '') {
-      this.weekType = weekType;
-      this.onSelectBatchName('');
-    }
+  onSelectBatchType(weekType: string) {
+    this.weekType = weekType;
+    this.onSelectBatchName('');
   }
 
-  searchStudent() {
+  searchStudent(branch: string, batch: string, weekType: string) {
     this.loading = true;
-    const students : StudentModel[] = [];
-    this.allStudents.forEach((student) => {
-      if((student.branch === this.branch) && (student.batchName === this.batch) && (student.batch === this.weekType)) {
-        students.push(student);
+    this.studentService.getStudents(branch, batch, weekType)
+    .subscribe((responce: StudentModel[]) => {
+      this.students = responce;
+      if(this.students.length > 0) {
+
+      } else {
+        this.noStudent = "No Students Found";
+        this.students = [];
       }
+      this.loading = false;
+    },
+    (error: any) => {
+      this.setError(error);
     });
-    if(students.length > 0) {
-      this.students = students;
-    }
-    else {
-      this.noStudent = "No Students Found";
-      this.students = [];
-    }
-    this.loading = false;
   }
 
-  setError(err : string) {
+  setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
-} 
+}

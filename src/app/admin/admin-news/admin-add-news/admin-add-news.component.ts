@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { FormValidator } from '../../../validators/form.validator';
-import { HttpService } from '../../../services/httpPost.service';
+import { NewsService } from '../../../services/news.service';
 
 @Component({
   selector: 'app-admin-add-news',
@@ -12,17 +11,14 @@ import { HttpService } from '../../../services/httpPost.service';
 export class AdminAddNewsComponent implements OnInit {
   
   form: FormGroup;
-
-  loading : boolean = true;
-
-  error : string = null;
-
   formError: boolean = false;
+
+  loading: boolean = true;
+  error: string = null;
 
   imgExt: string[] = ['jpg', 'png'];
 
-  constructor(private httpPostService: HttpService,
-              private formValidator: FormValidator,
+  constructor(private newsService: NewsService,
               private router: Router,
               private route: ActivatedRoute) { }
 
@@ -48,29 +44,32 @@ export class AdminAddNewsComponent implements OnInit {
     if(this.form.valid) {
       this.formError = false;
       this.loading = true;
-      const news = { title: this.form.value.title, body : this.form.value.body}
-      const data = { api : "addNews", data : news }
-      this.httpPostService.httpPostAuth(data).subscribe((val) => {
-       this.form.reset();
-       this.cancel();
+      const news = {
+        title: this.form.value.title,
+        body: this.form.value.body
+      }
+      this.newsService.addNews(news)
+      .subscribe((responce: any) => {
+        this.form.reset();
+        this.cancel();
       },
-      (error) => {
-        this.setError(error)
+      (error: any) => {
+        this.setError(error);
       });
     }
   }
 
   cancel() {
     this.loading = true;
-    this.router.navigate(["/admin", "news"], {relativeTo: this.route, skipLocationChange:true});        
+    this.router.navigate(["/admin", "news"], {relativeTo: this.route, skipLocationChange: true});        
   }
 
-  setError(err : string) {
+  setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Params, Router, ActivatedRoute } from '@angular/router';
 import { StudentModel } from '../../../models/student.model';
-import { Branch, BatchModel } from '../../../models/branch.model';
-import { HttpService } from '../../../services/httpPost.service';
+import { BatchModel } from '../../../models/branch.model';
+import { StudentService } from '../../../services/student.service';
 
 @Component({
   selector: 'app-admin-show-student',
@@ -14,14 +14,11 @@ export class AdminShowStudentComponent implements OnInit {
   student: StudentModel;
 
   loading : boolean = true;
-
-  error : string = null;
-
-  branch : Branch;
+  error: string = null;
 
   batch: BatchModel;
 
-  constructor(private httpPostService: HttpService,
+  constructor(private studentService: StudentService,
               private route: ActivatedRoute,
               private router: Router) { }
 
@@ -30,43 +27,33 @@ export class AdminShowStudentComponent implements OnInit {
     subscribe(
       (params: Params) => {
         const _id = params['id'];
-        const studentData = { api : "getStudent", data : { _id }}
-        this.httpPostService.httpPostAuth(studentData).subscribe((val) => {
-         this.student = val;0
-         
-         const branchData = { api : "getBranch", data : { _id : this.student.branch }}
-         this.httpPostService.httpPostAuth(branchData).subscribe((val) => {
-           this.branch = val;
-           this.batch = this.branch.batch.find(batch => (batch._id === this.student.batchName && batch.batchType === this.student.batch));
-           this.loading = false;
-         },
-         (error) => {
-           this.setError(error)
-         });
+        this.studentService.getStudent(_id)
+        .subscribe((responce: StudentModel) => {
+          this.student = responce;
+          this.loading = false;
         },
-        (error) => {
-          this.setError(error)
+        (error: any) => {
+          this.setError(error);
         });
-        }
-      );
-    }
+      }
+    );
+  }
 
   changeStatus(_id:string, status: string) {
     let statusConfirm: any = true;
-    if(status === "0") {
+    if (status === "0") {
       statusConfirm = confirm("do you really want to Deactivate Student??");
-    }  
-    else if(status === "1") {
+    } else if (status === "1") {
       statusConfirm = confirm("do you want to Activate this Student again??");
-    }  
-    if(statusConfirm) {
+    }
+    if (statusConfirm) {
       this.loading = true;
-      const data = { api : "changeStudentStatus", data : { _id, status }}
-      this.httpPostService.httpPostAuth(data).subscribe((val) => {
-       this.cancel();
+      this.studentService.changeStudentStatus(_id, status)
+      .subscribe((responce: any) => {
+        this.cancel();
       },
-      (error) => {
-        this.setError(error)
+      (error: any) => {
+        this.setError(error);
       });
     }
   }
@@ -75,27 +62,27 @@ export class AdminShowStudentComponent implements OnInit {
     const password = prompt("Please enter your Password");
     if(password) {
       this.loading = true;
-      const data = { api : "deleteStudent", data : { _id: this.student._id, password }}
-      this.httpPostService.httpPostAuth(data).subscribe((val) => {
+      this.studentService.deleteStudent(this.student._id, password)
+      .subscribe((responce: any) => {
         this.cancel();
       },
-      (error) => {
-        this.setError(error)
+      (error: any) => {
+        this.setError(error);
       });
     }
   }
-  
+
   cancel() {
     this.loading = true;
-    this.router.navigate(['/admin', 'student'], {relativeTo: this.route, skipLocationChange:true});
+    this.router.navigate(['/admin', 'student'], {relativeTo: this.route, skipLocationChange: true});
   }
 
-  setError(err : string) {
+  setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 }

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-
-import { Enquiry } from '../../../models/enquiry.model';
-import { HttpService } from '../../../services/httpPost.service';
+import { EnquiryModel } from '../../../models/enquiry.model';
+import { EnquiryService } from '../../../services/enquiry.service';
 
 @Component({
   selector: 'app-admin-show-enquiry',
@@ -11,13 +10,13 @@ import { HttpService } from '../../../services/httpPost.service';
 })
 export class AdminShowEnquiryComponent implements OnInit {
 
-  enquiry: Enquiry;
+  enquiry: EnquiryModel;
 
-  loading : boolean = true;
+  loading: boolean = true;
 
-  error : string = null;
+  error: string = null;
 
-  constructor(private httpPostService: HttpService,
+  constructor(private enquiryService: EnquiryService,
               private router: Router,
               private route: ActivatedRoute) { }
 
@@ -26,21 +25,14 @@ export class AdminShowEnquiryComponent implements OnInit {
     .subscribe(
       (params: Params) => {
         const _id = params['id'];
-        
-        const data = { api : "getEnquiry", data : { _id }}
-        this.httpPostService.httpPostAuth(data).subscribe((val) => {
-          this.enquiry = val;
 
-          const data = { api : "enquirySeen", data : { _id }}
-          this.httpPostService.httpPostAuth(data).subscribe((val) => {
-            this.loading = false;
-          },
-          (error) => {
-            this.setError(error)            
-          });
+        this.enquiryService.getEnquiry(_id)
+        .subscribe((responce: EnquiryModel) => {
+          this.enquiry = responce;
+          this.loading = false;
         },
-        (error) => {
-          this.setError(error)
+        (error: any) => {
+          this.setError(error);
         });
       }
     );
@@ -50,13 +42,13 @@ export class AdminShowEnquiryComponent implements OnInit {
     this.loading = true;
     this.router.navigate(['/admin', 'enquiry'], {relativeTo: this.route, skipLocationChange: true});
   }
-  
-	setError(err : string) {
+
+	setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 }

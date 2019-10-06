@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ExamModule } from '../../models/exams.model';
-import { HttpService } from '../../services/httpPost.service';
+import { ExamModel } from '../../models/exams.model';
+import { ExamService } from '../../services/exam.service';
 
 @Component({
   selector: 'app-exams-page',
@@ -9,18 +9,18 @@ import { HttpService } from '../../services/httpPost.service';
 })
 export class ExamsPageComponent implements OnInit {
 
-  exams: ExamModule[] = [];
+  exams: ExamModel[] = [];
   loading: boolean = true;
 
-  constructor(private httpPostService: HttpService) { }
+  constructor(private examService: ExamService) { }
 
   ngOnInit() {
-      const examsData = { api: "getExams", data: {}}
-      this.httpPostService.httpPost(examsData).subscribe((val: any) => {
-        this.exams = val;
+      this.examService.getExams()
+      .subscribe((responce: ExamModel[]) => {
+        this.exams = responce;
         this.loading = false;
       },
-      (error) => {
+      (error: any) => {
       });
   }
 

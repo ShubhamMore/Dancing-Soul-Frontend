@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Branch, BatchModel } from '../../../models/branch.model';
+import { BranchModel, BatchModel } from '../../../models/branch.model';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { StudentModel } from '../../../models/student.model';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FormValidator } from '../../../validators/form.validator';
-import { HttpService } from '../../../services/httpPost.service';
+import { StudentService } from '../../../services/student.service';
 
 @Component({
   selector: 'app-admin-edit-student',
@@ -15,121 +15,96 @@ import { HttpService } from '../../../services/httpPost.service';
 export class AdminEditStudentComponent implements OnInit {
 
   form: FormGroup;
+  formError: boolean = false;
 
   loading : boolean = true;
-
   error : string = null;
-
-  formError: boolean = false;
 
   imagePreview: string = null;
   uploadImage: File = null;
 
   invalidImage : boolean = false;
 
-  branches: Branch[] = [];
+  branches: BranchModel[] = [];
+  branch: BranchModel;
+  batches: BatchModel[] = [];
 
   student: StudentModel;
 
   imgExt: string[] = ['jpg', 'png'];
 
-  branch: Branch;
-
-  batches: BatchModel[] = [];
-
   weekType: string = "0";
 
-  constructor(private httpPostService: HttpService,
+  constructor(private studentService: StudentService,
               private formValidator: FormValidator,
               private router: Router,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
 
-    this.form = new FormGroup({
-      name: new FormControl(null, {
-        validators: [Validators.required]
-      }),
-      birthDate: new FormControl(null, {
-        validators: [Validators.required]
-      }),
-      firstGuardianName: new FormControl(null, {
-        validators: [Validators.required]
-      }),
-      firstGuardianRelation: new FormControl(null, {
-        validators: [Validators.required]
-      }),
-      secondGuardianName: new FormControl(null, {}),
-      secondGuardianRelation: new FormControl(null, {}),
-      workPlace: new FormControl(null, {}),
-      bloodGroup: new FormControl(null, {}),
-      medicalHistory: new FormControl(null, {
-        validators: [Validators.required]
-      }),
-      email: new FormControl(null, {
-        validators: [Validators.required, Validators.email]
-      }),
-      phone: new FormControl(null, {
-        validators: [Validators.required, Validators.minLength(10), Validators.maxLength(10)]
-      }),
-      address: new FormControl(null, {
-        validators: [Validators.required]
-      }),
-      branch: new FormControl(null, {
-        validators: [Validators.required]
-      }),
-      batch: new FormControl(null, {
-        validators: [Validators.required]
-      }),
-      batchName: new FormControl(null, {
-        validators: [Validators.required]
-      }),
-      image: new FormControl(null, {
-        validators:[this.formValidator.imageValidate.bind(this)]
-      })
-    });
-    
     this.route.params
     .subscribe(
-      (params:Params) => {
+      (params: Params) => {
         const _id = params['id'];
+        
+        this.studentService.getStudentForEditing(_id)
+        .subscribe((responce: any) => {
+          this.student = responce.students;
+          this.branches = responce.branches;
+          this.branch = this.branches.find((branch) => branch._id === this.student.branch);
 
-        const data = { api : "getBranches", data : { }}
-        this.httpPostService.httpPostAuth(data).subscribe((val) => {
-          this.branches = val;
-          const data = { api : "getStudent", data : { _id }}
-          this.httpPostService.httpPostAuth(data).subscribe((val) => {
-            this.student = val;
-            this.branch = this.branches.find((branch) => branch._id === this.student.branch);
-
-            this.form.patchValue({
-              name : this.student.name,
-              birthDate : this.student.birthDate,
-              firstGuardianName : this.student.firstGuardianName,
-              firstGuardianRelation : this.student.firstGuardianRelation,
-              secondGuardianName : this.student.secondGuardianName,
-              secondGuardianRelation : this.student.secondGuardianRelation,
-              workplace : this.student.workPlace,
-              bloodGroup : this.student.bloodGroup,
-              medicalHistory : this.student.medicalHistory,
-              email : this.student.email,
-              phone : this.student.phone,
-              address : this.student.address,
-              branch : this.student.branch,
-              batch : this.student.batch,
-              batchName : this.student.batchName,
-              image : null
-            });
-            this.branchChanged();
-            this.loading = false;
-          },
-          (error) => { 
-            this.setError(error)         
+          this.form = new FormGroup({
+            name: new FormControl(this.student.name, {
+              validators: [Validators.required]
+            }),
+            birthDate: new FormControl(this.student.birthDate, {
+              validators: [Validators.required]
+            }),
+            firstGuardianName: new FormControl(this.student.firstGuardianName, {
+              validators: [Validators.required]
+            }),
+            firstGuardianRelation: new FormControl(this.student.firstGuardianRelation, {
+              validators: [Validators.required]
+            }),
+            secondGuardianName: new FormControl(this.student.secondGuardianName, {}),
+            secondGuardianRelation: new FormControl(this.student.secondGuardianRelation, {}),
+            workPlace: new FormControl(this.student.workPlace, {}),
+            bloodGroup: new FormControl(this.student.bloodGroup, {}),
+            medicalHistory: new FormControl(this.student.medicalHistory, {
+              validators: [Validators.required]
+            }),
+            email: new FormControl(this.student.email, {
+              validators: [Validators.required, Validators.email]
+            }),
+            phone: new FormControl(this.student.phone, {
+              validators: [Validators.required, Validators.minLength(10), Validators.maxLength(10)]
+            }),
+            address: new FormControl(this.student.address, {
+              validators: [Validators.required]
+            }),
+            branch: new FormControl(this.student.branch, {
+              validators: [Validators.required]
+            }),
+            batch: new FormControl(this.student.batch, {
+              validators: [Validators.required]
+            }),
+            batchName: new FormControl('', {
+              validators: [Validators.required]
+            }),
+            image: new FormControl(null, {
+              validators: [this.formValidator.imageValidate.bind(this)]
+            })
           });
+      
+          this.branchChanged();
+          this.form.patchValue({batchName: this.student.batchName})
+
+          this.loading = false;
         },
-        (error) => {
-          this.setError(error)
+        (error: any) => { 
+          this.setError(error);       
         });
+        
       }
     );
   }
@@ -138,8 +113,8 @@ export class AdminEditStudentComponent implements OnInit {
     this.batches = [];
     const branch = this.branches.find((branch) => branch._id === this.form.value.branch);
     if(branch !== undefined) {
-      const len = branch.batch.length;
-      for(let i = 0; i < len; i++) {
+      const len: number = branch.batch.length;
+      for(let i: number = 0; i < len; i++) {
         if(branch.batch[i].batchType === this.weekType) {
           this.batches.push(branch.batch[i])
         }
@@ -154,16 +129,16 @@ export class AdminEditStudentComponent implements OnInit {
 
   onImagePicked(event: Event) {
     const files = (event.target as HTMLInputElement).files;
-    const imgExt : string[] = ["jpg", "png"];
-    let ext : string = null;
-    for(let i = 0; i < files.length; i++) {
+    const imgExt: string[] = ["jpg", "png"];
+    let ext: string = null;
+    for (let i: number = 0; i < files.length; i++) {
       ext = files[i].name.substring(files[i].name.lastIndexOf('.') + 1);
-      if(!(imgExt.indexOf(ext)!=-1)) {
+      if (!(imgExt.indexOf(ext) != -1)) {
         return this.invalidImage = true;
       }
     }
     this.invalidImage = false;
-    for(let i = 0; i < files.length; i++) {
+    for (let i: number = 0; i < files.length; i++) {
       this.uploadImage = files[i];
       const reader = new FileReader();
       reader.onload = () => {
@@ -180,15 +155,16 @@ export class AdminEditStudentComponent implements OnInit {
   }
 
   editStudent() {
-    if(this.form.invalid) {
+    if (this.form.invalid) {
       this.formError = true;
+      return;
     }
   
-    if(this.form.valid) {
+    else {
       this.formError = false;
       this.loading = true;
       
-      const student = new FormData();
+      const student: FormData = new FormData();
       student.append("_id", this.student._id);
       student.append("name", this.form.value.name);
       student.append("birthDate", this.form.value.birthDate);
@@ -205,26 +181,25 @@ export class AdminEditStudentComponent implements OnInit {
       student.append("branch", this.form.value.branch);
       student.append("batch", this.form.value.batch);
       student.append("batchName", this.form.value.batchName);
-      student.append("status", "1");
+      student.append("status", this.student.status);
 
       if(this.uploadImage) {
         student.append("image", this.uploadImage, "student");
       }
       
-      const data = { api : "editStudent", data : student }
-      this.httpPostService.httpPostAuth(data).subscribe((val) => {
-       this.cancel();
+      this.studentService.editStudent(student)
+      .subscribe((responce: any) => {
+        this.cancel();
       },
-      (error) => {
-        this.setError(error)
+      (error: any) => {
+        this.setError(error);
       });
     }
-    
   }
 
   cancel() {
     this.loading = true;
-    this.router.navigate(['/admin', 'student', this.student._id],{relativeTo:this.route, skipLocationChange:true});
+    this.router.navigate(['/admin', 'student', this.student._id], {relativeTo:this.route, skipLocationChange: true});
   }
 
   setError(err : string) {
@@ -232,7 +207,7 @@ export class AdminEditStudentComponent implements OnInit {
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 }

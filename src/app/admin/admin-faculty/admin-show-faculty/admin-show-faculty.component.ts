@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Faculty } from '../../../models/faculty.model';
+import { FacultyModel } from '../../../models/faculty.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { HttpService } from '../../../services/httpPost.service';
+import { FacultyService } from '../../../services/faculty.service';
 
 @Component({
   selector: 'app-admin-show-faculty',
@@ -10,13 +10,11 @@ import { HttpService } from '../../../services/httpPost.service';
 })
 export class AdminShowFacultyComponent implements OnInit {
 
-  faculty: Faculty = null;
-
+  faculty: FacultyModel = null;
   loading: boolean = true;
+  error: string = null;
 
-  error : string = null;
-
-  constructor(private httpPostService: HttpService,
+  constructor(private facultyServce: FacultyService,
               private route: ActivatedRoute,
               private router: Router) { }
 
@@ -25,36 +23,35 @@ export class AdminShowFacultyComponent implements OnInit {
     subscribe(
       (params: Params) => {
         const _id = params['id'];
-        const data = { api : "getFaculty", data : { _id }}
-        this.httpPostService.httpPostAuth(data).subscribe((val) => {
-          this.faculty = val;
+        this.facultyServce.getFaculty(_id)
+        .subscribe((responce: FacultyModel) => {
+          this.faculty = responce;
           this.loading = false;
         },
-        (error) => {
-          this.setError(error)
+        (error: any) => {
+          this.setError(error);
         });
       }
     );
   }
 
-  changeStatus(_id:string, status:string) {
+  changeStatus(_id: string, status: string) {
     let statusConfirm: any = true;
-    if(status === "0") {
+    if (status === "0") {
       statusConfirm = confirm("do you really want to Deactivate Faculty??");
     }
-    else if(status === "1") {
+    else if (status === "1") {
       statusConfirm = confirm("do you want to Activate this Faculty again??");
     }
 
-    if(statusConfirm) {
+    if (statusConfirm) {
       this.loading = true;
-
-      const data = { api : "changeFacultyStatus", data : { _id, status }};
-      this.httpPostService.httpPostAuth(data).subscribe((val) => {
-       this.cancel();
+      this.facultyServce.changeFacultyStatus(_id, status)
+      .subscribe((responce: any) => {
+        this.cancel();
       },
-      (error) => {
-        this.setError(error)
+      (error: any) => {
+        this.setError(error);
       });
     }
   }
@@ -63,22 +60,22 @@ export class AdminShowFacultyComponent implements OnInit {
     const password = prompt("Please enter your Password");
     if(password) {
       this.loading = true;
-      const data = { api : "deleteFaculty", data : { _id: this.faculty._id, password }}
-      this.httpPostService.httpPostAuth(data).subscribe((val) => {
+      this.facultyServce.deleteFaculty(this.faculty._id, password)
+      .subscribe((responce: any) => {
         this.cancel();
       },
-      (error) => {
-        this.setError(error)     
+      (error: any) => {
+        this.setError(error); 
       });
     }
   }
-  
+
   cancel() {
     this.loading = true;
-    this.router.navigate(['/admin', 'faculty'], {relativeTo: this.route, skipLocationChange:true});
+    this.router.navigate(['/admin', 'faculty'], {relativeTo: this.route, skipLocationChange: true});
   }
 
-  setError(err : string) {
+  setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}
@@ -86,4 +83,4 @@ export class AdminShowFacultyComponent implements OnInit {
 	clearErr() {
 		this.error = null;
 	}
-} 
+}

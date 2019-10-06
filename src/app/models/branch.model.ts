@@ -1,6 +1,6 @@
 import { ImageModel } from './image.model';
 
-export class Branch {
+export class BranchModel {
 
     public _id: string; 
     public branch: string;

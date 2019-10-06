@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { FormValidator } from '../../../validators/form.validator';
-import { HttpService } from '../../../services/httpPost.service';
+import { ExamService } from '../../../services/exam.service';
+import { ExamModel } from '../../../models/exams.model';
 
 
 @Component({
@@ -12,12 +13,12 @@ import { HttpService } from '../../../services/httpPost.service';
 })
 export class AdminEditExamComponent implements OnInit {
 
-  exam: any;
-  id:string;
+  exam: ExamModel;
+  _id: string;
 
-  loading : boolean = true;
+  loading: boolean = true;
 
-  error : string = null;
+  error: string = null;
 
   imgExt: string[] = ['jpg', 'png'];
   
@@ -25,11 +26,11 @@ export class AdminEditExamComponent implements OnInit {
 
   formError: boolean = false;
 
-  constructor(private httpPostService: HttpService,
+  constructor(private examService: ExamService,
               private formValidator: FormValidator,
               private router: Router,
               private route: ActivatedRoute) { }
-              
+  
   ngOnInit() {
 
     this.form = new FormGroup({
@@ -43,19 +44,19 @@ export class AdminEditExamComponent implements OnInit {
 
     this.route.params
     .subscribe(
-      (params:Params) => {
+      (params: Params) => {
         const _id = params['id'];
-        const data = { api : "getExam", data : { _id }}
-        this.httpPostService.httpPost(data).subscribe((val) => {
-          this.exam = val;
+        this.examService.getExam(_id)
+        .subscribe((responce: ExamModel) => {
+          this.exam = responce;
           this.form.setValue({
            title: this.exam.title,
            body: this.exam.body
           });
           this.loading = false;
         },
-        (error) => {
-          this.setError(error)
+        (error: any) => {
+          this.setError(error);
         });
       }
     );
@@ -74,28 +75,29 @@ export class AdminEditExamComponent implements OnInit {
         title: this.form.value.title,
         body: this.form.value.body
       }
-      const data = { api : "editExam", data : editedexam }
-      this.httpPostService.httpPostAuth(data).subscribe((val) => {
+      
+      this.examService.editExam(editedexam)
+      .subscribe((responce: any) => {
        this.cancel();
       },
-      (error) => {
+      (error: any) => {
         this.setError(error)  
       });
     }
   }
-  
+
   cancel() {
     this.loading = true;
 
-    this.router.navigate(['/admin', 'exams', this.exam._id], {relativeTo: this.route, skipLocationChange:true});
+    this.router.navigate(['/admin', 'exams', this.exam._id], {relativeTo: this.route, skipLocationChange: true});
   }
-  
-	setError(err : string) {
+
+	setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 }

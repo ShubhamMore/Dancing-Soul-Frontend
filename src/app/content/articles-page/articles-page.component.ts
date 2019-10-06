@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpService } from '../../services/httpPost.service';
-import { Article } from '../../models/articles.model';
+import { ArticleService } from '../../services/article.service';
+import { ArticleModel } from '../../models/articles.model';
 
 @Component({
   selector: 'app-articles-page',
@@ -9,19 +9,19 @@ import { Article } from '../../models/articles.model';
 })
 export class ArticlesPageComponent implements OnInit {
 
-  articles: Article[] = [];
+  articles: ArticleModel[] = [];
 
   loading: boolean = true;
 
-  constructor(private httpPostService: HttpService) { }
+  constructor(private articelService: ArticleService) { }
 
   ngOnInit() {
-    const data = { api: "getArticles", data: {}}
-    this.httpPostService.httpPost(data).subscribe((val) => {
-     this.articles = val;
-     this.loading = false;
+    this.articelService.getArticles()
+    .subscribe((responce: ArticleModel[]) => {
+      this.articles = responce;
+      this.loading = false;
     },
-    (error) => {
+    (error: any) => {
     });
   }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Article } from '../../../models/articles.model';
+import { ArticleModel } from '../../../models/articles.model';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { HttpService } from '../../../services/httpPost.service';
+import { ArticleService } from '../../../services/article.service';
 
 @Component({
   selector: 'app-admin-show-article',
@@ -9,49 +9,51 @@ import { HttpService } from '../../../services/httpPost.service';
   styleUrls: ['./admin-show-article.component.css']
 })
 export class AdminShowArticleComponent implements OnInit {
-  article: Article;
+  
+  article: ArticleModel;
 
-  loading : boolean = true;
+  loading: boolean = true;
 
-  error : string = null;
+  error: string = null;
 
-  constructor(private httpPostService: HttpService,
+  constructor(private articleService: ArticleService,
               private router: Router,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.params
     .subscribe(
-      (params:Params) => {
+      (params: Params) => {
         const _id = params['id'];
-        const data = { api : "getArticle", data : { _id }}
-        this.httpPostService.httpPost(data).subscribe((val) => {
-          this.article = val;
+        
+        this.articleService.getArticle(_id)
+        .subscribe((responce: ArticleModel) => {
+          this.article = responce;
           this.loading = false;
         },
-        (error) => {
-          this.setError(error)
+        (error: any) => {
+          this.setError(error);
         });
-        
       }
     );
   }
 
   edit() {
     this.loading = true;
-    this.router.navigate(['edit'], {relativeTo: this.route, skipLocationChange:true});
+    this.router.navigate(['edit'], {relativeTo: this.route, skipLocationChange: true});
   }
 
   delete() {
     
-    const dltConfirm = confirm("do you really want to delete??");
+    const dltConfirm = confirm("do you really want to delete this Article??");
     if(dltConfirm) {
       this.loading = true;
-      const data = { api : "deleteArticle", data : { _id : this.article._id }}
-      this.httpPostService.httpPostAuth(data).subscribe((val) => {
+      
+      this.articleService.deleteArticle(this.article._id)
+      .subscribe((responce: any) => {
         this.cancel();
       },
-      (error) => {
+      (error: any) => {
         this.setError(error)
       });
     }
@@ -59,10 +61,10 @@ export class AdminShowArticleComponent implements OnInit {
 
   cancel() {
     this.loading = true;
-    this.router.navigate(['/admin', 'article'], {relativeTo: this.route, skipLocationChange:true});
+    this.router.navigate(['/admin', 'article'], {relativeTo: this.route, skipLocationChange: true});
   }
   
-	setError(err : string) {
+	setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}

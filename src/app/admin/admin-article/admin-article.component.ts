@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Article } from '../../models/articles.model';
+import { ArticleModel } from '../../models/articles.model';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HttpService } from '../../services/httpPost.service';
+import { ArticleService } from '../../services/article.service';
 
 @Component({
   selector: 'app-admin-article',
@@ -10,50 +10,53 @@ import { HttpService } from '../../services/httpPost.service';
 })
 export class AdminArticleComponent implements OnInit {
 
-  articles: Article[] = [];
+  articles: ArticleModel[] = [];
 
   loading: boolean = true;
 
-  error : string = null;
-  constructor(private httpPostService: HttpService,
-              private router:Router,
-              private route:ActivatedRoute) { }
+  error: string = null;
+  constructor(private articelService: ArticleService,
+              private router: Router,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
-    const data = { api : "getArticles", data : {}}
-    this.httpPostService.httpPost(data).subscribe((val) => {
-     this.articles = val;
+    
+    this.articelService.getArticles()
+    .subscribe((responce: ArticleModel[]) => {
+     this.articles = responce;
      this.loading = false;
     },
-    (error) => {
+    (error: any) => {
+      this.setError(error);
     });
   }
 
-  deleteArticle(_id:string) {
-    const deleteConfirm = confirm("do you really want to Delete Article??");  
+  deleteArticle(_id: string) {
+    const deleteConfirm = confirm("do you really want to Delete this Article??");  
     if(deleteConfirm) {
       this.loading = true;
-      const data = { api : "deleteArticle", data : { _id }}
-      this.httpPostService.httpPostAuth(data).subscribe((val) => {
+      
+      this.articelService.deleteArticle(_id)
+      .subscribe((responce: any) => {
        this.loading = false;
       },
-      (error) => {
-       this.loading = false;
+      (error: any) => {
+        this.setError(error);
       });
     }    
   }
 
   onNewArticle() {
     this.loading = true;
-    this.router.navigate(['new'], {relativeTo:this.route, skipLocationChange:true});
+    this.router.navigate(['new'], {relativeTo: this.route, skipLocationChange: true});
   }
 
-	setError(err : string) {
+	setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 }

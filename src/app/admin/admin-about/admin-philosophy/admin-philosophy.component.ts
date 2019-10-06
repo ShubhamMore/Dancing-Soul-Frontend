@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpService } from '../../../services/httpPost.service';
+import { AboutService } from '../../../services/about.service';
 import { AboutModel } from '../../../models/about.model';
 
 @Component({
@@ -15,25 +15,25 @@ export class AdminPhilosophyComponent implements OnInit {
 
   error : string = null;
 	
-  constructor(private httpPostService: HttpService) { }
+  constructor(private aboutService: AboutService) { }
 
   ngOnInit() {
-    const data = { api : "getAbout", data : {}}
-    this.httpPostService.httpPost(data).subscribe((res) => {
-      this.about = res[0];
+    this.aboutService.getAbout()
+    .subscribe((responce: AboutModel) => {
+      this.about = responce;
       this.loading = false;
     },
-    (error) => {
+    (error: any) => {
       this.setError(error)
     });
   }
   
-	setError(err : string) {
+	setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 }

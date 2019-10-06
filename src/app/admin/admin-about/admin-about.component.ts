@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AboutModel } from '../../models/about.model';
-import { HttpService } from '../../services/httpPost.service';
+import { AboutService } from '../../services/about.service';
 
 @Component({
   selector: 'app-admin-about',
@@ -11,27 +11,27 @@ export class AdminAboutComponent implements OnInit {
   about: AboutModel;
 
   loading: boolean = true;
-  error : string = null;
+  error: string = null;
 	
-  constructor(private httpPostService: HttpService) { }
+  constructor(private aboutService: AboutService) { }
 
   ngOnInit() {
-    const data = { api : "getAbout", data : {}}
-    this.httpPostService.httpPost(data).subscribe((res) => {
-      this.about = res[0];
+    this.aboutService.getAbout()
+    .subscribe((responce: AboutModel) => {
+      this.about = responce;
       this.loading = false;
     },
-    (error) => {
+    (error: any) => {
       this.setError(error)
     });
   }
 
-	setError(err : string) {
+	setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 }

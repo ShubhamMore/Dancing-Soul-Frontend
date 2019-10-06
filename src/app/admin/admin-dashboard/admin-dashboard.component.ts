@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpService } from '../../services/httpPost.service';
+import { EnquiryService } from '../../services/enquiry.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -9,33 +9,33 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class AdminDashboardComponent implements OnInit {
 
-  loading : boolean = true;
+  loading: boolean = true;
 
-  error : string = null;
+  error: string = null;
 
-  enquiries : number;
+  enquiries: number;
 
-  constructor(private httpPostService: HttpService,
+  constructor(private enquiryService: EnquiryService,
               private router: Router,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    const data = { api : "getUnseenEnquiries", data : { }}
-    this.httpPostService.httpPostAuth(data).subscribe((val) => {
-      this.enquiries = val.unseenEnquiries;
+    this.enquiryService.getUnseenEnquiries()
+    .subscribe((responce: any) => {
+      this.enquiries = responce.unseenEnquiries;
       this.loading = false;
     },
-    (error) => {
+    (error: any) => {
       this.setError(error);
     });
   }
 	
-	setError(err : string) {
+	setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 

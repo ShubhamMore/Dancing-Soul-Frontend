@@ -1,4 +1,4 @@
-export class ReceiptModule {
+export class ReceiptModel{
     public _id: string;
     public student: string;
     public amount: string;

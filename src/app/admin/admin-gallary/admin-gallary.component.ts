@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpService } from '../../services/httpPost.service';
+import { GalleryService } from '../../services/gallery.service';
+import { ImageModel } from '../../models/image.model';
 
 @Component({
   selector: 'app-admin-gallary',
@@ -8,43 +9,41 @@ import { HttpService } from '../../services/httpPost.service';
 })
 export class AdminGallaryComponent implements OnInit {
 
-  images : string[] = [];
-  loading : boolean = true;
-  error : string = null;
+  images: ImageModel[] = [];
+  loading: boolean = true;
+  error: string = null;
 
-  constructor(private httpPostService: HttpService) {}
+  constructor(private galleryService: GalleryService) {}
 
   ngOnInit() {
-    const data = { api : "getImages", data : {}}    
-    this.httpPostService.httpPost(data)
-    .subscribe(response => {
+    this.galleryService.getImages()
+    .subscribe((response: ImageModel[]) => {
       this.images = response;
       this.loading = false;
     },
-    (error) => {
-      this.setError(error)
+    (error: any) => {
+      this.setError(error);
     });
   }
 
-  deleteImage(public_id : string) {
+  deleteImage(public_id: string) {
 
     this.loading = true;
-    const data = { api : "removeImage", data : {public_id}}
-    this.httpPostService.httpPostAuth(data)
-    .subscribe(res => {
+    this.galleryService.removeImage(public_id)
+    .subscribe((responce: any) => {
       this.ngOnInit();
     },
-    (error) => {
-      this.setError(error)
+    (error: any) => {
+      this.setError(error);
     });
   }
 
-  setError(err : string) {
+  setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 }

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Branch, BatchModel } from '../../../models/branch.model';
+import { BranchModel, BatchModel } from '../../../models/branch.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormValidator } from '../../../validators/form.validator';
-import { HttpService } from '../../../services/httpPost.service';
+import { StudentService } from '../../../services/student.service';
+import { BranchService } from '../../../services/branch.service';
 
 @Component({
   selector: 'app-admin-add-student',
@@ -13,28 +13,24 @@ import { HttpService } from '../../../services/httpPost.service';
 export class AdminAddStudentComponent implements OnInit {
 
   form: FormGroup;
-
   formError: boolean = false;
 
-  loading : boolean = true;
-
+  loading: boolean = true;
   error : string = null;
 
   imagePreview: string = null;
   uploadImage: File = null;
 
-  invalidImage : boolean = false;
+  invalidImage: boolean = false;
 
-  imgExt: string[] = ['jpg', 'png'];
-
-  branches: Branch[] = [];
+  branches: BranchModel[] = [];
 
   batches: BatchModel[] = [];
 
   weekType: string = "0";
 
-  constructor(private httpPostService: HttpService,
-              private formValidator: FormValidator,
+  constructor(private studentService: StudentService,
+              private branchService: BranchService,
               private router: Router,
               private route: ActivatedRoute) { }
 
@@ -80,15 +76,14 @@ export class AdminAddStudentComponent implements OnInit {
       })
     });
 
-    const data = { api : "getBranches", data : { }}
-    this.httpPostService.httpPostAuth(data).subscribe((val) => {
-      this.branches = val;
+    this.branchService.getBranches()
+    .subscribe((responce: BranchModel[]) => {
+      this.branches = responce;
       this.loading = false;
     },
-    (error) => {
-      this.setError(error)
+    (error: any) => {
+      this.setError(error);
     });
-
   }
 
   branchChanged() {
@@ -111,18 +106,18 @@ export class AdminAddStudentComponent implements OnInit {
 
   onImagePicked(event: Event) {
     const files = (event.target as HTMLInputElement).files;
-    const imgExt : string[] = ["jpg", "png"];
-    let ext : string = null;
-    for(let i = 0; i < files.length; i++) {
+    const imgExt: string[] = ["jpg", "png"];
+    let ext: string = null;
+    for(let i: number = 0; i < files.length; i++) {
       ext = files[i].name.substring(files[i].name.lastIndexOf('.') + 1);
       if(!(imgExt.indexOf(ext)!=-1)) {
         return this.invalidImage = true;
       }
     }
     this.invalidImage = false;
-    for(let i = 0; i < files.length; i++) {
+    for(let i: number = 0; i < files.length; i++) {
       this.uploadImage = files[i];
-      const reader = new FileReader();
+      const reader: any = new FileReader();
       reader.onload = () => {
         this.imagePreview = <string>reader.result;
       };
@@ -141,11 +136,11 @@ export class AdminAddStudentComponent implements OnInit {
       this.formError = true;
     }
   
-    if(this.form.valid) {
+    if (this.form.valid) {
       this.formError = false;
       this.loading = true;
 
-      const student = new FormData();
+      const student: FormData = new FormData();
       student.append("name", this.form.value.name);
       student.append("birthDate", this.form.value.birthDate);
       student.append("bloodGroup", this.form.value.bloodGroup);
@@ -167,27 +162,27 @@ export class AdminAddStudentComponent implements OnInit {
         student.append("image", this.uploadImage, "student");
       }
 
-      const data = { api : "addStudent", data : student }
-      this.httpPostService.httpPostAuth(data).subscribe((val) => {
-       this.cancel();
+      this.studentService.addStudent(student)
+      .subscribe((responce: any) => {
+        this.cancel();
       },
-      (error) => {
-        this.setError(error)
+      (error: any) => {
+        this.setError(error);
       });
     }
   }
 
   cancel() {
     this.loading = true;
-    this.router.navigate(['/admin', 'student'],{relativeTo:this.route, skipLocationChange:true})
+    this.router.navigate(['/admin', 'student'], {relativeTo: this.route, skipLocationChange: true})
   }
 
-  setError(err : string) {
+  setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 }

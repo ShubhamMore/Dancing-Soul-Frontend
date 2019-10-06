@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Faculty } from '../../models/faculty.model';
+import { FacultyModel } from '../../models/faculty.model';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HttpService } from '../../services/httpPost.service';
+import { FacultyService } from '../../services/faculty.service';
 
 @Component({
   selector: 'app-admin-faculty',
@@ -10,38 +10,36 @@ import { HttpService } from '../../services/httpPost.service';
 })
 export class AdminFacultyComponent implements OnInit {
 
-  faculties : Faculty[] = [];
-
+  faculties : FacultyModel[] = [];
   loading: boolean = true;
-
-  error : string = null;
+  error: string = null;
   
-  constructor(private httpPostService: HttpService,
+  constructor(private facultyService: FacultyService,
               private router: Router,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    const data = { api : "getFaculties", data : {}}
-    this.httpPostService.httpPostAuth(data).subscribe((val: any) => {
-      this.faculties = val;
+    this.facultyService.getFaculties()
+    .subscribe((responce: FacultyModel[]) => {
+      this.faculties = responce;
       this.loading = false;
     },
-    (error) => {
-      this.setError(error)
+    (error: any) => {
+      this.setError(error);
     });
   }
 
   onNewFaculty() {
     this.loading = true;
-    this.router.navigate(['new'], {relativeTo:this.route, skipLocationChange:true});
+    this.router.navigate(['new'], {relativeTo: this.route, skipLocationChange: true});
   }
 
-  setError(err : string) {
+  setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 }

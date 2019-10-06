@@ -1,4 +1,4 @@
-export class Enquiry {
+export class EnquiryModel {
     public _id: string;
     public name: string;
     public email: string;

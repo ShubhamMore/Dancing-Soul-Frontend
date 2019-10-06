@@ -1,4 +1,4 @@
-export class ExamModule {
+export class ExamModel {
     public _id: string;
     public title: string;
     public body: string;

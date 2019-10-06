@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpService } from '../../services/httpPost.service';
-import { Branch } from '../../models/branch.model';
+import { BranchService } from '../../services/branch.service';
+import { BranchModel } from '../../models/branch.model';
 
 @Component({
   selector: 'app-branches-page',
@@ -9,20 +9,19 @@ import { Branch } from '../../models/branch.model';
 })
 export class BranchesPageComponent implements OnInit {
 
-  branches: Branch[] = [];
+  branches: BranchModel[] = [];
   loading: boolean = true;
 
-    constructor(private httpPostService: HttpService) { }
-
-
-    ngOnInit() {
-        const data = { api: "getActivateBranches", data: { }}
-        this.httpPostService.httpPost(data).subscribe((val) => {
-         this.branches = val;
-         this.loading = false;
-         console.log(this.branches)
-        },
-        (error) => {        
-        });
-    }
+  constructor(private branchService: BranchService) { }
+  
+  ngOnInit() {
+    this.branchService.getBranches()
+    .subscribe((responce: BranchModel[]) => {
+     this.branches = responce;
+     this.loading = false;
+     console.log(this.branches)
+    },
+    (error: any) => {        
+    });
+  }
 }

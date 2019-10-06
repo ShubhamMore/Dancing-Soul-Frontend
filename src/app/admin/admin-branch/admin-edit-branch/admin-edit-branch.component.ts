@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { Branch } from '../../../models/branch.model';
+import { BranchModel, BatchModel } from '../../../models/branch.model';
 import { FormControl, Validators, FormGroup, FormArray } from '@angular/forms';
 import { FormValidator } from '../../../validators/form.validator';
-import { HttpService } from '../../../services/httpPost.service';
+import { BranchService } from '../../../services/branch.service';
 
 @Component({
   selector: 'app-admin-edit-branch',
@@ -12,7 +12,7 @@ import { HttpService } from '../../../services/httpPost.service';
 })
 export class AdminEditBranchComponent implements OnInit {
   
-  branchData: Branch;
+  branch: BranchModel;
 
   form: FormGroup;
 
@@ -21,13 +21,13 @@ export class AdminEditBranchComponent implements OnInit {
   imagePreview: string[] = [];
   uploadImages: File[] = [];
 
-  invalidImage : boolean = false;
+  invalidImage: boolean = false;
 
-  loading : boolean = true;
+  loading: boolean = true;
 
-  error : string = null;
+  error: string = null;
 
-  week : string [] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  week: string [] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
   weekDays: number[] = [];
 
@@ -43,7 +43,7 @@ export class AdminEditBranchComponent implements OnInit {
 
   imgExt: string[] = ['jpg', 'png'];
 
-  constructor(private httpPostService: HttpService,
+  constructor(private branchService: BranchService,
               private formValidator: FormValidator,
               private router: Router,
               private route: ActivatedRoute) { }
@@ -52,70 +52,69 @@ export class AdminEditBranchComponent implements OnInit {
 
     this.form = new FormGroup({
       city: new FormControl(null, {
-        validators:[Validators.required]
+        validators: [Validators.required]
       }),
       branch: new FormControl(null, {
-        validators:[Validators.required]
+        validators: [Validators.required]
       }),
       address: new FormControl(null, {
-        validators:[Validators.required]
+        validators: [Validators.required]
       }),
       email: new FormControl(null, {
-        validators:[Validators.required, Validators.email]
+        validators: [Validators.required, Validators.email]
       }),
       phone: new FormControl(null, {
-        validators:[Validators.required]
+        validators: [Validators.required]
       }),
       description: new FormControl(null, {
-        validators:[Validators.required]
+        validators: [Validators.required]
       })
     });
-    
+
     this.batchForm = new FormGroup({
       week: new FormControl(this.weekType, {
-        validators:[Validators.required]
+        validators: [Validators.required]
       }),
       batchName: new FormControl(null, {
-        validators:[Validators.required]
+        validators: [Validators.required]
       }),
       fees: new FormControl(null, {
-        validators:[Validators.required]
+        validators: [Validators.required]
       }),
       start_timming: new FormControl(null, {
-        validators:[Validators.required]
+        validators: [Validators.required]
       }),
       end_timming: new FormControl(null, {
-        validators:[Validators.required]
+        validators: [Validators.required]
       }),
       weekDays: new FormArray(
-        this.week.map( () => new FormControl(null)), {
-          validators:[this.formValidator.daysValidator.bind(this)]
+        this.week.map(() => new FormControl(null)), {
+          validators: [this.formValidator.daysValidator.bind(this)]
         }
       )
     });
       
     this.route.params
     .subscribe(
-      (params:Params) => {
+      (params: Params) => {
         const _id = params['id']; 
-        const data = { api : "getBranch", data : { _id }}
-        this.httpPostService.httpPostAuth(data).subscribe(
-          (val) => {
-            this.branchData = val;
-            this.batches = this.branchData.batch;
+        this.branchService.getBranch(_id)
+        .subscribe((responce: BranchModel) => {
+            this.branch = responce;
+            this.batches = this.branch.batch;
             this.form.patchValue({
-              city: this.branchData.city,
-              branch : this.branchData.branch,
-              address : this.branchData.address,
-              email : this.branchData.email,
-              phone : this.branchData.phone,
-              description : this.branchData.description,
-              image : null
+              city: this.branch.city,
+              branch: this.branch.branch,
+              address: this.branch.address,
+              email: this.branch.email,
+              phone: this.branch.phone,
+              description: this.branch.description,
+              image: null
             });
             this.loading = false;
           },
-          (error) => {
-            this.setError(error)
+          (error: any) => {
+            this.setError(error);
           }
         );
       }
@@ -124,11 +123,11 @@ export class AdminEditBranchComponent implements OnInit {
 
   onImagePicked(event: Event) {
     const files = (event.target as HTMLInputElement).files;
-    const imgExt : string[] = ["jpg", "png"];
-    let ext : string = null;
-    for(let i = 0; i < files.length; i++) {
+    const imgExt: string[] = ["jpg", "png"];
+    let ext: string = null;
+    for (let i = 0; i < files.length; i++) {
       ext = files[i].name.substring(files[i].name.lastIndexOf('.') + 1);
-      if(!(imgExt.indexOf(ext)!=-1)) {
+      if (!(imgExt.indexOf(ext)!=-1)) {
         return this.invalidImage = true;
       }
     }
@@ -144,7 +143,7 @@ export class AdminEditBranchComponent implements OnInit {
     this.form.patchValue({image: null});
   }
 
-  cancelImage(index : number) {
+  cancelImage(index: number) {
     this.imagePreview.splice(index, 1);
     this.uploadImages.splice(index, 1);
   }
@@ -153,7 +152,7 @@ export class AdminEditBranchComponent implements OnInit {
     if(this.batchForm.valid) {
       this.formError = null;
 
-      let days : string[] = [];
+      let days: string[] = [];
       const week: number[] = this.weekDays.sort();
       for(let i = 0; i < week.length; i++) {
         days.push(this.week[week[i]]);
@@ -163,7 +162,7 @@ export class AdminEditBranchComponent implements OnInit {
         batchType: this.weekType,
         days: days.join(', '),
         batchName: this.batchForm.value.batchName,
-        time: this.batchForm.value.start_timming + ' - ' + this.batchForm.value.end_timming,
+        time: this.batchForm.value.start_timming + '-' + this.batchForm.value.end_timming,
         fees: this.batchForm.value.fees
       }
       this.batches.push(batch);
@@ -171,6 +170,14 @@ export class AdminEditBranchComponent implements OnInit {
       this.batchForm.reset({week: this.weekType});
       this.weekdaysTouched = false;
     }
+  }
+
+  editBatch(i: number) {
+
+  }
+
+  saveEditBatch() {
+    
   }
 
   deleteBatch(i: number) {
@@ -190,8 +197,8 @@ export class AdminEditBranchComponent implements OnInit {
       this.loading = true;
       this.formError = null;
   
-      const  editedBranch = new FormData();
-      editedBranch.append("_id", this.branchData._id);
+      const editedBranch = new FormData();
+      editedBranch.append("_id", this.branch._id);
       editedBranch.append("city", this.form.value.city);
       editedBranch.append("branch", this.form.value.branch);
       editedBranch.append("address", this.form.value.address);
@@ -199,23 +206,22 @@ export class AdminEditBranchComponent implements OnInit {
       editedBranch.append("phone", this.form.value.phone);
       editedBranch.append("description", this.form.value.description);
       editedBranch.append("batch", JSON.stringify(this.batches));
-      editedBranch.append("status", this.branchData.status);
+      editedBranch.append("status", this.branch.status);
 
-      if(this.uploadImages.length > 0) {
-        for(let i = 0; i < this.uploadImages.length; i++) {
+      if (this.uploadImages.length > 0) {
+        for (let i = 0; i < this.uploadImages.length; i++) {
           editedBranch.append("image", this.uploadImages[i], "branch"+i);
         }
       }
-      
-      const data = { api : "editBranch", data : editedBranch }
-      this.httpPostService.httpPostAuth(data).subscribe((val) => {
+
+      this.branchService.editBrnach(editedBranch)
+      .subscribe((responce: any) => {
        this.form.reset();
        this.cancel();
       },
-      (error) => {
-        this.setError(error)
+      (error: any) => {
+        this.setError(error);
       });
-      
     }
   }
 
@@ -224,16 +230,16 @@ export class AdminEditBranchComponent implements OnInit {
     this.imagePreview = [];
     this.uploadImages = [];
     this.invalidImage = false;
-    this.router.navigate(["/admin", "branch", this.branchData._id], {relativeTo: this.route, skipLocationChange:true});
+    this.router.navigate(["/admin", "branch", this.branch._id], {relativeTo: this.route, skipLocationChange: true});
   }
 
   scheduleChange() {
     this.weekType = this.batchForm.value.week;
   }
   
-  weekDay(event: any, index:number) {
+  weekDay(event: any, index: number) {
     this.weekdaysTouched = true;
-    
+
     if(event.target.checked) {
       return this.weekDays.push(index);
     }
@@ -249,14 +255,13 @@ export class AdminEditBranchComponent implements OnInit {
     }
     return false;
   }
-	
-	setError(err : string) {
+
+	setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
-
 }

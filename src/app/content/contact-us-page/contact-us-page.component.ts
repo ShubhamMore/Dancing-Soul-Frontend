@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpService } from '../../services/httpPost.service';
+import { EnquiryService } from '../../services/enquiry.service';
+import { sendRequest } from 'selenium-webdriver/http';
 
 @Component({
   selector: 'app-contact-us-page',
@@ -28,7 +29,7 @@ export class ContactUsPageComponent implements OnInit {
   message = this.yourMessage;
   contact = this.yourPhone;
 
-  constructor(private httpPostService: HttpService) { }
+  constructor(private enquiryService: EnquiryService) { }
 
   ngOnInit() { 
   }
@@ -99,11 +100,11 @@ export class ContactUsPageComponent implements OnInit {
       seen: "0"
     }
 
-    const data = { api: "sendEnquiry", data: sendEmailData}
-    this.httpPostService.httpPost(data).subscribe((val) => {
-      console.log(val)
+    this.enquiryService.sendEnquiry(sendEmailData)
+    .subscribe((responce: any) => {
+      console.log(responce)
     },
-    (error) => {
+    (error: any) => {
       console.log(error)
     });
     this.reset();

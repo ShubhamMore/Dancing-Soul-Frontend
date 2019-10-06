@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NewsModule } from '../../models/news.model';
-import { HttpService } from '../../services/httpPost.service';
+import { NewsModel } from '../../models/news.model';
+import { NewsService } from '../../services/news.service';
 
 @Component({
   selector: 'app-news-shelter-page',
@@ -9,17 +9,18 @@ import { HttpService } from '../../services/httpPost.service';
 })
 export class NewsShelterPageComponent implements OnInit {
 
-  newsList: NewsModule[] = [];
+  newsList: NewsModel[] = [];
   loading: boolean = true;
-  constructor(private httpPostService: HttpService) { }
+  
+  constructor(private newsService: NewsService) { }
 
   ngOnInit() {
-    const newsData = { api: "getAllNews", data: {}}
-    this.httpPostService.httpPost(newsData).subscribe((val: any) => {
-      this.newsList = val;
+    this.newsService.getAllNews()
+    .subscribe((responce: NewsModel[]) => {
+      this.newsList = responce;
       this.loading = false;
     },
-    (error) => {
+    (error: any) => {
     });
  
   }

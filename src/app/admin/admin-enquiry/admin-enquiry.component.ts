@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-
-import { Enquiry } from '../../models/enquiry.model';
-import { HttpService } from '../../services/httpPost.service';
+import { EnquiryModel } from '../../models/enquiry.model';
+import { EnquiryService } from '../../services/enquiry.service';
 
 @Component({
   selector: 'app-admin-enquiry',
@@ -11,28 +10,28 @@ import { HttpService } from '../../services/httpPost.service';
 })
 export class AdminEnquiryComponent implements OnInit {
 
-  enquiries: Enquiry[];
+  enquiries: EnquiryModel[];
 
-  loading : boolean = true;
+  loading: boolean = true;
 
-  error : string = null;  
+  error: string = null;  
 
-  constructor(private httpPostService: HttpService,
+  constructor(private enquiryService: EnquiryService,
               private router: Router,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    const data = { api : "getEnquiries", data : { }}
-    this.httpPostService.httpPostAuth(data).subscribe((val) => {
-     this.enquiries = val;
-     this.loading = false;
+    this.enquiryService.getEnquiries()
+    .subscribe((responce: EnquiryModel[]) => {
+      this.enquiries = responce;
+      this.loading = false;
     },
-    (error) => {
+    (error: any) => {
       this.setError(error)      
     });
   }
 
-  limitData(data:string, limit:number = 25) {
+  limitData(data: string, limit: number = 25) {
     if(data.length >= limit) {
       const newdata = [];
       data.split(' ').reduce((acc, cur) => {
@@ -46,12 +45,12 @@ export class AdminEnquiryComponent implements OnInit {
     return data;
   }
   
-	setError(err : string) {
+	setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 }

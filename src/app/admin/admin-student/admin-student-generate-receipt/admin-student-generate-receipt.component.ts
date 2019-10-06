@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { StudentModel } from '../../../models/student.model';
-import { Branch, BatchModel } from '../../../models/branch.model';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { FormValidator } from '../../../validators/form.validator';
-import { HttpService } from '../../../services/httpPost.service';
+import { ReceiptService } from '../../../services/receipt.service';
+import { StudentService } from '../../../services/student.service';
 
 @Component({
   selector: 'app-admin-student-generate-receipt',
@@ -14,28 +14,22 @@ import { HttpService } from '../../../services/httpPost.service';
 export class AdminStudentGenerateReceiptComponent implements OnInit {
 
   form: FormGroup;
+  formError: string = null;
 
   loading: boolean = true;
-
   error : string = null;
 
   student: StudentModel;
-
-  branch : Branch;
-
-  batch: BatchModel;
+  studentMetaData: any;
 
   amount : number = 0;
 
   month : string [] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
   months: number[] = [];
-
   monthsTouched: boolean = false;
 
-  formError: string = null;
-
-  constructor(private httpPostService: HttpService,
+  constructor(private receiptService: ReceiptService,
+              private studentService: StudentService,
               private formValidator: FormValidator,
 
               private route: ActivatedRoute,
@@ -45,11 +39,11 @@ export class AdminStudentGenerateReceiptComponent implements OnInit {
     
     this.form = new FormGroup({
       payment_mode: new FormControl("", {
-        validators:[Validators.required]
+        validators: [Validators.required]
       }),
       months: new FormArray(
-        this.month.map( () => new FormControl(null)), {
-          validators:[this.formValidator.monthsValidator.bind(this)]
+        this.month.map(() => new FormControl(null)), {
+          validators: [this.formValidator.monthsValidator.bind(this)]
         }
       )
     });
@@ -58,25 +52,18 @@ export class AdminStudentGenerateReceiptComponent implements OnInit {
     subscribe(
       (params: Params) => {
         const _id = params['id'];
-        const studentData = { api : "getStudent", data : { _id }}
-        this.httpPostService.httpPostAuth(studentData).subscribe((val) => {
-         this.student = val;
-         const branchData = { api : "getBranch", data : { _id : this.student.branch }}
-         this.httpPostService.httpPostAuth(branchData).subscribe((val) => {
-           this.branch = val; 
-           this.batch = this.branch.batch.find(batch => ((batch._id === this.student.batchName) && (batch.batchType === this.student.batch)));
-           this.loading = false;
-         },
-         (error) => {
-           this.setError(error)
-         });
+        
+        this.studentService.getStudentForReceipt(_id)
+        .subscribe((responce: any) => {
+          this.student = responce.student;
+          this.studentMetaData = responce.studentMetaData;
+          this.loading = false;
         },
-        (error) => {
-          this.setError(error)
+        (error: any) => {
+          this.setError(error);
         });
       }
     );
-
   }
 
   date(): string {
@@ -93,15 +80,13 @@ export class AdminStudentGenerateReceiptComponent implements OnInit {
   }
 
   payFees() {
-    if(this.form.invalid) {
+    if (this.form.invalid) {
       return this.formError = "*Please Fill All Fields of Receipt";
-    }
-
-    else {
+    } else {
       this.formError = null;
       this.loading = true;
 
-      let months : string[] = [];
+      let months: string[] = [];
       const month: number[] = this.months.sort();
       for(let i = 0; i < month.length; i++) {
         months.push(this.month[month[i]]);
@@ -115,41 +100,41 @@ export class AdminStudentGenerateReceiptComponent implements OnInit {
         paymentMode : this.form.value.payment_mode
       }
 
-      const data = { api : "addReceipt", data : receipt }
-      this.httpPostService.httpPostAuth(data).subscribe((val) => {
+      this.receiptService.addReceipt(receipt)
+      .subscribe((responce: any) => {
         this.monthsTouched = false;
         this.amount = 0;
         this.form.reset({payment_mode: ""});
         this.cancel();
       },
-      (error) => {
-        this.setError(error)
+      (error: any) => {
+        this.setError(error);
       });
     }
   }
 
   cancel() {
     this.loading = true;
-    this.router.navigate(['/admin', 'student'], {relativeTo: this.route, skipLocationChange:true});
+    this.router.navigate(['/admin', 'student'], {relativeTo: this.route, skipLocationChange: true});
   }
-  
-  addMonth(event: any, index:number) {
+
+  addMonth(event: any, index: number) {
     this.monthsTouched = true;
-    
+
     if(event.target.checked) {
-      this.amount += parseInt(this.batch.fees);
+      this.amount += parseInt(this.studentMetaData.batch.fees);
       return this.months.push(index);
     }
-    this.amount -= parseInt(this.batch.fees);
+    this.amount -= parseInt(this.studentMetaData.batch.fees);
     this.months.splice(this.months.findIndex((month) => month === index), 1);
   }
 
-  setError(err : string) {
+  setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 }

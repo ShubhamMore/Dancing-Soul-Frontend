@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Faculty } from '../../../models/faculty.model';
+import { FacultyModel } from '../../../models/faculty.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
-import { FormValidator } from '../../../validators/form.validator';
-import { HttpService } from '../../../services/httpPost.service';
+import { FacultyService } from '../../../services/faculty.service';
 
 @Component({
   selector: 'app-admin-edit-faculty',
@@ -12,12 +11,11 @@ import { HttpService } from '../../../services/httpPost.service';
 })
 export class AdminEditFacultyComponent implements OnInit {
 
-  faculty: Faculty = null;
+  faculty: FacultyModel = null;
   form: FormGroup;
 
   loading: boolean = true;
-
-  error : string = null;
+  error: string = null;
 
   imagePreview: string = null;
   uploadImage: File = null;
@@ -28,9 +26,7 @@ export class AdminEditFacultyComponent implements OnInit {
 
   imgExt: string[] = ['jpg', 'png'];
 
-  
-  constructor(private httpPostService: HttpService,
-              private formValidator: FormValidator,
+  constructor(private facultyService: FacultyService,
               private router: Router,
               private route: ActivatedRoute) { }
 
@@ -58,9 +54,10 @@ export class AdminEditFacultyComponent implements OnInit {
     .subscribe(
       (params: Params) => {
         const _id = params['id'];
-        const data = { api : "getFaculty", data : { _id }}
-        this.httpPostService.httpPostAuth(data).subscribe((val) => {
-          this.faculty = val;
+      
+        this.facultyService.getFaculty(_id)
+        .subscribe((responce: FacultyModel) => {
+          this.faculty = responce;
 
           this.form.setValue({
             name: this.faculty.name,
@@ -72,17 +69,17 @@ export class AdminEditFacultyComponent implements OnInit {
 
           this.loading = false;
         },
-        (error) => {
-          this.setError(error)
+        (error: any) => {
+          this.setError(error);
         });
       }
-    ); 
+    );
   }
 
   onImagePicked(event: Event) {
     const files = (event.target as HTMLInputElement).files;
-    const imgExt : string[] = ["jpg", "png"];
-    let ext : string = null;
+    const imgExt: string[] = ["jpg", "png"];
+    let ext: string = null;
     for(let i = 0; i < files.length; i++) {
       ext = files[i].name.substring(files[i].name.lastIndexOf('.') + 1);
       if(!(imgExt.indexOf(ext)!=-1)) {
@@ -107,14 +104,14 @@ export class AdminEditFacultyComponent implements OnInit {
   }
 
   editFaculty() {
-    if(this.form.invalid) {
+    if (this.form.invalid) {
       this.formError = true;
     }
   
-    if(this.form.valid) {
+    if (this.form.valid) {
       this.formError = false;
       this.loading = true;
-      
+
       const faculty = new FormData();
       faculty.append("_id", this.faculty._id);
       faculty.append("name", this.form.value.name);
@@ -124,34 +121,34 @@ export class AdminEditFacultyComponent implements OnInit {
       faculty.append("phone", this.form.value.phone);
       faculty.append("status", this.faculty.status);
 
-      if(this.uploadImage) {
+      if (this.uploadImage) {
         faculty.append("image", this.uploadImage, "faculty");
       }
 
       this.loading = true;
-      
-      const data = { api : "editFaculty", data : faculty }
-      this.httpPostService.httpPostAuth(data).subscribe((val) => {
+
+      this.facultyService.editFaculty(faculty)
+      .subscribe((responce: any) => {
         this.form.reset();
         this.cancel();
       },
-      (error) => {
-        this.setError(error)
+      (error: any) => {
+        this.setError(error);
       });
     }
   }
   
   cancel() {
     this.loading = true;
-    this.router.navigate(['/admin', 'faculty', this.faculty._id], {relativeTo:this.route, skipLocationChange:true});
+    this.router.navigate(['/admin', 'faculty', this.faculty._id], {relativeTo:this.route, skipLocationChange: true});
   }
 
-  setError(err : string) {
+  setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 }

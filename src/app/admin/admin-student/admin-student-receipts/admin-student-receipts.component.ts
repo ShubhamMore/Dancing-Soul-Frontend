@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { ReceiptModule } from '../../../models/receipt.model';
-import { HttpService } from '../../../services/httpPost.service';
+import { ReceiptModel } from '../../../models/receipt.model';
+import { ReceiptService } from '../../../services/receipt.service';
 
 @Component({
   selector: 'app-admin-student-receipts',
@@ -10,15 +10,14 @@ import { HttpService } from '../../../services/httpPost.service';
 })
 export class AdminStudentReceiptsComponent implements OnInit {
 
-  receipts: ReceiptModule[] = [];
+  receipts: ReceiptModel[] = [];
 
   loading: boolean = true;
+  error: string = null;
 
-  error : string = null;
+  _id: string;
 
-  studentId : string;
-
-  constructor(private httpPostService: HttpService,
+  constructor(private receiptService: ReceiptService,
               private route: ActivatedRoute,
               private router: Router) { }
 
@@ -26,14 +25,14 @@ export class AdminStudentReceiptsComponent implements OnInit {
     this.route.params.
     subscribe(
       (params: Params) => {
-        this.studentId = params['id'];
-        const data = { api : "getReceipts", data : { student : this.studentId }}
-        this.httpPostService.httpPostAuth(data).subscribe((val) => {
-         this.receipts = val;
-         this.loading = false;
+        this._id = params['id'];
+        this.receiptService.getReceipts(this._id)
+        .subscribe((responce: ReceiptModel[]) => {
+          this.receipts = responce;
+          this.loading = false;
         },
-        (error) => {
-          this.setError(error)
+        (error: any) => {
+          this.setError(error);
         });
       }
     );
@@ -43,27 +42,27 @@ export class AdminStudentReceiptsComponent implements OnInit {
     const dltConfirm = confirm("do you really want to delete??");
     if(dltConfirm) {
       this.loading = true;
-      const data = { api : "deleteReceipt", data : { _id }}
-      this.httpPostService.httpPostAuth(data).subscribe((val) => {
+      this.receiptService.deleteReceipt(_id)
+      .subscribe((responce: any) => {
         this.ngOnInit();
       },
-      (error) => {
-        this.setError(error)
+      (error: any) => {
+        this.setError(error);
       });
     }
   }
 
   cancel() {
     this.loading = true;
-    this.router.navigate(['/admin', 'student'], {relativeTo: this.route, skipLocationChange:true});
+    this.router.navigate(['/admin', 'student'], {relativeTo: this.route, skipLocationChange: true});
   }
 
-  setError(err : string) {
+  setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 }

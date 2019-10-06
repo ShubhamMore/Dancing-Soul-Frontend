@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { FormValidator } from '../../../validators/form.validator';
-import { HttpService } from '../../../services/httpPost.service';
+import { ArticleService } from '../../../services/article.service';
 
 @Component({
   selector: 'app-admin-add-article',
@@ -17,12 +16,9 @@ export class AdminAddArticleComponent implements OnInit {
 
   formError: boolean = false;
   
-  error : string = null;
+  error: string = null;
 
-  imgExt: string[] = ['jpg', 'png'];
-
-  constructor(private httpPostService: HttpService,
-              private formValidator: FormValidator,
+  constructor(private articleService: ArticleService,
               private router: Router,
               private route: ActivatedRoute) { }
 
@@ -48,29 +44,32 @@ export class AdminAddArticleComponent implements OnInit {
     if(this.form.valid) {
       this.formError = false;
       this.loading = true;
-      const article = { title: this.form.value.title, body : this.form.value.body}
-      const data = { api : "addArticle", data : article }
-      this.httpPostService.httpPostAuth(data).subscribe((val) => {
+      const article = {
+        title: this.form.value.title,
+        body: this.form.value.body
+      }
+      this.articleService.addArticle(article)
+      .subscribe((responce: any) => {
        this.form.reset();
        this.cancel();
       },
-      (error) => {
-        this.setError(error)
+      (error: any) => {
+        this.setError(error);
       });
     }
   }
 
   cancel() {
     this.loading = true;
-    this.router.navigate(["/admin", "article"], {relativeTo: this.route, skipLocationChange:true});        
+    this.router.navigate(["/admin", "article"], {relativeTo: this.route, skipLocationChange: true});        
   }
 
-	setError(err : string) {
+	setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 }

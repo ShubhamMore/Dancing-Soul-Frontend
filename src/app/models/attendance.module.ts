@@ -1,4 +1,4 @@
-export class Attendance {
+export class AttendanceModel {
     public _id: string;
     public date: string;
     public branch: string;

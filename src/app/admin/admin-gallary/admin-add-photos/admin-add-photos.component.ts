@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { HttpService } from '../../../services/httpPost.service';
+import { GalleryService } from '../../../services/gallery.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { GoogleSymbol } from '@agm/core/services/google-maps-types';
 
 @Component({
   selector: 'app-admin-add-photos',
@@ -14,10 +15,10 @@ export class AdminAddPhotosComponent implements OnInit {
   imagePreview: string[] = [];
   uploadImages: File[] = [];
   loading: boolean = true;
-  error : string = null;
-  invalidImage : boolean = false;
+  error: string = null;
+  invalidImage: boolean = false;
 
-  constructor(private httpPostService: HttpService,
+  constructor(private galleryService: GalleryService,
               private router: Router,
               private route: ActivatedRoute) {}
 
@@ -32,11 +33,11 @@ export class AdminAddPhotosComponent implements OnInit {
 
   onImagePicked(event: Event) {
     const files = (event.target as HTMLInputElement).files;
-    const imgExt : string[] = ["jpg", "png"];
-    let ext : string = null;
+    const imgExt: string[] = ["jpg", "png"];
+    let ext: string = null;
     for(let i = 0; i < files.length; i++) {
       ext = files[i].name.substring(files[i].name.lastIndexOf('.') + 1);
-      if(!(imgExt.indexOf(ext)!=-1)) {
+      if (!(imgExt.indexOf(ext) != -1)) {
         return this.invalidImage = true;
       }
     }
@@ -56,44 +57,43 @@ export class AdminAddPhotosComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    
+  
     this.loading = true;
-    
+  
     const title = this.form.value.title;
-    const postData = new FormData();
+    const images = new FormData();
     for(let i = 0; i < this.uploadImages.length; i++) {
-      postData.append("image", this.uploadImages[i], title+i);
+      images.append("image", this.uploadImages[i], title+i);
     }
-    const data = { api : "addImages", data : postData }
     
-    this.httpPostService.httpPostAuth(data)
-    .subscribe(responseData => {
+    this.galleryService.addImages(images)
+    .subscribe((responce: any) => {
       this.imagePreview = [];
       this.uploadImages = [];
       this.form.reset();
       this.cancel();
     },
-    (error) => {
-      this.setError(error)
+    (error: any) => {
+      this.setError(error);
     });
   }
 
-  cancelImage(index : number) {
+  cancelImage(index: number) {
     this.imagePreview.splice(index, 1);
     this.uploadImages.splice(index, 1);
   }
 
   cancel() {
     this.loading = true;
-    this.router.navigate(['/admin', 'gallery'], {relativeTo:this.route, skipLocationChange:true});
+    this.router.navigate(['/admin', 'gallery'], {relativeTo: this.route, skipLocationChange: true});
   }
 
-  setError(err : string) {
+  setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { HttpService } from '../../../services/httpPost.service';
+import { NewsService } from '../../../services/news.service';
+import { NewsModel } from '../../../models/news.model';
 
 @Component({
   selector: 'app-admin-show-news',
@@ -10,63 +11,60 @@ import { HttpService } from '../../../services/httpPost.service';
 export class AdminShowNewsComponent implements OnInit {
   news: any;
 
-  loading : boolean = true;
+  loading: boolean = true;
+  error: string = null;
 
-  error : string = null;
-
-  constructor(private httpPostService: HttpService,
+  constructor(private newsService: NewsService,
               private router: Router,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.params
     .subscribe(
-      (params:Params) => {
+      (params: Params) => {
         const _id = params['id'];
-        const data = { api : "getNews", data : { _id }}
-        this.httpPostService.httpPost(data).subscribe((val) => {
-          this.news = val;
+        this.newsService.getNews(_id)
+        .subscribe((responce: NewsModel) => {
+          this.news = responce;
           this.loading = false;
         },
-        (error) => {
-          this.setError(error)
+        (error: any) => {
+          this.setError(error);
         });
-        
       }
     );
   }
 
   edit() {
     this.loading = true;
-    this.router.navigate(['edit'], {relativeTo: this.route, skipLocationChange:true});
+    this.router.navigate(['edit'], {relativeTo: this.route, skipLocationChange: true});
   }
 
   delete() {
-    
     const dltConfirm = confirm("do you really want to delete??");
-    if(dltConfirm) {
+    if (dltConfirm) {
       this.loading = true;
-      const data = { api : "deleteNews", data : { _id : this.news._id }}
-      this.httpPostService.httpPostAuth(data).subscribe((val) => {
+      this.newsService.deleteNews(this.news._id)
+      .subscribe((responce: any) => {
         this.cancel();
       },
-      (error) => {
-        this.setError(error)
+      (error: any) => {
+        this.setError(error);
       });
     }
   }
 
   cancel() {
     this.loading = true;
-    this.router.navigate(['/admin', 'news'], {relativeTo: this.route, skipLocationChange:true});
+    this.router.navigate(['/admin', 'news'], {relativeTo: this.route, skipLocationChange: true});
   }
 
-  setError(err : string) {
+  setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 }

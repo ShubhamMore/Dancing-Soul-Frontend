@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HttpService } from '../../services/httpPost.service';
+import { NewsService } from '../../services/news.service';
+import { NewsModel } from '../../models/news.model';
 
 @Component({
   selector: 'app-admin-news',
@@ -9,52 +10,51 @@ import { HttpService } from '../../services/httpPost.service';
 })
 export class AdminNewsComponent implements OnInit {
 
-  news: any[] = [];
+  news: NewsModel[] = [];
 
   loading: boolean = true;
+  error: string = null;
 
-  error : string = null;
-
-  constructor(private httpPostService: HttpService,
+  constructor(private newsService: NewsService,
               private router:Router,
               private route:ActivatedRoute) { }
 
   ngOnInit() {
-    const data = { api : "getAllNews", data : {}}
-    this.httpPostService.httpPost(data).subscribe((val) => {
-      this.news = val;
+    this.newsService.getAllNews()
+    .subscribe((responce: NewsModel[]) => {
+      this.news = responce;
       this.loading = false;
     },
-    (error) => {
-      this.setError(error)
+    (error: any) => {
+      this.setError(error);
     });
   }
 
-  deleteNews(_id:string) {
+  deleteNews(_id: string) {
     const deleteConfirm = confirm("do you really want to Delete News??");  
     if(deleteConfirm) {
       this.loading = true;
-      const data = { api : "deleteNews", data : { _id }}
-      this.httpPostService.httpPostAuth(data).subscribe((val) => {
-       this.loading = false;
+      this.newsService.deleteNews(_id)
+      .subscribe((responce: any) => {
+        this.loading = false;
       },
-      (error) => {
-        this.setError(error)
+      (error: any) => {
+        this.setError(error);
       });
-    }    
+    }
   }
 
   onNewNews() {
     this.loading = true;
-    this.router.navigate(['new'], {relativeTo:this.route, skipLocationChange:true});
+    this.router.navigate(['new'], {relativeTo: this.route, skipLocationChange: true});
   }
 
-  setError(err : string) {
+  setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 }

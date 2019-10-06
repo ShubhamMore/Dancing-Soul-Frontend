@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpService } from '../../../services/httpPost.service';
+import { AboutService } from '../../../services/about.service';
 import { AboutModel } from '../../../models/about.model';
 
 @Component({
@@ -15,12 +15,12 @@ export class AdminEditPhilosophyComponent implements OnInit {
 
   philosophy: string;
 
-  about : AboutModel;
+  about: AboutModel;
 
   loading: boolean = true;
-  error : string = null;
+  error: string = null;
 	
-  constructor(private httpPostService: HttpService,
+  constructor(private aboutService: AboutService,
               private router: Router,
               private route: ActivatedRoute) { }
 
@@ -32,13 +32,13 @@ export class AdminEditPhilosophyComponent implements OnInit {
       })
     });
 
-    const data = { api : "getAbout", data : {}}
-    this.httpPostService.httpPost(data).subscribe((val) => {
-      this.about = val[0];
+    this.aboutService.getAbout()
+    .subscribe((responce: AboutModel) => {
+      this.about = responce;
       this.form.patchValue({philosophy: this.about.philosophy});
       this.loading = false;
     },
-    (error) => {
+    (error: any) => {
       this.setError(error)
     });
   }
@@ -46,18 +46,19 @@ export class AdminEditPhilosophyComponent implements OnInit {
   savePhilisophy() {
     if(this.form.valid) {
       this.loading = true;
-      const about : AboutModel = {
-        _id : this.about._id,
-        aim : this.about.aim,
-        history : this.about.history,
-        philosophy : this.form.value.philosophy
+      const about: AboutModel = {
+        _id: this.about._id,
+        aim: this.about.aim,
+        history: this.about.history,
+        philosophy: this.form.value.philosophy
       }
-      const data = { api : "editAbout", data : about }
-      this.httpPostService.httpPostAuth(data).subscribe((val) => {
+
+      this.aboutService.saveAbout(about)
+      .subscribe((responce: any) => {
         this.form.reset();
         this.cancel();
       },
-      (error) => {
+      (error: any) => {
         this.setError(error)
       });
     }
@@ -65,16 +66,16 @@ export class AdminEditPhilosophyComponent implements OnInit {
   
   cancel() {
     this.loading = true;
-    this.router.navigate(['/admin', 'about', 'philosophy'], {relativeTo: this.route, skipLocationChange:true});
+    this.router.navigate(['/admin', 'about', 'philosophy'], {relativeTo: this.route, skipLocationChange: true});
   }
 
   
-	setError(err : string) {
+	setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 }

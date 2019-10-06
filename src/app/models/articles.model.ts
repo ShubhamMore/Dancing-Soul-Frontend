@@ -1,4 +1,4 @@
-export class Article {
+export class ArticleModel {
     public _id: string;
     public title: string;
     public body: string;

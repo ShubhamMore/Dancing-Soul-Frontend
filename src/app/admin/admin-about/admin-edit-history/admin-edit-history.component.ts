@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpService } from '../../../services/httpPost.service';
+import { AboutService } from '../../../services/about.service';
 import { AboutModel } from '../../../models/about.model';
 
 @Component({
@@ -17,9 +17,9 @@ export class AdminEditHistoryComponent implements OnInit {
 
   loading: boolean = true;
 
-  error : string = null;
+  error: string = null;
 
-  constructor(private httpPostService: HttpService,
+  constructor(private aboutService: AboutService,
     private router: Router,
     private route: ActivatedRoute) { }
     
@@ -30,9 +30,10 @@ export class AdminEditHistoryComponent implements OnInit {
       })
     });
 
-    const data = { api : "getAbout", data : {}}
-    this.httpPostService.httpPost(data).subscribe((val) => {
-     this.about = val[0];
+    
+    this.aboutService.getAbout()
+    .subscribe((responce: AboutModel) => {
+     this.about = responce;
      this.form.patchValue({history: this.about.history});
      this.loading = false;
     },
@@ -44,18 +45,19 @@ export class AdminEditHistoryComponent implements OnInit {
   saveHistory() {
     if(this.form.valid) {
       this.loading = true;
-      const about : AboutModel = {
-        _id : this.about._id,
-        aim : this.about.aim,
-        history : this.form.value.history,
-        philosophy : this.about.philosophy
+      const about: AboutModel = {
+        _id: this.about._id,
+        aim: this.about.aim,
+        history: this.form.value.history,
+        philosophy: this.about.philosophy
       }
-      const data = { api : "editAbout", data : about }
-      this.httpPostService.httpPostAuth(data).subscribe((val) => {
+
+      this.aboutService.saveAbout(about)
+      .subscribe((responce: any) => {
        this.form.reset();
        this.cancel();
       },
-      (error) => {
+      (error: any) => {
         this.setError(error)
       });
 
@@ -64,15 +66,15 @@ export class AdminEditHistoryComponent implements OnInit {
   
   cancel() {
     this.loading = true;
-    this.router.navigate(['/admin', 'about', 'history'], {relativeTo: this.route, skipLocationChange:true});
+    this.router.navigate(['/admin', 'about', 'history'], {relativeTo: this.route, skipLocationChange: true});
   }
 
-	setError(err : string) {
+	setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 

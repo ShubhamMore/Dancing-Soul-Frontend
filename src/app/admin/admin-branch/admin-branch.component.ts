@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Branch } from '../../models/branch.model';
+import { BranchModel } from '../../models/branch.model';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HttpService } from '../../services/httpPost.service';
+import { BranchService } from '../../services/branch.service';
 
 @Component({
   selector: 'app-admin-branch',
@@ -10,39 +10,39 @@ import { HttpService } from '../../services/httpPost.service';
 })
 export class AdminBranchComponent implements OnInit {
 
-    branches : Branch[] = [];
+    branches: BranchModel[] = [];
 
-    loading : boolean = true;
+    loading: boolean = true;
 
-    error : string = null;
+    error: string = null;
 
-    constructor(private httpPostService: HttpService,
+    constructor(private branchService: BranchService,
                 private router: Router,
                 private route: ActivatedRoute) { }
 
-
     ngOnInit() {
-        const data = { api : "getBranches", data : { }}
-        this.httpPostService.httpPostAuth(data).subscribe((val) => {
-         this.branches = val;
+        
+        this.branchService.getBranches().
+        subscribe((responce: BranchModel[]) => {
+         this.branches = responce;
          this.loading = false;
         },
-        (error) => { 
+        (error: any) => { 
             this.setError(error)       
         });
     }
 
     onNewBranch() {
         this.loading = true;
-        this.router.navigate(['new'], {relativeTo:this.route, skipLocationChange: true});
+        this.router.navigate(['new'], {relativeTo: this.route, skipLocationChange: true});
     }
     
-	setError(err : string) {
+	setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 }

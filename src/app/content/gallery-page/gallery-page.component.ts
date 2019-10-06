@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpService } from '../../services/httpPost.service';
+import { GalleryService } from '../../services/gallery.service';
+import { ImageModel } from '../../models/image.model';
 
 @Component({
   selector: 'app-gallery-page',
@@ -9,19 +10,19 @@ import { HttpService } from '../../services/httpPost.service';
 export class GalleryPageComponent implements OnInit {
 
   yourGalleryName='assets/img/gallery/'
-  gallery: any[] = [];
+  gallery: ImageModel[] = [];
   loading: boolean = true;
 
-  constructor(private httpPostService: HttpService) { }
+  constructor(private galleryService: GalleryService) { }
 
   ngOnInit() {
-      const examsData = { api: "getImages", data: {}}
-      this.httpPostService.httpPost(examsData).subscribe((val: any) => {
-        console.log(val)
-        this.gallery = val;
+      this.galleryService.getImages()
+      .subscribe((responce: ImageModel[]) => {
+        console.log(responce)
+        this.gallery = responce;
         this.loading = false;
       },
-      (error) => {
+      (error: any) => {
       });
   }
 

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormValidator } from '../../../validators/form.validator';
-import { HttpService } from '../../../services/httpPost.service';
+import { FacultyService } from '../../../services/faculty.service';
 
 @Component({
   selector: 'app-admin-add-faculty',
@@ -26,8 +25,7 @@ export class AdminAddFacultyComponent implements OnInit {
 
   imgExt: string[] = ['jpg', 'png'];
 
-  constructor(private httpPostService: HttpService,
-              private formValidator: FormValidator,
+  constructor(private facultyService: FacultyService,
               private router: Router,
               private route: ActivatedRoute) { }
 
@@ -56,11 +54,11 @@ export class AdminAddFacultyComponent implements OnInit {
   }
 
   addFaculty() {
-    if(this.form.invalid) {
+    if (this.form.invalid) {
       this.formError = true;
     }
 
-    if(this.form.valid) {
+    if (this.form.valid) {
       this.formError = false;
       this.loading = true;
 
@@ -72,27 +70,27 @@ export class AdminAddFacultyComponent implements OnInit {
       faculty.append("phone", this.form.value.phone);
       faculty.append("status", "1");
 
-      if(this.uploadImage) {
+      if (this.uploadImage) {
         faculty.append("image", this.uploadImage, "faculty");
       }
-      
-      const data = { api : "addFaculty", data : faculty }
-      this.httpPostService.httpPostAuth(data).subscribe((val) => {
+
+      this.facultyService.addFaculty(faculty)
+      .subscribe((responce: any) => {
         this.form.reset();
         this.cancel();
-      },(error) => {
-        this.setError(error)
+      },(error: any) => {
+        this.setError(error);
       });
     }
   }
 
   onImagePicked(event: Event) {
     const files = (event.target as HTMLInputElement).files;
-    const imgExt : string[] = ["jpg", "png"];
-    let ext : string = null;
+    const imgExt: string[] = ["jpg", "png"];
+    let ext: string = null;
     for(let i = 0; i < files.length; i++) {
       ext = files[i].name.substring(files[i].name.lastIndexOf('.') + 1);
-      if(!(imgExt.indexOf(ext)!=-1)) {
+      if(!(imgExt.indexOf(ext) != -1)) {
         return this.invalidImage = true;
       }
     }
@@ -112,18 +110,18 @@ export class AdminAddFacultyComponent implements OnInit {
     this.uploadImage = null;
     this.invalidImage = false;
   }
-  
+
   cancel() {
     this.loading = true;
-    this.router.navigate(['/admin', 'faculty'], {relativeTo:this.route, skipLocationChange:true});
+    this.router.navigate(['/admin', 'faculty'], {relativeTo: this.route, skipLocationChange: true});
   }
 
-  setError(err : string) {
+  setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 

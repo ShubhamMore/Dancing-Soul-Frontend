@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpService } from '../../../services/httpPost.service';
+import { AboutService } from '../../../services/about.service';
 import { AboutModel } from '../../../models/about.model';
 
 @Component({
@@ -17,9 +17,9 @@ export class AdminEditAimComponent implements OnInit {
 
   loading: boolean = true;
 
-  error : string = null;
+  error: string = null;
 	
-  constructor(private httpPostService: HttpService,
+  constructor(private aboutService: AboutService,
               private router: Router,
               private route: ActivatedRoute) { }
 
@@ -29,14 +29,15 @@ export class AdminEditAimComponent implements OnInit {
         validators: [Validators.required]
       })
     });
-    const data = { api : "getAbout", data : {}}
-    this.httpPostService.httpPost(data).subscribe((val) => {
-     this.about = val[0];
+    
+    this.aboutService.getAbout().
+    subscribe((responce: AboutModel) => {
+     this.about = responce;
      this.form.patchValue({ aim: this.about.aim});
      this.loading = false;
     },
-    (error) => {
-      
+    (error: any) => {
+      this.setError(error);
     });
     
   }
@@ -44,34 +45,35 @@ export class AdminEditAimComponent implements OnInit {
   saveAim() {
     if(this.form.valid) {
       this.loading = true;
-      const about : AboutModel = {
-        _id : this.about._id,
-        aim : this.form.value.aim,
-        history : this.about.history,
-        philosophy : this.about.philosophy
+      const about: AboutModel = {
+        _id: this.about._id,
+        aim: this.form.value.aim,
+        history: this.about.history,
+        philosophy: this.about.philosophy
       }
-      const data = { api : "editAbout", data : about }
-      this.httpPostService.httpPostAuth(data).subscribe((val) => {
+      
+      this.aboutService.saveAbout(about)
+      .subscribe((responce: any) => {
        this.form.reset();
        this.cancel();
       },
-      (error) => {
-       this.loading = false;
+      (error: any) => {
+        this.setError(error);
       });
     }
   }
   
   cancel() {
     this.loading = true;
-    this.router.navigate(['/admin', 'about', 'aim'], {relativeTo: this.route, skipLocationChange:true});
+    this.router.navigate(['/admin', 'about', 'aim'], {relativeTo: this.route, skipLocationChange: true});
   }
   
-	setError(err : string) {
+	setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 }

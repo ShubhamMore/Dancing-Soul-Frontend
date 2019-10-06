@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { Branch, BatchModel } from '../../../models/branch.model';
-import { HttpService } from '../../../services/httpPost.service';
+import { BranchModel, BatchModel } from '../../../models/branch.model';
+import { BranchService } from '../../../services/branch.service';
 import { ImageModel } from '../../../models/image.model';
 
 @Component({
@@ -10,24 +10,24 @@ import { ImageModel } from '../../../models/image.model';
   styleUrls: ['./admin-show-branch.component.css']
 })
 export class AdminShowBranchComponent implements OnInit {
-  
-  branch: Branch;
 
-  images : ImageModel[] = [];
+  branch: BranchModel;
 
-  batches : BatchModel[] = [];
+  images: ImageModel[] = [];
 
-  loading : boolean = true;
+  batches: BatchModel[] = [];
 
-  _id : string;
+  loading: boolean = true;
 
-  error : string = null;
+  _id: string;
+
+  error: string = null;
 
   week: string[] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
   days: boolean[] = [true, false, false, false, false, false, false];
 
-  constructor(private httpPostService: HttpService,
+  constructor(private branchService: BranchService,
               private router: Router,
               private route: ActivatedRoute) { }
 
@@ -37,21 +37,22 @@ export class AdminShowBranchComponent implements OnInit {
     .subscribe(
       (params:Params) => {
         this._id = params['id'];
-        const data = { api : "getBranch", data : { _id: this._id }}
-        this.httpPostService.httpPostAuth(data).subscribe((val) => {
-          this.branch = val;
+
+        this.branchService.getBranch(this._id)
+        .subscribe((responce: BranchModel) => {
+          this.branch = responce;
           this.batches = this.branch.batch;
           this.images = this.branch.images;
           this.loading = false;
         },
-        (error) => {
-          this.setError(error)    
+        (error: any) => {
+          this.setError(error);  
         });
       }
     );
   }
 
-  changeStatus(_id:string, status: string) {
+  changeStatus(_id: string, status: string) {
     let statusConfirm: any = true;
     if(status === "0") {
       statusConfirm = confirm("do you really want to Deactivate Branch??");
@@ -61,31 +62,31 @@ export class AdminShowBranchComponent implements OnInit {
     }  
     if(statusConfirm) {
       this.loading = true;
-      const data = { api : "changeBranchStatus", data : { _id, status }}
-      this.httpPostService.httpPostAuth(data).subscribe((val) => {
+
+      this.branchService.changeBranchStatus(_id, status)
+      .subscribe((responce: any) => {
         this.cancel();
       },
-      (error) => {
-        this.setError(error)            
+      (error: any) => {
+        this.setError(error);            
       });
     }
   }
   
   editBranch() {
     this.loading = true;
-    this.router.navigate(['edit'], {relativeTo: this.route, skipLocationChange:true});
+    this.router.navigate(['edit'], {relativeTo: this.route, skipLocationChange: true});
   }
 
   deleteImage(public_id: string) {
     this.loading = true;
     this.loading = true;
-    const data = { api : "deleteBranchImage", data : {_id: this._id, public_id}}
-    this.httpPostService.httpPostAuth(data)
-    .subscribe(res => {
+    this.branchService.deleteImage(this._id, public_id)
+    .subscribe((responce: any) => {
       this.ngOnInit();
     },
-    (error) => {
-      this.setError(error)          
+    (error: any) => {
+      this.setError(error);        
     });
   }
 
@@ -100,7 +101,7 @@ export class AdminShowBranchComponent implements OnInit {
   cancel() {
     this.loading = true;
     this.clear();
-    this.router.navigate(['/admin', 'branch'], {relativeTo: this.route, skipLocationChange:true});
+    this.router.navigate(['/admin', 'branch'], {relativeTo: this.route, skipLocationChange: true});
   }
 
   isWeekDays(): boolean {
@@ -123,30 +124,27 @@ export class AdminShowBranchComponent implements OnInit {
     return false;
   }
 
-  deleteBranch(_id : string) {
+  deleteBranch(_id: string) {
     const password = prompt("Please enter your Password");
     if(password) {
       this.loading = true;
-      const data = { api : "deleteBranch", data : { _id, password }}
-      this.httpPostService.httpPostAuth(data).subscribe((val) => {
+      
+      this.branchService.deleteBranch(_id, password)
+      .subscribe((responce: any) => {
         this.cancel();
       },
-      (error) => {
+      (error: any) => {
         this.setError(error)    
       });
     }
   }
 
-  alertDismiss() {
-    this.error = null;
-  }
-
-	setError(err : string) {
+	setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 }

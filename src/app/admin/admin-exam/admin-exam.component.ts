@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HttpService } from '../../services/httpPost.service';
+import { ExamService } from '../../services/exam.service';
+import { ExamModel } from '../../models/exams.model';
 
 @Component({
   selector: 'app-admin-exam',
@@ -9,52 +10,52 @@ import { HttpService } from '../../services/httpPost.service';
 })
 export class AdminExamComponent implements OnInit {
 
-  exams: any[] = [];
+  exams: ExamModel[] = [];
 
   loading: boolean = true;
 
-  error : string = null;
+  error: string = null;
 
-  constructor(private httpPostService: HttpService,
-              private router:Router,
-              private route:ActivatedRoute) { }
+  constructor(private examService: ExamService,
+              private router: Router,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
-    const data = { api : "getExams", data : {}}
-    this.httpPostService.httpPost(data).subscribe((val) => {
-     this.exams = val;
+    this.examService.getExams()
+    .subscribe((responce: ExamModel[]) => {
+     this.exams = responce;
      this.loading = false;
     },
-    (error) => {
+    (error: any) => {
       this.setError(error)
     });
   }
 
-  deleteExam(_id:string) {
+  deleteExam(_id: string) {
     const deleteConfirm = confirm("do you really want to Delete this Exam??");  
-    if(deleteConfirm) {
+    if (deleteConfirm) {
       this.loading = true;
-      const data = { api : "deleteExam", data : { _id }}
-      this.httpPostService.httpPostAuth(data).subscribe((val) => {
-       this.loading = false;
+      this.examService.deleteExam(_id)
+      .subscribe((responce: any) => {
+        this.loading = false;
       },
-      (error) => {
-       this.setError(error)
+      (error: any) => {
+       this.setError(error);
       });
-    }    
+    }
   }
 
   onNewExam() {
     this.loading = true;
-    this.router.navigate(['new'], {relativeTo:this.route, skipLocationChange:true});
+    this.router.navigate(['new'], {relativeTo: this.route, skipLocationChange: true});
   }
-  
-	setError(err : string) {
+
+	setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 }

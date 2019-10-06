@@ -1,4 +1,4 @@
-export class NewsModule {
+export class NewsModel {
     public _id: string;
     public title: string;
     public body: string;

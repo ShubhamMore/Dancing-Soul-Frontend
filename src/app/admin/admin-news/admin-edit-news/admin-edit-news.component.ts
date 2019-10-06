@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
-import { FormValidator } from '../../../validators/form.validator';
-import { HttpService } from '../../../services/httpPost.service';
+import { NewsService } from '../../../services/news.service';
+import { NewsModel } from '../../../models/news.model';
 
 
 @Component({
@@ -12,21 +12,18 @@ import { HttpService } from '../../../services/httpPost.service';
 })
 export class AdminEditNewsComponent implements OnInit {
 
-  news: any;
-  id:string;
+  news: NewsModel;
+  _id: string;
 
-  loading : boolean = true;
-
-  error : string = null;
+  loading: boolean = true;
+  error: string = null;
 
   imgExt: string[] = ['jpg', 'png'];
   
   form: FormGroup;
-
   formError: boolean = false;
 
-  constructor(private httpPostService: HttpService,
-              private formValidator: FormValidator,
+  constructor(private newsService: NewsService,
               private router: Router,
               private route: ActivatedRoute) { }
               
@@ -43,19 +40,19 @@ export class AdminEditNewsComponent implements OnInit {
 
     this.route.params
     .subscribe(
-      (params:Params) => {
+      (params: Params) => {
         const _id = params['id'];
-        const data = { api : "getNews", data : { _id }}
-        this.httpPostService.httpPost(data).subscribe((val) => {
-          this.news = val;
+        this.newsService.getNews(_id)
+        .subscribe((responce: NewsModel) => {
+          this.news = responce;
           this.form.setValue({
            title: this.news.title,
            body: this.news.body
           });
           this.loading = false;
         },
-        (error) => {
-          this.setError(error)
+        (error: any) => {
+          this.setError(error);
         });
       }
     );
@@ -74,27 +71,27 @@ export class AdminEditNewsComponent implements OnInit {
         title: this.form.value.title,
         body: this.form.value.body
       }
-      const data = { api : "editNews", data : editednews }
-      this.httpPostService.httpPostAuth(data).subscribe((val) => {
-       this.cancel();
+      this.newsService.editNews(editednews)
+      .subscribe((responce: any) => {
+        this.cancel();
       },
-      (error) => {
-        this.setError(error) 
+      (error: any) => {
+        this.setError(error);
       });
     }
   }
-  
+
   cancel() {
     this.loading = true;
-    this.router.navigate(['/admin', 'news', this.news._id],{relativeTo: this.route, skipLocationChange:true});
+    this.router.navigate(['/admin', 'news', this.news._id], {relativeTo: this.route, skipLocationChange: true});
   }
 
-  setError(err : string) {
+  setError(err: string) {
 		this.error = err;
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 }
