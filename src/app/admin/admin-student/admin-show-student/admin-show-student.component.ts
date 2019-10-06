@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Params, Router, ActivatedRoute } from '@angular/router';
 import { StudentModel } from '../../../models/student.model';
-import { BatchModel } from '../../../models/branch.model';
 import { StudentService } from '../../../services/student.service';
 
 @Component({
@@ -12,11 +11,10 @@ import { StudentService } from '../../../services/student.service';
 export class AdminShowStudentComponent implements OnInit {
 
   student: StudentModel;
+  studentMetaData: any;
 
   loading : boolean = true;
   error: string = null;
-
-  batch: BatchModel;
 
   constructor(private studentService: StudentService,
               private route: ActivatedRoute,
@@ -28,8 +26,9 @@ export class AdminShowStudentComponent implements OnInit {
       (params: Params) => {
         const _id = params['id'];
         this.studentService.getStudent(_id)
-        .subscribe((responce: StudentModel) => {
-          this.student = responce;
+        .subscribe((responce: any) => {
+          this.student = responce.student;
+          this.studentMetaData = responce.studentMetaData;
           this.loading = false;
         },
         (error: any) => {

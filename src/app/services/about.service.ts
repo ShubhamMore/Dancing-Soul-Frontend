@@ -13,7 +13,7 @@ export class AboutService {
 
   getAbout() {
     const data = {api: 'getAbout', data: {}};
-    return this.httpService.httpPostAuth(data).pipe(
+    return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
       }),

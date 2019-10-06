@@ -155,7 +155,7 @@
                         <strong>Branch : </strong>
                       </td>
                       <td>
-                        <p>{{branch.branch}}</p>
+                        <p>{{studentMetaData.branch}}</p>
                       </td>
                     </tr>
                     <tr>
@@ -163,7 +163,7 @@
                         <strong>Batch : </strong>
                       </td>
                       <td>
-                        <p>{{student.batch == "0" ? "Week Day Batch" : "Weel End Batch"}}</p>
+                        <p>{{student.batch == "0" ? "Week Day Batch" : "Week End Batch"}}</p>
                       </td>
                     </tr>
                     <tr>
@@ -171,7 +171,7 @@
                         <strong>Batch Name : </strong>
                       </td>
                       <td>
-                        <p>{{batch.batchName}}</p> 
+                        <p>{{studentMetaData.batch.batchName}}</p> 
                       </td>
                     </tr>
                     <tr>
@@ -179,7 +179,7 @@
                         <strong>Fees : </strong>
                       </td>
                       <td>
-                        <p>Rs. {{batch.fees}}.00/-</p>      
+                        <p>Rs. {{studentMetaData.batch.fees}}.00/-</p>      
                       </td>
                     </tr>
                     <tr>
@@ -187,7 +187,7 @@
                         <strong>Time : </strong>
                       </td>
                       <td>
-                        <p>{{batch.time}}</p>                
+                        <p>{{studentMetaData.batch.time}}</p>                
                       </td>
                     </tr>
                     <tr>

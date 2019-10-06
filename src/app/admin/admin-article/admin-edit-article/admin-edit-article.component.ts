@@ -72,7 +72,7 @@ export class AdminEditArticleComponent implements OnInit {
         body: this.form.value.body
       }
 
-      this.articleService.editArticle(this.article)
+      this.articleService.editArticle(editedArticle)
       .subscribe((responce: any) => {
        this.cancel();
       },

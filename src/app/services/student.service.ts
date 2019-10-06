@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpService } from './httpPost.service';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { StudentModel } from '../models/student.model';
 
 @Injectable({
   providedIn: 'root'

@@ -34,6 +34,18 @@ export class FacultyService {
     );
   }
 
+  getActivateFaculties() {
+    const data = {api: 'getActivateFaculties', data: {}};
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError(err => {
+        return throwError(err);
+      })
+    );
+  }
+
   getFaculty(_id: string) {
     const data = {api: 'getFaculty', data: {_id}};
     return this.httpService.httpPostAuth(data).pipe(

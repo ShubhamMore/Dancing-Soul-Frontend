@@ -26,7 +26,7 @@ export class AboutPageComponent implements OnInit {
     this.aboutService.getAbout()
     .subscribe((responce: AboutModel) => {
       this.aboutUs = responce;
-      this.facultyService.getFaculties()
+      this.facultyService.getActivateFaculties()
       .subscribe((responce: FacultyModel[]) => {
         this.faculties = responce;
         this.loading = false;

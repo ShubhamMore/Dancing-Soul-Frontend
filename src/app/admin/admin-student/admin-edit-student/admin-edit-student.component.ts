@@ -49,8 +49,8 @@ export class AdminEditStudentComponent implements OnInit {
         
         this.studentService.getStudentForEditing(_id)
         .subscribe((responce: any) => {
-          this.student = responce.students;
-          this.branches = responce.branches;
+          this.student = responce.student;
+          this.branches = responce.branch;
           this.branch = this.branches.find((branch) => branch._id === this.student.branch);
 
           this.form = new FormGroup({
@@ -97,6 +97,8 @@ export class AdminEditStudentComponent implements OnInit {
           });
       
           this.branchChanged();
+          this.changeWeekType();
+          
           this.form.patchValue({batchName: this.student.batchName})
 
           this.loading = false;

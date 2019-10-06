@@ -37,7 +37,7 @@ export class AdminExamComponent implements OnInit {
       this.loading = true;
       this.examService.deleteExam(_id)
       .subscribe((responce: any) => {
-        this.loading = false;
+        this.ngOnInit();
       },
       (error: any) => {
        this.setError(error);

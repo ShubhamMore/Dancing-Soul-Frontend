@@ -25,7 +25,7 @@ export class ArticleService {
 
   getArticles() {
     const data = {api: 'getArticles', data: {}};
-    return this.httpService.httpPostAuth(data).pipe(
+    return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
       }),

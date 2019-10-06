@@ -11,7 +11,7 @@ export class AttendanceService {
   constructor(private httpService: HttpService) { }
 
   getStudentsForAttendance(branch: string, batch: string, batchType: string) {
-    const data = {api: 'saveAttendance', data: {branch, batch, batchType}};
+    const data = {api: 'getStudentsForAttendance', data: {branch, batch, batchType}};
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;

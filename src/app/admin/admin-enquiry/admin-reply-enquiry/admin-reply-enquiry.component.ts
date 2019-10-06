@@ -56,7 +56,11 @@ export class AdminReplyEnquiryComponent implements OnInit {
   sendReply() {
     if(this.form.valid) {
       this.loading = true;
-      const reply = { email : this.enquiry.email, subject : this.form.value.subject, body : this.form.value.body }
+      const reply = {
+        email : this.enquiry.email,
+        subject : this.form.value.subject,
+        body : this.form.value.body
+      }
 
       this.enquiryService.replyEnquiry(reply)
       .subscribe((responce: any) => {

@@ -66,10 +66,12 @@ export class AdminAttendanceComponent implements OnInit {
 
     this.branchService.getBranches()
     .subscribe((responce: BranchModel[]) => {
-     this.branches = responce;
-     if(this.branches.length > 0) {
+      this.branches = responce;
+      if(this.branches.length > 0) {
 
-    }},
+      }
+      this.loading = false;
+    },
     (error: any) => {
       this.setError(error);
     });
@@ -82,17 +84,17 @@ export class AdminAttendanceComponent implements OnInit {
     return n.toString();
   }
 
-  onSelectBranch(id:string) {
-    if(id !== '') {
-      this.branch = id;
-      this.batches = this.branches.find((branch) => (branch._id === id)).batch;
-      this.onSelectBatchName('');
+  onSelectBranch() {
+    this.branch = this.form.value.branch;
+      if(this.branch !== '') {
+      this.batches = this.branches.find((branch) => (branch._id === this.branch)).batch;
+      this.onSelectBatchName();
     }
   }
 
-  onSelectBatchName(batch:string) {
-    this.batch = batch;
-    if(batch !== '') {
+  onSelectBatchName() {
+    this.batch = this.form.value.batch;
+    if(this.batch !== '') {
       this.searchStudent(this.branch, this.batch, this.weekType);
     }
     else {
@@ -101,10 +103,11 @@ export class AdminAttendanceComponent implements OnInit {
     }
   }
 
-  onSelectBatchType(weekType:string) {
+  onSelectBatchType() {
+    this.weekType = this.form.value.weekType;
     if(this.batch !== '') {
-      this.weekType = weekType;
-      this.onSelectBatchName('');
+      this.form.patchValue({batch: ''});
+      this.onSelectBatchName();
     }
   }
 

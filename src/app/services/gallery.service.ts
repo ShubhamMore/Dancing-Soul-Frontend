@@ -24,7 +24,7 @@ export class GalleryService {
 
   getImages() {
     const data = { api : "getImages", data : {}}        
-    return this.httpService.httpPostAuth(data).pipe(
+    return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
       }),

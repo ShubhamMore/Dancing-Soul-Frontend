@@ -15,7 +15,7 @@ export class BranchesPageComponent implements OnInit {
   constructor(private branchService: BranchService) { }
   
   ngOnInit() {
-    this.branchService.getBranches()
+    this.branchService.getActivateBranches()
     .subscribe((responce: BranchModel[]) => {
      this.branches = responce;
      this.loading = false;

@@ -25,7 +25,7 @@ export class NewsService {
 
   getAllNews() {
     const data = {api: 'getAllNews', data: {}};
-    return this.httpService.httpPostAuth(data).pipe(
+    return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
       }),
@@ -48,7 +48,7 @@ export class NewsService {
   }
 
   editNews(news: NewsModel) {
-    const data = {api: 'editArticle', data: news};
+    const data = {api: 'editNews', data: news};
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;

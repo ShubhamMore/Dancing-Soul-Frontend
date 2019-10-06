@@ -38,7 +38,7 @@ export class AdminArticleComponent implements OnInit {
       
       this.articelService.deleteArticle(_id)
       .subscribe((responce: any) => {
-       this.loading = false;
+        this.ngOnInit();
       },
       (error: any) => {
         this.setError(error);

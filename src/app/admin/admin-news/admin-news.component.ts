@@ -36,7 +36,7 @@ export class AdminNewsComponent implements OnInit {
       this.loading = true;
       this.newsService.deleteNews(_id)
       .subscribe((responce: any) => {
-        this.loading = false;
+        this.ngOnInit();
       },
       (error: any) => {
         this.setError(error);

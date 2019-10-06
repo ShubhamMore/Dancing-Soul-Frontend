@@ -25,7 +25,7 @@ export class EnquiryService {
 
   sendEnquiry(sendEmailData: any) {
     const data = { api: "sendEnquiry", data: sendEmailData}
-    return this.httpService.httpPostAuth(data).pipe(
+    return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
       }),

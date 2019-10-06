@@ -34,6 +34,18 @@ export class BranchService {
     );
   }
 
+  getActivateBranches() {
+    const data = {api: 'getActivateBranches', data: {}};
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError(err => {
+        return throwError(err);
+      })
+    );
+  }
+
   getBranch(_id: string) {
     const data = {api: 'getBranch', data: {_id}};
     return this.httpService.httpPostAuth(data).pipe(

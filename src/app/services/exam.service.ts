@@ -25,7 +25,7 @@ export class ExamService {
 
   getExams() {
     const data = {api: 'getExams', data: {}};
-    return this.httpService.httpPostAuth(data).pipe(
+    return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
       }),
