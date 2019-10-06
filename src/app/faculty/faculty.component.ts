@@ -10,7 +10,7 @@ import { BranchService } from '../services/branch.service';
 @Component({
   selector: 'app-faculty',
   templateUrl: './faculty.component.html',
-  styleUrls: ['./faculty.component.css']
+  styleUrls: ['./faculty.component.css'] 
 })
 export class FacultyComponent implements OnInit {
 
