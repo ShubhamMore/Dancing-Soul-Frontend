@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ReceiptModule } from '../../../models/receipt.model';
+import { ReceiptModel } from '../../../models/receipt.model';
 import { HttpService } from '../../../services/httpPost.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { Branch, BatchModel } from '../../../models/branch.model';
+import { BranchModel, BatchModel } from '../../../models/branch.model';
 import { StudentModel } from '../../../models/student.model';
 
 @Component({
@@ -12,8 +12,8 @@ import { StudentModel } from '../../../models/student.model';
 })
 export class StudentShowReceiptComponent implements OnInit {
 
-  receipt: ReceiptModule;
-  branch: Branch;
+  receipt: ReceiptModel;
+  branch: BranchModel;
   student: StudentModel;
   batch: BatchModel;
 
@@ -61,7 +61,7 @@ export class StudentShowReceiptComponent implements OnInit {
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 

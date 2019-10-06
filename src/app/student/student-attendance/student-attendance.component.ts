@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { HttpService } from '../../services/httpPost.service';
 import { BatchModel } from '../../models/branch.model';
-import { Branch } from '../../models/branch.model';
+import { BranchModel } from '../../models/branch.model';
 import { StudentModel } from '../../models/student.model';
-import { Attendance } from '../../models/attendance.module';
+import { AttendanceModel } from '../../models/attendance.module';
 
 @Component({
   selector: 'app-student-attendance',
@@ -14,12 +14,12 @@ import { Attendance } from '../../models/attendance.module';
 export class StudentAttendanceComponent implements OnInit {
   student: StudentModel;
 
-  attendance: Attendance[] = [];
+  attendance: AttendanceModel[] = [];
 
   loading: boolean = true;
   error: string = null;
 
-  branch: Branch;
+  branch: BranchModel;
 
   batch: BatchModel;
   
@@ -75,7 +75,7 @@ export class StudentAttendanceComponent implements OnInit {
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 }

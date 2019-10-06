@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { HttpService } from '../../services/httpPost.service';
-import { ReceiptModule } from '../../models/receipt.model';
+import { ReceiptService } from '../../services/receipt.service';
+import { ReceiptModel } from '../../models/receipt.model';
 
 @Component({
   selector: 'app-student-receipts',
@@ -10,13 +10,13 @@ import { ReceiptModule } from '../../models/receipt.model';
 })
 export class StudentReceiptsComponent implements OnInit {
 
-  receipts: ReceiptModule[] = [];
+  receipts: ReceiptModel[] = [];
 
   loading: boolean = true;
   error: string = null;
-  studentId: string;
+  _id: string;
 
-  constructor(private httpPostService: HttpService,
+  constructor(private receiptService: ReceiptService,
               private route: ActivatedRoute,
               private router: Router) { }
                          
@@ -24,13 +24,13 @@ export class StudentReceiptsComponent implements OnInit {
     this.route.queryParams.
     subscribe(
       (params: Params) => {
-        this.studentId = params['id'];
-        const data = { api: "getReceipts", data: { student: this.studentId }}
-        this.httpPostService.httpPostAuth(data).subscribe((val) => {
-         this.receipts = val;
+        this._id = params['id'];
+        this.receiptService.getReceipts(this._id)
+        .subscribe((responce: ReceiptModel[]) => {
+         this.receipts = responce;
          this.loading = false;
         },
-        (error) => {
+        (error: any) => {
           this.setError(error);
         });
       }
@@ -42,7 +42,7 @@ export class StudentReceiptsComponent implements OnInit {
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 }

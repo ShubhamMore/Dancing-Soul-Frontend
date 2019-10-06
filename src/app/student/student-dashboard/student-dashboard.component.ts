@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StudentModel } from '../../models/student.model';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { Branch, BatchModel } from '../../models/branch.model';
+import { BranchModel, BatchModel } from '../../models/branch.model';
 import { HttpService } from '../../services/httpPost.service';
 
 @Component({
@@ -17,7 +17,7 @@ export class StudentDashboardComponent implements OnInit {
 
   error: string = null;
 
-  branch: Branch;
+  branch: BranchModel;
 
   batch: BatchModel;
 
@@ -55,7 +55,7 @@ export class StudentDashboardComponent implements OnInit {
 		this.loading = false;
 	}
 
-	clearErr() {
+	clearError() {
 		this.error = null;
 	}
 }
