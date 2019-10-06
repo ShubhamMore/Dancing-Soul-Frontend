@@ -16,13 +16,14 @@ export class GalleryPageComponent implements OnInit {
   constructor(private galleryService: GalleryService) { }
 
   ngOnInit() {
-      this.galleryService.getImages()
+      this.galleryService.getAllImages()
       .subscribe((responce: ImageModel[]) => {
         console.log(responce)
         this.gallery = responce;
         this.loading = false;
       },
       (error: any) => {
+        console.log(error)
       });
   }
 

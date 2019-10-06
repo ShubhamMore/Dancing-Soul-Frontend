@@ -34,6 +34,18 @@ export class GalleryService {
     );
   }
 
+  getAllImages() {
+    const data = { api : "getAllImages", data : {}}        
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError(err => {
+        return throwError(err);
+      })
+    );
+  }
+
   removeImage(public_id: string) {
     const data = { api : "removeImage", data : {public_id}}         
     return this.httpService.httpPostAuth(data).pipe(
