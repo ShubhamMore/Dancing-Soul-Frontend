@@ -4,10 +4,27 @@
   <div class="col-12">
     <div class="branches-page">
         <h2>Our Branches</h2>
-        <div class="branch-card" *ngFor="let branch of branches">
+        <div class="branch-card" *ngFor="let branch of branches;let i=index">
           <div class="flex-container">
             <div class="branch-img">
-
+                <div id="{{'demo'+i}}" class="carousel slide" data-ride="carousel" >
+                    <ul class="carousel-indicators">
+                      <li [attr.data-target] ="'#demo'+i" *ngFor="let branchImg of branch.images;let j = index" [attr.data-slide-to]="j" [ngClass]="j == 0 ? 'active' : ''">{{i}}Sarvesh</li>
+                    </ul>
+                    
+                    <div class="carousel-inner">
+                      <div class="carousel-item" *ngFor="let branchImg of branch.images; let k = index"  [ngClass]="k == 0 ? 'item active' : 'item'">
+                        <img src="{{branchImg.secure_url}}" alt="Branch Image" width="1100" height="500">
+                      </div>
+                    </div>
+                    
+                    <a class="carousel-control-prev" href="{{'#demo'+i}}" data-slide="prev">
+                      <span class="carousel-control-prev-icon"></span>
+                    </a>
+                    <a class="carousel-control-next" href="{{'#demo'+i}}" data-slide="next">
+                      <span class="carousel-control-next-icon"></span>
+                    </a>
+                </div>
             </div>
             <div class="branch-details">
               <div class="description">
