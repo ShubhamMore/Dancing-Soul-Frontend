@@ -34,8 +34,8 @@ export class AttendanceService {
     );
   }
 
-  getAttendance() {
-    const data = {api: 'getAttendance', data: {}};
+  getAttendance(_id: string) {
+    const data = {api: 'getAttendance', data: {_id}};
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;

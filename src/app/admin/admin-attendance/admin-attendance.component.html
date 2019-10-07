@@ -63,7 +63,7 @@
                 <tr>
                   <th>ID</th>
                   <th>Student</th>
-                  <th>Present</th>
+                  <th>Mark Attendance</th>
                 </tr>
               </thead>
               <tbody>
@@ -75,7 +75,7 @@
                   <td>
                     <div class="attendance-selector">
                         <input type="checkbox" [id]="student._id" class="attendance" (change)="markAttendance($event, student._id, i)">
-                        <label [for]="student._id">{{attendance[i]}}</label>
+                        <label [for]="student._id">{{ attendance[i].attendanceStatus === "0" ? "A" : "P" }}</label>
                     </div>
                   </td>
                 </tr>

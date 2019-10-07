@@ -10,7 +10,7 @@ import { BranchService } from '../services/branch.service';
 @Component({
   selector: 'app-faculty',
   templateUrl: './faculty.component.html',
-  styleUrls: ['./faculty.component.css'] 
+  styleUrls: ['./faculty.component.css']
 })
 export class FacultyComponent implements OnInit {
 
@@ -24,20 +24,17 @@ export class FacultyComponent implements OnInit {
 
   students: StudentModel[] = [];
 
-  attendance: string[] = [] ;
-
-  present: string[] = [];
-  absent: string[] = [];
+  attendance: any[] = [] ;
 
   noStudent = 'Please Select Branch';
 
   branches: BranchModel[] = [];
-  branch: string = '';
+  branch : string = '';
 
   batches: BatchModel[] = [];
   batch: string = '';
 
-  date: string;
+  date : string;
 
   constructor(private attendanceService: AttendanceService,
               private branchService: BranchService,
@@ -66,10 +63,12 @@ export class FacultyComponent implements OnInit {
 
     this.branchService.getBranches()
     .subscribe((responce: BranchModel[]) => {
-     this.branches = responce;
-     if(this.branches.length > 0) {
+      this.branches = responce;
+      if(this.branches.length > 0) {
 
-    }},
+      }
+      this.loading = false;
+    },
     (error: any) => {
       this.setError(error);
     });
@@ -82,17 +81,17 @@ export class FacultyComponent implements OnInit {
     return n.toString();
   }
 
-  onSelectBranch(id:string) {
-    if(id !== '') {
-      this.branch = id;
-      this.batches = this.branches.find((branch) => (branch._id === id)).batch;
-      this.onSelectBatchName('');
+  onSelectBranch() {
+    this.branch = this.form.value.branch;
+      if(this.branch !== '') {
+      this.batches = this.branches.find((branch) => (branch._id === this.branch)).batch;
+      this.onSelectBatchName();
     }
   }
 
-  onSelectBatchName(batch:string) {
-    this.batch = batch;
-    if(batch !== '') {
+  onSelectBatchName() {
+    this.batch = this.form.value.batch;
+    if(this.batch !== '') {
       this.searchStudent(this.branch, this.batch, this.weekType);
     }
     else {
@@ -101,10 +100,11 @@ export class FacultyComponent implements OnInit {
     }
   }
 
-  onSelectBatchType(weekType:string) {
+  onSelectBatchType() {
+    this.weekType = this.form.value.weekType;
     if(this.batch !== '') {
-      this.weekType = weekType;
-      this.onSelectBatchName('');
+      this.form.patchValue({batch: ''});
+      this.onSelectBatchName();
     }
   }
 
@@ -113,15 +113,18 @@ export class FacultyComponent implements OnInit {
     this.attendanceService.getStudentsForAttendance(branch, batch, batchType)
     .subscribe((responce: StudentModel[]) => {
       this.students = responce;
-      if(this.students.length > 0) {
-        this.students.forEach((student) => {
-          this.absent.push(student._id);
-          this.attendance.push("A");
-        })
-      } else {
-        this.noStudent = "No Students Found";
-        this.students = [];
+      if (this.students.length < 1) {
+        this.noStudent = 'No Students Found';
       }
+
+      this.students.forEach((student) => {
+        const attendance = {
+          student: student._id,
+          attendanceStatus: "0"
+        }
+        this.attendance.push(attendance);
+      });
+
       this.loading = false;
     },
     (error: any) => {
@@ -137,9 +140,10 @@ export class FacultyComponent implements OnInit {
         branch: this.form.value.branch,
         batch: this.form.value.batch,
         batchType: this.form.value.weekType,
-        present: this.present,
-        absent: this.absent
+        attendance: this.attendance
       }
+
+      console.log(attendance)
       
       this.attendanceService.saveAttendance(attendance)
       .subscribe((responce: any) => {
@@ -151,8 +155,7 @@ export class FacultyComponent implements OnInit {
           date: this.date
         });
         this.students = [];
-        this.absent = [];
-        this.present = [];
+        this.attendance = [];
       },(error: any) => {
         this.setError(error)    
       });
@@ -161,20 +164,11 @@ export class FacultyComponent implements OnInit {
 
   markAttendance(event: any, student: string, index: number) {
     if(event.target.checked) {
-      const i: number = this.absent.findIndex((absentStudent) => absentStudent === student);
-      if(i !== undefined) {
-        this.absent.splice(i, 1);
-        this.present.push(student);
-        this.attendance[index] = "P";
-      }
+      this.attendance[index].attendanceStatus = "1";
     }
     else {
-      const i: number = this.present.findIndex((presentStudent) => presentStudent === student);
-      if(i !== undefined) {
-        this.present.splice(i, 1);
-        this.absent.push(student);
-        this.attendance[index] = "A";
-      }
+      this.attendance[index].attendanceStatus = "0";
+
     }
   }
 	

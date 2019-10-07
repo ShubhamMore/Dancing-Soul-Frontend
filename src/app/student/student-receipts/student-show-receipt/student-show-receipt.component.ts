@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ReceiptModel } from '../../../models/receipt.model';
-import { HttpService } from '../../../services/httpPost.service';
+import { ReceiptService } from '../../../services/receipt.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { BranchModel, BatchModel } from '../../../models/branch.model';
-import { StudentModel } from '../../../models/student.model';
 
 @Component({
   selector: 'app-student-show-receipt',
@@ -13,14 +11,12 @@ import { StudentModel } from '../../../models/student.model';
 export class StudentShowReceiptComponent implements OnInit {
 
   receipt: ReceiptModel;
-  branch: BranchModel;
-  student: StudentModel;
-  batch: BatchModel;
+  receiptMetaData: any;
 
   loading: boolean = true;
   error: string = null;
 
-  constructor(private httpPostService: HttpService,
+  constructor(private receiptService: ReceiptService,
               private route: ActivatedRoute,
               private router: Router) { }
 
@@ -29,27 +25,13 @@ export class StudentShowReceiptComponent implements OnInit {
     subscribe(
       (params: Params) => {
         const _id = params['id'];
-        const data = { api: "getReceipt", data: { _id }}
-        this.httpPostService.httpPostAuth(data).subscribe((val) => {
-          this.receipt = val;
-          const data = { api: "getStudent", data: { _id: this.receipt.student }}
-          this.httpPostService.httpPostAuth(data).subscribe((val) => {
-            this.student = val;
-            const data = { api: "getBranch", data: { _id: this.student.branch }}
-            this.httpPostService.httpPostAuth(data).subscribe((val) => {
-              this.branch = val;
-              this.batch = this.branch.batch.find(batch => (batch._id === this.student.batchName && batch.batchType === this.student.batch));
-              this.loading = false;
-            },
-            (error) => {
-              this.setError(error);
-            });
-          },
-          (error) => {
-            this.setError(error);            
-          });
+        this.receiptService.getReceipt(_id)
+        .subscribe((responce: any) => {
+          this.receipt = responce.receipt;
+          this.receiptMetaData = responce.receiptMetaData;
+          this.loading = false;
         },
-        (error) => {
+        (error: any) => {
           this.setError(error);          
         });
       }
@@ -68,5 +50,4 @@ export class StudentShowReceiptComponent implements OnInit {
   print() {
     window.print();
   }
-
 }

@@ -24,10 +24,7 @@ export class AdminAttendanceComponent implements OnInit {
 
   students: StudentModel[] = [];
 
-  attendance: string[] = [] ;
-
-  present: string[] = [];
-  absent: string[] = [];
+  attendance: any[] = [] ;
 
   noStudent = 'Please Select Branch';
 
@@ -116,15 +113,18 @@ export class AdminAttendanceComponent implements OnInit {
     this.attendanceService.getStudentsForAttendance(branch, batch, batchType)
     .subscribe((responce: StudentModel[]) => {
       this.students = responce;
-      if(this.students.length > 0) {
-        this.students.forEach((student) => {
-          this.absent.push(student._id);
-          this.attendance.push("A");
-        })
-      } else {
-        this.noStudent = "No Students Found";
-        this.students = [];
+      if (this.students.length < 1) {
+        this.noStudent = 'No Students Found';
       }
+
+      this.students.forEach((student) => {
+        const attendance = {
+          student: student._id,
+          attendanceStatus: "0"
+        }
+        this.attendance.push(attendance);
+      });
+
       this.loading = false;
     },
     (error: any) => {
@@ -140,9 +140,10 @@ export class AdminAttendanceComponent implements OnInit {
         branch: this.form.value.branch,
         batch: this.form.value.batch,
         batchType: this.form.value.weekType,
-        present: this.present,
-        absent: this.absent
+        attendance: this.attendance
       }
+
+      console.log(attendance)
       
       this.attendanceService.saveAttendance(attendance)
       .subscribe((responce: any) => {
@@ -154,8 +155,7 @@ export class AdminAttendanceComponent implements OnInit {
           date: this.date
         });
         this.students = [];
-        this.absent = [];
-        this.present = [];
+        this.attendance = [];
       },(error: any) => {
         this.setError(error)    
       });
@@ -164,20 +164,11 @@ export class AdminAttendanceComponent implements OnInit {
 
   markAttendance(event: any, student: string, index: number) {
     if(event.target.checked) {
-      const i: number = this.absent.findIndex((absentStudent) => absentStudent === student);
-      if(i !== undefined) {
-        this.absent.splice(i, 1);
-        this.present.push(student);
-        this.attendance[index] = "P";
-      }
+      this.attendance[index].attendanceStatus = "1";
     }
     else {
-      const i: number = this.present.findIndex((presentStudent) => presentStudent === student);
-      if(i !== undefined) {
-        this.present.splice(i, 1);
-        this.absent.push(student);
-        this.attendance[index] = "A";
-      }
+      this.attendance[index].attendanceStatus = "0";
+
     }
   }
 	

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { StudentModel } from '../../models/student.model';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { BranchModel, BatchModel } from '../../models/branch.model';
-import { HttpService } from '../../services/httpPost.service';
+import { StudentService } from '../../services/student.service';
+import { StudentModel } from '../../models/student.model';
 
 @Component({
   selector: 'app-student-dashboard',
@@ -12,16 +11,12 @@ import { HttpService } from '../../services/httpPost.service';
 export class StudentDashboardComponent implements OnInit {
 
   student: StudentModel;
+  studentMetaData: any;
 
   loading: boolean = true;
-
   error: string = null;
 
-  branch: BranchModel;
-
-  batch: BatchModel;
-
-  constructor(private httpPostService: HttpService,
+  constructor(private studentService: StudentService,
               private route: ActivatedRoute,
               private router: Router) { }
 
@@ -30,22 +25,15 @@ export class StudentDashboardComponent implements OnInit {
     subscribe(
       (params: Params) => {
         const _id = params["id"];
-        const studentData = { api: "getStudent", data: { _id }}
-        this.httpPostService.httpPostAuth(studentData).subscribe((val) => {
-         this.student = val;
-         const branchData = { api: "getBranch", data: { _id: this.student.branch }}
-         this.httpPostService.httpPostAuth(branchData).subscribe((val) => {
-           this.branch = val;
-           this.batch = this.branch.batch.find(batch => (batch._id === this.student.batchName && batch.batchType === this.student.batch));
-           this.loading = false;
-         },
-         (error) => {
-           this.setError(error)
-          });
+        this.studentService.getStudent(_id)
+        .subscribe((responce: any) => {
+          this.student = responce.student;
+          this.studentMetaData = responce.studentMetaData;
+          this.loading = false;
         },
-        (error) => {
-          this.setError(error)
-        }); 
+        (error: any) => {
+          this.setError(error);
+        });
       }
     );
   }

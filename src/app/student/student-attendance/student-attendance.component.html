@@ -26,10 +26,10 @@
                 <tr class="attendance" *ngFor="let atten of attendance; let i = index" routerLinkActive="active">
                   <td>{{ i+1 }}</td>
                   <td>
-                    {{ atten.date }}
+                    <p>{{ atten.date }}</p>
                   </td>
                   <td>
-                    {{ checkAttendance(i) }}
+                    <p [ngClass]="atten.status === '0' ? 'absent' : ''">{{ atten.status === '1' ? "Present" : "Absent" }}</p>
                   </td>
                 </tr>
               </tbody>

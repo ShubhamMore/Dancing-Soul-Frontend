@@ -34,6 +34,18 @@ export class ReceiptService {
     );
   }
 
+  getReceipt(_id: string) {
+    const data = { api : "getReceipt", data : { _id }}
+    return this.httpService.httpPostAuth(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError(err => {
+        return throwError(err);
+      })
+    );
+  }
+
   deleteReceipt(_id: string) {
     const data = { api : "deleteReceipt", data : { _id }}
     return this.httpService.httpPostAuth(data).pipe(
