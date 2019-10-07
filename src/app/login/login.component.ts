@@ -45,6 +45,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     if(this.form.invalid) {
+      this.error = "Please provice valid Credentials";
       return  this.loginAuth = false;
     }
 
