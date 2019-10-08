@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpService } from './httpPost.service';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { ArticleModel } from '../models/articles.model';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +33,18 @@ export class ArticleService {
       })
     );
   }
+  
+  getAllArticles() {
+    const data = {api: 'getAllArticles', data: {}};
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError(err => {
+        return throwError(err);
+      })
+    );
+  }
 
   getArticle(_id: string) {
     const data = {api: 'getArticle', data: {_id}};
@@ -47,8 +58,20 @@ export class ArticleService {
     );
   }
 
-  editArticle(article: ArticleModel) {
+  editArticle(article: any) {
     const data = {api: 'editArticle', data: article};
+    return this.httpService.httpPostAuth(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError(err => {
+        return throwError(err);
+      })
+    );
+  }
+
+  deleteArticleImage(_id: string, public_id: string) {
+    const data = {api: 'deleteArticleImage', data: {_id, public_id}};
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;

@@ -13,10 +13,16 @@ export class AdminAddArticleComponent implements OnInit {
   form: FormGroup;
 
   loading : boolean = true;
+  error: string = null;
 
   formError: boolean = false;
   
-  error: string = null;
+  imagePreview: string = null;
+  uploadImage: File = null;
+
+  invalidImage : boolean = false;
+
+  imgExt: string[] = ['jpg', 'png'];
 
   constructor(private articleService: ArticleService,
               private router: Router,
@@ -36,6 +42,34 @@ export class AdminAddArticleComponent implements OnInit {
     this.loading = false;
   }
 
+  
+  onImagePicked(event: Event) {
+    const files = (event.target as HTMLInputElement).files;
+    const imgExt: string[] = ["jpg", "png"];
+    let ext: string = null;
+    for(let i = 0; i < files.length; i++) {
+      ext = files[i].name.substring(files[i].name.lastIndexOf('.') + 1);
+      if(!(imgExt.indexOf(ext) != -1)) {
+        return this.invalidImage = true;
+      }
+    }
+    this.invalidImage = false;
+    for(let i = 0; i < files.length; i++) {
+      this.uploadImage = files[i];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = <string>reader.result;
+      };
+      reader.readAsDataURL(files[i]);
+    }
+  }
+
+  cancelImage() {
+    this.imagePreview = null;
+    this.uploadImage = null;
+    this.invalidImage = false;
+  }
+
   addArticle() {
     if(this.form.invalid) {
       this.formError = true;
@@ -44,10 +78,14 @@ export class AdminAddArticleComponent implements OnInit {
     if(this.form.valid) {
       this.formError = false;
       this.loading = true;
-      const article = {
-        title: this.form.value.title,
-        body: this.form.value.body
+
+      const article = new FormData();
+      article.append("title", this.form.value.title);
+      article.append("body", this.form.value.body);
+      if (this.uploadImage) {
+        article.append("image", this.uploadImage, "article");
       }
+
       this.articleService.addArticle(article)
       .subscribe((responce: any) => {
        this.form.reset();
@@ -61,6 +99,7 @@ export class AdminAddArticleComponent implements OnInit {
 
   cancel() {
     this.loading = true;
+    this.cancelImage();
     this.router.navigate(["/admin", "article"], {relativeTo: this.route, skipLocationChange: true});        
   }
 

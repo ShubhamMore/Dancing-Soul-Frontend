@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ArticleModel } from '../../../models/articles.model';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ArticleService } from '../../../services/article.service';
+import { ImageModel } from '../../../models/image.model';
 
 @Component({
   selector: 'app-admin-show-article',
@@ -16,6 +17,8 @@ export class AdminShowArticleComponent implements OnInit {
 
   error: string = null;
 
+  image: ImageModel = null;
+
   constructor(private articleService: ArticleService,
               private router: Router,
               private route: ActivatedRoute) { }
@@ -29,8 +32,9 @@ export class AdminShowArticleComponent implements OnInit {
         this.articleService.getArticle(_id)
         .subscribe((responce: ArticleModel) => {
           this.article = responce;
+          this.image = this.article.image;
           this.loading = false;
-        },
+          },
         (error: any) => {
           this.setError(error);
         });
@@ -41,6 +45,17 @@ export class AdminShowArticleComponent implements OnInit {
   edit() {
     this.loading = true;
     this.router.navigate(['edit'], {relativeTo: this.route, skipLocationChange: true});
+  }
+
+  deleteArticleImage() {
+    this.loading = true;
+    this.articleService.deleteArticleImage(this.article._id, this.article.image.public_id)
+    .subscribe((responce: any) => {
+        this.ngOnInit();
+    },
+    (error: any) => {
+      this.setError(error);
+    });
   }
 
   delete() {

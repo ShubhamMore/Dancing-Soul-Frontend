@@ -15,12 +15,17 @@ export class AdminEditArticleComponent implements OnInit {
   article: ArticleModel;
 
   loading: boolean = true;
-  
   error: string = null;
   
   form: FormGroup;
-
   formError: boolean = false;
+  
+  imagePreview: string = null;
+  uploadImage: File = null;
+
+  invalidImage : boolean = false;
+
+  imgExt: string[] = ['jpg', 'png'];
 
   constructor(private articleService: ArticleService,
               private router: Router,
@@ -58,6 +63,33 @@ export class AdminEditArticleComponent implements OnInit {
     );
   }
 
+  onImagePicked(event: Event) {
+    const files = (event.target as HTMLInputElement).files;
+    const imgExt: string[] = ["jpg", "png"];
+    let ext: string = null;
+    for(let i = 0; i < files.length; i++) {
+      ext = files[i].name.substring(files[i].name.lastIndexOf('.') + 1);
+      if(!(imgExt.indexOf(ext)!=-1)) {
+        return this.invalidImage = true;
+      }
+    }
+    this.invalidImage = false;
+    for(let i = 0; i < files.length; i++) {
+      this.uploadImage = files[i];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = <string>reader.result;
+      };
+      reader.readAsDataURL(files[i]);
+    }
+  }
+
+  cancelImage() {
+    this.imagePreview = null;
+    this.uploadImage = null;
+    this.invalidImage = false;
+  }
+
   editArticle() {
     if(this.form.invalid) {
       this.formError = true;
@@ -66,13 +98,16 @@ export class AdminEditArticleComponent implements OnInit {
     if(this.form.valid) {
       this.loading = true;
       this.formError = false;
-      const editedArticle: ArticleModel = {
-        _id: this.article._id,
-        title: this.form.value.title,
-        body: this.form.value.body
+      
+      const article = new FormData();
+      article.append("_id", this.article._id);
+      article.append("title", this.form.value.title);
+      article.append("body", this.form.value.body);
+      if (this.uploadImage) {
+        article.append("image", this.uploadImage, "article");
       }
 
-      this.articleService.editArticle(editedArticle)
+      this.articleService.editArticle(article)
       .subscribe((responce: any) => {
        this.cancel();
       },

@@ -26,6 +26,28 @@
               <span *ngIf="!form.get('body').valid && form.get('body').touched">*Please enter Article Description</span>
             </div>
             
+            <div class="form-group">
+              <label for="images">Pick Article Image to Upload : </label><br>
+              <input type="file" #filePicker (change)="onImagePicked($event)">
+              <button class="btn-add" type="button" id="images" (click)="filePicker.click()">Click Here to Pick Image</button>
+              <span *ngIf="invalidImage">*Please Select a Valid Image File</span>
+            </div>
+       
+            <div *ngIf="imagePreview; else noImagePicked">
+              <h5>Image To Upload : </h5>
+              
+              <div class="row">
+                <span class="m-2">
+                  <div class="preview-image">
+                    <img [src]="imagePreview" alt="Preview">
+                    <a class="remove-image"(click)="cancelImage()"><i class="fa fa-remove remove"></i></a>
+                  </div>
+                </span>
+              </div>
+              
+            </div>
+            <ng-template #noImagePicked><p>No Image Picked yet</p></ng-template>
+
             <div class="row mt-1" *ngIf="formError">
               <span>*Please Fill All Article Fields</span>
             </div>
