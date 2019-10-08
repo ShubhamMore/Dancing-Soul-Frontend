@@ -17,9 +17,9 @@ export class StudentModel {
     public address: string;
     public branch: string;
     public batch: string;
-    public batchName: string;
+    public batchType: string;
     public status: string;
-    constructor (id: string, name: string, birthDate: string, bloodGroup: string, workPlace: string, image: ImageModel, firstGuardianName: string, firstGuardianRelation: string, secondGuardianName: string, secondGuardianRelation: string, medicalHistory: string, phone: string, email: string, address: string, branch: string, batch: string, batchName: string, status: string) {
+    constructor (id: string, name: string, birthDate: string, bloodGroup: string, workPlace: string, image: ImageModel, firstGuardianName: string, firstGuardianRelation: string, secondGuardianName: string, secondGuardianRelation: string, medicalHistory: string, phone: string, email: string, address: string, branch: string, batch: string, batchType: string, status: string) {
         this._id = id;
         this.name = name;
         this.birthDate = birthDate;
@@ -36,7 +36,7 @@ export class StudentModel {
         this.address = address;
         this.branch = branch;
         this.batch = batch;
-        this.batchName = batchName;
+        this.batchType = batchType;
         this.status = status;
     }
 }

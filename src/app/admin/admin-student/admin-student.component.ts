@@ -55,11 +55,11 @@ export class AdminStudentComponent implements OnInit {
     this.branch = _id;
     if (_id !== '') {
       this.batches = this.branches.find((branch) => (branch._id === _id)).batch;
-      this.onSelectBatchName('');
+      this.onSelectBatch('');
     }
   }
 
-  onSelectBatchName(batch: string) {
+  onSelectBatch(batch: string) {
     this.batch = batch;
     if (batch !== '') {
       this.searchStudent(this.branch, this.batch, this.weekType);
@@ -71,7 +71,7 @@ export class AdminStudentComponent implements OnInit {
 
   onSelectBatchType(weekType: string) {
     this.weekType = weekType;
-    this.onSelectBatchName('');
+    this.onSelectBatch('');
   }
 
   searchStudent(branch: string, batch: string, weekType: string) {

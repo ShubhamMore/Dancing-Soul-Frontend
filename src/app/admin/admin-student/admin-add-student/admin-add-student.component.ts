@@ -68,10 +68,10 @@ export class AdminAddStudentComponent implements OnInit {
       branch: new FormControl("", {
         validators: [Validators.required]
       }),
-      batch: new FormControl(this.weekType, {
+      batch: new FormControl("", {
         validators: [Validators.required]
       }),
-      batchName: new FormControl("", {
+      batchType: new FormControl(this.weekType, {
         validators: [Validators.required]
       })
     });
@@ -93,14 +93,14 @@ export class AdminAddStudentComponent implements OnInit {
       const len = branch.batch.length;
       for(let i = 0; i < len; i++) {
         if(branch.batch[i].batchType === this.weekType) {
-          this.batches.push(branch.batch[i])
+          this.batches.push(branch.batch[i]);
         }
-      }
+      }  
     }
   }
 
   changeWeekType() {
-    this.weekType = this.form.value.batch;
+    this.weekType = this.form.value.batchType;
     this.branchChanged();
   }
 
@@ -155,7 +155,7 @@ export class AdminAddStudentComponent implements OnInit {
       student.append("address", this.form.value.address);
       student.append("branch", this.form.value.branch);
       student.append("batch", this.form.value.batch);
-      student.append("batchName", this.form.value.batchName);
+      student.append("batchType", this.form.value.batchType);
       student.append("status", "1");
 
       if(this.uploadImage) {

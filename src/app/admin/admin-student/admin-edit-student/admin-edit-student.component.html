@@ -148,11 +148,11 @@
             <div class="col-md-6 col-sm-12">
               <div class="form-group">
                 <label for="batch">Select Batch : </label>
-                <select class="batch" type="date" name="batch" id="batch" formControlName="batch" (change)="changeWeekType()">
+                <select class="batchType" type="text" name="batchType" id="batchType" formControlName="batchType" (change)="changeWeekType()">
                   <option value="0">Week Day</option>
                   <option value="1">Week End</option>
                   </select>
-                <span *ngIf="!form.get('batch').valid && form.get('batch').touched">*Please Select Batch</span>
+                <span *ngIf="!form.get('batchType').valid && form.get('batchType').touched">*Please Select Batch Type</span>
               </div>
             </div>
     
@@ -162,12 +162,12 @@
     
             <div class="col-md-6 col-sm-12">
               <div class="form-group">
-                <label for="batchName">Select Batch Name : </label>
-                <select class="batchName" type="text" name="batchName" id="batchName" formControlName="batchName">
+                <label for="batch">Select Batch Name : </label>
+                <select class="batch" type="text" name="batch" id="batch" formControlName="batch">
                   <option value="">Select Batch</option>
                   <option *ngFor="let batch of batches" [value]="batch._id">{{batch.batchName}}</option>
                 </select>
-                <span *ngIf="!form.get('batchName').valid && form.get('batchName').touched">*Please Select Batch Name</span>
+                <span *ngIf="!form.get('batch').valid && form.get('batch').touched">*Please Select Batch Name</span>
               </div>
             </div>
       

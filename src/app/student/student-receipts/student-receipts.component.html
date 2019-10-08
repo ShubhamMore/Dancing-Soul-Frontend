@@ -21,7 +21,7 @@
                 <tr>
                   <th>ID</th>
                   <th>Amount</th>
-                  <th>Month</th>
+                  <th>Fee Description</th>
                   <th>Payment Mode</th>
                   <th>Show</th>
                 </tr>
@@ -31,7 +31,7 @@
                     Rs. {{ receipt.amount }}.00/-
                   </td>
                   <td>
-                    {{ receipt.months }}
+                    {{ receipt.feeDescription }}
                   </td>
                   <td>
                     {{ receipt.paymentMode | uppercase }}

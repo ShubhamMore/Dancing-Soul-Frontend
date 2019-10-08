@@ -14,10 +14,16 @@ import { StudentService } from '../../../services/student.service';
 export class AdminStudentGenerateReceiptComponent implements OnInit {
 
   form: FormGroup;
+  monthsForm: FormGroup;
   formError: string = null;
 
   loading: boolean = true;
   error : string = null;
+
+  feeType: string = '0';
+  feeDescription: string = null;
+  feeDescriptionError: boolean = false;
+  amountError: boolean = false;
 
   student: StudentModel;
   studentMetaData: any;
@@ -36,11 +42,14 @@ export class AdminStudentGenerateReceiptComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-    
-    this.form = new FormGroup({
+
+    this.form = new FormGroup({ 
       payment_mode: new FormControl("", {
         validators: [Validators.required]
-      }),
+      })
+    })
+    
+    this.monthsForm = new FormGroup({
       months: new FormArray(
         this.month.map(() => new FormControl(null)), {
           validators: [this.formValidator.monthsValidator.bind(this)]
@@ -82,27 +91,38 @@ export class AdminStudentGenerateReceiptComponent implements OnInit {
   payFees() {
     if (this.form.invalid) {
       return this.formError = "*Please Fill All Fields of Receipt";
+    } else if (!this.feeDescription && (this.feeType == '1')) {
+      return this.feeDescriptionError = true;
+    } else if ((!this.amount || (this.amount < 1)) && (this.feeType == '1')) {
+      return this.amountError = true;
+    } else if(this.monthsForm.invalid && this.feeType == '0') {
+      return this.formError = "*Please Fill All Fields of Receipt";
     } else {
+      this.feeDescriptionError = this.amountError = this.monthsTouched = false;
       this.formError = null;
       this.loading = true;
-
-      let months: string[] = [];
-      const month: number[] = this.months.sort();
-      for(let i = 0; i < month.length; i++) {
-        months.push(this.month[month[i]]);
+      let feeDescription: string;
+      if(this.feeType == '0') {
+        let months: string[] = [];
+        const month: number[] = this.months.sort();
+        for(let i = 0; i < month.length; i++) {
+          months.push(this.month[month[i]]);
+        }
+        feeDescription = months.join(', ') + ' Month/s';
+      } else {
+        feeDescription = this.feeDescription;
       }
-
       const receipt = {
-        student : this.student._id,
-        amount : this.amount.toString(),
-        months : months.join(', '),
-        receiptDate : this.date(),
-        paymentMode : this.form.value.payment_mode
+        student: this.student._id,
+        amount: this.amount.toString(),
+        feeDescription: feeDescription,
+        receiptDate: this.date(),
+        paymentMode: this.form.value.payment_mode,
+        feeType: this.feeType
       }
 
       this.receiptService.addReceipt(receipt)
       .subscribe((responce: any) => {
-        this.monthsTouched = false;
         this.amount = 0;
         this.form.reset({payment_mode: ""});
         this.cancel();
@@ -127,6 +147,34 @@ export class AdminStudentGenerateReceiptComponent implements OnInit {
     }
     this.amount -= parseInt(this.studentMetaData.batch.fees);
     this.months.splice(this.months.findIndex((month) => month === index), 1);
+  }
+
+  changeFeeType(event: any) {
+    this.feeType = event.target.value;
+    this.amount = 0;
+    this.months = [];
+    this.feeDescriptionError = false;
+    if(this.feeType == '0') {
+      this.ngOnInit();
+    }
+  }
+
+  addCustomAmount(event: any) {
+    this.amount = parseInt(event.target.value);
+    if(!this.amount) {
+      this.amountError = true;
+      return;
+    }
+    this.amountError = false;
+  }
+
+  addfeeDescription(event: any) {
+    this.feeDescription = event.target.value;
+    if(!this.feeDescription) {
+      this.feeDescriptionError = true;
+      return;
+    }
+    this.feeDescriptionError = false;
   }
 
   setError(err: string) {

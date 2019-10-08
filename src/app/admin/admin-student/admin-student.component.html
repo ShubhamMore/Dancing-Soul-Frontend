@@ -29,7 +29,7 @@
           </select>
           </div>
           <div class="col-md-4 col-sm-12">
-            <select class="batchName" type="text" name="batchName" id="batchName" ngModel #batchName="ngModel" required (change)="onSelectBatchName(batchName.value)">
+            <select class="batch" type="text" name="batch" id="batch" ngModel #batch="ngModel" required (change)="onSelectBatch(batch.value)">
               <option value="">Select Batch Name</option>
               <ng-container *ngFor="let batch of batches">
                 <option [value]="batch._id" *ngIf="batch.batchType === weekType">{{batch.batchName}}</option>

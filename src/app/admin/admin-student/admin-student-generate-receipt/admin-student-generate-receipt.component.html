@@ -16,7 +16,17 @@
         <div class="row">
           <div class="col-12">
             <form class="" (submit)="payFees()" [formGroup]="form">
-              
+
+              <div class="row">
+                <div class="col-12">
+                  <label for="feeType">Select Fee Type : </label>
+                  <select name="feeType" id="feeType" (change)="changeFeeType($event)">
+                    <option value="0">Regular Fees</option>
+                    <option value="1">Custom Fees</option>
+                  </select>
+                </div>
+              </div>
+
               <div class="row">
                 <div class="col-12">
                   <div class="table-responsive">
@@ -43,7 +53,7 @@
                             <strong>Batch : </strong>
                           </td>
                           <td>
-                            <p>{{student.batch == "0" ? "Week Day Batch" : "Week End Batch"}}</p>
+                            <p>{{student.batchType == "0" ? "Week Day Batch" : "Week End Batch"}}</p>
                           </td>
                         </tr>
                         <tr>
@@ -59,7 +69,10 @@
                             <strong>Fees : </strong>
                           </td>
                           <td>
-                            <p>Rs. {{studentMetaData.batch.fees}}.00/-</p>      
+                            <p *ngIf="feeType == '0'">Rs. {{studentMetaData.batch.fees}}.00/-</p>   
+
+                            <input type="number" name="fees" id="fees" pattern="\d*" [value]="amount" (input)="addCustomAmount($event)" placeholder="Rs." *ngIf="feeType == '1'">
+                            <span *ngIf="(feeType == '1') && amountError">*Please Enter amount greater than 0</span>
                           </td>
                         </tr>
                       </tbody>
@@ -69,21 +82,33 @@
               </div>
     
               <hr>
-    
-              <div class="row">
-                <div class="col-12">
-                  <div class="form-group">
-                    <label>Select Months : </label>
-                    <div class="months-selector">
-                      <div formArrayName="months">
-                        <label *ngFor="let m of form.get('months').controls; let i = index">
-                          <input type="checkbox" [id]="month[i]" class="month" [formControlName]="i" (change)="addMonth($event, i)">
-                          <label [for]="month[i]">{{month[i]}}</label>
-                        </label>
-                      </div>
-                    </div>  
-                    <span *ngIf="!form.get('months').valid && monthsTouched">*Please Select Months</span>
+  
+              <form class="monthsForm" (submit)="payFees()" [formGroup]="monthsForm" *ngIf="feeType == '0'">
+                
+                <div class="row">
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label>Select Months : </label>
+                      <div class="months-selector">
+                        <div formArrayName="months">
+                          <label *ngFor="let m of monthsForm.get('months').controls; let i = index">
+                            <input type="checkbox" [id]="month[i]" class="month" [formControlName]="i" (change)="addMonth($event, i)">
+                            <label [for]="month[i]">{{month[i]}}</label>
+                          </label>
+                        </div>
+                      </div>  
+                      <span *ngIf="!monthsForm.get('months').valid && monthsTouched">*Please Select Months</span>
+                    </div>
                   </div>
+                </div>
+  
+              </form>
+
+              <div class="row" *ngIf="feeType == '1'">
+                <div class="col-12">
+                  <label for="feeDescription">Description : </label>
+                  <textarea name="feeDescription" id="feeDescription" rows="3" (input)="addfeeDescription($event)"></textarea>
+                  <span class="input-error" *ngIf="feeDescriptionError">*Please enter Fees Description</span>
                 </div>
               </div>
     
@@ -111,7 +136,7 @@
     
               <div class="row pt-2">
                 <div class="col-12">
-                  <label>Amount : Rs. {{amount}}.00/-</label>
+                  <label>Amount : Rs. {{!!amount ? amount : '0'}}.00/-</label>
                 </div>
               </div>
     
@@ -132,7 +157,7 @@
                 </div>
               </div>
     
-            </form>
+            </form> 
           </div>
         </div>
       </div>

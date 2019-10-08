@@ -85,11 +85,11 @@ export class AdminAttendanceComponent implements OnInit {
     this.branch = this.form.value.branch;
       if(this.branch !== '') {
       this.batches = this.branches.find((branch) => (branch._id === this.branch)).batch;
-      this.onSelectBatchName();
+      this.onSelectBatch();
     }
   }
 
-  onSelectBatchName() {
+  onSelectBatch() {
     this.batch = this.form.value.batch;
     if(this.batch !== '') {
       this.searchStudent(this.branch, this.batch, this.weekType);
@@ -104,7 +104,7 @@ export class AdminAttendanceComponent implements OnInit {
     this.weekType = this.form.value.weekType;
     if(this.batch !== '') {
       this.form.patchValue({batch: ''});
-      this.onSelectBatchName();
+      this.onSelectBatch();
     }
   }
 
