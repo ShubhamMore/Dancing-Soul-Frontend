@@ -25,6 +25,10 @@ export class AdminStudentGenerateReceiptComponent implements OnInit {
   feeDescriptionError: boolean = false;
   amountError: boolean = false;
 
+  lateFee: boolean = false;
+  lateFeeAmount: number = 0;
+  lateFeeError: boolean = false;
+
   student: StudentModel;
   studentMetaData: any;
 
@@ -95,12 +99,16 @@ export class AdminStudentGenerateReceiptComponent implements OnInit {
       return this.feeDescriptionError = true;
     } else if ((!this.amount || (this.amount < 1)) && (this.feeType == '1')) {
       return this.amountError = true;
+    } else if ((!this.lateFeeAmount || (this.lateFeeAmount < 1)) && this.lateFee) {
+      return this.lateFeeError = true;
     } else if(this.monthsForm.invalid && this.feeType == '0') {
       return this.formError = "*Please Fill All Fields of Receipt";
     } else {
-      this.feeDescriptionError = this.amountError = this.monthsTouched = false;
+      this.feeDescriptionError = this.amountError = this.lateFeeError = this.monthsTouched = false;
+
       this.formError = null;
       this.loading = true;
+
       let feeDescription: string;
       if(this.feeType == '0') {
         let months: string[] = [];
@@ -112,9 +120,17 @@ export class AdminStudentGenerateReceiptComponent implements OnInit {
       } else {
         feeDescription = this.feeDescription;
       }
+
+      let amount: string;
+      if (this.lateFee) {
+        amount = (this.amount + this.lateFeeAmount).toString();
+      } else {
+        amount = this.amount.toString();
+      }
+
       const receipt = {
         student: this.student._id,
-        amount: this.amount.toString(),
+        amount: amount,
         feeDescription: feeDescription,
         receiptDate: this.date(),
         paymentMode: this.form.value.payment_mode,
@@ -147,6 +163,22 @@ export class AdminStudentGenerateReceiptComponent implements OnInit {
     }
     this.amount -= parseInt(this.studentMetaData.batch.fees);
     this.months.splice(this.months.findIndex((month) => month === index), 1);
+  }
+
+  addLateFee(event: any) {
+    if(event.target.checked) {
+      return this.lateFee = true;
+    }
+    this.lateFeeAmount = 0;
+    return this.lateFee = false;
+  }
+
+  addLateFeeAmount(event: any) {
+    this.lateFeeAmount = event.target.value;
+    if(!this.lateFeeAmount || (this.lateFeeAmount < 1)) {
+      return this.lateFeeError = true;
+    }
+    return this.lateFeeError = false;
   }
 
   changeFeeType(event: any) {

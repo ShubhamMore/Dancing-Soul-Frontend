@@ -72,7 +72,7 @@
                             <p *ngIf="feeType == '0'">Rs. {{studentMetaData.batch.fees}}.00/-</p>   
 
                             <input type="number" name="fees" id="fees" pattern="\d*" [value]="amount" (input)="addCustomAmount($event)" placeholder="Rs." *ngIf="feeType == '1'">
-                            <span *ngIf="(feeType == '1') && amountError">*Please Enter amount greater than 0</span>
+                            <span *ngIf="(feeType == '1') && amountError">*Please Enter valid fee amount</span>
                           </td>
                         </tr>
                       </tbody>
@@ -111,7 +111,19 @@
                   <span class="input-error" *ngIf="feeDescriptionError">*Please enter Fees Description</span>
                 </div>
               </div>
-    
+
+              <div class="row">
+                <div class="col-md-6 col-12">
+                  <label class="pointer" for="lateFeeCheckBox">Click here to {{ lateFee ? 'Remove' : 'Add '}} Late Fee</label>
+                  <input class="lateFeeCheckBox" type="checkbox" name="lateFeeCheckBox" id="lateFeeCheckBox" (change)="addLateFee($event)" hidden>
+                </div>
+
+                <div class="col-md-6 col-12" *ngIf="lateFee">
+                  <input type="number" name="lateFee" id="lateFee" [value]="lateFeeAmount" (input)="addLateFeeAmount($event)">
+                  <span class="input-error" *ngIf="lateFeeError">*Please enter valid late fee amount</span>
+                </div>
+              </div>
+
               <div class="pt-2">
                 <div class="row">
                   <div class="col-md-6 col-sm-12">
@@ -133,21 +145,21 @@
                   </div>
                 </div>
               </div>
-    
+
               <div class="row pt-2">
                 <div class="col-12">
                   <label>Amount : Rs. {{!!amount ? amount : '0'}}.00/-</label>
                 </div>
               </div>
-    
+
               <div class="row mt-1" *ngIf="formError">
                 <div class="col-12">
                   <span>*Please Fill All Receipt Fields</span>
                 </div>
               </div>
-                
+
               <hr>
-        
+
               <div class="row">
                 <div class="col-6">
                   <button type="submit" class="btn-pay">Pay</button>
@@ -156,7 +168,7 @@
                   <button type="button" class="btn-cancel float-right" (click)="cancel()">Cancel</button>
                 </div>
               </div>
-    
+
             </form> 
           </div>
         </div>

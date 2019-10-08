@@ -59,3 +59,7 @@
     background-color: #e67e22;
     color: #fff;
   }
+  
+  .pointer {
+    cursor: pointer;
+  }
