@@ -105,4 +105,40 @@ export class StudentService {
       })
     );
   }
+
+  addIdentity(identity: FormData) {
+    const data = {api: 'addIdentity', data: identity};
+    return this.httpService.httpPostAuth(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError(err => {
+        return throwError(err);
+      })
+    );
+  }
+
+  getIdentity(student: string) {
+    const data = {api: 'getIdentity', data: {student}};
+    return this.httpService.httpPostAuth(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError(err => {
+        return throwError(err);
+      })
+    );
+  }
+
+  editIdentity(identity: FormData) {
+    const data = {api: 'editIdentity', data: identity};
+    return this.httpService.httpPostAuth(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError(err => {
+        return throwError(err);
+      })
+    );
+  }
 }

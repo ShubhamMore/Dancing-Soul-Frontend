@@ -86,11 +86,10 @@ export class AdminAddFacultyComponent implements OnInit {
 
   onImagePicked(event: Event) {
     const files = (event.target as HTMLInputElement).files;
-    const imgExt: string[] = ["jpg", "png"];
     let ext: string = null;
     for(let i = 0; i < files.length; i++) {
       ext = files[i].name.substring(files[i].name.lastIndexOf('.') + 1);
-      if(!(imgExt.indexOf(ext) != -1)) {
+      if(!(this.imgExt.indexOf(ext) != -1)) {
         return this.invalidImage = true;
       }
     }

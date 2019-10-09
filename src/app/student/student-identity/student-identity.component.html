@@ -1,3 +1,21 @@
-<p>
-  student-identity works!
-</p>
+<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
+
+<div class="row" *ngIf="!loading">
+  <div class="col-12">
+    <div class="row mt-2" *ngIf="!!error">
+      <div class="col-10 mx-auto">
+        <div class="alert alert-danger alert-dismissible">
+          <button type="button" class="close" (click)="clearError()" data-dismiss="alert">&times;</button>
+            <span>{{error}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-12 mx-auto">
+        <h3>ID Proof : </h3>
+        <hr>
+        
+      </div>
+    </div>
+  </div> 
+</div>
