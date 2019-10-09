@@ -118,6 +118,11 @@ import { ReceiptService } from './services/receipt.service';
 import { StudentService } from './services/student.service';
 import { EnquiryService } from './services/enquiry.service';
 import { AdminAimComponent } from './admin/admin-about/admin-aim/admin-aim.component';
+import { AdminStudentAddProgressComponent } from './admin/admin-student/admin-student-add-progress/admin-student-add-progress.component';
+import { AdminStudentShowProgressComponent } from './admin/admin-student/admin-student-show-progress/admin-student-show-progress.component';
+import { AdminStudentIdentityComponent } from './admin/admin-student/admin-student-identity/admin-student-identity.component';
+import { StudentIdentityComponent } from './student/student-identity/student-identity.component';
+import { StudentProgressComponent } from './student/student-progress/student-progress.component';
 
 
 @NgModule({
@@ -209,7 +214,12 @@ import { AdminAimComponent } from './admin/admin-about/admin-aim/admin-aim.compo
     StudentReceiptsComponent,
     StudentAttendanceComponent,
     StudentShowReceiptComponent,
-    AdminAimComponent 
+    AdminAimComponent,
+    AdminStudentAddProgressComponent,
+    AdminStudentShowProgressComponent,
+    AdminStudentIdentityComponent,
+    StudentIdentityComponent,
+    StudentProgressComponent 
   ],
 
   imports: [
