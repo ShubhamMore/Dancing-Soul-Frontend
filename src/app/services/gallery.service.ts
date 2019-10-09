@@ -58,4 +58,53 @@ export class GalleryService {
     );
   }
 
+  addVideo(video: any) {
+    const data = { api : "addVideo", data : video }       
+    return this.httpService.httpPostAuth(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError(err => {
+        return throwError(err);
+      })
+    );
+  }
+
+  getVideos() {
+    const data = { api : "getVideos", data : {}}        
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError(err => {
+        return throwError(err);
+      })
+    );
+  }
+
+  
+  getVideo(_id: string) {
+    const data = { api : "getVideo", data : {_id}}        
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError(err => {
+        return throwError(err);
+      })
+    );
+  }
+
+  removeVideo(_id: string) {
+    const data = { api : "removeVideo", data : {_id}}         
+    return this.httpService.httpPostAuth(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError(err => {
+        return throwError(err);
+      })
+    );
+  }
+
 }

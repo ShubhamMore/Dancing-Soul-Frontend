@@ -79,6 +79,9 @@ import { AdminEditNewsComponent } from './admin/admin-news/admin-edit-news/admin
 
 import { AdminGallaryComponent } from './admin/admin-gallary/admin-gallary.component';
 import { AdminAddPhotosComponent } from './admin/admin-gallary/admin-add-photos/admin-add-photos.component';
+import { AdminShowPhotosComponent } from './admin/admin-gallary/admin-show-photos/admin-show-photos.component';
+import { AdminShowVideosComponent } from './admin/admin-gallary/admin-show-videos/admin-show-videos.component';
+import { AdminAddVideosComponent } from './admin/admin-gallary/admin-add-videos/admin-add-videos.component';
 
 import { AdminAttendanceComponent } from './admin/admin-attendance/admin-attendance.component';
 
@@ -114,6 +117,7 @@ import { NewsService } from './services/news.service';
 import { ReceiptService } from './services/receipt.service';
 import { StudentService } from './services/student.service';
 import { EnquiryService } from './services/enquiry.service';
+import { AdminAimComponent } from './admin/admin-about/admin-aim/admin-aim.component';
 
 
 @NgModule({
@@ -177,6 +181,9 @@ import { EnquiryService } from './services/enquiry.service';
     // ADMIN GALLERY COMPONENT
     AdminGallaryComponent,
     AdminAddPhotosComponent,
+    AdminShowPhotosComponent,
+    AdminAddVideosComponent, 
+    AdminShowVideosComponent,
     // ADMIN ATTENDANCE COMPONENT
     AdminAttendanceComponent,
     // ADMIN FACULTY COMPONENT
@@ -201,7 +208,8 @@ import { EnquiryService } from './services/enquiry.service';
     StudentDashboardComponent,
     StudentReceiptsComponent,
     StudentAttendanceComponent,
-    StudentShowReceiptComponent        
+    StudentShowReceiptComponent,
+    AdminAimComponent 
   ],
 
   imports: [

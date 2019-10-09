@@ -1,0 +1,54 @@
+<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
+
+<div class="row" *ngIf="!loading">
+  <div class="col-12">
+    <div class="row mt-2" *ngIf="!!error">
+      <div class="col-10 mx-auto">
+      <div class="alert alert-danger alert-dismissible">
+        <button type="button" class="close" (click)="clearError()" data-dismiss="alert">&times;</button>
+        <span>{{error}}</span>
+      </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-12 mx-auto">
+        <div class="row">
+          <div class="col-6">
+            <h3>Videos</h3>
+          </div>
+          <div class="col-6">
+            <button class="new-btn float-right" (click)="onNewVideo()">Add New Video</button>
+          </div>
+        </div>
+        <hr>
+        <div class="table-responsive" *ngIf="videos.length > 0; else empty_videos">
+          <table class="table table-sm">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Date</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="video" *ngFor="let video of videos, let i = index">
+              <td>{{ i+1 }}</td>
+              <td>
+                <a class="title" skipLocationChange (click)="openVideo(video.url)">{{video.title}} </a>
+              </td>
+              <td>{{video.created_at}}</td>
+              <td>
+                <button type="button" class="btn-delete" (click)="deleteVideo(video._id)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+      <ng-template #empty_videos>
+        <h5 class="pl-3">No Videos Available..</h5>
+      </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

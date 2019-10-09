@@ -33,15 +33,22 @@
       <li>
         <a routerLink="/admin/student" routerLinkActive="active" skipLocationChange>Student</a>
       </li>
-      <li>
 
+      <li>
         <a routerLink="/admin/attendance" routerLinkActive="active" skipLocationChange>Attendance</a>
       </li>
 
       <li>
-        <a routerLink="/admin/gallery" routerLinkActive="active" skipLocationChange>Gallery</a>
+        <a href="#gallerySubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Gallery</a>
+        <ul class="collapse list-unstyled" id="gallerySubmenu">
+          <li>
+            <a routerLink="/admin/gallery/photos" routerLinkActive="active" skipLocationChange>Photo</a>
+          </li>
+           <li>
+            <a routerLink="/admin/gallery/videos" routerLinkActive="active" skipLocationChange>Video</a>
+          </li>
+        </ul>
       </li>
-
       <li>
         <a routerLink="/admin/exams" routerLinkActive="active" skipLocationChange>Exams</a>
       </li>

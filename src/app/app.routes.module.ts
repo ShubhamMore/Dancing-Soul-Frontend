@@ -11,11 +11,12 @@ import { ChangePasswordComponent } from './login/change-password/change-password
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 
 import { AdminAboutComponent } from './admin/admin-about/admin-about.component';
+import { AdminAimComponent } from './admin/admin-about/admin-aim/admin-aim.component';
 import { AdminEditAimComponent } from './admin/admin-about/admin-edit-aim/admin-edit-aim.component';
-import { AdminHistoryComponent } from './admin/admin-about/admin-history/admin-history.component';
-import { AdminEditHistoryComponent } from './admin/admin-about/admin-edit-history/admin-edit-history.component';
 import { AdminPhilosophyComponent } from './admin/admin-about/admin-philosophy/admin-philosophy.component';
 import { AdminEditPhilosophyComponent } from './admin/admin-about/admin-edit-philosophy/admin-edit-philosophy.component';
+import { AdminHistoryComponent } from './admin/admin-about/admin-history/admin-history.component';
+import { AdminEditHistoryComponent } from './admin/admin-about/admin-edit-history/admin-edit-history.component';
 
 import { AdminArticleComponent } from './admin/admin-article/admin-article.component';
 import { AdminAddArticleComponent } from './admin/admin-article/admin-add-article/admin-add-article.component';
@@ -43,6 +44,9 @@ import { AdminEditNewsComponent } from './admin/admin-news/admin-edit-news/admin
 
 import { AdminGallaryComponent } from './admin/admin-gallary/admin-gallary.component';
 import { AdminAddPhotosComponent } from './admin/admin-gallary/admin-add-photos/admin-add-photos.component';
+import { AdminShowPhotosComponent } from './admin/admin-gallary/admin-show-photos/admin-show-photos.component';
+import { AdminAddVideosComponent } from './admin/admin-gallary/admin-add-videos/admin-add-videos.component';
+import { AdminShowVideosComponent } from './admin/admin-gallary/admin-show-videos/admin-show-videos.component';
 
 import { AdminAttendanceComponent } from './admin/admin-attendance/admin-attendance.component';
 
@@ -108,7 +112,7 @@ const appRoutes: Routes = [
       {path: 'dashboard', component: AdminDashboardComponent, canActivate: [ AdminAuthGuard ]},
 
       {path: 'about', redirectTo: "about/aim", pathMatch: 'full'},
-      {path: 'about/aim', component: AdminAboutComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'about/aim', component: AdminAimComponent, canActivate: [ AdminAuthGuard ]},
       {path: 'about/aim/edit', component: AdminEditAimComponent, canActivate: [ AdminAuthGuard ]},
       {path: 'about/history', component: AdminHistoryComponent, canActivate: [ AdminAuthGuard ]},
       {path: 'about/history/edit', component: AdminEditHistoryComponent, canActivate: [ AdminAuthGuard ]},
@@ -135,8 +139,11 @@ const appRoutes: Routes = [
       {path: 'news/:id', component: AdminShowNewsComponent, canActivate: [ AdminAuthGuard ]},
       {path: 'news/:id/edit', component: AdminEditNewsComponent, canActivate: [ AdminAuthGuard ]},
   
-      {path: 'gallery', component: AdminGallaryComponent, canActivate: [ AdminAuthGuard ]},
-      {path: 'gallery/new', component: AdminAddPhotosComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'gallery', redirectTo: "gallery/photos", pathMatch: 'full'},
+      {path: 'gallery/photos', component: AdminShowPhotosComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'gallery/photos/new', component: AdminAddPhotosComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'gallery/videos', component: AdminShowVideosComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'gallery/videos/new', component: AdminAddVideosComponent, canActivate: [ AdminAuthGuard ]},
       
       {path: 'article', component: AdminArticleComponent, canActivate: [ AdminAuthGuard ]},
       {path: 'article/new', component: AdminAddArticleComponent, canActivate: [ AdminAuthGuard ]},
