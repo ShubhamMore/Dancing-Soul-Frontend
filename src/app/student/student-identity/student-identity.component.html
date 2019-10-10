@@ -12,23 +12,81 @@
     </div>
     <div class="row mt-2">
       <div class="col-12 mx-auto">
-        <h3>ID Proof : </h3>
+        <button class="btn-id-proof btn-save float-right" type="button" (click)="identity ? editIdentity() : addIdentity()">SAVE</button>
+        <h3>ID Proof</h3>
         <hr>
+
         <div class="row">
           <div class="col-md-6 col-12">
-
+            <h4>Aadhar Card</h4>
+            <div *ngIf="aadharCard">
+              <img [src]="aadharCard" width="80%" alt="Aadhar Card">
+            </div>
           </div>
           <div class="col-md-6 col-12">
-
+            <h4>Birth Cirtificate</h4>
+            <div *ngIf="birthCirtificate">
+              <img [src]="birthCirtificate" width="80%"   alt="Birth Cirtificate">
+            </div>
           </div>
         </div>
+
+        <hr *ngIf="(!!aadharCard || !!birthCirtificate)">
+
         <div class="row">
           <div class="col-md-6 col-12">
 
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group">
+                  <input type="file" #aadharCardFilePicker (change)="onImagePicked($event, '0')">
+                  <button class="btn-add" type="button" id="images" (click)="aadharCardFilePicker.click()">Click Here to Pick Aadhar Card</button>
+                </div>
+                <span *ngIf="invalidAadharCard">*Please Select a Valid Image File</span>
+              </div>
+            </div>
+              
+            <div *ngIf="aadharCardPreview; else noAadharCard">
+              <h5>Aadhar Card To Upload : </h5>
+              <div class="row">
+                  <span class="m-2">
+                    <div class="preview-image">
+                      <img [src]="aadharCardPreview" alt="Preview">
+                      <a class="remove-image"(click)="cancelImage('0')"><i class="fa fa-remove remove"></i></a>
+                    </div>
+                  </span>
+              </div>
+            
+            </div>
+            <ng-template #noAadharCard><p>No Aadhar Card Picked yet</p></ng-template>
           </div>
-          <div class="col-md-6 col-12">
 
+          <div class="col-md-6 col-12">
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group">
+                  <input type="file" #birthCirtificateFilePicker (change)="onImagePicked($event, '1')">
+                  <button class="btn-add" type="button" id="images" (click)="birthCirtificateFilePicker.click()">Click Here to Pick Birth Cirtificate</button>
+                </div>
+                <span *ngIf="invalidBirthCirtificate">*Please Select a Valid Image File</span>
+              </div>
+            </div>
+              
+            <div *ngIf="birthCirtificatePreview; else noBirthCirtificate">
+              <h5>Birth Cirtificate To Upload : </h5>
+              <div class="row">
+                  <span class="m-2">
+                    <div class="preview-image">
+                      <img [src]="birthCirtificatePreview" alt="Preview">
+                      <a class="remove-image"(click)="cancelImage('1')"><i class="fa fa-remove remove"></i></a>
+                    </div>
+                  </span>
+              </div>
+            
+            </div>
+            <ng-template #noBirthCirtificate><p>No Birth Cirtificate Picked yet</p></ng-template>
           </div>
+         
         </div>
       </div>
     </div>

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { StudentService } from '../../services/student.service';
-import { IdentityModel, IdentityImageModel } from '../../models/identity.model';
+import { IdentityModel } from '../../models/identity.model';
+import { ImageModel } from '../../models/image.model';
 
 @Component({
   selector: 'app-student-identity',
@@ -10,16 +11,28 @@ import { IdentityModel, IdentityImageModel } from '../../models/identity.model';
 })
 export class StudentIdentityComponent implements OnInit {
 
+  student: string;
+
   identity: IdentityModel;
-  identityImages: IdentityImageModel[];
 
-  loading: boolean = true;
-  error: string = null;
+  aadharCard: any;
+  birthCirtificate: any;
 
-  imagePreview: string[] = [];
-  uploadImages: File[] = [];
+  loading: boolean;
+  error: string;
 
-  invalidImage: boolean = false;
+  aadharCardPreview: string;
+  uploadAadharCard: File;
+  
+  invalidAadharCard: boolean;
+  
+  birthCirtificatePreview: string;
+  uploadBirthCirtificate: File;
+  
+  invalidBirthCirtificate: boolean;
+
+  identityError: boolean;
+
   imgExt: string[] = ['jpg', 'png'];
 
   constructor(private studentService: StudentService,
@@ -27,16 +40,31 @@ export class StudentIdentityComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.identityImages = [];
+
+    this.loading = true;
+    this.error = null;
+  
+    this.aadharCardPreview = null;
+    this.uploadAadharCard = null;
+    
+    this.invalidAadharCard = false;
+    
+    this.birthCirtificatePreview = null;
+    this.uploadBirthCirtificate = null;
+    
+    this.invalidBirthCirtificate = false;
+  
+    this.identityError = false;
+
     this.route.queryParams.
     subscribe(
       (params: Params) => {
-        const _id = params["id"];
-        this.studentService.getIdentity(_id)
+        this.student = params["id"];
+        this.studentService.getIdentity(this.student)
         .subscribe((responce: any) => {
           this.identity = responce;
           if (this.identity) {
-            this.identityImages = this.identity.identityImages;
+            this.prepareIdentityImages(this.identity.identityImages);
           }
           this.loading = false;
         },
@@ -46,63 +74,125 @@ export class StudentIdentityComponent implements OnInit {
       }
     );
   }
-    
-  onImagePicked(event: Event) {
+
+  prepareIdentityImages(images: ImageModel[]) {
+    images.forEach((image) => {
+      if(image.image_name.includes('aadharcard')) {
+        this.aadharCard = image.secure_url;
+      }
+      else if(image.image_name.includes('birthcirtificate')) {
+        this.birthCirtificate = image.secure_url;
+      }
+    });
+  }
+  
+  onImagePicked(event: Event, identityType: string) {
     const files = (event.target as HTMLInputElement).files;
     let ext: string = null;
     for(let i = 0; i < files.length; i++) {
       ext = files[i].name.substring(files[i].name.lastIndexOf('.') + 1);
       if(!(this.imgExt.indexOf(ext) != -1)) {
-        return this.invalidImage = true;
+        if(identityType == '0') {
+
+          return this.invalidAadharCard = true;
+        } else {
+          return this.invalidBirthCirtificate = true;
+        }
       }
     }
-    this.invalidImage = false;
-    for(let i = 0; i < files.length; i++) {
-      this.uploadImages.push(files[i]);
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.imagePreview.push(<string>reader.result);
-      };
-      reader.readAsDataURL(files[i]);
+
+    this.cancelImage(identityType);
+    if(identityType == '0') {
+      this.invalidAadharCard = false;
+      for(let i = 0; i < files.length; i++) {
+        this.uploadAadharCard = files[i];
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.aadharCardPreview = <string>reader.result;
+        };
+        reader.readAsDataURL(files[i]);
+      }
+    } else {
+      this.invalidBirthCirtificate = false;
+      for(let i = 0; i < files.length; i++) {
+        this.uploadBirthCirtificate = files[i];
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.birthCirtificatePreview = <string>reader.result;
+        };
+        reader.readAsDataURL(files[i]);
+      }
     }
   }
 
-  cancelImage(index: number) {
-    this.imagePreview.splice(index, 1);
-    this.uploadImages.splice(index, 1);
+  cancelImage(identityType: string) {
+    if(identityType == '0') {
+      this.aadharCardPreview = null;
+      this.uploadAadharCard = null;
+      this.invalidAadharCard = false;
+    } else {
+      this.birthCirtificatePreview = null;
+      this.uploadBirthCirtificate = null;
+      this.invalidBirthCirtificate = false;
+    }
   }
 
   addIdentity() {
-    const identity = new FormData();
-
-    this.studentService.addIdentity(identity)
-    .subscribe((responce: any) => {
-      this.identity = responce;
-      if (this.identity) {
-
+    console.log("add")
+    if(this.uploadAadharCard || this.uploadBirthCirtificate) {
+      this.identityError = false;
+      const identity = new FormData();
+      identity.append("student", this.student)
+      if(this.uploadAadharCard) {
+        identity.append("image", this.uploadAadharCard, "AadharCard");
       }
-      this.loading = false;
-    },
-    (error: any) => {
-      this.setError(error);
-    });
+
+      if(this.uploadBirthCirtificate) {
+        identity.append("image", this.uploadBirthCirtificate, "BirthCirtificate");
+      }
+      
+      this.loading = true;
+      this.studentService.addIdentity(identity)
+      .subscribe((responce: any) => {
+        console.log(responce)
+        this.ngOnInit();
+      },
+      (error: any) => {
+        this.setError(error);
+      });
+    } else {
+      this.identityError = true;      
+    }
   }
 
   editIdentity() {
-    const identity = new FormData();
-    identity.append("_id", this.identity._id);
+    console.log("edit")
 
-    this.studentService.editIdentity(identity)
-    .subscribe((responce: any) => {
-      this.identity = responce;
-      if (this.identity) {
-
+    if(this.uploadAadharCard || this.uploadBirthCirtificate) {
+      this.identityError = false;
+      const identity = new FormData();
+      identity.append("_id", this.identity._id);
+      identity.append("student", this.student)
+      if(this.uploadAadharCard) {
+        identity.append("image", this.uploadAadharCard, "AadharCard");
       }
-      this.loading = false;
-    },
-    (error: any) => {
-      this.setError(error);
-    });
+
+      if(this.uploadBirthCirtificate) {
+        identity.append("image", this.uploadBirthCirtificate, "BirthCirtificate");
+      }
+
+      this.loading = true;
+      this.studentService.editIdentity(identity)
+      .subscribe((responce: any) => {
+        console.log(responce)
+        this.ngOnInit();        
+      },
+      (error: any) => {
+        this.setError(error);
+      });
+    } else {
+      this.identityError = true;
+    }
   }
 
 	setError(err: string) {
@@ -113,5 +203,4 @@ export class StudentIdentityComponent implements OnInit {
 	clearError() {
 		this.error = null;
 	}
-
 }

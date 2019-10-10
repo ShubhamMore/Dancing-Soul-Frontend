@@ -118,12 +118,12 @@ section{
     border-radius: 200px;
     color: #fff;
 }
-
 .btn-edit, 
 .btn-save, 
 .btn-add, 
 .reply-btn, 
 .btn-activate,
+.btn-identity,
 .btn-submit {
   outline: none;
   border: 1px solid #e67e22;
@@ -139,6 +139,7 @@ section{
 .btn-save:hover, 
 .btn-add:hover, 
 .reply-btn:hover, 
+.btn-identity:hover,
 .btn-activate:hover,
 .btn-submit:hover {
   background-color: #e67e22;
@@ -194,7 +195,6 @@ section{
   background-color: #e67e22;
   color: #fff;
 }
-
 .btn-edit:focus, 
 .btn-save:focus, 
 .btn-add:focus, 
@@ -204,6 +204,7 @@ section{
 .btn-deactivate:focus, 
 .btn-activate:focus,
 .brn-close:focus,
+.btn-identity:focus,
 .btn-submit:focus {
   outline: none;
 }

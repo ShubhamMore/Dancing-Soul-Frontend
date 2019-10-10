@@ -71,6 +71,10 @@ export class AdminShowStudentComponent implements OnInit {
     }
   }
 
+  studentIdentity() {
+    this.router.navigate(['identity'], {relativeTo: this.route, skipLocationChange: true});
+  }
+
   cancel() {
     this.loading = true;
     this.router.navigate(['/admin', 'student'], {relativeTo: this.route, skipLocationChange: true});
