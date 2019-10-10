@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { StudentService } from '../../../services/student.service';
+import { IdentityService } from '../../../services/identity.service';
 import { IdentityModel } from '../../../models/identity.model';
 import { ImageModel } from '../../../models/image.model';
 
@@ -35,7 +35,7 @@ export class AdminStudentIdentityComponent implements OnInit {
   
     imgExt: string[] = ['jpg', 'png'];
   
-    constructor(private studentService: StudentService,
+    constructor(private identityService: IdentityService,
                 private router: Router,
                 private route: ActivatedRoute) { }
   
@@ -60,7 +60,7 @@ export class AdminStudentIdentityComponent implements OnInit {
       subscribe(
         (params: Params) => {
           this.student = params["id"];
-          this.studentService.getIdentity(this.student)
+          this.identityService.getIdentity(this.student)
           .subscribe((responce: any) => {
             this.identity = responce;
             if (this.identity) {
@@ -152,7 +152,7 @@ export class AdminStudentIdentityComponent implements OnInit {
         }
         
         this.loading = true;
-        this.studentService.addIdentity(identity)
+        this.identityService.addIdentity(identity)
         .subscribe((responce: any) => {
           console.log(responce)
           this.ngOnInit();
@@ -182,7 +182,7 @@ export class AdminStudentIdentityComponent implements OnInit {
         }
   
         this.loading = true;
-        this.studentService.editIdentity(identity)
+        this.identityService.editIdentity(identity)
         .subscribe((responce: any) => {
           console.log(responce)
           this.ngOnInit();        

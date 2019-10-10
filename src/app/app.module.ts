@@ -123,7 +123,10 @@ import { AdminStudentShowProgressComponent } from './admin/admin-student/admin-s
 import { AdminStudentIdentityComponent } from './admin/admin-student/admin-student-identity/admin-student-identity.component';
 import { StudentIdentityComponent } from './student/student-identity/student-identity.component';
 import { StudentProgressComponent } from './student/student-progress/student-progress.component';
-
+import { StudentExamCertificateComponent } from './student/student-exam-certificate/student-exam-certificate.component';
+import { IdentityService } from './services/identity.service';
+import { CertificateService } from './services/certificate.service';
+import { AdminStudentCertificateComponent } from './admin/admin-student/admin-student-certificate/admin-student-certificate.component';
 
 @NgModule({
   declarations: [
@@ -219,7 +222,9 @@ import { StudentProgressComponent } from './student/student-progress/student-pro
     AdminStudentShowProgressComponent,
     AdminStudentIdentityComponent,
     StudentIdentityComponent,
-    StudentProgressComponent 
+    StudentProgressComponent,
+    StudentExamCertificateComponent,
+    AdminStudentCertificateComponent
   ],
 
   imports: [
@@ -249,6 +254,8 @@ import { StudentProgressComponent } from './student/student-progress/student-pro
     NewsService,
     ReceiptService,
     StudentService,
+    IdentityService,
+    CertificateService,
     // AUTH GUARDS
     LoginAuthGuard,
     AdminAuthGuard,
