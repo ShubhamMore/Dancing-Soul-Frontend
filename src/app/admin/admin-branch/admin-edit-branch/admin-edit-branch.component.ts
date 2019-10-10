@@ -39,6 +39,9 @@ export class AdminEditBranchComponent implements OnInit {
 
   weekType: string = "0";
 
+  editBatchIndex: number = null;
+  editingBatch: boolean = false;
+
   images: string;
 
   imgExt: string[] = ['jpg', 'png'];
@@ -173,15 +176,63 @@ export class AdminEditBranchComponent implements OnInit {
   }
 
   editBatch(i: number) {
+    this.editBatchIndex = i;
+    this.editingBatch = true;
+    const batch: any = this.batches[i];
+    const weekDays = [null, null, null, null, null, null, null];
+    batch.days.split(',').forEach((day: string) => {
+      const i: number = this.week.indexOf(day.trim());
+      weekDays[i] = 'checked';
+      this.weekDays.push(i);
+    })
+    console.log(this.weekDays);
+    this.batchForm.patchValue({weekDays: weekDays})
 
+    this.batchForm.patchValue({
+      week: batch.batchType,
+      batchName: batch.batchName,
+      fees: batch.fees,
+      start_timming: batch.time.split('-')[0].trim(),
+      end_timming: batch.time.split('-')[1].trim()
+    });
   }
 
   saveEditBatch() {
-    
+    if(this.batchForm.valid) {
+      this.formError = null;
+      let days: string[] = [];
+      const week: number[] = this.weekDays.sort();
+      for(let i: number = 0; i < week.length; i++) {
+        days.push(this.week[week[i]]);
+      }
+
+      const batch: BatchModel = {
+        _id: this.batches[this.editBatchIndex]._id,
+        batchType: this.weekType,
+        days: days.join(', '),
+        batchName: this.batchForm.value.batchName,
+        time: this.batchForm.value.start_timming + ' - ' + this.batchForm.value.end_timming,
+        fees: this.batchForm.value.fees
+      }
+
+      this.batches[this.editBatchIndex] = batch;
+      this.cancelEditBatch();
+    }
+  }
+
+  cancelEditBatch() {
+    this.editBatchIndex = null;
+    this.editingBatch = false;
+    this.weekDays = [];
+    this.batchForm.reset({week: this.weekType});
+    this.weekdaysTouched = false;
   }
 
   deleteBatch(i: number) {
-    this.batches.splice(i, 1);
+    let confirmDelete: any = confirm("do you really want to Delete this Batch??");
+    if(confirmDelete) {
+      this.batches.splice(i, 1);
+    }
   }
   
   editAddress() {

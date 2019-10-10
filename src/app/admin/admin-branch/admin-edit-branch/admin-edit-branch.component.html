@@ -11,7 +11,7 @@
         </div>
       </div>
       <div class="row mt-2">
-        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-12 mx-auto">
+        <div class="col-md-10 col-12 mx-auto">
           <h4 class="text-center mb-3">Edit Branch - {{branch.branch}}</h4>
           <form class="" (submit)="editAddress()" [formGroup]="form">
       
@@ -174,7 +174,9 @@
                         </div>
                         <div class="col-md-6 col-sm-12">
                           <br>
-                          <button type="submit" class="btn-add">Add</button>            
+                          <button type="submit" class="btn-add" *ngIf="!editingBatch">Add</button>
+                          <button type="button" class="btn-edit" *ngIf="editingBatch" (click)="saveEditBatch()">Save</button>
+                          <button type="button" class=" ml-2 btn-cancel" *ngIf="editingBatch" (click)="cancelEditBatch()">Cancel</button>
                         </div>
                       </div>
                     </form>
@@ -193,6 +195,7 @@
                       <th>Timming</th>
                       <th>Fees</th>
                       <th>Days</th>
+                      <th>Edit</th>
                       <th>Delete</th>
                     </thead>
                     <tbody>
@@ -203,7 +206,10 @@
                           <td>{{batch.fees}}</td>
                           <td>{{batch.days}}</td>
                           <td>
-                            <button type="button" class="btn-delete" (click)="deleteBatch(i)">Delete</button>
+                            <button type="button" class="btn-edit" (click)="editBatch(i)"><i class="fa fa-edit"></i></button>
+                          </td>
+                          <td>
+                            <button type="button" class="btn-delete" (click)="deleteBatch(i)"><i class="fa fa-trash"></i></button>
                           </td>
                         </tr>
                       </ng-container>
