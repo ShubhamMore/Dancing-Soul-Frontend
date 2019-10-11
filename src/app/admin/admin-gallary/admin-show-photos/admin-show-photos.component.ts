@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GalleryService } from '../../../services/gallery.service';
 import { ImageModel } from '../../../models/image.model';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 @Component({
   selector: 'app-admin-show-photos',
   templateUrl: './admin-show-photos.component.html',
@@ -8,6 +9,7 @@ import { ImageModel } from '../../../models/image.model';
 })
 export class AdminShowPhotosComponent implements OnInit {
 
+  form: FormGroup;
   images: ImageModel[] = [];
   category: string;
   loading: boolean = true;
@@ -16,7 +18,13 @@ export class AdminShowPhotosComponent implements OnInit {
   constructor(private galleryService: GalleryService) {}
 
   ngOnInit() {
-    this.mdp();
+    this.form = new FormGroup({
+      category: new FormControl('mdp', {
+        validators: [Validators.required]
+      })
+    });
+    
+    this.categoryChanged();
   }
 
   getImages(category: string) {
@@ -32,16 +40,9 @@ export class AdminShowPhotosComponent implements OnInit {
     });
   }
 
-  mdp() {
-    this.getImages('mdp');
-  }
-  
-  itc() {
-    this.getImages('itc');
-  }
-  
-  mdm() {
-    this.getImages('mdm');
+  categoryChanged() {
+    this.category = this.form.value.category;
+    this.getImages(this.category);
   }
 
   deleteImage(public_id: string) {

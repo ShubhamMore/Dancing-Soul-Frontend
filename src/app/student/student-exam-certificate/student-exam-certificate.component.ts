@@ -57,7 +57,6 @@ export class StudentExamCertificateComponent implements OnInit {
         this.student = params["id"];
         this.certificateService.getCertificates(this.student)
         .subscribe((responce: any) => {
-          console.log(responce)
           this.certificate = responce;
           if (this.certificate) {
             this.certificates = this.certificate.certificateImages;
@@ -118,7 +117,6 @@ export class StudentExamCertificateComponent implements OnInit {
       this.loading = true;
       this.certificateService.saveCertificate(certificate)
       .subscribe((responce: any) => {
-        console.log(responce)
         this.ngOnInit();        
       },
       (error: any) => {
@@ -133,7 +131,6 @@ export class StudentExamCertificateComponent implements OnInit {
     this.loading = true;
       this.certificateService.removeCertificate(this.certificate._id, public_id)
       .subscribe((responce: any) => {
-        console.log(responce)
         this.ngOnInit();        
       },
       (error: any) => {

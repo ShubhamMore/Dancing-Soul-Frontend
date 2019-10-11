@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { GalleryService } from '../../../services/gallery.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { GoogleSymbol } from '@agm/core/services/google-maps-types';
 
 @Component({
   selector: 'app-admin-add-photos',
@@ -61,7 +60,6 @@ export class AdminAddPhotosComponent implements OnInit {
     this.loading = true;
   
     const category = this.form.value.category;
-    console.log(category)
     const images = new FormData();
     images.append("category", category);
     for(let i = 0; i < this.uploadImages.length; i++) {

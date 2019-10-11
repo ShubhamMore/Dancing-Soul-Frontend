@@ -166,7 +166,6 @@ export class AdminAddBranchComponent implements OnInit {
       weekDays[i] = 'checked';
       this.weekDays.push(i);
     })
-    console.log(this.weekDays);
     this.batchForm.patchValue({weekDays: weekDays})
 
     this.batchForm.patchValue({

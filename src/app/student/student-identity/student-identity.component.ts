@@ -138,7 +138,6 @@ export class StudentIdentityComponent implements OnInit {
   }
 
   addIdentity() {
-    console.log("add")
     if(this.uploadAadharCard || this.uploadBirthCirtificate) {
       this.identityError = false;
       const identity = new FormData();
@@ -154,7 +153,6 @@ export class StudentIdentityComponent implements OnInit {
       this.loading = true;
       this.identityService.addIdentity(identity)
       .subscribe((responce: any) => {
-        console.log(responce)
         this.ngOnInit();
       },
       (error: any) => {
@@ -166,7 +164,6 @@ export class StudentIdentityComponent implements OnInit {
   }
 
   editIdentity() {
-    console.log("edit")
 
     if(this.uploadAadharCard || this.uploadBirthCirtificate) {
       this.identityError = false;
@@ -184,7 +181,6 @@ export class StudentIdentityComponent implements OnInit {
       this.loading = true;
       this.identityService.editIdentity(identity)
       .subscribe((responce: any) => {
-        console.log(responce)
         this.ngOnInit();        
       },
       (error: any) => {

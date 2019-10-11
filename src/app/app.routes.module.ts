@@ -61,6 +61,8 @@ import { AdminShowStudentComponent } from './admin/admin-student/admin-show-stud
 import { AdminEditStudentComponent } from './admin/admin-student/admin-edit-student/admin-edit-student.component';
 import { AdminStudentIdentityComponent } from './admin/admin-student/admin-student-identity/admin-student-identity.component';
 import { AdminStudentCertificateComponent } from './admin/admin-student/admin-student-certificate/admin-student-certificate.component';
+import { AdminStudentShowProgressComponent } from './admin/admin-student/admin-student-show-progress/admin-student-show-progress.component';
+import { AdminStudentAddProgressComponent } from './admin/admin-student/admin-student-add-progress/admin-student-add-progress.component';
 
 import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
@@ -77,6 +79,7 @@ import { StudentReceiptsComponent } from './student/student-receipts/student-rec
 import { StudentShowReceiptComponent } from './student/student-receipts/student-show-receipt/student-show-receipt.component';
 import { StudentIdentityComponent } from './student/student-identity/student-identity.component';
 import { StudentExamCertificateComponent } from './student/student-exam-certificate/student-exam-certificate.component';
+import { StudentProgressComponent } from './student/student-progress/student-progress.component';
 
 import { FacultyComponent } from './faculty/faculty.component';
 
@@ -88,6 +91,7 @@ import { GalleryPageComponent } from './content/gallery-page/gallery-page.compon
 import { NewsShelterPageComponent } from './content/news-shelter-page/news-shelter-page.component';
 import { ArticlesPageComponent } from './content/articles-page/articles-page.component';
 import { ExamsPageComponent } from './content/exams-page/exams-page.component';
+
 
 const appRoutes: Routes = [
   
@@ -160,6 +164,8 @@ const appRoutes: Routes = [
       {path: 'student/:id/edit', component: AdminEditStudentComponent, canActivate: [ AdminAuthGuard ]},
       {path: 'student/:id/identity', component: AdminStudentIdentityComponent, canActivate: [ AdminAuthGuard ]},
       {path: 'student/:id/certificates', component: AdminStudentCertificateComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'student/:id/progress', component: AdminStudentShowProgressComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'student/:id/progress/new', component: AdminStudentAddProgressComponent, canActivate: [ AdminAuthGuard ]},
       {path: 'student/:id/generate', component: AdminStudentGenerateReceiptComponent, canActivate: [ AdminAuthGuard ]},
       {path: 'student/:id/receipts', component: AdminStudentReceiptsComponent, canActivate: [ AdminAuthGuard ]},
       
@@ -178,6 +184,7 @@ const appRoutes: Routes = [
       {path: 'identity', component: StudentIdentityComponent, canActivate: [ StudentAuthGuard ]},
       {path: 'receipts', component: StudentReceiptsComponent, canActivate: [ StudentAuthGuard ]},
       {path: 'certificates', component: StudentExamCertificateComponent, canActivate: [ StudentAuthGuard ]},
+      {path: 'progress', component: StudentProgressComponent, canActivate: [ StudentAuthGuard ]},
       {path: 'receipt/:id', component: StudentShowReceiptComponent, canActivate: [ StudentAuthGuard ]},
     ]},
     

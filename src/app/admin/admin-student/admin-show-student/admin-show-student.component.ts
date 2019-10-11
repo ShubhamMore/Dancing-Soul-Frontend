@@ -78,6 +78,10 @@ export class AdminShowStudentComponent implements OnInit {
   studentCertificates() {
     this.router.navigate(['certificates'], {relativeTo: this.route, skipLocationChange: true});
   }
+  
+  studentProgress() {
+    this.router.navigate(['progress'], {relativeTo: this.route, skipLocationChange: true});
+  }
 
   cancel() {
     this.loading = true;
