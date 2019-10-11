@@ -24,7 +24,7 @@ export class AdminAddPhotosComponent implements OnInit {
 
   ngOnInit() {
     this.form = new FormGroup({
-      title: new FormControl(null, {
+      category: new FormControl('', {
         validators: [Validators.required]
       })
     });
@@ -54,16 +54,18 @@ export class AdminAddPhotosComponent implements OnInit {
   }
 
   onSavePost() {
-    if (this.form.invalid) {
+    if (this.form.invalid || !(this.uploadImages.length > 0)) {
       return;
     }
   
     this.loading = true;
   
-    const title = this.form.value.title;
+    const category = this.form.value.category;
+    console.log(category)
     const images = new FormData();
+    images.append("category", category);
     for(let i = 0; i < this.uploadImages.length; i++) {
-      images.append("image", this.uploadImages[i], title+i);
+      images.append("image", this.uploadImages[i], category+i);
     }
     
     this.galleryService.addImages(images)

@@ -27,10 +27,15 @@
               <div class="row">
                 <div class="col-md-6 cpl-sm-12">
                   <div class="form-group">
-                      <label for="title">Enter Title for an Images : </label>
-                      <input type="text" formControlName="title" id="title" placeholder="Title">
+                      <label for="title">Select Categories for an Images : </label>
+                      <select class="category" type="text" name="category" id="category" formControlName="category">
+                        <option value=''>Select Category</option>
+                        <option value="mdp">Moments duting Performance</option>
+                        <option value="itc">In the Class</option>
+                        <option value="mdm">Music, Drama & More</option>
+                      </select>
+                      <span *ngIf="!form.get('category').valid && form.get('category').touched">*Please Select Category</span>
                   </div>
-                  <span *ngIf="form.get('title').invalid && form.get('title').touched">*Please enter a Title for an Image</span>
                 </div>
               </div>
               <div class="row">

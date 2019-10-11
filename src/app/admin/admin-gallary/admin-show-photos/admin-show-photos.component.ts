@@ -9,13 +9,20 @@ import { ImageModel } from '../../../models/image.model';
 export class AdminShowPhotosComponent implements OnInit {
 
   images: ImageModel[] = [];
+  category: string;
   loading: boolean = true;
   error: string = null;
 
   constructor(private galleryService: GalleryService) {}
 
   ngOnInit() {
-    this.galleryService.getImages()
+    this.mdp();
+  }
+
+  getImages(category: string) {
+    this.loading = true;
+    this.images = [];
+    this.galleryService.getImages(category)
     .subscribe((response: ImageModel[]) => {
       this.images = response;
       this.loading = false;
@@ -23,6 +30,18 @@ export class AdminShowPhotosComponent implements OnInit {
     (error: any) => {
       this.setError(error);
     });
+  }
+
+  mdp() {
+    this.getImages('mdp');
+  }
+  
+  itc() {
+    this.getImages('itc');
+  }
+  
+  mdm() {
+    this.getImages('mdm');
   }
 
   deleteImage(public_id: string) {
