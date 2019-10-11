@@ -15,9 +15,56 @@
         <button class="btn-id-proof btn-save float-right" type="button" (click)="saveCertificate()">SAVE</button>
         <h3>Certificates</h3>
         <hr>
+        
         <div class="row">
           <div class="col-md-10 col-12">
-            
+
+            <div class="row">
+              <div class="col-md-6 col-12">
+                <div class="form-group">
+                  <input type="file" #certificateFilePicker (change)="onImagePicked($event)">
+                  <button class="btn-add" type="button" id="images" (click)="certificateFilePicker.click()">Click Here to Pick Certificate</button>
+                </div>
+                <span *ngIf="invalidCertificate">*Please Select a Valid Image File for Certificate</span>
+              </div>
+              
+              <div class="col-md-6 col-12">
+                <div *ngIf="certificatePreview; else noCertificate">
+                  <h5>Certificate To Upload : </h5>
+                  <div class="row">
+                      <span class="m-2">
+                        <div class="preview-image">
+                          <img [src]="certificatePreview" alt="Preview">
+                          <a class="remove-image"(click)="cancelCertificate()"><i class="fa fa-remove remove"></i></a>
+                        </div>
+                      </span>
+                  </div>
+                </div>
+                <ng-template #noCertificate><h4>No Certificate Picked Yet..</h4></ng-template>   
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+          <div class="col-md-10 col-12">
+            <div *ngIf="certificates.length > 0; else noCertificates">
+                <h3>Certificates : </h3>
+                <div class="row">
+                  <span class="m-2" *ngFor="let certificate of certificates; let i = index;">
+                    <div class="image-container">
+                      <img [src]="certificate.secure_url" class="image" [alt]="certificate.image_name">
+                      <div class="middle">
+                          <a class="delete" (click)="deleteCertificate(certificate.public_id)"><i class="fa fa-trash-o trash"></i></a>
+                      </div>
+                    </div>
+                  </span>
+                </div>
+            </div>
+            <ng-template #noCertificates><h4>No Certificates Uploaded Yet..</h4></ng-template>   
           </div>
         </div>
       </div>

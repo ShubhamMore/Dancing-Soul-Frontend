@@ -39,13 +39,15 @@ export class StudentExamCertificateComponent implements OnInit {
 
     this.loading = true;
     this.error = null;
+
+    this.certificates = [];
   
     this.certificatePreview = null;
     this.uploadCertificate = null;
     
     this.invalidCertificate = false;
 
-    this.certificateTitle = null;
+    this.certificateTitle = "123";
   
     this.certificateError = false;
 
@@ -55,6 +57,7 @@ export class StudentExamCertificateComponent implements OnInit {
         this.student = params["id"];
         this.certificateService.getCertificates(this.student)
         .subscribe((responce: any) => {
+          console.log(responce)
           this.certificate = responce;
           if (this.certificate) {
             this.certificates = this.certificate.certificateImages;
@@ -103,7 +106,9 @@ export class StudentExamCertificateComponent implements OnInit {
       this.certificateError = false;
       const certificate = new FormData();
 
-      certificate.append("_id", this.certificate._id);
+      if(this.certificate) {
+        certificate.append("_id", this.certificate._id);
+      }
 
       certificate.append("student", this.student)
       if(this.uploadCertificate) {
@@ -122,6 +127,18 @@ export class StudentExamCertificateComponent implements OnInit {
     } else {
       this.certificateError = true;
     }
+  }
+
+  deleteCertificate(public_id: string) {
+    this.loading = true;
+      this.certificateService.removeCertificate(this.certificate._id, public_id)
+      .subscribe((responce: any) => {
+        console.log(responce)
+        this.ngOnInit();        
+      },
+      (error: any) => {
+        this.setError(error);
+      });
   }
 
 	setError(err: string) {

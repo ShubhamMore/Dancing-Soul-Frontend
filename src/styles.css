@@ -124,6 +124,7 @@ section{
 .reply-btn, 
 .btn-activate,
 .btn-identity,
+.btn-certificate,
 .btn-submit {
   outline: none;
   border: 1px solid #e67e22;
@@ -140,6 +141,7 @@ section{
 .btn-add:hover, 
 .reply-btn:hover, 
 .btn-identity:hover,
+.btn-certificate:hover,
 .btn-activate:hover,
 .btn-submit:hover {
   background-color: #e67e22;
@@ -205,6 +207,7 @@ section{
 .btn-activate:focus,
 .brn-close:focus,
 .btn-identity:focus,
+.btn-certificate:focus,
 .btn-submit:focus {
   outline: none;
 }

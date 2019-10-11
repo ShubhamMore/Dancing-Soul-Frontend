@@ -60,6 +60,7 @@ import { AdminAddStudentComponent } from './admin/admin-student/admin-add-studen
 import { AdminShowStudentComponent } from './admin/admin-student/admin-show-student/admin-show-student.component';
 import { AdminEditStudentComponent } from './admin/admin-student/admin-edit-student/admin-edit-student.component';
 import { AdminStudentIdentityComponent } from './admin/admin-student/admin-student-identity/admin-student-identity.component';
+import { AdminStudentCertificateComponent } from './admin/admin-student/admin-student-certificate/admin-student-certificate.component';
 
 import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
@@ -75,6 +76,7 @@ import { StudentAttendanceComponent } from './student/student-attendance/student
 import { StudentReceiptsComponent } from './student/student-receipts/student-receipts.component';
 import { StudentShowReceiptComponent } from './student/student-receipts/student-show-receipt/student-show-receipt.component';
 import { StudentIdentityComponent } from './student/student-identity/student-identity.component';
+import { StudentExamCertificateComponent } from './student/student-exam-certificate/student-exam-certificate.component';
 
 import { FacultyComponent } from './faculty/faculty.component';
 
@@ -157,6 +159,7 @@ const appRoutes: Routes = [
       {path: 'student/:id', component: AdminShowStudentComponent, canActivate: [ AdminAuthGuard ]},
       {path: 'student/:id/edit', component: AdminEditStudentComponent, canActivate: [ AdminAuthGuard ]},
       {path: 'student/:id/identity', component: AdminStudentIdentityComponent, canActivate: [ AdminAuthGuard ]},
+      {path: 'student/:id/certificates', component: AdminStudentCertificateComponent, canActivate: [ AdminAuthGuard ]},
       {path: 'student/:id/generate', component: AdminStudentGenerateReceiptComponent, canActivate: [ AdminAuthGuard ]},
       {path: 'student/:id/receipts', component: AdminStudentReceiptsComponent, canActivate: [ AdminAuthGuard ]},
       
@@ -174,6 +177,7 @@ const appRoutes: Routes = [
       {path: 'attendance', component: StudentAttendanceComponent, canActivate: [ StudentAuthGuard ]},
       {path: 'identity', component: StudentIdentityComponent, canActivate: [ StudentAuthGuard ]},
       {path: 'receipts', component: StudentReceiptsComponent, canActivate: [ StudentAuthGuard ]},
+      {path: 'certificates', component: StudentExamCertificateComponent, canActivate: [ StudentAuthGuard ]},
       {path: 'receipt/:id', component: StudentShowReceiptComponent, canActivate: [ StudentAuthGuard ]},
     ]},
     

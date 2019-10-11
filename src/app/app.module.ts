@@ -42,6 +42,7 @@ import { AdminComponent } from './admin/admin.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 
 import { AdminAboutComponent } from './admin/admin-about/admin-about.component';
+import { AdminAimComponent } from './admin/admin-about/admin-aim/admin-aim.component';
 import { AdminEditAimComponent } from './admin/admin-about/admin-edit-aim/admin-edit-aim.component';
 import { AdminHistoryComponent } from './admin/admin-about/admin-history/admin-history.component';
 import { AdminEditHistoryComponent } from './admin/admin-about/admin-edit-history/admin-edit-history.component';
@@ -91,6 +92,10 @@ import { AdminShowStudentComponent } from './admin/admin-student/admin-show-stud
 import { AdminEditStudentComponent } from './admin/admin-student/admin-edit-student/admin-edit-student.component';
 import { AdminStudentReceiptsComponent } from './admin/admin-student/admin-student-receipts/admin-student-receipts.component';
 import { AdminStudentGenerateReceiptComponent } from './admin/admin-student/admin-student-generate-receipt/admin-student-generate-receipt.component';
+import { AdminStudentIdentityComponent } from './admin/admin-student/admin-student-identity/admin-student-identity.component';
+import { AdminStudentCertificateComponent } from './admin/admin-student/admin-student-certificate/admin-student-certificate.component';
+import { AdminStudentAddProgressComponent } from './admin/admin-student/admin-student-add-progress/admin-student-add-progress.component';
+import { AdminStudentShowProgressComponent } from './admin/admin-student/admin-student-show-progress/admin-student-show-progress.component';
 
 import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
@@ -100,6 +105,9 @@ import { StudentDashboardComponent } from './student/student-dashboard/student-d
 import { StudentAttendanceComponent } from './student/student-attendance/student-attendance.component';
 import { StudentReceiptsComponent } from './student/student-receipts/student-receipts.component';
 import { StudentShowReceiptComponent } from './student/student-receipts/student-show-receipt/student-show-receipt.component';
+import { StudentIdentityComponent } from './student/student-identity/student-identity.component';
+import { StudentProgressComponent } from './student/student-progress/student-progress.component';
+import { StudentExamCertificateComponent } from './student/student-exam-certificate/student-exam-certificate.component';
 
 import { FacultyComponent } from './faculty/faculty.component';
 
@@ -117,16 +125,9 @@ import { NewsService } from './services/news.service';
 import { ReceiptService } from './services/receipt.service';
 import { StudentService } from './services/student.service';
 import { EnquiryService } from './services/enquiry.service';
-import { AdminAimComponent } from './admin/admin-about/admin-aim/admin-aim.component';
-import { AdminStudentAddProgressComponent } from './admin/admin-student/admin-student-add-progress/admin-student-add-progress.component';
-import { AdminStudentShowProgressComponent } from './admin/admin-student/admin-student-show-progress/admin-student-show-progress.component';
-import { AdminStudentIdentityComponent } from './admin/admin-student/admin-student-identity/admin-student-identity.component';
-import { StudentIdentityComponent } from './student/student-identity/student-identity.component';
-import { StudentProgressComponent } from './student/student-progress/student-progress.component';
-import { StudentExamCertificateComponent } from './student/student-exam-certificate/student-exam-certificate.component';
 import { IdentityService } from './services/identity.service';
 import { CertificateService } from './services/certificate.service';
-import { AdminStudentCertificateComponent } from './admin/admin-student/admin-student-certificate/admin-student-certificate.component';
+
 
 @NgModule({
   declarations: [
@@ -157,6 +158,7 @@ import { AdminStudentCertificateComponent } from './admin/admin-student/admin-st
     AdminDashboardComponent,
     // ADMIN ABOUT COMPONENT
     AdminAboutComponent,
+    AdminAimComponent,
     AdminEditAimComponent,
     AdminHistoryComponent,
     AdminEditHistoryComponent,
@@ -206,6 +208,10 @@ import { AdminStudentCertificateComponent } from './admin/admin-student/admin-st
     AdminEditStudentComponent,
     AdminStudentReceiptsComponent,
     AdminStudentGenerateReceiptComponent,
+    AdminStudentIdentityComponent,
+    AdminStudentCertificateComponent,
+    AdminStudentAddProgressComponent,
+    AdminStudentShowProgressComponent,
     // ERROR COMPONENT
     PageNotFoundComponent,
     ServerErrorComponent,
@@ -217,14 +223,9 @@ import { AdminStudentCertificateComponent } from './admin/admin-student/admin-st
     StudentReceiptsComponent,
     StudentAttendanceComponent,
     StudentShowReceiptComponent,
-    AdminAimComponent,
-    AdminStudentAddProgressComponent,
-    AdminStudentShowProgressComponent,
-    AdminStudentIdentityComponent,
     StudentIdentityComponent,
-    StudentProgressComponent,
     StudentExamCertificateComponent,
-    AdminStudentCertificateComponent
+    StudentProgressComponent
   ],
 
   imports: [
