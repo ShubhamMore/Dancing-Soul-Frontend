@@ -9,14 +9,14 @@ import { ArticleModel } from '../../models/articles.model';
 })
 export class ArticlesPageComponent implements OnInit {
 
-  articles: ArticleModel[] = [];
+  articles: any[] = [];
 
   loading: boolean = true;
 
-  constructor(private articelService: ArticleService) { }
+  constructor(private articleService: ArticleService) { }
 
   ngOnInit() {
-    this.articelService.getArticles()
+    this.articleService.getAllArticles()
     .subscribe((responce: ArticleModel[]) => {
       this.articles = responce;
       this.loading = false;
