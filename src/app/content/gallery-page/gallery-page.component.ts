@@ -12,7 +12,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 export class GalleryPageComponent implements OnInit {
 
   yourGalleryName='assets/img/gallery/'
-  gallery: ImageModel[] = [];
+  gallery: any = null;
   loading: boolean = true;
   videos : VideoModel[] = [];
   videoLinks : SafeResourceUrl[] = [];
@@ -20,21 +20,22 @@ export class GalleryPageComponent implements OnInit {
 
   ngOnInit() {
       this.galleryService.getAllImages()
-      .subscribe((responce: ImageModel[]) => {
+      .subscribe((responce: any) => {
         this.gallery = responce;
+        
+        this.galleryService.getVideos()
+        .subscribe((responce: VideoModel[]) => {
+        this.videos = responce;
+        this.videoLinks = this.videos.map(video => this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/'+video.url.split('/')[video.url.split('/').length-1]));
         this.loading = false;
+        },
+        (error: any) => { 
+          console.log(error)
+        });
       },
       (error: any) => {
         console.log(error)
       });
-      this.galleryService.getVideos()
-    .subscribe((responce: VideoModel[]) => {
-     this.videos = responce;
-     this.loading = false;
-     this.videoLinks = this.videos.map(video => this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/'+video.url.split('/')[video.url.split('/').length-1]));
-    },
-    (error: any) => {        
-    });    
   }
 
   ngAfterViewInit(){
