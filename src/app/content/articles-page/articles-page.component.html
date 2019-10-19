@@ -6,11 +6,15 @@
     <div class="row article-container">
         <div class="col-md-12">
           <div class="article-data"  [ngStyle]="{'min-height: 470px;': article.url}">
-            <img *ngIf='article.url' src="{{article.url}}" alt="Article Image">
+            <img *ngIf='article.url' src="{{article.url}}" alt="Article Image" (click)="openImageModal(article.url)">
             <h3>{{article.title}}</h3>
             <p>{{article.body}}</p>
           </div>
         </div>
     </div>
   </div>
+</div>
+<div id="myModal" class="modal">
+  <span class="close" (click)='closeModal()'>&times;</span>
+  <img class="modal-content" src="{{modelImageSrc}}" id="img01">
 </div>

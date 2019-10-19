@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { ArticleService } from '../../services/article.service';
 import { ArticleModel } from '../../models/articles.model';
 
@@ -10,7 +10,7 @@ import { ArticleModel } from '../../models/articles.model';
 export class ArticlesPageComponent implements OnInit {
 
   articles: any[] = [];
-
+  modelImageSrc:string;
   loading: boolean = true;
 
   constructor(private articleService: ArticleService) { }
@@ -23,5 +23,22 @@ export class ArticlesPageComponent implements OnInit {
     },
     (error: any) => {
     });
+  }
+
+  openImageModal(url){
+    var modal = document.getElementById("myModal");
+    modal.style.display = "block";
+    this.modelImageSrc = url;
+  }
+  closeModal(){
+    var modal = document.getElementById("myModal");
+    modal.style.display = "none";
+    this.modelImageSrc = '';
+  }
+
+  @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+    var modal = document.getElementById("myModal");
+    modal.style.display = "none";
+    this.modelImageSrc = '';
   }
 }
