@@ -32,7 +32,10 @@
               <a routerLink="/admin/branch" skipLocationChange>Branches</a>
             </h5>
           </div>
-          <div class="card-body">Basic card</div>            
+          <div class="card-body">
+              <p>Activated : {{dashboardData.activateBranch}}</p>
+              <p>Deactivated : {{dashboardData.deactivateBranch}}</p>
+          </div>            
         </div>
       </div>
       <div class="col-md-4 col-sm-10 mx-auto">
@@ -42,7 +45,10 @@
               <a routerLink="/admin/student" skipLocationChange>Students</a>
             </h5>
           </div>
-          <div class="card-body">Basic card</div>
+          <div class="card-body">
+            <p>Activated : {{dashboardData.activateStudent}}</p>
+            <p>Deactivated : {{dashboardData.deactivateStudent}}</p>
+          </div>
         </div>
       </div>
       <div class="col-md-4 col-sm-10 mx-auto">
@@ -52,7 +58,10 @@
               <a routerLink="/admin/faculty" skipLocationChange>Faculties</a>
             </h5>
           </div>
-          <div class="card-body">Basic card</div>
+          <div class="card-body">
+              <p>Activated : {{dashboardData.activateFaculty}}</p>
+              <p>Deactivated : {{dashboardData.deactivateFaculty}}</p>
+          </div>
         </div>
       </div>
     </div>

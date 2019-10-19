@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { EnquiryService } from '../../services/enquiry.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { DashboardService } from '../../services/dashboard.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -14,15 +14,17 @@ export class AdminDashboardComponent implements OnInit {
   error: string = null;
 
   enquiries: number;
+  dashboardData: any = null;
 
-  constructor(private enquiryService: EnquiryService,
+  constructor(private dashboardService: DashboardService,
               private router: Router,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.enquiryService.getUnseenEnquiries()
+    this.dashboardService.getDashboardData()
     .subscribe((responce: any) => {
       this.enquiries = responce.unseenEnquiries;
+      this.dashboardData = responce.dashboardData;
       this.loading = false;
     },
     (error: any) => {

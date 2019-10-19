@@ -114,19 +114,21 @@ import { FacultyComponent } from './faculty/faculty.component';
 import { FormValidator } from './validators/form.validator';
 
 import { HttpService } from './services/httpPost.service';
+
 import { AboutService } from './services/about.service';
 import { ArticleService } from './services/article.service';
 import { AttendanceService } from './services/attendance.service';
 import { BranchService } from './services/branch.service';
+import { CertificateService } from './services/certificate.service';
+import { DashboardService } from './services/dashboard.service';
+import { EnquiryService } from './services/enquiry.service';
 import { ExamService } from './services/exam.service';
 import { FacultyService } from './services/faculty.service';
 import { GalleryService } from './services/gallery.service';
+import { IdentityService } from './services/identity.service';
 import { NewsService } from './services/news.service';
 import { ReceiptService } from './services/receipt.service';
 import { StudentService } from './services/student.service';
-import { EnquiryService } from './services/enquiry.service';
-import { IdentityService } from './services/identity.service';
-import { CertificateService } from './services/certificate.service';
 
 
 @NgModule({
@@ -248,15 +250,16 @@ import { CertificateService } from './services/certificate.service';
     ArticleService,
     AttendanceService,
     BranchService,
+    CertificateService,
+    DashboardService,
     EnquiryService,
     ExamService,
     FacultyService,
     GalleryService,
+    IdentityService,
     NewsService,
     ReceiptService,
     StudentService,
-    IdentityService,
-    CertificateService,
     // AUTH GUARDS
     LoginAuthGuard,
     AdminAuthGuard,
