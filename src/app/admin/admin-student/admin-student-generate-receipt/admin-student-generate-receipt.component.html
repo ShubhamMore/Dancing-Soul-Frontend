@@ -148,7 +148,7 @@
 
               <div class="row pt-2">
                 <div class="col-12">
-                  <label>Amount : Rs. {{!!amount ? amount : '0'}}.00/-</label>
+                  <label>Amount : Rs. {{!!amount ? amount + (!!lateFeeAmount ? lateFeeAmount : 0) : '0'}}.00/-</label>
                 </div>
               </div>
 

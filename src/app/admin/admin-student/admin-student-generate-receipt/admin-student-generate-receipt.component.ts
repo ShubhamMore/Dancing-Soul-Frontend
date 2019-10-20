@@ -174,8 +174,7 @@ export class AdminStudentGenerateReceiptComponent implements OnInit {
   }
 
   addLateFeeAmount(event: any) {
-    this.lateFeeAmount = event.target.value;
-    this.amount += this.lateFeeAmount;
+    this.lateFeeAmount = parseInt(event.target.value);
     if(!this.lateFeeAmount || (this.lateFeeAmount < 1)) {
       return this.lateFeeError = true;
     }
