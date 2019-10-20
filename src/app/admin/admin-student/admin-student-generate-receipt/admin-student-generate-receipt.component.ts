@@ -121,16 +121,16 @@ export class AdminStudentGenerateReceiptComponent implements OnInit {
         feeDescription = this.feeDescription;
       }
 
-      let amount: string;
+      let amount: number;
       if (this.lateFee) {
-        amount = (this.amount + this.lateFeeAmount).toString();
+        amount = this.amount + this.lateFeeAmount;
       } else {
-        amount = this.amount.toString();
+        amount = this.amount;
       }
 
       const receipt = {
         student: this.student._id,
-        amount: amount,
+        amount: amount.toString(),
         feeDescription: feeDescription,
         receiptDate: this.date(),
         paymentMode: this.form.value.payment_mode,
@@ -175,6 +175,7 @@ export class AdminStudentGenerateReceiptComponent implements OnInit {
 
   addLateFeeAmount(event: any) {
     this.lateFeeAmount = event.target.value;
+    this.amount += this.lateFeeAmount;
     if(!this.lateFeeAmount || (this.lateFeeAmount < 1)) {
       return this.lateFeeError = true;
     }
