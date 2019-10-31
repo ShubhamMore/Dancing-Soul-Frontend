@@ -11,12 +11,12 @@
         </div>
       </div>
       <div class="row mt-2">
-        <div class="col-md-10 col-12 mx-auto">
+        <div class="col-10 mx-auto">
           <h4 class="text-center mb-3">Edit Branch - {{branch.branch}}</h4>
           <form class="" (submit)="editAddress()" [formGroup]="form">
-      
+
             <div class="row">
-      
+
               <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                   <label for="city">City : </label>
@@ -24,7 +24,7 @@
                   <span *ngIf="!form.get('city').valid && form.get('city').touched">*Please enter City</span>
                 </div>
               </div>
-      
+
               <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                   <label for="branch">Branch Name : </label>
@@ -32,11 +32,11 @@
                   <span *ngIf="!form.get('branch').valid && form.get('branch').touched">*Please enter Branch</span>
                 </div>
               </div>
-      
+
             </div>
-    
+
             <div class="row">
-              <div class="col-12"> 
+              <div class="col-12">
                 <div class="form-group">
                   <label for="address">Address : </label>
                   <textarea class="address" name="address" id="address" rows="3" formControlName="address" placeholder="Address"></textarea>
@@ -44,10 +44,10 @@
                 </div>
               </div>
             </div>
-            
-      
+
+
             <div class="row">
-      
+
               <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                   <label for="email">Email : </label>
@@ -55,7 +55,7 @@
                   <span *ngIf="!form.get('email').valid && form.get('email').touched">*Please enter valid Email</span>
                 </div>
               </div>
-      
+
               <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                   <label for="phone">Phone : </label>
@@ -63,11 +63,11 @@
                   <span *ngIf="!form.get('phone').valid && form.get('phone').touched">*Please enter valid phone number</span>
                 </div>
               </div>
-      
+
             </div>
-    
+
             <div class="row">
-              <div class="col-12">  
+              <div class="col-12">
                 <div class="form-group">
                   <label for="description">Description : </label>
                   <textarea class="description" name="description" id="description" rows="5" formControlName="description" placeholder="Description"></textarea>
@@ -75,7 +75,7 @@
                 </div>
               </div>
             </div>
-    
+
             <div class="row">
               <div class="col-12">
                 <div class="form-group">
@@ -86,12 +86,12 @@
                 <span *ngIf="invalidImage">*Please Select a Valid Image File</span>
               </div>
             </div>
-      
+
             <div class="row">
                 <div class="col-12">
                   <div *ngIf="imagePreview.length > 0; else noImagePicked">
                       <h5>Image To Upload : </h5>
-        
+
                       <div class="row">
                           <span class="m-2" *ngFor="let image of imagePreview; let i = index;">
                               <div class="preview-image">
@@ -100,12 +100,12 @@
                               </div>
                           </span>
                       </div>
-                  
+
                   </div>
                   <ng-template #noImagePicked><p>No Image Picked yet</p></ng-template>
                 </div>
-            </div> 
-      
+            </div>
+
             <div class="row">
               <div class="col-12">
                 <div class="form-group">
@@ -144,7 +144,7 @@
                             <label for="batchName">Batch Name : </label>
                             <input class="batchName" type="text" name="batchName" id="batchName" formControlName="batchName" placeholder="Batch Name">
                             <span *ngIf="!batchForm.get('batchName').valid && batchForm.get('batchName').touched">*Please Enter Batch Name</span>
-                          </div>  
+                          </div>
                         </div>
                         <div class="col-md-6 col-sm-12 p-0">
                           <div class="form-group m-1">
@@ -165,10 +165,10 @@
                                 <div class="col-2 text-center">
                                   <p>-</p>
                                 </div>
-                                <div class="col-5 p-0">					
+                                <div class="col-5 p-0">
                                   <input type="text" name="end_timming" id="end_timming" formControlName="end_timming" placeholder="To">
                                 </div>
-                              </div> 
+                              </div>
                             <span *ngIf="(!batchForm.get('start_timming').valid && batchForm.get('start_timming').touched) || (!batchForm.get('end_timming').valid && batchForm.get('end_timming').touched)">*Please Enter Timming</span>
                           </div>
                         </div>
@@ -184,7 +184,7 @@
                 </div>
               </div>
             </div>
-    
+
             <div class="row" *ngIf="isWeekType(weekType)">
               <div class="col-12">
                 <label for="batches">Batches : </label>
@@ -218,17 +218,17 @@
                 </div>
               </div>
             </div>
-              
+
             <hr>
-            
+
             <div class="row">
               <div class="col-12">
                 <button type="submit" class="btn-save">Save</button>
-          
+
                 <button type="button" class="btn-cancel float-right" (click)="cancel()">Cancel</button>
               </div>
             </div>
-      
+
           </form>
         </div>
       </div>
