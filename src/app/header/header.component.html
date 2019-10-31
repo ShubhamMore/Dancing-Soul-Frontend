@@ -1,46 +1,46 @@
   <nav class="navbar navbar-expand-xl navbar-light">
     <div class="navbar-header">
-      <a class="navbar-brand pointer" (click)="goToHome()">
+      <a class="navbar-brand pointer" (click)="goToHome()" data-toggle="collapse" data-target=".navbar-collapse.show">
         <img src="../../assets/images/dancing-soul-logo.png" alt="Dancing Soul" class="logo">
       </a>
     </div>
-    
+
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    
+
     <div class="collapse navbar-collapse" id="navbarResponsive">
 
       <ul class="main-nav navbar-nav mr-auto" *ngIf="!isAuthenticated && !user">
-        <li class="nav-item">
+        <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
           <a class="nav-link" routerLink="about">About Us</a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
           <a class="nav-link" routerLink="branches">Branches</a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
           <a class="nav-link"  routerLink="articles">Articles</a>
         </li>
-        
-        <li class="nav-item">
+
+        <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
           <a class="nav-link"  routerLink="newsShelter">News Shelter</a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
           <a class="nav-link" routerLink="gallery">Photos/Videos</a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
           <a class="nav-link" routerLink="contactUs">Contact Us</a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
           <a class="nav-link"  routerLink="exams">Exams</a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
           <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
         </li>
 
@@ -51,7 +51,7 @@
       </ul>
 
       <ul class="main-nav navbar-nav mr-auto" *ngIf="isAuthenticated && (user.userType === 'student')">
-        
+
       </ul>
 
       <ul class="main-nav navbar-nav mr-auto" *ngIf="isAuthenticated && (user.userType === 'faculty')">
@@ -60,16 +60,16 @@
 
       <ul class="main-nav navbar-nav mr-auto" *ngIf="isAuthenticated">
 
-        <li class="nav-item">
+        <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
           <a class="nav-link" style="cursor: pointer;" (click)="changePassword()">Change Password</a>
         </li>
 
-        <li class="nav-item">
+        <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
           <a class="nav-link" style="cursor: pointer;" (click)="onLogout()">Logout</a>
         </li>
 
       </ul>
 
     </div>
-    
+
   </nav>
