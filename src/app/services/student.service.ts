@@ -7,11 +7,10 @@ import { throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class StudentService {
-
-  constructor(private httpService: HttpService) { }
+  constructor(private httpService: HttpService) {}
 
   addStudent(student: any) {
-    const data = {api: 'addStudent', data: student};
+    const data = { api: 'addStudent', data: student };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -23,7 +22,7 @@ export class StudentService {
   }
 
   getStudents(branch: string, batch: string, weekType: string) {
-    const data = {api: 'getStudents', data: {branch, batch, weekType}};
+    const data = { api: 'getStudents', data: { branch, batch, weekType } };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -34,8 +33,8 @@ export class StudentService {
     );
   }
 
-  getStudent(_id: string) {
-    const data = {api: 'getStudent', data: {_id}};
+  getStudent(id: string) {
+    const data = { api: 'getStudent', data: { _id: id } };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -46,8 +45,8 @@ export class StudentService {
     );
   }
 
-  getStudentForReceipt(_id: string) {
-    const data = { api : "getStudentForReceipt", data : { _id }}
+  getStudentForReceipt(id: string) {
+    const data = { api: 'getStudentForReceipt', data: { _id: id } };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -58,8 +57,8 @@ export class StudentService {
     );
   }
 
-  getStudentForEditing(_id: string) {
-    const data = {api: 'getStudentForEditing', data: {_id}};
+  getStudentForEditing(id: string) {
+    const data = { api: 'getStudentForEditing', data: { _id: id } };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -71,7 +70,7 @@ export class StudentService {
   }
 
   editStudent(student: FormData) {
-    const data = {api: 'editStudent', data: student};
+    const data = { api: 'editStudent', data: student };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -82,8 +81,8 @@ export class StudentService {
     );
   }
 
-  changeStudentStatus(_id: string, status: string) {
-    const data = {api: 'changeStudentStatus', data: {_id, status}};
+  changeStudentStatus(id: string, status: string) {
+    const data = { api: 'changeStudentStatus', data: { _id: id, status } };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -94,8 +93,8 @@ export class StudentService {
     );
   }
 
-  deleteStudent(_id: string, password: string) {
-    const data = {api: 'deleteStudent', data: {_id, password}};
+  deleteStudent(id: string, password: string) {
+    const data = { api: 'deleteStudent', data: { _id: id, password } };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;

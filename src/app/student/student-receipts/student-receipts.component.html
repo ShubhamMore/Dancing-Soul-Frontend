@@ -1,19 +1,21 @@
-<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
+<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading" />
 
 <div class="row" *ngIf="!loading">
   <div class="col-12">
     <div class="row mt-2" *ngIf="!!error">
-      <div class="col-10 mx-auto">
+      <div class="col-md-10 col-12 mx-auto">
         <div class="alert alert-danger alert-dismissible">
-          <button type="button" class="close" (click)="clearError()" data-dismiss="alert">&times;</button>
-            <span>{{error}}</span>
+          <button type="button" class="close" (click)="clearError()" data-dismiss="alert">
+            &times;
+          </button>
+          <span>{{ error }}</span>
         </div>
       </div>
     </div>
     <div class="row mt-2">
-      <div class="col-12 mx-auto">
+      <div class="col-md-10 col-12 mx-auto">
         <h3>Receipts</h3>
-        <hr>
+        <hr />
         <div class="row" *ngIf="receipts.length > 0; else empty_receipts">
           <div class="table-responsive">
             <table class="table table-sm table-hover">
@@ -25,11 +27,13 @@
                   <th>Payment Mode</th>
                   <th>Show</th>
                 </tr>
-                <tr class="receipt" *ngFor="let receipt of receipts; let i = index" routerLinkActive="active">
-                  <td>{{ i+1 }}</td>
-                  <td>
-                    Rs. {{ receipt.amount }}.00/-
-                  </td>
+                <tr
+                  class="receipt"
+                  *ngFor="let receipt of receipts; let i = index"
+                  routerLinkActive="active"
+                >
+                  <td>{{ i + 1 }}</td>
+                  <td>Rs. {{ receipt.amount }}.00/-</td>
                   <td>
                     {{ receipt.feeDescription }}
                   </td>
@@ -37,7 +41,12 @@
                     {{ receipt.paymentMode | uppercase }}
                   </td>
                   <td>
-                    <a class="btn-edit" routerLink="/student/receipt/{{receipt._id}}" queryParamsHandling="preserve">Show</a>
+                    <a
+                      class="btn-edit"
+                      routerLink="/student/receipt/{{ receipt._id }}"
+                      queryParamsHandling="preserve"
+                      >Show</a
+                    >
                   </td>
                 </tr>
               </tbody>
@@ -49,5 +58,5 @@
         </ng-template>
       </div>
     </div>
-  </div> 
+  </div>
 </div>

@@ -7,11 +7,10 @@ import { throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class ArticleService {
-
-  constructor(private httpService: HttpService) { }
+  constructor(private httpService: HttpService) {}
 
   addArticle(article: any) {
-    const data = {api: 'addArticle', data: article};
+    const data = { api: 'addArticle', data: article };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -23,19 +22,7 @@ export class ArticleService {
   }
 
   getArticles() {
-    const data = {api: 'getArticles', data: {}};
-    return this.httpService.httpPost(data).pipe(
-      map((response: any) => {
-        return response;
-      }),
-      catchError(err => {
-        return throwError(err);
-      })
-    );
-  }
-  
-  getAllArticles() {
-    const data = {api: 'getAllArticles', data: {}};
+    const data = { api: 'getArticles', data: {} };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -46,8 +33,20 @@ export class ArticleService {
     );
   }
 
-  getArticle(_id: string) {
-    const data = {api: 'getArticle', data: {_id}};
+  getAllArticles() {
+    const data = { api: 'getAllArticles', data: {} };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError(err => {
+        return throwError(err);
+      })
+    );
+  }
+
+  getArticle(id: string) {
+    const data = { api: 'getArticle', data: { _id: id } };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -59,7 +58,7 @@ export class ArticleService {
   }
 
   editArticle(article: any) {
-    const data = {api: 'editArticle', data: article};
+    const data = { api: 'editArticle', data: article };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -70,8 +69,8 @@ export class ArticleService {
     );
   }
 
-  deleteArticleImage(_id: string, public_id: string) {
-    const data = {api: 'deleteArticleImage', data: {_id, public_id}};
+  deleteArticleImage(id: string, publicId: string) {
+    const data = { api: 'deleteArticleImage', data: { _id: id, public_id: publicId } };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -82,8 +81,8 @@ export class ArticleService {
     );
   }
 
-  deleteArticle(_id: string) {
-    const data = {api: 'deleteArticle', data: {_id}};
+  deleteArticle(id: string) {
+    const data = { api: 'deleteArticle', data: { _id: id } };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -93,5 +92,4 @@ export class ArticleService {
       })
     );
   }
-  
 }

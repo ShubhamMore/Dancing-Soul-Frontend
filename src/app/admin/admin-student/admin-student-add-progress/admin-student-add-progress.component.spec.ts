@@ -8,9 +8,8 @@ describe('AdminStudentAddProgressComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminStudentAddProgressComponent ]
-    })
-    .compileComponents();
+      declarations: [AdminStudentAddProgressComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -13,44 +13,63 @@ import { BranchService } from '../../services/branch.service';
   styleUrls: ['./admin-attendance.component.css']
 })
 export class AdminAttendanceComponent implements OnInit {
-
-  weekType = "0";
+  weekType: string;
 
   form: FormGroup;
 
-  loading: boolean = true;
+  loading: boolean;
+  error: string;
 
-  error: string = null;
+  students: StudentModel[];
+  attendance: any[];
 
-  students: StudentModel[] = [];
+  noStudent: string;
 
-  attendance: any[] = [] ;
+  branches: BranchModel[];
+  branch: string;
 
-  noStudent = 'Please Select Branch';
+  batches: BatchModel[];
+  batch: string;
 
-  branches: BranchModel[] = [];
-  branch : string = '';
+  date: string;
 
-  batches: BatchModel[] = [];
-  batch: string = '';
-
-  date : string;
-
-  constructor(private attendanceService: AttendanceService,
-              private branchService: BranchService,
-              private router: Router,
-              private route: ActivatedRoute) { }
+  constructor(
+    private attendanceService: AttendanceService,
+    private branchService: BranchService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
+    this.weekType = '0';
+
+    this.loading = true;
+
+    this.students = [];
+
+    this.attendance = [];
+
+    this.noStudent = 'Please Select Branch';
+
+    this.branches = [];
+    this.branch = '';
+
+    this.batches = [];
+    this.batch = '';
 
     const date = new Date();
-    this.date = date.getFullYear() + "-" + this.zeroAppend(date.getMonth() + 1) + "-" + this.zeroAppend(date.getDate());
+    this.date =
+      date.getFullYear() +
+      '-' +
+      this.zeroAppend(date.getMonth() + 1) +
+      '-' +
+      this.zeroAppend(date.getDate());
 
     this.form = new FormGroup({
-      branch: new FormControl("", {
+      branch: new FormControl('', {
         validators: [Validators.required]
       }),
-      batch: new FormControl("", {
+      batch: new FormControl('', {
         validators: [Validators.required]
       }),
       weekType: new FormControl(this.weekType, {
@@ -61,79 +80,80 @@ export class AdminAttendanceComponent implements OnInit {
       })
     });
 
-    this.branchService.getBranches()
-    .subscribe((responce: BranchModel[]) => {
-      this.branches = responce;
-      if(this.branches.length > 0) {
-
+    this.branchService.getBranches().subscribe(
+      (responce: BranchModel[]) => {
+        this.branches = responce;
+        if (this.branches.length > 0) {
+        }
+        this.loading = false;
+      },
+      (error: any) => {
+        this.setError(error);
       }
-      this.loading = false;
-    },
-    (error: any) => {
-      this.setError(error);
-    });
+    );
   }
 
-  zeroAppend(n : number) : string {
-    if(n < 10) {
-      return ("0" + n).toString();
+  zeroAppend(n: number): string {
+    if (n < 10) {
+      return ('0' + n).toString();
     }
     return n.toString();
   }
 
   onSelectBranch() {
     this.branch = this.form.value.branch;
-      if(this.branch !== '') {
-      this.batches = this.branches.find((branch) => (branch._id === this.branch)).batch;
+    if (this.branch !== '') {
+      this.batches = this.branches.find(branch => branch._id === this.branch).batch;
       this.onSelectBatch();
     }
   }
 
   onSelectBatch() {
     this.batch = this.form.value.batch;
-    if(this.batch !== '') {
+    if (this.batch !== '') {
       this.searchStudent(this.branch, this.batch, this.weekType);
-    }
-    else {
+    } else {
       this.students = [];
-      this.noStudent = 'Please Select ' + (this.weekType === "0" ? "Week Day" : "Week End") + ' Batch';
+      this.noStudent =
+        'Please Select ' + (this.weekType === '0' ? 'Week Day' : 'Week End') + ' Batch';
     }
   }
 
   onSelectBatchType() {
     this.weekType = this.form.value.weekType;
-    if(this.batch !== '') {
-      this.form.patchValue({batch: ''});
+    if (this.batch !== '') {
+      this.form.patchValue({ batch: '' });
       this.onSelectBatch();
     }
   }
 
   searchStudent(branch: string, batch: string, batchType: string) {
     this.loading = true;
-    this.attendanceService.getStudentsForAttendance(branch, batch, batchType)
-    .subscribe((responce: StudentModel[]) => {
-      this.students = responce;
-      if (this.students.length < 1) {
-        this.noStudent = 'No Students Found';
-      }
-
-      this.students.forEach((student) => {
-        const attendance = {
-          student: student._id,
-          attendanceStatus: "0"
+    this.attendanceService.getStudentsForAttendance(branch, batch, batchType).subscribe(
+      (responce: StudentModel[]) => {
+        this.students = responce;
+        if (this.students.length < 1) {
+          this.noStudent = 'No Students Found';
         }
-        this.attendance.push(attendance);
-      });
 
-      this.loading = false;
-    },
-    (error: any) => {
-      this.setError(error);
-    });
+        this.students.forEach(student => {
+          const attendance = {
+            student: student._id,
+            attendanceStatus: '0'
+          };
+          this.attendance.push(attendance);
+        });
+
+        this.loading = false;
+      },
+      (error: any) => {
+        this.setError(error);
+      }
+    );
   }
 
   addAttendance() {
-    if(this.form.valid) {
+    if (this.form.valid) {
       this.loading = true;
       const attendance = {
         date: this.form.value.date,
@@ -141,43 +161,43 @@ export class AdminAttendanceComponent implements OnInit {
         batch: this.form.value.batch,
         batchType: this.form.value.weekType,
         attendance: this.attendance
-      }
+      };
 
-      console.log(attendance)
-      
-      this.attendanceService.saveAttendance(attendance)
-      .subscribe((responce: any) => {
-        this.loading = false;
-        this.form.reset({
-          branch: "",
-          batch: "",
-          weekType: this.weekType,
-          date: this.date
-        });
-        this.students = [];
-        this.attendance = [];
-      },(error: any) => {
-        this.setError(error)    
-      });
+      console.log(attendance);
+
+      this.attendanceService.saveAttendance(attendance).subscribe(
+        (responce: any) => {
+          this.loading = false;
+          this.form.reset({
+            branch: '',
+            batch: '',
+            weekType: this.weekType,
+            date: this.date
+          });
+          this.students = [];
+          this.attendance = [];
+        },
+        (error: any) => {
+          this.setError(error);
+        }
+      );
     }
   }
 
   markAttendance(event: any, student: string, index: number) {
-    if(event.target.checked) {
-      this.attendance[index].attendanceStatus = "1";
-    }
-    else {
-      this.attendance[index].attendanceStatus = "0";
-
+    if (event.target.checked) {
+      this.attendance[index].attendanceStatus = '1';
+    } else {
+      this.attendance[index].attendanceStatus = '0';
     }
   }
-	
-	setError(err: string) {
-		this.error = err;
-		this.loading = false;
-	}
 
-	clearError() {
-		this.error = null;
-	}
+  setError(err: string) {
+    this.error = err;
+    this.loading = false;
+  }
+
+  clearError() {
+    this.error = null;
+  }
 }

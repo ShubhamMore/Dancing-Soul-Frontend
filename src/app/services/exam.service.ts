@@ -8,11 +8,10 @@ import { ExamModel } from '../models/exams.model';
   providedIn: 'root'
 })
 export class ExamService {
-
-  constructor(private httpService: HttpService) { }
+  constructor(private httpService: HttpService) {}
 
   addExam(exam: any) {
-    const data = {api: 'addExam', data: exam};
+    const data = { api: 'addExam', data: exam };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -24,7 +23,7 @@ export class ExamService {
   }
 
   getExams() {
-    const data = {api: 'getExams', data: {}};
+    const data = { api: 'getExams', data: {} };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -35,8 +34,8 @@ export class ExamService {
     );
   }
 
-  getExam(_id: string) {
-    const data = {api: 'getExam', data: {_id}};
+  getExam(id: string) {
+    const data = { api: 'getExam', data: { _id: id } };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -48,7 +47,7 @@ export class ExamService {
   }
 
   editExam(exam: ExamModel) {
-    const data = {api: 'editExam', data: exam};
+    const data = { api: 'editExam', data: exam };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -59,8 +58,8 @@ export class ExamService {
     );
   }
 
-  deleteExam(_id: string) {
-    const data = {api: 'deleteExam', data: {_id}};
+  deleteExam(id: string) {
+    const data = { api: 'deleteExam', data: { _id: id } };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -70,5 +69,4 @@ export class ExamService {
       })
     );
   }
-  
 }

@@ -1,248 +1,257 @@
-  <img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
+<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading" />
 
-  <div class="row" *ngIf="!loading">
-    <div class="col-12">
-      <div class="row mt-2" *ngIf="!!error">
-        <div class="col-10 mx-auto">
+<div class="row" *ngIf="!loading">
+  <div class="col-12">
+    <div class="row mt-2" *ngIf="!!error">
+      <div class="col-10 mx-auto">
         <div class="alert alert-danger alert-dismissible">
-          <button type="button" class="close" (click)="clearError()" data-dismiss="alert">&times;</button>
-          <span>{{error}}</span>
+          <button type="button" class="close" (click)="clearError()" data-dismiss="alert">
+            &times;
+          </button>
+          <span>{{ error }}</span>
         </div>
-        </div>
-      </div>
-      <div class="row mt-2">
       </div>
     </div>
-    <div class="col-10 mx-auto">
-    
-      <div class="student">
-        <div class="row">
-          <div class="col-12">
-            <button class="btn-close float-right" (click)="cancel()">X</button>
-            <h3>Student Details</h3>
+    <div class="row mt-2"></div>
+  </div>
+  <div class="col-10 mx-auto">
+    <div class="student">
+      <div class="row">
+        <div class="col-12">
+          <button class="btn-close float-right" (click)="cancel()">X</button>
+          <h3>Student Details</h3>
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="row text-center">
+        <div class="col-md-4 col-12">
+          <button class="btn-identity" (click)="studentIdentity()">Identity</button>
+        </div>
+        <div class="col-md-4 col-12">
+          <button class="btn-certificate" (click)="studentCertificates()">Certificates</button>
+        </div>
+        <div class="col-md-4 col-12">
+          <button class="btn-identity" (click)="studentProgress()">Progress</button>
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="row">
+        <div class="col-md-4 col-sm-10 mx-auto text-center">
+          <div>
+            <div class="student-image">
+              <img
+                class="student-image"
+                [src]="student.image.secure_url"
+                [alt]="student.name"
+                width="150px"
+                height="150px"
+              />
+            </div>
+
+            <div class="student-name">
+              <h4>{{ student.name | uppercase }}</h4>
+            </div>
           </div>
         </div>
-    
-        <hr>
 
-        <div class="row text-center">
-          <div class="col-md-4 col-12">
-            <button class="btn-identity" (click)="studentIdentity()">Identity</button>
-          </div>
-          <div class="col-md-4 col-12">
-              <button class="btn-certificate" (click)="studentCertificates()">Certificates</button>
-              
-            </div>
-            <div class="col-md-4 col-12">
-                <button class="btn-identity" (click)="studentProgress()">Progress</button>
-
+        <div class="col-md-8 col-sm-10 mx-auto">
+          <div class="table-responsive">
+            <table class="table table-sm">
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>Birth Date : </strong>
+                  </td>
+                  <td>
+                    <p>{{ student.birthDate }}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Address : </strong>
+                  </td>
+                  <td>
+                    <p>{{ student.address }}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>First Guardian Name : </strong>
+                  </td>
+                  <td>
+                    <p>{{ student.firstGuardianName }}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>First Guardian Relation : </strong>
+                  </td>
+                  <td>
+                    <p>{{ student.firstGuardianRelation }}</p>
+                  </td>
+                </tr>
+                <tr *ngIf="student.secondGuardianName != ''">
+                  <td>
+                    <strong>Second Guardian Name : </strong>
+                  </td>
+                  <td>
+                    <p>{{ student.secondGuardianName }}</p>
+                  </td>
+                </tr>
+                <tr *ngIf="student.secondGuardianRelation != ''">
+                  <td>
+                    <strong>Second Guardian Relation : </strong>
+                  </td>
+                  <td>
+                    <p>{{ student.secondGuardianRelation }}</p>
+                  </td>
+                </tr>
+                <tr *ngIf="student.workPlace != ''">
+                  <td>
+                    <strong>School/ College/ Office : </strong>
+                  </td>
+                  <td>
+                    <p>{{ student.workPlace }}</p>
+                  </td>
+                </tr>
+                <tr *ngIf="student.bloodGroup != ''">
+                  <td>
+                    <strong>Blood Group : </strong>
+                  </td>
+                  <td>
+                    <p>{{ student.bloodGroup }}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Medical History : </strong>
+                  </td>
+                  <td>
+                    <p>{{ student.medicalHistory }}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong><em>E-</em>mail : </strong>
+                  </td>
+                  <td>
+                    <p>
+                      <a href="mailto:{{ student.email }}">{{ student.email }}</a>
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Phone : </strong>
+                  </td>
+                  <td>
+                    <p>+91 {{ student.phone }}</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
-
-        <hr>
-    
-        <div class="row">
-    
-          <div class="col-md-4 col-sm-10 mx-auto text-center">
-    
-            <div>
-              <div class="student-image">
-                <img class="student-image" [src]="student.image.secure_url" [alt]="student.name" width="150px" height="150px">
-              </div>
-              
-              <div class="student-name">
-                <h4>{{student.name | uppercase}}</h4>
-              </div>
-            </div>
-    
-          </div>
-    
-          <div class="col-md-8 col-sm-10 mx-auto">
-    
-            <div class="table-responsive">
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col-12">
+          <h4>CLASS DETAILS</h4>
+          <div class="row">
+            <div class="col-10 mx-auto">
               <table class="table table-sm">
                 <tbody>
                   <tr>
                     <td>
-                      <strong>Birth Date : </strong>
+                      <strong>Branch : </strong>
                     </td>
                     <td>
-                      <p>{{student.birthDate}}</p>
+                      <p>{{ studentMetaData.branch }}</p>
                     </td>
                   </tr>
                   <tr>
                     <td>
-                      
-                      <strong>Address : </strong>
+                      <strong>Batch Type : </strong>
                     </td>
                     <td>
-                      <p>{{student.address}}</p>
+                      <p>{{ student.batchType == '0' ? 'Week Day Batch' : 'Week End Batch' }}</p>
                     </td>
                   </tr>
                   <tr>
                     <td>
-                      <strong>First Guardian Name : </strong>
+                      <strong>Batch Name : </strong>
                     </td>
                     <td>
-                      <p>{{student.firstGuardianName}}</p>
+                      <p>{{ studentMetaData.batch.batchName }}</p>
                     </td>
                   </tr>
                   <tr>
                     <td>
-                      <strong>First Guardian Relation : </strong>
-                    </td>
-                    <td>  
-                      <p>{{student.firstGuardianRelation}}</p>
-                    </td>
-                  </tr>
-                  <tr *ngIf="student.secondGuardianName != ''">
-                    <td>
-                      <strong>Second Guardian Name : </strong>
+                      <strong>Fees : </strong>
                     </td>
                     <td>
-                      <p>{{student.secondGuardianName}}</p>
-                    </td>
-                  </tr>
-                  <tr *ngIf="student.secondGuardianRelation != ''">
-                    <td>
-                      <strong>Second Guardian Relation : </strong>
-                    </td>
-                    <td>
-                      <p>{{student.secondGuardianRelation}}</p>
-                    </td>
-                  </tr>
-                  <tr *ngIf="student.workPlace != ''">
-                    <td>
-                      <strong>School/ College/ Office : </strong>
-                    </td>
-                    <td>
-                      <p>{{student.workPlace}}</p>
-                    </td>
-                  </tr>
-                  <tr *ngIf="student.bloodGroup != ''">
-                    <td>
-                      <strong>Blood Group : </strong>
-                    </td>
-                    <td>
-                      <p>{{student.bloodGroup}}</p>                      
+                      <p>Rs. {{ studentMetaData.batch.fees }}.00/-</p>
                     </td>
                   </tr>
                   <tr>
                     <td>
-                      <strong>Medical History : </strong>
+                      <strong>Time : </strong>
                     </td>
                     <td>
-                      <p>{{student.medicalHistory}}</p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <strong><em>E-</em>mail : </strong>
-                    </td>
-                    <td>
-                      <p><a href="mailto:{{student.email}}">{{student.email}}</a></p>
+                      <p>{{ studentMetaData.batch.time }}</p>
                     </td>
                   </tr>
                   <tr>
                     <td>
-                      <strong>Phone : </strong>
+                      <strong>Status : </strong>
                     </td>
                     <td>
-                      <p>+91 {{student.phone}}</p>
+                      <p>{{ student.status == '1' ? 'ACTIVATED' : 'DEACTIVATED' }}</p>
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-          </div> 
-    
-        </div>
-        <hr>
-        <div class="row">
-          <div class="col-12">
-            <h4>CLASS DETAILS</h4>
-            <div class="row">
-              <div class="col-10 mx-auto">
-                <table class="table table-sm">
-                  <tbody>
-                    <tr>
-                      <td>
-                        <strong>Branch : </strong>
-                      </td>
-                      <td>
-                        <p>{{studentMetaData.branch}}</p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <strong>Batch Type : </strong>
-                      </td>
-                      <td>
-                        <p>{{student.batchType == "0" ? "Week Day Batch" : "Week End Batch"}}</p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <strong>Batch Name : </strong>
-                      </td>
-                      <td>
-                        <p>{{studentMetaData.batch.batchName}}</p> 
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <strong>Fees : </strong>
-                      </td>
-                      <td>
-                        <p>Rs. {{studentMetaData.batch.fees}}.00/-</p>      
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <strong>Time : </strong>
-                      </td>
-                      <td>
-                        <p>{{studentMetaData.batch.time}}</p>                
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <strong>Status : </strong>
-                      </td>
-                      <td>
-                        <p>{{ student.status == "1" ? "ACTIVATED" : "DEACTIVATED" }}</p>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-    
-        <hr>
-    
-        <div class="row">
-    
-          <div class="col-6">
-            <button routerLink="edit" class="btn-edit" skipLocationChange>Edit</button>
-          </div>
-    
-          <div class="col-6">
-              <button class="btn-deactivate float-right" (click)="changeStatus(student._id, '0')" *ngIf="student.status === '1'">Deactivate</button>
-              <button class="btn-activate float-right" (click)="changeStatus(student._id, '1')" *ngIf="student.status === '0'">Activate</button>
-          </div>
-    
-        </div>
-    
-        <hr>
-        <div class="row">
-          <div class="col-12">
-            <button class="btn-delete float-right" (click)="deleteStudent()">Delete</button>
-            <h6>Delete this Student</h6>
           </div>
         </div>
       </div>
-       
+
+      <hr />
+
+      <div class="row">
+        <div class="col-6">
+          <button routerLink="edit" class="btn-edit" skipLocationChange>Edit</button>
+        </div>
+
+        <div class="col-6">
+          <button
+            class="btn-deactivate float-right"
+            (click)="changeStatus(student._id, '0')"
+            *ngIf="student.status === '1'"
+          >
+            Deactivate
+          </button>
+          <button
+            class="btn-activate float-right"
+            (click)="changeStatus(student._id, '1')"
+            *ngIf="student.status === '0'"
+          >
+            Activate
+          </button>
+        </div>
+      </div>
+
+      <hr />
+      <div class="row">
+        <div class="col-12">
+          <button class="btn-delete float-right" (click)="deleteStudent()">Delete</button>
+          <h6>Delete this Student</h6>
+        </div>
+      </div>
     </div>
   </div>
+</div>

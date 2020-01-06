@@ -8,9 +8,8 @@ describe('AdminEditHistoryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminEditHistoryComponent ]
-    })
-    .compileComponents();
+      declarations: [AdminEditHistoryComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

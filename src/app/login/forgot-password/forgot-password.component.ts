@@ -9,45 +9,48 @@ import { HttpService } from '../../services/httpPost.service';
   styleUrls: ['./forgot-password.component.css']
 })
 export class ForgotPasswordComponent implements OnInit {
-
   form: FormGroup;
 
-  loginAuth: boolean = true;
+  loginAuth: boolean;
+  loading: boolean;
 
-  loading: boolean = true;
+  linkSend: boolean;
 
-  linkSend: boolean = false;
-
-  constructor(private httpPostService: HttpService,
-              private authService: AuthService) { }
+  constructor(private httpPostService: HttpService, private authService: AuthService) {}
 
   ngOnInit() {
+    this.loading = true;
+
+    this.loginAuth = true;
+    this.linkSend = false;
 
     this.form = new FormGroup({
       forgotPassword: new FormControl(null, {
         validators: [Validators.required]
       })
-    }); 
+    });
 
     this.loading = false;
   }
 
   forgotPassword() {
-    if(this.form.invalid) {
-      return  this.loginAuth = false;
+    if (this.form.invalid) {
+      return (this.loginAuth = false);
     }
 
-    if(this.form.valid) {
+    if (this.form.valid) {
       this.loginAuth = true;
       this.loading = true;
-      const data = { api: "forgotPassword", data: { email: this.form.value.forgotPassword }}
-      this.httpPostService.httpPost(data).subscribe((val) => {
-       this.linkSend = true;
-       this.loading = false;
-      },
-      (error) => {
-       this.loading = false;
-      });
+      const data = { api: 'forgotPassword', data: { email: this.form.value.forgotPassword } };
+      this.httpPostService.httpPost(data).subscribe(
+        val => {
+          this.linkSend = true;
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+        }
+      );
     }
   }
 

@@ -9,40 +9,42 @@ import { BranchService } from '../../services/branch.service';
   styleUrls: ['./admin-branch.component.css']
 })
 export class AdminBranchComponent implements OnInit {
+  branches: BranchModel[];
 
-    branches: BranchModel[] = [];
+  loading: boolean;
+  error: string;
 
-    loading: boolean = true;
+  constructor(
+    private branchService: BranchService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
-    error: string = null;
+  ngOnInit() {
+    this.loading = true;
+    this.branches = [];
+    this.branchService.getBranches().subscribe(
+      (responce: BranchModel[]) => {
+        this.branches = responce;
+        this.loading = false;
+      },
+      (error: any) => {
+        this.setError(error);
+      }
+    );
+  }
 
-    constructor(private branchService: BranchService,
-                private router: Router,
-                private route: ActivatedRoute) { }
+  onNewBranch() {
+    this.loading = true;
+    this.router.navigate(['new'], { relativeTo: this.route, skipLocationChange: true });
+  }
 
-    ngOnInit() {
-        
-        this.branchService.getBranches().
-        subscribe((responce: BranchModel[]) => {
-         this.branches = responce;
-         this.loading = false;
-        },
-        (error: any) => { 
-            this.setError(error)       
-        });
-    }
+  setError(err: string) {
+    this.error = err;
+    this.loading = false;
+  }
 
-    onNewBranch() {
-        this.loading = true;
-        this.router.navigate(['new'], {relativeTo: this.route, skipLocationChange: true});
-    }
-    
-	setError(err: string) {
-		this.error = err;
-		this.loading = false;
-	}
-
-	clearError() {
-		this.error = null;
-	}
+  clearError() {
+    this.error = null;
+  }
 }

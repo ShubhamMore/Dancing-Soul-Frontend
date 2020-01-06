@@ -32,19 +32,13 @@ export class BranchModel {
 }
 
 export class BatchModel {
-    public _id: string;
-    public batchType: string;
-    public days: string;
-    public batchName: string;
-    public time: string;
-    public fees: string;
-    
-    constructor(_id: string, batchType: string, days: string, batchname: string, time: string, fees: string) {
-        this._id = _id;
-        this.batchType = batchType;
-        this.days = days;
-        this.batchName = batchname;
-        this.time = time;
-        this.fees = fees;
-    }
+  constructor(
+    // tslint:disable-next-line: variable-name
+    public _id: string,
+    public batchType: string,
+    public days: string,
+    public batchName: string,
+    public time: string,
+    public fees: string
+  ) {}
 }

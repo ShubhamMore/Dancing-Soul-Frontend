@@ -1,44 +1,62 @@
-<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
+<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading" />
 
 <div class="row" *ngIf="!loading">
   <div class="col-12">
-    
     <div class="row mt-2" *ngIf="!loginAuth">
       <div class="col-10 mx-auto">
         <div class="alert alert-danger alert-dismissible">
-          <button type="button" class="close" (click)="alertDismiss()" data-dismiss="alert">&times;</button>
-            <span>{{error}}</span>
+          <button type="button" class="close" (click)="alertDismiss()" data-dismiss="alert">
+            &times;
+          </button>
+          <span>{{ error }}</span>
         </div>
       </div>
     </div>
-    
+
     <div class="row mt-2">
       <div class="col-md-5 col-sm-10 mx-auto">
         <h3 class="m-1">Login</h3>
         <form class="login-form" (submit)="login()" [formGroup]="form">
-  
           <div class="row">
             <div class="col-12">
               <div class="form-group">
                 <label for="username">User Name : </label>
-                <input type="text" class="username" name="username" id="username" formControlName="username" placeholder="USERNAME">
-                <span *ngIf="!form.get('username').valid && form.get('username').touched">*Please enter User Name</span>
+                <input
+                  type="text"
+                  class="username"
+                  name="username"
+                  id="username"
+                  formControlName="username"
+                  placeholder="USERNAME"
+                />
+                <span *ngIf="!form.get('username').valid && form.get('username').touched"
+                  >*Please enter User Name</span
+                >
               </div>
             </div>
           </div>
-          
+
           <div class="row">
             <div class="col-12">
               <div class="form-group">
                 <label for="password">Password : </label>
-                <input type="password" class="password" name="password" id="password" formControlName="password" placeholder="PASSWORD">
-                <span *ngIf="!form.get('password').valid && form.get('password').touched">*Please enter Password</span>
+                <input
+                  type="password"
+                  class="password"
+                  name="password"
+                  id="password"
+                  formControlName="password"
+                  placeholder="PASSWORD"
+                />
+                <span *ngIf="!form.get('password').valid && form.get('password').touched"
+                  >*Please enter Password</span
+                >
               </div>
             </div>
           </div>
-          
-          <hr>
-  
+
+          <hr />
+
           <div class="row">
             <div class="col-md-6 col-sm-12">
               <button type="submit" class="btn-login">Login</button>
@@ -50,6 +68,5 @@
         </form>
       </div>
     </div>
-    
   </div>
 </div>

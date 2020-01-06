@@ -8,37 +8,39 @@ import { DashboardService } from '../../services/dashboard.service';
   styleUrls: ['./admin-dashboard.component.css']
 })
 export class AdminDashboardComponent implements OnInit {
+  loading: boolean;
 
-  loading: boolean = true;
-
-  error: string = null;
+  error: string;
 
   enquiries: number;
-  dashboardData: any = null;
+  dashboardData: any;
 
-  constructor(private dashboardService: DashboardService,
-              private router: Router,
-              private route: ActivatedRoute) { }
+  constructor(
+    private dashboardService: DashboardService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    this.dashboardService.getDashboardData()
-    .subscribe((responce: any) => {
-      this.enquiries = responce.unseenEnquiries;
-      this.dashboardData = responce.dashboardData;
-      this.loading = false;
-    },
-    (error: any) => {
-      this.setError(error);
-    });
+    this.loading = true;
+    this.dashboardService.getDashboardData().subscribe(
+      (responce: any) => {
+        this.enquiries = responce.unseenEnquiries;
+        this.dashboardData = responce.dashboardData;
+        this.loading = false;
+      },
+      (error: any) => {
+        this.setError(error);
+      }
+    );
   }
-	
-	setError(err: string) {
-		this.error = err;
-		this.loading = false;
-	}
 
-	clearError() {
-		this.error = null;
-	}
+  setError(err: string) {
+    this.error = err;
+    this.loading = false;
+  }
 
+  clearError() {
+    this.error = null;
+  }
 }

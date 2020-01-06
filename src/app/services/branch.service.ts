@@ -7,11 +7,10 @@ import { throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class BranchService {
-
-  constructor(private httpService: HttpService) { }
+  constructor(private httpService: HttpService) {}
 
   addBranch(branch: any) {
-    const data = {api: 'addBranch', data: branch};
+    const data = { api: 'addBranch', data: branch };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -23,7 +22,7 @@ export class BranchService {
   }
 
   getBranches() {
-    const data = {api: 'getBranches', data: {}};
+    const data = { api: 'getBranches', data: {} };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -35,7 +34,7 @@ export class BranchService {
   }
 
   getActivateBranches() {
-    const data = {api: 'getActivateBranches', data: {}};
+    const data = { api: 'getActivateBranches', data: {} };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -46,8 +45,8 @@ export class BranchService {
     );
   }
 
-  getBranch(_id: string) {
-    const data = {api: 'getBranch', data: {_id}};
+  getBranch(id: string) {
+    const data = { api: 'getBranch', data: { _id: id } };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -59,7 +58,7 @@ export class BranchService {
   }
 
   editBrnach(branch: FormData) {
-    const data = {api: 'editBranch', data: branch};
+    const data = { api: 'editBranch', data: branch };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -70,8 +69,8 @@ export class BranchService {
     );
   }
 
-  changeBranchStatus(_id: string, status: string) {
-    const data = {api: 'changeBranchStatus', data: {_id, status}};
+  changeBranchStatus(id: string, status: string) {
+    const data = { api: 'changeBranchStatus', data: { _id: id, status } };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -82,8 +81,8 @@ export class BranchService {
     );
   }
 
-  deleteBranch(_id: string, password: string) {
-    const data = {api: 'deleteBranch', data: {_id, password}};
+  deleteBranch(id: string, password: string) {
+    const data = { api: 'deleteBranch', data: { _id: id, password } };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -94,8 +93,8 @@ export class BranchService {
     );
   }
 
-  deleteImage(_id: string, public_id: string) {
-    const data = { api : "deleteBranchImage", data : {_id, public_id}}    
+  deleteImage(id: string, publicId: string) {
+    const data = { api: 'deleteBranchImage', data: { _id: id, public_id: publicId } };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;

@@ -10,22 +10,24 @@ import { ExamService } from '../../../services/exam.service';
   styleUrls: ['./admin-add-exam.component.css']
 })
 export class AdminAddExamComponent implements OnInit {
-  
   form: FormGroup;
 
-  loading: boolean = true;
+  loading: boolean;
 
-  error: string = null;
+  error: string;
 
-  formError: boolean = false;
+  formError: boolean;
 
-  constructor(private examService: ExamService,
-              private formValidator: FormValidator,
-              private router: Router,
-              private route: ActivatedRoute) { }
+  constructor(
+    private examService: ExamService,
+    private formValidator: FormValidator,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-
+    this.loading = true;
+    this.formError = false;
     this.form = new FormGroup({
       title: new FormControl(null, {
         validators: [Validators.required]
@@ -39,40 +41,41 @@ export class AdminAddExamComponent implements OnInit {
   }
 
   addExam() {
-    if(this.form.invalid) {
+    if (this.form.invalid) {
       this.formError = true;
     }
 
-    if(this.form.valid) {
+    if (this.form.valid) {
       this.formError = false;
       this.loading = true;
       const exam = {
         title: this.form.value.title,
-        body : this.form.value.body
+        body: this.form.value.body
       };
-      
-      this.examService.addExam(exam)
-      .subscribe((responce: any) => {
-        this.form.reset();
-        this.cancel();
-      },
-      (error: any) => {
-        this.setError(error);
-      });
+
+      this.examService.addExam(exam).subscribe(
+        (responce: any) => {
+          this.form.reset();
+          this.cancel();
+        },
+        (error: any) => {
+          this.setError(error);
+        }
+      );
     }
   }
 
   cancel() {
     this.loading = true;
-    this.router.navigate(["/admin", "exams"], {relativeTo: this.route, skipLocationChange: true});        
+    this.router.navigate(['/admin', 'exams'], { relativeTo: this.route, skipLocationChange: true });
   }
 
-	setError(err: string) {
-		this.error = err;
-		this.loading = false;
-	}
+  setError(err: string) {
+    this.error = err;
+    this.loading = false;
+  }
 
-	clearError() {
-		this.error = null;
-	}
+  clearError() {
+    this.error = null;
+  }
 }

@@ -8,9 +8,8 @@ describe('AdminEditBranchComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminEditBranchComponent ]
-    })
-    .compileComponents();
+      declarations: [AdminEditBranchComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

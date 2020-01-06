@@ -1,13 +1,15 @@
-<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
+<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading" />
 
 <div class="row" *ngIf="!loading">
   <div class="col-12">
     <div class="row mt-2" *ngIf="!!error">
-      <div class="col-10 mx-auto">
-      <div class="alert alert-danger alert-dismissible">
-        <button type="button" class="close" (click)="clearError()" data-dismiss="alert">&times;</button>
-        <span>{{error}}</span>
-      </div>
+      <div class="col-md-10 col-12 mx-auto">
+        <div class="alert alert-danger alert-dismissible">
+          <button type="button" class="close" (click)="clearError()" data-dismiss="alert">
+            &times;
+          </button>
+          <span>{{ error }}</span>
+        </div>
       </div>
     </div>
     <div class="row mt-2">
@@ -15,21 +17,39 @@
         <form class="" (submit)="sendReply()" [formGroup]="form">
           <div class="reply-header">
             <div class="reply-to">
-              <p><strong>To : </strong>{{enquiry.email}}</p>
+              <p><strong>To : </strong>{{ enquiry.email }}</p>
             </div>
-            <hr>
+            <hr />
             <div class="reply-subject form-group">
               <label for="subject">Subject : </label>
-              <input class="subject" type="text" id="subject" name="subject" placeholder="Subject" formControlName="subject">
-              <span *ngIf="!form.get('subject').valid && form.get('subject').touched">*Please enter valid Subject</span>
+              <input
+                class="subject"
+                type="text"
+                id="subject"
+                name="subject"
+                placeholder="Subject"
+                formControlName="subject"
+              />
+              <span *ngIf="!form.get('subject').valid && form.get('subject').touched"
+                >*Please enter valid Subject</span
+              >
             </div>
           </div>
           <div class="reply-body form-group">
             <label for="subject">Body : </label>
-            <textarea class="body" name="body" id="body" rows="8"placeholder="Body" formControlName="body"></textarea>
-            <span *ngIf="!form.get('body').valid && form.get('body').touched">*Please enter reply Body</span>
+            <textarea
+              class="body"
+              name="body"
+              id="body"
+              rows="8"
+              placeholder="Body"
+              formControlName="body"
+            ></textarea>
+            <span *ngIf="!form.get('body').valid && form.get('body').touched"
+              >*Please enter reply Body</span
+            >
           </div>
-          <hr>
+          <hr />
           <div class="reply-footer">
             <button class="reply-btn" type="submit">Send</button>
             <button class="btn-cancel float-right" type="button" (click)="cancel()">Cancel</button>

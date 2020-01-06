@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -9,26 +9,25 @@ import { User } from '../auth/user.model';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
-
+export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenticated: boolean;
   private userSub: Subscription;
 
   user: User;
 
-  constructor(private authService: AuthService,
-              private router: Router,
-              private route: ActivatedRoute) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     this.userSub = this.authService.user.subscribe(user => {
       this.isAuthenticated = !!user;
       this.user = user;
     });
-
   }
 
-  
   onLogout() {
     this.authService.logout();
   }
@@ -42,24 +41,23 @@ export class HeaderComponent implements OnInit {
   }
 
   goToHome() {
-    if(!!this.user) {
-      if(this.user.userType === 'admin') {
-        this.router.navigate(['/admin/dashboard'], {relativeTo: this.route});
+    if (!!this.user) {
+      if (this.user.userType === 'admin') {
+        this.router.navigate(['/admin/dashboard'], { relativeTo: this.route });
+      } else if (this.user.userType === 'faculty') {
+        this.router.navigate(['/faculty'], { relativeTo: this.route });
+      } else if (this.user.userType === 'student') {
+        this.router.navigate(['/student/dashboard'], {
+          relativeTo: this.route,
+          queryParamsHandling: 'preserve'
+        });
       }
-      else if(this.user.userType === 'faculty') {
-        this.router.navigate(['/faculty'], {relativeTo: this.route});
-      }
-      else if(this.user.userType === 'student') {
-        this.router.navigate(['/student/dashboard'], { relativeTo: this.route, queryParamsHandling: "preserve" });
-      }
-    }
-    else {
-      this.router.navigate(['/'], {relativeTo: this.route});
+    } else {
+      this.router.navigate(['/'], { relativeTo: this.route });
     }
   }
 
   changePassword() {
     this.router.navigate(['/change_password'], { relativeTo: this.route });
-
   }
 }

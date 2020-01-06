@@ -8,11 +8,10 @@ import { AboutModel } from '../models/about.model';
   providedIn: 'root'
 })
 export class AboutService {
-
-  constructor(private httpService: HttpService) { }
+  constructor(private httpService: HttpService) {}
 
   getAbout() {
-    const data = {api: 'getAbout', data: {}};
+    const data = { api: 'getAbout', data: {} };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -24,7 +23,7 @@ export class AboutService {
   }
 
   saveAbout(about: AboutModel) {
-    const data = {api: 'saveAbout', data: about};
+    const data = { api: 'saveAbout', data: about };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -35,4 +34,3 @@ export class AboutService {
     );
   }
 }
-

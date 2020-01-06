@@ -7,17 +7,16 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
   styleUrls: ['./student.component.css']
 })
 export class StudentComponent implements OnInit {
-
-  constructor(private route: ActivatedRoute,
-              private router: Router) { }
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
-    let id: string;
-    this.route.queryParams.
-    subscribe(
-    (params: Params) => {
-      id = params["id"];
+    this.route.queryParams.subscribe((params: Params) => {
+      // tslint:disable-next-line: no-string-literal
+      const id = params['id'];
     });
-    this.router.navigate(['dashboard'], {relativeTo: this.route, queryParamsHandling: "preserve"});
+    this.router.navigate(['dashboard'], {
+      relativeTo: this.route,
+      queryParamsHandling: 'preserve'
+    });
   }
 }

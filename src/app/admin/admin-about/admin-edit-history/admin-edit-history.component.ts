@@ -10,72 +10,76 @@ import { AboutModel } from '../../../models/about.model';
   styleUrls: ['./admin-edit-history.component.css']
 })
 export class AdminEditHistoryComponent implements OnInit {
-
   form: FormGroup;
 
   about: AboutModel;
 
-  loading: boolean = true;
+  loading: boolean;
 
-  error: string = null;
+  error: string;
 
-  constructor(private aboutService: AboutService,
+  constructor(
+    private aboutService: AboutService,
     private router: Router,
-    private route: ActivatedRoute) { }
-    
+    private route: ActivatedRoute
+  ) {}
+
   ngOnInit() {
+    this.loading = true;
     this.form = new FormGroup({
       history: new FormControl(null, {
         validators: [Validators.required]
       })
     });
 
-    
-    this.aboutService.getAbout()
-    .subscribe((responce: AboutModel) => {
-     this.about = responce;
-     this.form.patchValue({history: this.about.history});
-     this.loading = false;
-    },
-    (error) => {
-      this.setError(error)
-    });
+    this.aboutService.getAbout().subscribe(
+      (responce: AboutModel) => {
+        this.about = responce;
+        this.form.patchValue({ history: this.about.history });
+        this.loading = false;
+      },
+      error => {
+        this.setError(error);
+      }
+    );
   }
 
   saveHistory() {
-    if(this.form.valid) {
+    if (this.form.valid) {
       this.loading = true;
       const about: AboutModel = {
         _id: this.about._id,
         aim: this.about.aim,
         history: this.form.value.history,
         philosophy: this.about.philosophy
-      }
+      };
 
-      this.aboutService.saveAbout(about)
-      .subscribe((responce: any) => {
-       this.form.reset();
-       this.cancel();
-      },
-      (error: any) => {
-        this.setError(error)
-      });
-
+      this.aboutService.saveAbout(about).subscribe(
+        (responce: any) => {
+          this.form.reset();
+          this.cancel();
+        },
+        (error: any) => {
+          this.setError(error);
+        }
+      );
     }
   }
-  
+
   cancel() {
     this.loading = true;
-    this.router.navigate(['/admin', 'about', 'history'], {relativeTo: this.route, skipLocationChange: true});
+    this.router.navigate(['/admin', 'about', 'history'], {
+      relativeTo: this.route,
+      skipLocationChange: true
+    });
   }
 
-	setError(err: string) {
-		this.error = err;
-		this.loading = false;
-	}
+  setError(err: string) {
+    this.error = err;
+    this.loading = false;
+  }
 
-	clearError() {
-		this.error = null;
-	}
-
+  clearError() {
+    this.error = null;
+  }
 }

@@ -11,31 +11,37 @@ import { BranchService } from '../../../services/branch.service';
   styleUrls: ['./admin-add-student.component.css']
 })
 export class AdminAddStudentComponent implements OnInit {
-
   form: FormGroup;
-  formError: boolean = false;
+  formError: boolean;
 
-  loading: boolean = true;
-  error : string = null;
+  loading: boolean;
+  error: string;
 
-  imagePreview: string = null;
-  uploadImage: File = null;
+  imagePreview: string;
+  uploadImage: File;
 
-  invalidImage: boolean = false;
+  invalidImage: boolean;
 
-  branches: BranchModel[] = [];
+  branches: BranchModel[];
 
-  batches: BatchModel[] = [];
+  batches: BatchModel[];
 
-  weekType: string = "0";
+  weekType: string;
 
-  constructor(private studentService: StudentService,
-              private branchService: BranchService,
-              private router: Router,
-              private route: ActivatedRoute) { }
+  constructor(
+    private studentService: StudentService,
+    private branchService: BranchService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-
+    this.loading = true;
+    this.formError = false;
+    this.invalidImage = false;
+    this.branches = [];
+    this.batches = [];
+    this.weekType = '0';
     this.form = new FormGroup({
       name: new FormControl(null, {
         validators: [Validators.required]
@@ -49,10 +55,10 @@ export class AdminAddStudentComponent implements OnInit {
       firstGuardianRelation: new FormControl(null, {
         validators: [Validators.required]
       }),
-      secondGuardianName: new FormControl("", {}),
-      secondGuardianRelation: new FormControl("", {}),
-      workPlace: new FormControl("", {}),
-      bloodGroup: new FormControl("", {}),
+      secondGuardianName: new FormControl('', {}),
+      secondGuardianRelation: new FormControl('', {}),
+      workPlace: new FormControl('', {}),
+      bloodGroup: new FormControl('', {}),
       medicalHistory: new FormControl(null, {
         validators: [Validators.required]
       }),
@@ -65,10 +71,10 @@ export class AdminAddStudentComponent implements OnInit {
       address: new FormControl(null, {
         validators: [Validators.required]
       }),
-      branch: new FormControl("", {
+      branch: new FormControl('', {
         validators: [Validators.required]
       }),
-      batch: new FormControl("", {
+      batch: new FormControl('', {
         validators: [Validators.required]
       }),
       batchType: new FormControl(this.weekType, {
@@ -76,26 +82,27 @@ export class AdminAddStudentComponent implements OnInit {
       })
     });
 
-    this.branchService.getBranches()
-    .subscribe((responce: BranchModel[]) => {
-      this.branches = responce;
-      this.loading = false;
-    },
-    (error: any) => {
-      this.setError(error);
-    });
+    this.branchService.getBranches().subscribe(
+      (responce: BranchModel[]) => {
+        this.branches = responce;
+        this.loading = false;
+      },
+      (error: any) => {
+        this.setError(error);
+      }
+    );
   }
 
   branchChanged() {
     this.batches = [];
-    const branch = this.branches.find((branch) => branch._id === this.form.value.branch);
-    if(branch !== undefined) {
+    const branch = this.branches.find(curBranch => curBranch._id === this.form.value.branch);
+    if (branch !== undefined) {
       const len = branch.batch.length;
-      for(let i = 0; i < len; i++) {
-        if(branch.batch[i].batchType === this.weekType) {
+      for (let i = 0; i < len; i++) {
+        if (branch.batch[i].batchType === this.weekType) {
           this.batches.push(branch.batch[i]);
         }
-      }  
+      }
     }
   }
 
@@ -106,20 +113,22 @@ export class AdminAddStudentComponent implements OnInit {
 
   onImagePicked(event: Event) {
     const files = (event.target as HTMLInputElement).files;
-    const imgExt: string[] = ["jpg", "png"];
+    const imgExt: string[] = ['jpg', 'png'];
     let ext: string = null;
-    for(let i: number = 0; i < files.length; i++) {
-      ext = files[i].name.substring(files[i].name.lastIndexOf('.') + 1);
-      if(!(imgExt.indexOf(ext)!=-1)) {
-        return this.invalidImage = true;
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < files.length; i++) {
+      ext = files[i].name.substring(files[i].name.lastIndexOf('.') + 1).toLowerCase();
+      if (!(imgExt.indexOf(ext) !== -1)) {
+        return (this.invalidImage = true);
       }
     }
     this.invalidImage = false;
-    for(let i: number = 0; i < files.length; i++) {
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < files.length; i++) {
       this.uploadImage = files[i];
       const reader: any = new FileReader();
       reader.onload = () => {
-        this.imagePreview = <string>reader.result;
+        this.imagePreview = reader.result as string;
       };
       reader.readAsDataURL(files[i]);
     }
@@ -132,57 +141,61 @@ export class AdminAddStudentComponent implements OnInit {
   }
 
   addStudent() {
-    if(this.form.invalid) {
+    if (this.form.invalid) {
       this.formError = true;
     }
-  
+
     if (this.form.valid) {
       this.formError = false;
       this.loading = true;
 
       const student: FormData = new FormData();
-      student.append("name", this.form.value.name);
-      student.append("birthDate", this.form.value.birthDate);
-      student.append("bloodGroup", this.form.value.bloodGroup);
-      student.append("workPlace", this.form.value.workPlace);
-      student.append("firstGuardianName", this.form.value.firstGuardianName);
-      student.append("firstGuardianRelation", this.form.value.firstGuardianRelation);
-      student.append("secondGuardianName", this.form.value.secondGuardianName);
-      student.append("secondGuardianRelation", this.form.value.secondGuardianRelation);
-      student.append("medicalHistory", this.form.value.medicalHistory);
-      student.append("phone", this.form.value.phone);
-      student.append("email", this.form.value.email);
-      student.append("address", this.form.value.address);
-      student.append("branch", this.form.value.branch);
-      student.append("batch", this.form.value.batch);
-      student.append("batchType", this.form.value.batchType);
-      student.append("status", "1");
+      student.append('name', this.form.value.name);
+      student.append('birthDate', this.form.value.birthDate);
+      student.append('bloodGroup', this.form.value.bloodGroup);
+      student.append('workPlace', this.form.value.workPlace);
+      student.append('firstGuardianName', this.form.value.firstGuardianName);
+      student.append('firstGuardianRelation', this.form.value.firstGuardianRelation);
+      student.append('secondGuardianName', this.form.value.secondGuardianName);
+      student.append('secondGuardianRelation', this.form.value.secondGuardianRelation);
+      student.append('medicalHistory', this.form.value.medicalHistory);
+      student.append('phone', this.form.value.phone);
+      student.append('email', this.form.value.email);
+      student.append('address', this.form.value.address);
+      student.append('branch', this.form.value.branch);
+      student.append('batch', this.form.value.batch);
+      student.append('batchType', this.form.value.batchType);
+      student.append('status', '1');
 
-      if(this.uploadImage) {
-        student.append("image", this.uploadImage, "student");
+      if (this.uploadImage) {
+        student.append('image', this.uploadImage, 'student');
       }
 
-      this.studentService.addStudent(student)
-      .subscribe((responce: any) => {
-        this.cancel();
-      },
-      (error: any) => {
-        this.setError(error);
-      });
+      this.studentService.addStudent(student).subscribe(
+        (responce: any) => {
+          this.cancel();
+        },
+        (error: any) => {
+          this.setError(error);
+        }
+      );
     }
   }
 
   cancel() {
     this.loading = true;
-    this.router.navigate(['/admin', 'student'], {relativeTo: this.route, skipLocationChange: true})
+    this.router.navigate(['/admin', 'student'], {
+      relativeTo: this.route,
+      skipLocationChange: true
+    });
   }
 
   setError(err: string) {
-		this.error = err;
-		this.loading = false;
-	}
+    this.error = err;
+    this.loading = false;
+  }
 
-	clearError() {
-		this.error = null;
-	}
+  clearError() {
+    this.error = null;
+  }
 }

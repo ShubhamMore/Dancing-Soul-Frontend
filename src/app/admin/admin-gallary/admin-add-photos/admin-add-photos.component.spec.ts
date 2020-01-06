@@ -8,9 +8,8 @@ describe('AdminAddPhotosComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminAddPhotosComponent ]
-    })
-    .compileComponents();
+      declarations: [AdminAddPhotosComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

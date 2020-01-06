@@ -8,32 +8,32 @@ import { AboutModel } from '../../../models/about.model';
   styleUrls: ['./admin-philosophy.component.css']
 })
 export class AdminPhilosophyComponent implements OnInit {
-
   about: AboutModel;
 
-  loading: boolean = true;
+  loading: boolean;
+  error: string;
 
-  error : string = null;
-	
-  constructor(private aboutService: AboutService) { }
+  constructor(private aboutService: AboutService) {}
 
   ngOnInit() {
-    this.aboutService.getAbout()
-    .subscribe((responce: AboutModel) => {
-      this.about = responce;
-      this.loading = false;
-    },
-    (error: any) => {
-      this.setError(error)
-    });
+    this.loading = true;
+    this.aboutService.getAbout().subscribe(
+      (responce: AboutModel) => {
+        this.about = responce;
+        this.loading = false;
+      },
+      (error: any) => {
+        this.setError(error);
+      }
+    );
   }
-  
-	setError(err: string) {
-		this.error = err;
-		this.loading = false;
-	}
 
-	clearError() {
-		this.error = null;
-	}
+  setError(err: string) {
+    this.error = err;
+    this.loading = false;
+  }
+
+  clearError() {
+    this.error = null;
+  }
 }

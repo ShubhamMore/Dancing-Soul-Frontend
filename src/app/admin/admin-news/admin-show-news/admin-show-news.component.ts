@@ -11,60 +11,63 @@ import { NewsModel } from '../../../models/news.model';
 export class AdminShowNewsComponent implements OnInit {
   news: any;
 
-  loading: boolean = true;
-  error: string = null;
+  loading: boolean;
+  error: string;
 
-  constructor(private newsService: NewsService,
-              private router: Router,
-              private route: ActivatedRoute) { }
+  constructor(
+    private newsService: NewsService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    this.route.params
-    .subscribe(
-      (params: Params) => {
-        const _id = params['id'];
-        this.newsService.getNews(_id)
-        .subscribe((responce: NewsModel) => {
+    this.loading = true;
+    this.route.params.subscribe((params: Params) => {
+      // tslint:disable-next-line: no-string-literal
+      const id = params['id'];
+      this.newsService.getNews(id).subscribe(
+        (responce: NewsModel) => {
           this.news = responce;
           this.loading = false;
         },
         (error: any) => {
           this.setError(error);
-        });
-      }
-    );
+        }
+      );
+    });
   }
 
   edit() {
     this.loading = true;
-    this.router.navigate(['edit'], {relativeTo: this.route, skipLocationChange: true});
+    this.router.navigate(['edit'], { relativeTo: this.route, skipLocationChange: true });
   }
 
   delete() {
-    const dltConfirm = confirm("do you really want to delete??");
+    const dltConfirm = confirm('do you really want to delete??');
     if (dltConfirm) {
       this.loading = true;
-      this.newsService.deleteNews(this.news._id)
-      .subscribe((responce: any) => {
-        this.cancel();
-      },
-      (error: any) => {
-        this.setError(error);
-      });
+      this.newsService.deleteNews(this.news._id).subscribe(
+        (responce: any) => {
+          this.cancel();
+        },
+        (error: any) => {
+          this.setError(error);
+        }
+      );
     }
   }
 
   cancel() {
     this.loading = true;
-    this.router.navigate(['/admin', 'news'], {relativeTo: this.route, skipLocationChange: true});
+    this.router.navigate(['/admin', 'news'], { relativeTo: this.route, skipLocationChange: true });
   }
 
   setError(err: string) {
-		this.error = err;
-		this.loading = false;
-	}
+    this.error = err;
+    this.loading = false;
+  }
 
-	clearError() {
-		this.error = null;
-	}
+  clearError() {
+    this.error = null;
+  }
 }

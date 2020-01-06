@@ -7,11 +7,10 @@ import { throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class FacultyService {
-
-  constructor(private httpService: HttpService) { }
+  constructor(private httpService: HttpService) {}
 
   addFaculty(faculty: any) {
-    const data = {api: 'addFaculty', data: faculty};
+    const data = { api: 'addFaculty', data: faculty };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -23,7 +22,7 @@ export class FacultyService {
   }
 
   getFaculties() {
-    const data = {api: 'getFaculties', data: {}};
+    const data = { api: 'getFaculties', data: {} };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -35,7 +34,7 @@ export class FacultyService {
   }
 
   getActivateFaculties() {
-    const data = {api: 'getActivateFaculties', data: {}};
+    const data = { api: 'getActivateFaculties', data: {} };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -46,8 +45,8 @@ export class FacultyService {
     );
   }
 
-  getFaculty(_id: string) {
-    const data = {api: 'getFaculty', data: {_id}};
+  getFaculty(id: string) {
+    const data = { api: 'getFaculty', data: { _id: id } };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -59,7 +58,7 @@ export class FacultyService {
   }
 
   editFaculty(faculty: FormData) {
-    const data = {api: 'editFaculty', data: faculty};
+    const data = { api: 'editFaculty', data: faculty };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -70,8 +69,8 @@ export class FacultyService {
     );
   }
 
-  changeFacultyStatus(_id: string, status: string) {
-    const data = {api: 'changeFacultyStatus', data: {_id, status}};
+  changeFacultyStatus(id: string, status: string) {
+    const data = { api: 'changeFacultyStatus', data: { _id: id, status } };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -82,8 +81,8 @@ export class FacultyService {
     );
   }
 
-  deleteFaculty(_id: string, password: string) {
-    const data = {api: 'deleteFaculty', data: {_id, password}};
+  deleteFaculty(id: string, password: string) {
+    const data = { api: 'deleteFaculty', data: { _id: id, password } };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;

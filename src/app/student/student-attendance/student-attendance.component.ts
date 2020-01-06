@@ -8,39 +8,41 @@ import { AttendanceService } from '../../services/attendance.service';
   styleUrls: ['./student-attendance.component.css']
 })
 export class StudentAttendanceComponent implements OnInit {
+  attendance: any[];
 
-  attendance: any[] = [];
+  loading: boolean;
+  error: string;
 
-  loading: boolean = true;
-  error: string = null;
-  
-  constructor(private attendanceService: AttendanceService,
-              private route: ActivatedRoute,
-              private router: Router) { }
+  constructor(
+    private attendanceService: AttendanceService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.route.queryParams.
-    subscribe(
-      (params: Params) => {
-        const _id = params['id'];
-        this.attendanceService.getAttendance(_id)
-        .subscribe((responce: any) => {
+    this.loading = true;
+    this.attendance = [];
+    this.route.queryParams.subscribe((params: Params) => {
+      // tslint:disable-next-line: no-string-literal
+      const id = params['id'];
+      this.attendanceService.getAttendance(id).subscribe(
+        (responce: any) => {
           this.attendance = responce;
           this.loading = false;
         },
         (error: any) => {
           this.setError(error);
-        });
-      }
-    );
+        }
+      );
+    });
   }
 
-	setError(err: string) {
-		this.error = err;
-		this.loading = false;
-	}
+  setError(err: string) {
+    this.error = err;
+    this.loading = false;
+  }
 
-	clearError() {
-		this.error = null;
-	}
+  clearError() {
+    this.error = null;
+  }
 }

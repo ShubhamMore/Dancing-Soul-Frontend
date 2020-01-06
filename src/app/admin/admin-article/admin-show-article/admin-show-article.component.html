@@ -1,58 +1,62 @@
-<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
+<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading" />
 
 <div class="row" *ngIf="!loading">
   <div class="col-12">
     <div class="row mt-2" *ngIf="!!error">
-      <div class="col-10 mx-auto">
-      <div class="alert alert-danger alert-dismissible">
-        <button type="button" class="close" (click)="clearError()" data-dismiss="alert">&times;</button>
-        <span>{{error}}</span>
-      </div>
+      <div class="col-md-10 col-12 mx-auto">
+        <div class="alert alert-danger alert-dismissible">
+          <button type="button" class="close" (click)="clearError()" data-dismiss="alert">
+            &times;
+          </button>
+          <span>{{ error }}</span>
+        </div>
       </div>
     </div>
     <div class="row mt-2">
       <div class="col-10 mx-auto">
-    
         <div class="article p-3">
-    
           <div class="row">
             <div class="col-12">
               <button type="button" class="btn-close float-right" (click)="cancel()">X</button>
-              <h3>{{article.title}}</h3>
+              <h3>{{ article.title }}</h3>
             </div>
           </div>
-    
-          <hr>
-    
+
+          <hr />
+
           <div class="row">
             <div class="col-12">
               <div *ngIf="image; else noImages">
                 <div class="row">
                   <span class="m-2">
                     <div class="image-container">
-                      <img [src]="image.secure_url" class="image" [alt]="image.image_name">
+                      <img [src]="image.secure_url" class="image" [alt]="image.image_name" />
                       <div class="middle" *ngIf="image.public_id !== 'shared/1569750534235'">
-                        <a class="delete" (click)="deleteArticleImage(image.public_id)"><i class="fa fa-trash-o trash"></i></a>
+                        <a class="delete" (click)="deleteArticleImage(image.public_id)"
+                          ><i class="fa fa-trash-o trash"></i
+                        ></a>
                       </div>
                     </div>
                   </span>
                 </div>
               </div>
-              <ng-template #noImages><p>No Images Available</p></ng-template>      
+              <ng-template #noImages><p>No Images Available</p></ng-template>
             </div>
           </div>
 
           <div class="row">
             <div class="col-12">
-              <p>{{article.body}}</p>    
+              <p>{{ article.body }}</p>
             </div>
           </div>
-    
-          <hr>
+
+          <hr />
           <div class="row">
             <div class="col-11 mx-auto">
-              <button type="button" class="btn-edit ml-3" (click)= "edit()">Edit</button>
-              <button type="button" class="btn-delete mr-3 float-right" (click)="delete()">Delete</button>
+              <button type="button" class="btn-edit ml-3" (click)="edit()">Edit</button>
+              <button type="button" class="btn-delete mr-3 float-right" (click)="delete()">
+                Delete
+              </button>
             </div>
           </div>
         </div>

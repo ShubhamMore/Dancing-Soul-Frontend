@@ -9,91 +9,97 @@ import { StudentService } from '../../../services/student.service';
   styleUrls: ['./admin-show-student.component.css']
 })
 export class AdminShowStudentComponent implements OnInit {
-
   student: StudentModel;
   studentMetaData: any;
 
-  loading : boolean = true;
-  error: string = null;
+  loading: boolean;
+  error: string;
 
-  constructor(private studentService: StudentService,
-              private route: ActivatedRoute,
-              private router: Router) { }
+  constructor(
+    private studentService: StudentService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.route.params.
-    subscribe(
-      (params: Params) => {
-        const _id = params['id'];
-        this.studentService.getStudent(_id)
-        .subscribe((responce: any) => {
+    this.loading = true;
+    this.route.params.subscribe((params: Params) => {
+      // tslint:disable-next-line: no-string-literal
+      const id = params['id'];
+      this.studentService.getStudent(id).subscribe(
+        (responce: any) => {
           this.student = responce.student;
           this.studentMetaData = responce.studentMetaData;
           this.loading = false;
         },
         (error: any) => {
           this.setError(error);
-        });
-      }
-    );
+        }
+      );
+    });
   }
 
-  changeStatus(_id:string, status: string) {
+  changeStatus(id: string, status: string) {
     let statusConfirm: any = true;
-    if (status === "0") {
-      statusConfirm = confirm("do you really want to Deactivate Student??");
-    } else if (status === "1") {
-      statusConfirm = confirm("do you want to Activate this Student again??");
+    if (status === '0') {
+      statusConfirm = confirm('do you really want to Deactivate Student??');
+    } else if (status === '1') {
+      statusConfirm = confirm('do you want to Activate this Student again??');
     }
     if (statusConfirm) {
       this.loading = true;
-      this.studentService.changeStudentStatus(_id, status)
-      .subscribe((responce: any) => {
-        this.cancel();
-      },
-      (error: any) => {
-        this.setError(error);
-      });
+      this.studentService.changeStudentStatus(id, status).subscribe(
+        (responce: any) => {
+          this.cancel();
+        },
+        (error: any) => {
+          this.setError(error);
+        }
+      );
     }
   }
 
   deleteStudent() {
-    const password = prompt("Please enter your Password");
-    if(password) {
+    const password = prompt('Please enter your Password');
+    if (password) {
       this.loading = true;
-      this.studentService.deleteStudent(this.student._id, password)
-      .subscribe((responce: any) => {
-        this.cancel();
-      },
-      (error: any) => {
-        this.setError(error);
-      });
+      this.studentService.deleteStudent(this.student._id, password).subscribe(
+        (responce: any) => {
+          this.cancel();
+        },
+        (error: any) => {
+          this.setError(error);
+        }
+      );
     }
   }
 
   studentIdentity() {
-    this.router.navigate(['identity'], {relativeTo: this.route, skipLocationChange: true});
+    this.router.navigate(['identity'], { relativeTo: this.route, skipLocationChange: true });
   }
 
   studentCertificates() {
-    this.router.navigate(['certificates'], {relativeTo: this.route, skipLocationChange: true});
+    this.router.navigate(['certificates'], { relativeTo: this.route, skipLocationChange: true });
   }
-  
+
   studentProgress() {
-    this.router.navigate(['progress'], {relativeTo: this.route, skipLocationChange: true});
+    this.router.navigate(['progress'], { relativeTo: this.route, skipLocationChange: true });
   }
 
   cancel() {
     this.loading = true;
-    this.router.navigate(['/admin', 'student'], {relativeTo: this.route, skipLocationChange: true});
+    this.router.navigate(['/admin', 'student'], {
+      relativeTo: this.route,
+      skipLocationChange: true
+    });
   }
 
   setError(err: string) {
-		this.error = err;
-		this.loading = false;
-	}
+    this.error = err;
+    this.loading = false;
+  }
 
-	clearError() {
-		this.error = null;
-	}
+  clearError() {
+    this.error = null;
+  }
 }

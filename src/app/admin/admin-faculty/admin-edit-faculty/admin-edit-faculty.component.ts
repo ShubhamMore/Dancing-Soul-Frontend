@@ -10,28 +10,33 @@ import { FacultyService } from '../../../services/faculty.service';
   styleUrls: ['./admin-edit-faculty.component.css']
 })
 export class AdminEditFacultyComponent implements OnInit {
-
-  faculty: FacultyModel = null;
+  faculty: FacultyModel;
   form: FormGroup;
 
-  loading: boolean = true;
-  error: string = null;
+  loading: boolean;
+  error: string;
 
-  imagePreview: string = null;
-  uploadImage: File = null;
+  imagePreview: string;
+  uploadImage: File;
 
-  invalidImage : boolean = false;
+  invalidImage: boolean;
 
-  formError: boolean = false;
+  formError: boolean;
 
-  imgExt: string[] = ['jpg', 'png'];
+  imgExt: string[];
 
-  constructor(private facultyService: FacultyService,
-              private router: Router,
-              private route: ActivatedRoute) { }
+  constructor(
+    private facultyService: FacultyService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
+    this.loading = true;
+    this.formError = false;
+    this.invalidImage = false;
 
+    this.imgExt = ['jpg', 'png'];
     this.form = new FormGroup({
       name: new FormControl(null, {
         validators: [Validators.required]
@@ -50,13 +55,12 @@ export class AdminEditFacultyComponent implements OnInit {
       })
     });
 
-    this.route.params
-    .subscribe(
-      (params: Params) => {
-        const _id = params['id'];
-      
-        this.facultyService.getFaculty(_id)
-        .subscribe((responce: FacultyModel) => {
+    this.route.params.subscribe((params: Params) => {
+      // tslint:disable-next-line: no-string-literal
+      const id = params['id'];
+
+      this.facultyService.getFaculty(id).subscribe(
+        (responce: FacultyModel) => {
           this.faculty = responce;
 
           this.form.setValue({
@@ -71,27 +75,29 @@ export class AdminEditFacultyComponent implements OnInit {
         },
         (error: any) => {
           this.setError(error);
-        });
-      }
-    );
+        }
+      );
+    });
   }
 
   onImagePicked(event: Event) {
     const files = (event.target as HTMLInputElement).files;
-    const imgExt: string[] = ["jpg", "png"];
+    const imgExt: string[] = ['jpg', 'png'];
     let ext: string = null;
-    for(let i = 0; i < files.length; i++) {
-      ext = files[i].name.substring(files[i].name.lastIndexOf('.') + 1);
-      if(!(imgExt.indexOf(ext)!=-1)) {
-        return this.invalidImage = true;
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < files.length; i++) {
+      ext = files[i].name.substring(files[i].name.lastIndexOf('.') + 1).toLowerCase();
+      if (!(imgExt.indexOf(ext) !== -1)) {
+        return (this.invalidImage = true);
       }
     }
     this.invalidImage = false;
-    for(let i = 0; i < files.length; i++) {
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < files.length; i++) {
       this.uploadImage = files[i];
       const reader = new FileReader();
       reader.onload = () => {
-        this.imagePreview = <string>reader.result;
+        this.imagePreview = reader.result as string;
       };
       reader.readAsDataURL(files[i]);
     }
@@ -107,48 +113,52 @@ export class AdminEditFacultyComponent implements OnInit {
     if (this.form.invalid) {
       this.formError = true;
     }
-  
+
     if (this.form.valid) {
       this.formError = false;
       this.loading = true;
 
       const faculty = new FormData();
-      faculty.append("_id", this.faculty._id);
-      faculty.append("name", this.form.value.name);
-      faculty.append("birthDate", this.form.value.birthDate);
-      faculty.append("description", this.form.value.description);
-      faculty.append("email", this.form.value.email);
-      faculty.append("phone", this.form.value.phone);
-      faculty.append("status", this.faculty.status);
+      faculty.append('_id', this.faculty._id);
+      faculty.append('name', this.form.value.name);
+      faculty.append('birthDate', this.form.value.birthDate);
+      faculty.append('description', this.form.value.description);
+      faculty.append('email', this.form.value.email);
+      faculty.append('phone', this.form.value.phone);
+      faculty.append('status', this.faculty.status);
 
       if (this.uploadImage) {
-        faculty.append("image", this.uploadImage, "faculty");
+        faculty.append('image', this.uploadImage, 'faculty');
       }
 
       this.loading = true;
 
-      this.facultyService.editFaculty(faculty)
-      .subscribe((responce: any) => {
-        this.form.reset();
-        this.cancel();
-      },
-      (error: any) => {
-        this.setError(error);
-      });
+      this.facultyService.editFaculty(faculty).subscribe(
+        (responce: any) => {
+          this.form.reset();
+          this.cancel();
+        },
+        (error: any) => {
+          this.setError(error);
+        }
+      );
     }
   }
-  
+
   cancel() {
     this.loading = true;
-    this.router.navigate(['/admin', 'faculty', this.faculty._id], {relativeTo:this.route, skipLocationChange: true});
+    this.router.navigate(['/admin', 'faculty', this.faculty._id], {
+      relativeTo: this.route,
+      skipLocationChange: true
+    });
   }
 
   setError(err: string) {
-		this.error = err;
-		this.loading = false;
-	}
+    this.error = err;
+    this.loading = false;
+  }
 
-	clearError() {
-		this.error = null;
-	}
+  clearError() {
+    this.error = null;
+  }
 }

@@ -8,32 +8,32 @@ import { AboutService } from '../../../services/about.service';
   styleUrls: ['./admin-aim.component.css']
 })
 export class AdminAimComponent implements OnInit {
-
   about: AboutModel;
 
-  loading: boolean = true;
-  error: string = null;
-	
-  constructor(private aboutService: AboutService) { }
+  loading: boolean;
+  error: string;
+
+  constructor(private aboutService: AboutService) {}
 
   ngOnInit() {
-    this.aboutService.getAbout()
-    .subscribe((responce: AboutModel) => {
-      this.about = responce;
-      this.loading = false;
-    },
-    (error: any) => {
-      this.setError(error)
-    });
+    this.loading = true;
+    this.aboutService.getAbout().subscribe(
+      (responce: AboutModel) => {
+        this.about = responce;
+        this.loading = false;
+      },
+      (error: any) => {
+        this.setError(error);
+      }
+    );
   }
 
-	setError(err: string) {
-		this.error = err;
-		this.loading = false;
-	}
+  setError(err: string) {
+    this.error = err;
+    this.loading = false;
+  }
 
-	clearError() {
-		this.error = null;
-	}
-
+  clearError() {
+    this.error = null;
+  }
 }

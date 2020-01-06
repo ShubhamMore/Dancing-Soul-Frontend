@@ -9,33 +9,35 @@ import { EnquiryService } from '../../services/enquiry.service';
   styleUrls: ['./admin-enquiry.component.css']
 })
 export class AdminEnquiryComponent implements OnInit {
-
   enquiries: EnquiryModel[];
 
-  loading: boolean = true;
+  loading: boolean;
+  error: string;
 
-  error: string = null;  
-
-  constructor(private enquiryService: EnquiryService,
-              private router: Router,
-              private route: ActivatedRoute) { }
+  constructor(
+    private enquiryService: EnquiryService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    this.enquiryService.getEnquiries()
-    .subscribe((responce: EnquiryModel[]) => {
-      this.enquiries = responce;
-      this.loading = false;
-    },
-    (error: any) => {
-      this.setError(error)      
-    });
+    this.loading = true;
+    this.enquiryService.getEnquiries().subscribe(
+      (responce: EnquiryModel[]) => {
+        this.enquiries = responce;
+        this.loading = false;
+      },
+      (error: any) => {
+        this.setError(error);
+      }
+    );
   }
 
   limitData(data: string, limit: number = 25) {
-    if(data.length >= limit) {
+    if (data.length >= limit) {
       const newdata = [];
       data.split(' ').reduce((acc, cur) => {
-        if(acc + cur.length <= limit) {
+        if (acc + cur.length <= limit) {
           newdata.push(cur);
         }
         return acc + cur.length;
@@ -44,13 +46,13 @@ export class AdminEnquiryComponent implements OnInit {
     }
     return data;
   }
-  
-	setError(err: string) {
-		this.error = err;
-		this.loading = false;
-	}
 
-	clearError() {
-		this.error = null;
-	}
+  setError(err: string) {
+    this.error = err;
+    this.loading = false;
+  }
+
+  clearError() {
+    this.error = null;
+  }
 }

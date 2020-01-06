@@ -1,43 +1,64 @@
-<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
+<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading" />
 
 <div class="row" *ngIf="!loading">
   <div class="col-12">
     <div class="row mt-2" *ngIf="!!error">
-      <div class="col-10 mx-auto">
-      <div class="alert alert-danger alert-dismissible">
-        <button type="button" class="close" (click)="clearError()" data-dismiss="alert">&times;</button>
-        <span>{{error}}</span>
-      </div>
+      <div class="col-md-10 col-12 mx-auto">
+        <div class="alert alert-danger alert-dismissible">
+          <button type="button" class="close" (click)="clearError()" data-dismiss="alert">
+            &times;
+          </button>
+          <span>{{ error }}</span>
+        </div>
       </div>
     </div>
     <div class="row mt-2">
       <div class="col-10 mx-auto">
         <h4 class="text-center mb-3">Add New Video</h4>
         <form class="add-video" (submit)="addVideo()" [formGroup]="form">
-
           <div class="form-group">
             <label for="date">Date : </label>
-            <input class="date" type="date" name="date" id="date" formControlName="date">
-            <span *ngIf="!form.get('date').valid && form.get('date').touched">*Please enter Date</span>
+            <input class="date" type="date" name="date" id="date" formControlName="date" />
+            <span *ngIf="!form.get('date').valid && form.get('date').touched"
+              >*Please enter Date</span
+            >
           </div>
 
           <div class="form-group">
             <label for="title">Title : </label>
-            <input class="title" type="text" name="title" id="title" formControlName="title" placeholder="Title">
-            <span *ngIf="!form.get('title').valid && form.get('title').touched">*Please enter Title</span>
+            <input
+              class="title"
+              type="text"
+              name="title"
+              id="title"
+              formControlName="title"
+              placeholder="Title"
+            />
+            <span *ngIf="!form.get('title').valid && form.get('title').touched"
+              >*Please enter Title</span
+            >
           </div>
-          
+
           <div class="form-group">
             <label for="videoUrl">Video URL : </label>
-            <input class="videoUrl" type="url" name="videoUrl" id="videoUrl" formControlName="videoUrl" placeholder="http://video.url">
-            <span *ngIf="!form.get('videoUrl').valid && form.get('videoUrl').touched">*Please enter Video URL</span>
+            <input
+              class="videoUrl"
+              type="url"
+              name="videoUrl"
+              id="videoUrl"
+              formControlName="videoUrl"
+              placeholder="http://video.url"
+            />
+            <span *ngIf="!form.get('videoUrl').valid && form.get('videoUrl').touched"
+              >*Please enter Video URL</span
+            >
           </div>
-  
+
           <div class="row mt-1" *ngIf="formError">
             <span>*Please Fill All Fields</span>
           </div>
-          
-          <hr>
+
+          <hr />
           <button type="submit" class="btn-add">Save</button>
           <button type="button" class="btn-cancel float-right" (click)="cancel()">Cancel</button>
         </form>

@@ -7,32 +7,32 @@ import { AboutModel } from '../../../models/about.model';
   styleUrls: ['./admin-history.component.css']
 })
 export class AdminHistoryComponent implements OnInit {
-
   about: AboutModel;
 
-  loading: boolean = true;
-  
-  error: string = null;
+  loading: boolean;
+  error: string;
 
-  constructor(private aboutService: AboutService) { }
+  constructor(private aboutService: AboutService) {}
 
   ngOnInit() {
-    this.aboutService.getAbout()
-    .subscribe((responce: AboutModel) => {
-      this.about = responce;
-      this.loading = false;
-    },
-    (error: any) => {
-      this.setError(error)
-    });  
+    this.loading = true;
+    this.aboutService.getAbout().subscribe(
+      (responce: AboutModel) => {
+        this.about = responce;
+        this.loading = false;
+      },
+      (error: any) => {
+        this.setError(error);
+      }
+    );
   }
-  
-	setError(err: string) {
-		this.error = err;
-		this.loading = false;
-	}
 
-	clearError() {
-		this.error = null;
-	}
+  setError(err: string) {
+    this.error = err;
+    this.loading = false;
+  }
+
+  clearError() {
+    this.error = null;
+  }
 }

@@ -8,9 +8,8 @@ describe('AdminGallaryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminGallaryComponent ]
-    })
-    .compileComponents();
+      declarations: [AdminGallaryComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -9,43 +9,44 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
   styleUrls: ['./student-show-receipt.component.css']
 })
 export class StudentShowReceiptComponent implements OnInit {
-
   receipt: ReceiptModel;
   receiptMetaData: any;
 
-  loading: boolean = true;
-  error: string = null;
+  loading: boolean;
+  error: string;
 
-  constructor(private receiptService: ReceiptService,
-              private route: ActivatedRoute,
-              private router: Router) { }
+  constructor(
+    private receiptService: ReceiptService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.route.params.
-    subscribe(
-      (params: Params) => {
-        const _id = params['id'];
-        this.receiptService.getReceipt(_id)
-        .subscribe((responce: any) => {
+    this.loading = true;
+    this.route.params.subscribe((params: Params) => {
+      // tslint:disable-next-line: no-string-literal
+      const id = params['id'];
+      this.receiptService.getReceipt(id).subscribe(
+        (responce: any) => {
           this.receipt = responce.receipt;
           this.receiptMetaData = responce.receiptMetaData;
           this.loading = false;
         },
         (error: any) => {
-          this.setError(error);          
-        });
-      }
-    );
+          this.setError(error);
+        }
+      );
+    });
   }
 
   setError(err: string) {
-		this.error = err;
-		this.loading = false;
-	}
+    this.error = err;
+    this.loading = false;
+  }
 
-	clearError() {
-		this.error = null;
-	}
+  clearError() {
+    this.error = null;
+  }
 
   print() {
     window.print();
