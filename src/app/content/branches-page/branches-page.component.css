@@ -1,24 +1,44 @@
 .branches-page{
     padding: 40px;
+    font-weight: 400;
 }
 .branch-card{
-    margin: 20px;
     background-color: #fff;
     flex-basis: 300px;
     box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
     transition: box-shadow 0.5s;
 }
-.branch-card:hover,
-.branch-card:active{
- box-shadow: 0 .1rem 3rem rgba(0,0,0,0.175)!important;
+.card-body{
+    padding: 0;
 }
-
 .branch-img{
-    flex:1 1 150px;
-    height: 550px;
+    flex:1 1 80px;
+    height: 375px;
     background-color: #f4f4f4;
 }
+.card-header {
+    background-color: #e2e2e2;
+    text-align: center;
+    font-weight: 400;
+}
+.card-header:hover,
+.card-header:active {
+    background-color: rgba(0,0,0,.1);
+    cursor: pointer;
+}
 
+.card-header i{
+    padding-right: 10px;
+}
+.accordion .card-header:after {
+    font-family: 'FontAwesome';  
+    content: "\f068";
+    float: right; 
+}
+.accordion .card-header.collapsed:after {
+    /* symbol for "collapsed" panels */
+    content: "\f067"; 
+}
 @media only screen and (max-width: 767px){
     .branches-page{
         padding: 2px;
@@ -29,17 +49,26 @@
     .branch-img{
         height: 200px;
     }
+    .branch-img{
+        flex:1 1 150px;
+    }
+    .branch-details{
+        flex:1 1 150px;
+    }
 }
 
 .branch-details{
-    flex:1 1 150px;
+    flex:1 1 220px;
     height: 100%;
 }
 
-.branch-details .description{
+ .description{
     background-color: #f4f4f4;
     padding : 10px 20px;
     text-align: center;
+    font-weight: 400;
+    font-size: 90%;
+    color: red;
 }
 
 .branch-details .detail{
@@ -60,14 +89,9 @@
 }
 
 .batch-details{
-    display: flex;
-    flex-wrap: wrap;
     padding: 10px;
 }
 
-.batch-details div{
-    flex: 1;
-}
 .batch-details div table{
     margin-left: auto;
     margin-right: auto;

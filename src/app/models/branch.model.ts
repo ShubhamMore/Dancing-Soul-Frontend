@@ -12,8 +12,10 @@ export class BranchModel {
     public images: ImageModel[];
     public batch: BatchModel[];
     public status: string;
+    public weekDayBatch : string[];
+    public weekEndBatch : string[];
 
-    constructor(id: string, branch: string, city: string ,address: string , email: string , phone: string, description: string, images: ImageModel[], batch: BatchModel[], status: string) {
+    constructor(id: string, branch: string, city: string ,address: string , email: string , phone: string, description: string, images: ImageModel[], batch: BatchModel[], status: string,weekDayBatch:string[],weekEndBatch:string[]) {
         this._id = id;
         this.city = city;
         this.branch = branch;
@@ -24,6 +26,8 @@ export class BranchModel {
         this.images = images;
         this.batch = batch;
         this.status = status;
+        this.weekDayBatch = weekDayBatch;
+        this.weekEndBatch = weekEndBatch;
     }
 }
 
