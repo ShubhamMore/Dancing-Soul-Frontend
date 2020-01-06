@@ -8,11 +8,10 @@ import { NewsModel } from '../models/news.model';
   providedIn: 'root'
 })
 export class NewsService {
-
-  constructor(private httpService: HttpService) { }
+  constructor(private httpService: HttpService) {}
 
   addNews(news: any) {
-    const data = {api: 'addNews', data: news};
+    const data = { api: 'addNews', data: news };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -24,7 +23,7 @@ export class NewsService {
   }
 
   getAllNews() {
-    const data = {api: 'getAllNews', data: {}};
+    const data = { api: 'getAllNews', data: {} };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -35,8 +34,8 @@ export class NewsService {
     );
   }
 
-  getNews(_id: string) {
-    const data = {api: 'getNews', data: {_id}};
+  getNews(id: string) {
+    const data = { api: 'getNews', data: { _id: id } };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -48,7 +47,7 @@ export class NewsService {
   }
 
   editNews(news: NewsModel) {
-    const data = {api: 'editNews', data: news};
+    const data = { api: 'editNews', data: news };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -59,8 +58,8 @@ export class NewsService {
     );
   }
 
-  deleteNews(_id: string) {
-    const data = {api: 'deleteNews', data: {_id}};
+  deleteNews(id: string) {
+    const data = { api: 'deleteNews', data: { _id: id } };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -70,5 +69,4 @@ export class NewsService {
       })
     );
   }
-  
 }

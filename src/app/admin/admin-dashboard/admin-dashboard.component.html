@@ -1,24 +1,26 @@
-<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
-	
+<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading" />
+
 <div class="row" *ngIf="!loading">
   <div class="col-12">
     <div class="row mt-2" *ngIf="!!error">
       <div class="col-10 mx-auto">
         <div class="alert alert-danger alert-dismissible">
-          <button type="button" class="close" (click)="clearError()" data-dismiss="alert">&times;</button>
-          <span>{{error}}</span>
+          <button type="button" class="close" (click)="clearError()" data-dismiss="alert">
+            &times;
+          </button>
+          <span>{{ error }}</span>
         </div>
       </div>
     </div>
-    
+
     <div class="row mt-2">
       <div class="col-12">
         <p class="float-right">
           <a class="notification" routerLink="/admin/enquiry" skipLocationChange>
             <span>
-              <i class="fa fa-bell-o" style="font-size:36px; color:#e67e22"></i>      
+              <i class="fa fa-bell-o" style="font-size:36px; color:#e67e22"></i>
             </span>
-            <span class="badge" *ngIf="enquiries > 0">{{enquiries}}</span>
+            <span class="badge" *ngIf="enquiries > 0">{{ enquiries }}</span>
           </a>
         </p>
         <h3>ADMIN DASHBOARD</h3>
@@ -33,9 +35,9 @@
             </h5>
           </div>
           <div class="card-body">
-              <p>Activated : {{dashboardData.activateBranch}}</p>
-              <p>Deactivated : {{dashboardData.deactivateBranch}}</p>
-          </div>            
+            <p>Activated : {{ dashboardData.activateBranch }}</p>
+            <p>Deactivated : {{ dashboardData.deactivateBranch }}</p>
+          </div>
         </div>
       </div>
       <div class="col-md-4 col-sm-10 mx-auto">
@@ -46,8 +48,8 @@
             </h5>
           </div>
           <div class="card-body">
-            <p>Activated : {{dashboardData.activateStudent}}</p>
-            <p>Deactivated : {{dashboardData.deactivateStudent}}</p>
+            <p>Activated : {{ dashboardData.activateStudent }}</p>
+            <p>Deactivated : {{ dashboardData.deactivateStudent }}</p>
           </div>
         </div>
       </div>
@@ -59,8 +61,8 @@
             </h5>
           </div>
           <div class="card-body">
-              <p>Activated : {{dashboardData.activateFaculty}}</p>
-              <p>Deactivated : {{dashboardData.deactivateFaculty}}</p>
+            <p>Activated : {{ dashboardData.activateFaculty }}</p>
+            <p>Deactivated : {{ dashboardData.deactivateFaculty }}</p>
           </div>
         </div>
       </div>

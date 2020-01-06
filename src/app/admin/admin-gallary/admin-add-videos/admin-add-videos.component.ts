@@ -9,19 +9,21 @@ import { GalleryService } from '../../../services/gallery.service';
   styleUrls: ['./admin-add-videos.component.css']
 })
 export class AdminAddVideosComponent implements OnInit {
-
   form: FormGroup;
-  formError: boolean = false;
+  formError: boolean;
 
-  loading: boolean = true;
-  error: string = null;
+  loading: boolean;
+  error: string;
 
-  constructor(private galleryService: GalleryService,
-              private router: Router,
-              private route: ActivatedRoute) { }
+  constructor(
+    private galleryService: GalleryService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-
+    this.loading = true;
+    this.formError = false;
     this.form = new FormGroup({
       date: new FormControl(this.date(), {
         validators: [Validators.required]
@@ -39,23 +41,28 @@ export class AdminAddVideosComponent implements OnInit {
 
   date(): string {
     const today: any = new Date();
-    const date: string = this.dateMonthCreator(today.getDate()) + '-' + this.dateMonthCreator(today.getMonth() + 1) + '-' + today.getFullYear().toString();
+    const date: string =
+      this.dateMonthCreator(today.getDate()) +
+      '-' +
+      this.dateMonthCreator(today.getMonth() + 1) +
+      '-' +
+      today.getFullYear().toString();
     return date;
   }
 
   dateMonthCreator(dm: number): string {
-    if(dm < 10) {
+    if (dm < 10) {
       return '0' + dm.toString();
     }
     return dm.toString();
   }
 
   addVideo() {
-    if(this.form.invalid) {
+    if (this.form.invalid) {
       this.formError = true;
     }
 
-    if(this.form.valid) {
+    if (this.form.valid) {
       this.formError = false;
       this.loading = true;
       const video: any = {
@@ -63,30 +70,33 @@ export class AdminAddVideosComponent implements OnInit {
         url: this.form.value.videoUrl,
         created_at: this.form.value.date
       };
-      
-      this.galleryService.addVideo(video)
-      .subscribe((responce: any) => {
-        this.form.reset();
-        this.cancel();
-      },
-      (error: any) => {
-        this.setError(error);
-      });
+
+      this.galleryService.addVideo(video).subscribe(
+        (responce: any) => {
+          this.form.reset();
+          this.cancel();
+        },
+        (error: any) => {
+          this.setError(error);
+        }
+      );
     }
   }
 
   cancel() {
     this.loading = true;
-    this.router.navigate(["/admin", "gallery", "videos"], {relativeTo: this.route, skipLocationChange: true});        
+    this.router.navigate(['/admin', 'gallery', 'videos'], {
+      relativeTo: this.route,
+      skipLocationChange: true
+    });
   }
 
-	setError(err: string) {
-		this.error = err;
-		this.loading = false;
-	}
+  setError(err: string) {
+    this.error = err;
+    this.loading = false;
+  }
 
-	clearError() {
-		this.error = null;
-	}
-
+  clearError() {
+    this.error = null;
+  }
 }

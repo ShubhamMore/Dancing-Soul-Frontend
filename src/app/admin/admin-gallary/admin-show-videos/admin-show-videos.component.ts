@@ -9,57 +9,59 @@ import { GalleryService } from '../../../services/gallery.service';
   styleUrls: ['./admin-show-videos.component.css']
 })
 export class AdminShowVideosComponent implements OnInit {
+  videos: VideoModel[];
+  loading: boolean;
+  error: string;
 
-  videos: VideoModel[] = [];
-
-  loading: boolean = true;
-  error: string = null;
-  constructor(private galleryService: GalleryService,
-              private router: Router,
-              private route: ActivatedRoute) { }
+  constructor(
+    private galleryService: GalleryService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    
-    this.galleryService.getVideos()
-    .subscribe((responce: VideoModel[]) => {
-     this.videos = responce;
-     this.loading = false;
-    },
-    (error: any) => {
-      this.setError(error);
-    });
-  }
-
-  deleteVideo(_id: string) {
-    const deleteConfirm = confirm("do you really want to Delete this Video??");  
-    if(deleteConfirm) {
-      this.loading = true;
-      
-      this.galleryService.removeVideo(_id)
-      .subscribe((responce: any) => {
-        this.ngOnInit();
+    this.loading = true;
+    this.videos = [];
+    this.galleryService.getVideos().subscribe(
+      (responce: VideoModel[]) => {
+        this.videos = responce;
+        this.loading = false;
       },
       (error: any) => {
         this.setError(error);
-      });
-    }    
+      }
+    );
   }
 
-  openVideo(url: string) {
-    
+  deleteVideo(id: string) {
+    const deleteConfirm = confirm('do you really want to Delete this Video??');
+    if (deleteConfirm) {
+      this.loading = true;
+
+      this.galleryService.removeVideo(id).subscribe(
+        (responce: any) => {
+          this.ngOnInit();
+        },
+        (error: any) => {
+          this.setError(error);
+        }
+      );
+    }
   }
+
+  openVideo(url: string) {}
 
   onNewVideo() {
     this.loading = true;
-    this.router.navigate(['new'], {relativeTo: this.route, skipLocationChange: true});
+    this.router.navigate(['new'], { relativeTo: this.route, skipLocationChange: true });
   }
 
-	setError(err: string) {
-		this.error = err;
-		this.loading = false;
-	}
+  setError(err: string) {
+    this.error = err;
+    this.loading = false;
+  }
 
-	clearError() {
-		this.error = null;
-	}
+  clearError() {
+    this.error = null;
+  }
 }

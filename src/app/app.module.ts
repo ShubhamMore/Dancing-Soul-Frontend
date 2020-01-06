@@ -11,7 +11,13 @@ import { Angular2ImageGalleryModule } from 'angular2-image-gallery';
 import { AppRoutes } from './app.routes.module';
 
 // GUARDS
-import { AdminAuthGuard, LoginAuthGuard, StudentAuthGuard, FacultuAuthGuard, ChangePassswordGuard } from './auth/auth.guard';
+import {
+  AdminAuthGuard,
+  LoginAuthGuard,
+  StudentAuthGuard,
+  FacultuAuthGuard,
+  ChangePassswordGuard
+} from './auth/auth.guard';
 
 // SERVICES
 import { AuthService } from './auth/auth.service';
@@ -91,6 +97,7 @@ import { AdminAddStudentComponent } from './admin/admin-student/admin-add-studen
 import { AdminShowStudentComponent } from './admin/admin-student/admin-show-student/admin-show-student.component';
 import { AdminEditStudentComponent } from './admin/admin-student/admin-edit-student/admin-edit-student.component';
 import { AdminStudentReceiptsComponent } from './admin/admin-student/admin-student-receipts/admin-student-receipts.component';
+// tslint:disable-next-line: max-line-length
 import { AdminStudentGenerateReceiptComponent } from './admin/admin-student/admin-student-generate-receipt/admin-student-generate-receipt.component';
 import { AdminStudentIdentityComponent } from './admin/admin-student/admin-student-identity/admin-student-identity.component';
 import { AdminStudentCertificateComponent } from './admin/admin-student/admin-student-certificate/admin-student-certificate.component';
@@ -129,7 +136,6 @@ import { IdentityService } from './services/identity.service';
 import { NewsService } from './services/news.service';
 import { ReceiptService } from './services/receipt.service';
 import { StudentService } from './services/student.service';
-
 
 @NgModule({
   declarations: [
@@ -194,7 +200,7 @@ import { StudentService } from './services/student.service';
     AdminGallaryComponent,
     AdminAddPhotosComponent,
     AdminShowPhotosComponent,
-    AdminAddVideosComponent, 
+    AdminAddVideosComponent,
     AdminShowVideosComponent,
     // ADMIN ATTENDANCE COMPONENT
     AdminAttendanceComponent,
@@ -274,5 +280,4 @@ import { StudentService } from './services/student.service';
 
   bootstrap: [AppComponent]
 })
-
-export class AppModule { }
+export class AppModule {}

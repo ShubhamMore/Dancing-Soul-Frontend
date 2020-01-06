@@ -10,23 +10,23 @@ import { EnquiryService } from '../../../services/enquiry.service';
   styleUrls: ['./admin-reply-enquiry.component.css']
 })
 export class AdminReplyEnquiryComponent implements OnInit {
-
   form: FormGroup;
 
-  loading: boolean = true;
-
-  error: string = null;
+  loading: boolean;
+  error: string;
 
   enquiry: EnquiryModel;
 
-  _id: string;
+  id: string;
 
-  constructor(private enquiryService: EnquiryService,
-              private router: Router,
-              private route: ActivatedRoute) { }
+  constructor(
+    private enquiryService: EnquiryService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-
+    this.loading = true;
     this.form = new FormGroup({
       subject: new FormControl(null, {
         validators: [Validators.required]
@@ -36,54 +36,57 @@ export class AdminReplyEnquiryComponent implements OnInit {
       })
     });
 
-    this.route.params
-    .subscribe(
-      (params: Params) => {
-        this._id = params['id'];
-        
-        this.enquiryService.getEnquiryForReply(this._id)
-        .subscribe((responce: EnquiryModel) => {
-         this.enquiry = responce;
-         this.loading = false;
+    this.route.params.subscribe((params: Params) => {
+      // tslint:disable-next-line: no-string-literal
+      this.id = params['id'];
+
+      this.enquiryService.getEnquiryForReply(this.id).subscribe(
+        (responce: EnquiryModel) => {
+          this.enquiry = responce;
+          this.loading = false;
         },
         (error: any) => {
           this.setError(error);
-        });
-      }
-    );
+        }
+      );
+    });
   }
 
   sendReply() {
-    if(this.form.valid) {
+    if (this.form.valid) {
       this.loading = true;
       const reply = {
-        email : this.enquiry.email,
-        subject : this.form.value.subject,
-        body : this.form.value.body
-      }
+        email: this.enquiry.email,
+        subject: this.form.value.subject,
+        body: this.form.value.body
+      };
 
-      this.enquiryService.replyEnquiry(reply)
-      .subscribe((responce: any) => {
-        this.form.reset();
-        this.loading = false;
-      },
-      (error: any) => {
-        this.setError(error);
-      });
+      this.enquiryService.replyEnquiry(reply).subscribe(
+        (responce: any) => {
+          this.form.reset();
+          this.loading = false;
+        },
+        (error: any) => {
+          this.setError(error);
+        }
+      );
     }
   }
 
   cancel() {
     this.loading = true;
-    this.router.navigate(['/admin', 'enquiry', this._id], {relativeTo:this.route, skipLocationChange: true});
+    this.router.navigate(['/admin', 'enquiry', this.id], {
+      relativeTo: this.route,
+      skipLocationChange: true
+    });
   }
 
-	setError(err: string) {
-		this.error = err;
-		this.loading = false;
-	}
+  setError(err: string) {
+    this.error = err;
+    this.loading = false;
+  }
 
-	clearError() {
-		this.error = null;
-	}
+  clearError() {
+    this.error = null;
+  }
 }

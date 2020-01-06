@@ -8,9 +8,8 @@ describe('AdminStudentGenerateReceiptComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminStudentGenerateReceiptComponent ]
-    })
-    .compileComponents();
+      declarations: [AdminStudentGenerateReceiptComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

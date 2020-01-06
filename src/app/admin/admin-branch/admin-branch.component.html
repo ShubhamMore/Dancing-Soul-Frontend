@@ -1,14 +1,15 @@
-<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
-
+<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading" />
 
 <div class="row" *ngIf="!loading">
   <div class="col-12">
     <div class="row mt-2" *ngIf="!!error">
-      <div class="col-10 mx-auto">
-      <div class="alert alert-danger alert-dismissible">
-        <button type="button" class="close" (click)="clearError()" data-dismiss="alert">&times;</button>
-        <span>{{error}}</span>
-      </div>
+      <div class="col-md-10 col-12 mx-auto">
+        <div class="alert alert-danger alert-dismissible">
+          <button type="button" class="close" (click)="clearError()" data-dismiss="alert">
+            &times;
+          </button>
+          <span>{{ error }}</span>
+        </div>
       </div>
     </div>
     <div class="row mt-2">
@@ -21,7 +22,7 @@
             <button class="new-btn float-right" (click)="onNewBranch()">Create New Branch</button>
           </div>
         </div>
-        <hr>
+        <hr />
         <div class="table-responsive" *ngIf="branches.length > 0; else empty_branches">
           <table class="table table-sm">
             <thead>
@@ -33,18 +34,20 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="branch" *ngFor="let branch of branches, let i = index" routerLinkActive="active">
-                <td>{{ i+1 }}</td>
+              <tr
+                class="branch"
+                *ngFor="let branch of branches; let i = index"
+                routerLinkActive="active"
+              >
+                <td>{{ i + 1 }}</td>
                 <td>
                   <a [routerLink]="branch._id" class="branch-name" skipLocationChange>
                     {{ branch.branch }}
                   </a>
                 </td>
+                <td>+91 {{ branch.phone }}</td>
                 <td>
-                  +91 {{ branch.phone }}
-                </td>
-                <td>
-                  {{ branch.status == "1" ? "ACTIVATED" : "DEACTIVATED" }}
+                  {{ branch.status == '1' ? 'ACTIVATED' : 'DEACTIVATED' }}
                 </td>
               </tr>
             </tbody>

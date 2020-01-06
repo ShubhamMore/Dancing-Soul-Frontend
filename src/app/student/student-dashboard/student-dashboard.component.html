@@ -1,48 +1,49 @@
-<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
+<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading" />
 
 <div class="row" *ngIf="!loading">
   <div class="col-12">
     <div class="row mt-2" *ngIf="!!error">
-      <div class="col-10 mx-auto">
-      <div class="alert alert-danger alert-dismissible">
-        <button type="button" class="close" (click)="clearError()" data-dismiss="alert">&times;</button>
-        <span>{{error}}</span>
-      </div>
+      <div class="col-md-10 col-12 mx-auto">
+        <div class="alert alert-danger alert-dismissible">
+          <button type="button" class="close" (click)="clearError()" data-dismiss="alert">
+            &times;
+          </button>
+          <span>{{ error }}</span>
+        </div>
       </div>
     </div>
-    <div class="row mt-2">
-    </div>
+    <div class="row mt-2"></div>
   </div>
-  <div class="col-10 mx-auto">
-  
+  <div class="col-md-10 col-12 mx-auto">
     <div class="student">
       <div class="row">
         <div class="col-12">
           <h2 class="text-center">Profile</h2>
         </div>
       </div>
-  
-      <hr>
-  
+
+      <hr />
+
       <div class="row">
-  
         <div class="col-md-4 col-sm-10 mx-auto text-center">
-  
           <div>
-            <div class="student-image">
-              <img class="student-image" [src]="student.image.secure_url" [alt]="student.name" width="150px" height="150px">
+            <div class="text-center">
+              <img
+                class="student-image"
+                [src]="student.image.secure_url"
+                [alt]="student.name"
+                width="150px"
+                height="150px"
+              />
             </div>
-            
-            <div class="student-name">
-              <h4>{{student.name | uppercase}}</h4>
+
+            <div class="student-name mt-1">
+              <h4>{{ student.name | uppercase }}</h4>
             </div>
           </div>
-  
-  
         </div>
-  
+
         <div class="col-md-8 col-sm-10 mx-auto">
-  
           <div class="table-responsive">
             <table class="table table-sm">
               <tbody>
@@ -51,16 +52,15 @@
                     <strong>Birth Date : </strong>
                   </td>
                   <td>
-                    <p>{{student.birthDate}}</p>
+                    <p>{{ student.birthDate }}</p>
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    
                     <strong>Address : </strong>
                   </td>
                   <td>
-                    <p>{{student.address}}</p>
+                    <p>{{ student.address }}</p>
                   </td>
                 </tr>
                 <tr>
@@ -68,15 +68,15 @@
                     <strong>First Guardian Name : </strong>
                   </td>
                   <td>
-                    <p>{{student.firstGuardianName}}</p>
+                    <p>{{ student.firstGuardianName }}</p>
                   </td>
                 </tr>
                 <tr>
                   <td>
                     <strong>First Guardian Relation : </strong>
                   </td>
-                  <td>  
-                    <p>{{student.firstGuardianRelation}}</p>
+                  <td>
+                    <p>{{ student.firstGuardianRelation }}</p>
                   </td>
                 </tr>
                 <tr *ngIf="student.secondGuardianName != ''">
@@ -84,7 +84,7 @@
                     <strong>Second Guardian Name : </strong>
                   </td>
                   <td>
-                    <p>{{student.secondGuardianName}}</p>
+                    <p>{{ student.secondGuardianName }}</p>
                   </td>
                 </tr>
                 <tr *ngIf="student.secondGuardianRelation != ''">
@@ -92,7 +92,7 @@
                     <strong>Second Guardian Relation : </strong>
                   </td>
                   <td>
-                    <p>{{student.secondGuardianRelation}}</p>
+                    <p>{{ student.secondGuardianRelation }}</p>
                   </td>
                 </tr>
                 <tr *ngIf="student.workPlace != ''">
@@ -100,7 +100,7 @@
                     <strong>School/ College/ Office : </strong>
                   </td>
                   <td>
-                    <p>{{student.workPlace}}</p>
+                    <p>{{ student.workPlace }}</p>
                   </td>
                 </tr>
                 <tr *ngIf="student.bloodGroup != ''">
@@ -108,7 +108,7 @@
                     <strong>Blood Group : </strong>
                   </td>
                   <td>
-                    <p>{{student.bloodGroup}}</p>                      
+                    <p>{{ student.bloodGroup }}</p>
                   </td>
                 </tr>
                 <tr>
@@ -116,7 +116,7 @@
                     <strong>Medical History : </strong>
                   </td>
                   <td>
-                    <p>{{student.medicalHistory}}</p>
+                    <p>{{ student.medicalHistory }}</p>
                   </td>
                 </tr>
                 <tr>
@@ -124,7 +124,9 @@
                     <strong><em>E-</em>mail : </strong>
                   </td>
                   <td>
-                    <p><a href="mailto:{{student.email}}">{{student.email}}</a></p>
+                    <p>
+                      <a href="mailto:{{ student.email }}">{{ student.email }}</a>
+                    </p>
                   </td>
                 </tr>
                 <tr>
@@ -132,16 +134,15 @@
                     <strong>Phone : </strong>
                   </td>
                   <td>
-                    <p>+91 {{student.phone}}</p>
+                    <p>+91 {{ student.phone }}</p>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-        </div> 
-  
+        </div>
       </div>
-      <hr>
+      <hr />
       <div class="row">
         <div class="col-12">
           <h4>CLASS DETAILS</h4>
@@ -154,7 +155,7 @@
                       <strong>Branch : </strong>
                     </td>
                     <td>
-                      <p>{{studentMetaData.branch}}</p>
+                      <p>{{ studentMetaData.branch }}</p>
                     </td>
                   </tr>
                   <tr>
@@ -162,7 +163,7 @@
                       <strong>Batch : </strong>
                     </td>
                     <td>
-                      <p>{{student.batchType == "0" ? "Week Day Batch" : "Week End Batch"}}</p>
+                      <p>{{ student.batchType == '0' ? 'Week Day Batch' : 'Week End Batch' }}</p>
                     </td>
                   </tr>
                   <tr>
@@ -170,7 +171,7 @@
                       <strong>Batch Name : </strong>
                     </td>
                     <td>
-                      <p>{{studentMetaData.batch.batchName}}</p> 
+                      <p>{{ studentMetaData.batch.batchName }}</p>
                     </td>
                   </tr>
                   <tr>
@@ -178,7 +179,7 @@
                       <strong>Fees : </strong>
                     </td>
                     <td>
-                      <p>Rs. {{studentMetaData.batch.fees}}.00/-</p>      
+                      <p>Rs. {{ studentMetaData.batch.fees }}.00/-</p>
                     </td>
                   </tr>
                   <tr>
@@ -186,7 +187,7 @@
                       <strong>Time : </strong>
                     </td>
                     <td>
-                      <p>{{studentMetaData.batch.time}}</p>                
+                      <p>{{ studentMetaData.batch.time }}</p>
                     </td>
                   </tr>
                   <tr>
@@ -194,7 +195,7 @@
                       <strong>Status : </strong>
                     </td>
                     <td>
-                      <p>{{ student.status == "1" ? "ACTIVATED" : "DEACTIVATED" }}</p>
+                      <p>{{ student.status == '1' ? 'ACTIVATED' : 'DEACTIVATED' }}</p>
                     </td>
                   </tr>
                 </tbody>
@@ -204,6 +205,5 @@
         </div>
       </div>
     </div>
-     
   </div>
 </div>

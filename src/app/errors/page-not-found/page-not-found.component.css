@@ -1,11 +1,11 @@
 h2 {
-    text-align: left;
+  text-align: left;
 }
 
 h2::after {
-    display: none;
+  display: none;
 }
 
 h3 {
-    font-size: 150%;
+  font-size: 150%;
 }

@@ -11,10 +11,12 @@ export class AppComponent implements OnInit {
   title = 'Dancing Soul';
 
   loading = true;
-  
-  constructor(private authService: AuthService,
-              private router : Router, 
-              private route : ActivatedRoute) {}
+
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     const userData: UserData = JSON.parse(localStorage.getItem('userData'));
@@ -23,15 +25,17 @@ export class AppComponent implements OnInit {
       return;
     }
 
-    this.authService.autoLogin()
-    .subscribe(
+    this.authService.autoLogin().subscribe(
       resData => {
         this.loading = false;
         this.authService.loadUser(userData);
       },
       errorMessage => {
         this.loading = false;
-        this.router.navigate(["/login"], {relativeTo: this.route, queryParams: { auth: 'false' }});
+        this.router.navigate(['/login'], {
+          relativeTo: this.route,
+          queryParams: { auth: 'false' }
+        });
       }
     );
   }

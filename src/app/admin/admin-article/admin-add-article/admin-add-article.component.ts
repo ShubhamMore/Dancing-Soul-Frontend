@@ -9,27 +9,33 @@ import { ArticleService } from '../../../services/article.service';
   styleUrls: ['./admin-add-article.component.css']
 })
 export class AdminAddArticleComponent implements OnInit {
-  
   form: FormGroup;
 
-  loading : boolean = true;
-  error: string = null;
+  loading: boolean;
+  error: string;
 
-  formError: boolean = false;
-  
-  imagePreview: string = null;
-  uploadImage: File = null;
+  formError: boolean;
 
-  invalidImage : boolean = false;
+  imagePreview: string;
+  uploadImage: File;
 
-  imgExt: string[] = ['jpg', 'png'];
+  invalidImage: boolean;
 
-  constructor(private articleService: ArticleService,
-              private router: Router,
-              private route: ActivatedRoute) { }
+  imgExt: string[];
+
+  constructor(
+    private articleService: ArticleService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
+    this.loading = true;
 
+    this.formError = false;
+    this.invalidImage = false;
+
+    this.imgExt = ['jpg', 'png'];
     this.form = new FormGroup({
       title: new FormControl(null, {
         validators: [Validators.required]
@@ -42,23 +48,24 @@ export class AdminAddArticleComponent implements OnInit {
     this.loading = false;
   }
 
-  
   onImagePicked(event: Event) {
     const files = (event.target as HTMLInputElement).files;
-    const imgExt: string[] = ["jpg", "png"];
+    const imgExt: string[] = ['jpg', 'png'];
     let ext: string = null;
-    for(let i = 0; i < files.length; i++) {
-      ext = files[i].name.substring(files[i].name.lastIndexOf('.') + 1);
-      if(!(imgExt.indexOf(ext) != -1)) {
-        return this.invalidImage = true;
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < files.length; i++) {
+      ext = files[i].name.substring(files[i].name.lastIndexOf('.') + 1).toLowerCase();
+      if (!(imgExt.indexOf(ext) !== -1)) {
+        return (this.invalidImage = true);
       }
     }
     this.invalidImage = false;
-    for(let i = 0; i < files.length; i++) {
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < files.length; i++) {
       this.uploadImage = files[i];
       const reader = new FileReader();
       reader.onload = () => {
-        this.imagePreview = <string>reader.result;
+        this.imagePreview = reader.result as string;
       };
       reader.readAsDataURL(files[i]);
     }
@@ -71,44 +78,48 @@ export class AdminAddArticleComponent implements OnInit {
   }
 
   addArticle() {
-    if(this.form.invalid) {
+    if (this.form.invalid) {
       this.formError = true;
     }
 
-    if(this.form.valid) {
+    if (this.form.valid) {
       this.formError = false;
       this.loading = true;
 
       const article = new FormData();
-      article.append("title", this.form.value.title);
-      article.append("body", this.form.value.body);
+      article.append('title', this.form.value.title);
+      article.append('body', this.form.value.body);
       if (this.uploadImage) {
-        article.append("image", this.uploadImage, "article");
+        article.append('image', this.uploadImage, 'article');
       }
 
-      this.articleService.addArticle(article)
-      .subscribe((responce: any) => {
-       this.form.reset();
-       this.cancel();
-      },
-      (error: any) => {
-        this.setError(error);
-      });
+      this.articleService.addArticle(article).subscribe(
+        (responce: any) => {
+          this.form.reset();
+          this.cancel();
+        },
+        (error: any) => {
+          this.setError(error);
+        }
+      );
     }
   }
 
   cancel() {
     this.loading = true;
     this.cancelImage();
-    this.router.navigate(["/admin", "article"], {relativeTo: this.route, skipLocationChange: true});        
+    this.router.navigate(['/admin', 'article'], {
+      relativeTo: this.route,
+      skipLocationChange: true
+    });
   }
 
-	setError(err: string) {
-		this.error = err;
-		this.loading = false;
-	}
+  setError(err: string) {
+    this.error = err;
+    this.loading = false;
+  }
 
-	clearError() {
-		this.error = null;
-	}
+  clearError() {
+    this.error = null;
+  }
 }

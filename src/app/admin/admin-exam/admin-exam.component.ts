@@ -9,53 +9,58 @@ import { ExamModel } from '../../models/exams.model';
   styleUrls: ['./admin-exam.component.css']
 })
 export class AdminExamComponent implements OnInit {
+  exams: ExamModel[];
 
-  exams: ExamModel[] = [];
+  loading: boolean;
 
-  loading: boolean = true;
+  error: string;
 
-  error: string = null;
-
-  constructor(private examService: ExamService,
-              private router: Router,
-              private route: ActivatedRoute) { }
+  constructor(
+    private examService: ExamService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    this.examService.getExams()
-    .subscribe((responce: ExamModel[]) => {
-     this.exams = responce;
-     this.loading = false;
-    },
-    (error: any) => {
-      this.setError(error)
-    });
-  }
-
-  deleteExam(_id: string) {
-    const deleteConfirm = confirm("do you really want to Delete this Exam??");  
-    if (deleteConfirm) {
-      this.loading = true;
-      this.examService.deleteExam(_id)
-      .subscribe((responce: any) => {
-        this.ngOnInit();
+    this.loading = true;
+    this.exams = [];
+    this.examService.getExams().subscribe(
+      (responce: ExamModel[]) => {
+        this.exams = responce;
+        this.loading = false;
       },
       (error: any) => {
-       this.setError(error);
-      });
+        this.setError(error);
+      }
+    );
+  }
+
+  deleteExam(id: string) {
+    const deleteConfirm = confirm('do you really want to Delete this Exam??');
+    if (deleteConfirm) {
+      this.loading = true;
+      this.examService.deleteExam(id).subscribe(
+        (responce: any) => {
+          this.ngOnInit();
+        },
+        (error: any) => {
+          this.setError(error);
+        }
+      );
     }
   }
 
   onNewExam() {
     this.loading = true;
-    this.router.navigate(['new'], {relativeTo: this.route, skipLocationChange: true});
+    this.router.navigate(['new'], { relativeTo: this.route, skipLocationChange: true });
   }
 
-	setError(err: string) {
-		this.error = err;
-		this.loading = false;
-	}
+  setError(err: string) {
+    this.error = err;
+    this.loading = false;
+  }
 
-	clearError() {
-		this.error = null;
-	}
+  clearError() {
+    this.error = null;
+  }
 }

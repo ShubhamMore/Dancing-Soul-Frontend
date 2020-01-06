@@ -1,13 +1,15 @@
-<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
+<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading" />
 
 <div class="row" *ngIf="!loading">
   <div class="col-12">
     <div class="row mt-2" *ngIf="!!error">
-      <div class="col-10 mx-auto">
-      <div class="alert alert-danger alert-dismissible">
-        <button type="button" class="close" (click)="clearError()" data-dismiss="alert">&times;</button>
-        <span>{{error}}</span>
-      </div>
+      <div class="col-md-10 col-12 mx-auto">
+        <div class="alert alert-danger alert-dismissible">
+          <button type="button" class="close" (click)="clearError()" data-dismiss="alert">
+            &times;
+          </button>
+          <span>{{ error }}</span>
+        </div>
       </div>
     </div>
     <div class="row mt-2">
@@ -20,63 +22,72 @@
             <button class="btn-cancel float-right" (click)="cancel()">Cancel</button>
           </div>
         </div>
-        <hr>
+        <hr />
         <div class="row">
           <div class="col-12">
             <form [formGroup]="form" (submit)="onSavePost()">
               <div class="row">
                 <div class="col-md-6 cpl-sm-12">
                   <div class="form-group">
-                      <label for="title">Select Categories for an Images : </label>
-                      <select class="category" type="text" name="category" id="category" formControlName="category">
-                        <option value=''>Select Category</option>
-                        <option value="mdp">Moments duting Performance</option>
-                        <option value="itc">In the Class</option>
-                        <option value="mdm">Music, Drama & More</option>
-                      </select>
-                      <span *ngIf="!form.get('category').valid && form.get('category').touched">*Please Select Category</span>
+                    <label for="title">Select Categories for an Images : </label>
+                    <select
+                      class="category"
+                      type="text"
+                      name="category"
+                      id="category"
+                      formControlName="category"
+                    >
+                      <option value="">Select Category</option>
+                      <option value="mdp">Moments duting Performance</option>
+                      <option value="itc">In the Class</option>
+                      <option value="mdm">Music, Drama & More</option>
+                    </select>
+                    <span *ngIf="!form.get('category').valid && form.get('category').touched"
+                      >*Please Select Category</span
+                    >
                   </div>
                 </div>
               </div>
               <div class="row">
-    
                 <div class="col-md-6 col-sm-12">
                   <div class="form-group">
-                    <label for="images">Pick Images to Upload : </label><br>
-                    <input type="file" #filePicker (change)="onImagePicked($event)" multiple>
-                    <button class="btn-add" type="button" id="images" (click)="filePicker.click()">Click Here to Pick Image</button>
+                    <label for="images">Pick Images to Upload : </label><br />
+                    <input type="file" #filePicker (change)="onImagePicked($event)" multiple />
+                    <button class="btn-add" type="button" id="images" (click)="filePicker.click()">
+                      Click Here to Pick Image
+                    </button>
                   </div>
                   <span *ngIf="invalidImage">*Please Select a Valid Image File</span>
                 </div>
-                
+
                 <div class="col-md-6 col-sm-12">
                   <button class="btn-save float-right" type="submit">Upload Images</button>
                 </div>
-    
               </div>
-            </form>       
+            </form>
           </div>
-    
-          <hr>
-          
+
+          <hr />
+
           <div class="row">
             <div class="col-12">
               <div *ngIf="imagePreview.length > 0; else noImagePicked">
-                  <h4>Image To Upload : </h4>
-    
-                  <div class="row">
-                      <span class="m-2" *ngFor="let image of imagePreview; let i = index;">
-                          <div class="preview-image">
-                              <img [src]="image" alt="Preview">
-                              <a class="remove-image"(click)="cancelImage(i)"><i class="fa fa-remove remove"></i></a>
-                          </div>
-                      </span>
-                  </div>
-              
+                <h4>Image To Upload :</h4>
+
+                <div class="row">
+                  <span class="m-2" *ngFor="let image of imagePreview; let i = index">
+                    <div class="preview-image">
+                      <img [src]="image" alt="Preview" />
+                      <a class="remove-image" (click)="cancelImage(i)"
+                        ><i class="fa fa-remove remove"></i
+                      ></a>
+                    </div>
+                  </span>
+                </div>
               </div>
               <ng-template #noImagePicked><p>No Image Picked yet</p></ng-template>
             </div>
-          </div> 
+          </div>
         </div>
       </div>
     </div>

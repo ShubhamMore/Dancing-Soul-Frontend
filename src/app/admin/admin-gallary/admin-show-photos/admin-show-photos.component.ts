@@ -8,36 +8,38 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./admin-show-photos.component.css']
 })
 export class AdminShowPhotosComponent implements OnInit {
-
   form: FormGroup;
-  images: ImageModel[] = [];
+  images: ImageModel[];
   category: string;
-  loading: boolean = true;
-  error: string = null;
+  loading: boolean;
+  error: string;
 
   constructor(private galleryService: GalleryService) {}
 
   ngOnInit() {
+    this.loading = true;
+    this.images = [];
     this.form = new FormGroup({
       category: new FormControl('mdp', {
         validators: [Validators.required]
       })
     });
-    
+
     this.categoryChanged();
   }
 
   getImages(category: string) {
     this.loading = true;
     this.images = [];
-    this.galleryService.getImages(category)
-    .subscribe((response: ImageModel[]) => {
-      this.images = response;
-      this.loading = false;
-    },
-    (error: any) => {
-      this.setError(error);
-    });
+    this.galleryService.getImages(category).subscribe(
+      (response: ImageModel[]) => {
+        this.images = response;
+        this.loading = false;
+      },
+      (error: any) => {
+        this.setError(error);
+      }
+    );
   }
 
   categoryChanged() {
@@ -45,25 +47,24 @@ export class AdminShowPhotosComponent implements OnInit {
     this.getImages(this.category);
   }
 
-  deleteImage(public_id: string) {
-
+  deleteImage(publicId: string) {
     this.loading = true;
-    this.galleryService.removeImage(public_id)
-    .subscribe((responce: any) => {
-      this.ngOnInit();
-    },
-    (error: any) => {
-      this.setError(error);
-    });
+    this.galleryService.removeImage(publicId).subscribe(
+      (responce: any) => {
+        this.ngOnInit();
+      },
+      (error: any) => {
+        this.setError(error);
+      }
+    );
   }
 
   setError(err: string) {
-		this.error = err;
-		this.loading = false;
-	}
+    this.error = err;
+    this.loading = false;
+  }
 
-	clearError() {
-		this.error = null;
-	}
-
+  clearError() {
+    this.error = null;
+  }
 }

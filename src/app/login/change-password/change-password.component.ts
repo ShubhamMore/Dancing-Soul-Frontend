@@ -10,20 +10,21 @@ import { HttpService } from '../../services/httpPost.service';
   styleUrls: ['./change-password.component.css']
 })
 export class ChangePasswordComponent implements OnInit {
-
   form: FormGroup;
 
-  loading: boolean = true;
-  error: string = null;
+  loading: boolean;
+  error: string;
   user: string;
 
-  constructor(private httpPostService: HttpService,
-              private authService: AuthService,
-              private roure: ActivatedRoute,
-              private router: Router) { }
+  constructor(
+    private httpPostService: HttpService,
+    private authService: AuthService,
+    private roure: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-
+    this.loading = true;
     this.form = new FormGroup({
       currentPassword: new FormControl(null, {
         validators: [Validators.required]
@@ -36,41 +37,42 @@ export class ChangePasswordComponent implements OnInit {
       })
     });
 
-    this.user = "";
+    this.user = '';
 
     this.loading = false;
   }
 
   changePassword() {
-
-    if(this.form.valid) {
+    if (this.form.valid) {
       this.loading = true;
 
       const data = {
-        api: "changePassword",
-        data : {
+        api: 'changePassword',
+        data: {
           email: JSON.parse(localStorage.getItem('userData')).email,
           password: this.form.value.currentPassword,
           newPassword: this.form.value.newPassword
         }
-      }
+      };
 
-      this.httpPostService.httpPostAuth(data).subscribe((val) => {
-        this.loading = false;
-        this.form.reset();
-      },
-      (error) => {
-        this.setError(error);
-      });
+      this.httpPostService.httpPostAuth(data).subscribe(
+        val => {
+          this.loading = false;
+          this.form.reset();
+        },
+        error => {
+          this.setError(error);
+        }
+      );
     }
   }
 
   setError(err: string) {
-		this.error = err;
-		this.loading = false;
-	}
+    this.error = err;
+    this.loading = false;
+  }
 
-	clearErr() {
-		this.error = null;
-	}
+  clearErr() {
+    this.error = null;
+  }
 }

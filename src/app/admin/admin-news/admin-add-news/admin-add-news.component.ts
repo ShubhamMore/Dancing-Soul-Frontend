@@ -9,21 +9,25 @@ import { NewsService } from '../../../services/news.service';
   styleUrls: ['./admin-add-news.component.css']
 })
 export class AdminAddNewsComponent implements OnInit {
-  
   form: FormGroup;
-  formError: boolean = false;
+  formError: boolean;
 
-  loading: boolean = true;
-  error: string = null;
+  loading: boolean;
+  error: string;
 
-  imgExt: string[] = ['jpg', 'png'];
+  imgExt: string[];
 
-  constructor(private newsService: NewsService,
-              private router: Router,
-              private route: ActivatedRoute) { }
+  constructor(
+    private newsService: NewsService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
+    this.loading = true;
+    this.formError = false;
 
+    this.imgExt = ['jpg', 'png'];
     this.form = new FormGroup({
       title: new FormControl(null, {
         validators: [Validators.required]
@@ -37,39 +41,40 @@ export class AdminAddNewsComponent implements OnInit {
   }
 
   addNews() {
-    if(this.form.invalid) {
+    if (this.form.invalid) {
       this.formError = true;
     }
 
-    if(this.form.valid) {
+    if (this.form.valid) {
       this.formError = false;
       this.loading = true;
       const news = {
         title: this.form.value.title,
         body: this.form.value.body
-      }
-      this.newsService.addNews(news)
-      .subscribe((responce: any) => {
-        this.form.reset();
-        this.cancel();
-      },
-      (error: any) => {
-        this.setError(error);
-      });
+      };
+      this.newsService.addNews(news).subscribe(
+        (responce: any) => {
+          this.form.reset();
+          this.cancel();
+        },
+        (error: any) => {
+          this.setError(error);
+        }
+      );
     }
   }
 
   cancel() {
     this.loading = true;
-    this.router.navigate(["/admin", "news"], {relativeTo: this.route, skipLocationChange: true});        
+    this.router.navigate(['/admin', 'news'], { relativeTo: this.route, skipLocationChange: true });
   }
 
   setError(err: string) {
-		this.error = err;
-		this.loading = false;
-	}
+    this.error = err;
+    this.loading = false;
+  }
 
-	clearError() {
-		this.error = null;
-	}
+  clearError() {
+    this.error = null;
+  }
 }

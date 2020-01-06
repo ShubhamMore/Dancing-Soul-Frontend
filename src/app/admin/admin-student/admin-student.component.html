@@ -1,13 +1,15 @@
-<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
+<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading" />
 
 <div class="row" *ngIf="!loading">
   <div class="col-12">
     <div class="row mt-2" *ngIf="!!error">
       <div class="col-10 mx-auto">
-      <div class="alert alert-danger alert-dismissible">
-        <button type="button" class="close" (click)="clearError()" data-dismiss="alert">&times;</button>
-        <span>{{error}}</span>
-      </div>
+        <div class="alert alert-danger alert-dismissible">
+          <button type="button" class="close" (click)="clearError()" data-dismiss="alert">
+            &times;
+          </button>
+          <span>{{ error }}</span>
+        </div>
       </div>
     </div>
     <div class="row mt-2">
@@ -20,30 +22,60 @@
             <button class="new-btn float-right" (click)="onNewStudent()">Add New student</button>
           </div>
         </div>
-        <hr>
+        <hr />
         <div class="row">
           <div class="col-md-4 col-sm-12">
-            <select class="branch" type="text" name="branch" id="branch" ngModel #branch="ngModel" required (change)="onSelectBranch(branch.value)">
+            <select
+              class="branch"
+              type="text"
+              name="branch"
+              id="branch"
+              ngModel
+              #branch="ngModel"
+              required
+              (change)="onSelectBranch(branch.value)"
+            >
               <option value="">Select Branch</option>
-              <option *ngFor="let branch of branches" [value]="branch._id">{{branch.branch}}</option>
-          </select>
+              <option *ngFor="let branch of branches" [value]="branch._id">{{
+                branch.branch
+              }}</option>
+            </select>
           </div>
           <div class="col-md-4 col-sm-12">
-            <select class="batch" type="text" name="batch" id="batch" ngModel #batch="ngModel" required (change)="onSelectBatch(batch.value)">
+            <select
+              class="batch"
+              type="text"
+              name="batch"
+              id="batch"
+              ngModel
+              #batch="ngModel"
+              required
+              (change)="onSelectBatch(batch.value)"
+            >
               <option value="">Select Batch Name</option>
               <ng-container *ngFor="let batch of batches">
-                <option [value]="batch._id" *ngIf="batch.batchType === weekType">{{batch.batchName}}</option>
+                <option [value]="batch._id" *ngIf="batch.batchType === weekType">{{
+                  batch.batchName
+                }}</option>
               </ng-container>
-          </select>
+            </select>
           </div>
           <div class="col-md-4 col-sm-12">
-            <select class="batchType" type="text" name="batchType" id="batchType" [(ngModel)]="weekType" #batchType="ngModel" (change)="onSelectBatchType(batchType.value)">
+            <select
+              class="batchType"
+              type="text"
+              name="batchType"
+              id="batchType"
+              [(ngModel)]="weekType"
+              #batchType="ngModel"
+              (change)="onSelectBatchType(batchType.value)"
+            >
               <option value="0">Week Day</option>
               <option value="1">Week End</option>
-          </select>
+            </select>
           </div>
         </div>
-        <br>
+        <br />
         <div class="row" *ngIf="students.length > 0; else empty_students">
           <div class="table-responsive">
             <table class="table table-sm table-hover">
@@ -58,24 +90,40 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="student-tr" *ngFor="let student of students, let i = index" routerLinkActive="active">
-                  <td>{{ i+1 }}</td>
+                <tr
+                  class="student-tr"
+                  *ngFor="let student of students; let i = index"
+                  routerLinkActive="active"
+                >
+                  <td>{{ i + 1 }}</td>
                   <td>
                     <a [routerLink]="student._id" class="student" skipLocationChange>
                       {{ student.name }}
                     </a>
                   </td>
+                  <td>+91 {{ student.phone }}</td>
                   <td>
-                    +91 {{ student.phone }}
+                    {{ student.status == '1' ? 'ACTIVATED' : 'DEACTIVATED' }}
                   </td>
                   <td>
-                    {{ student.status == "1" ? "ACTIVATED" : "DEACTIVATED" }}
+                    <button
+                      type="button"
+                      [routerLink]="[student._id, 'generate']"
+                      class="btn-edit"
+                      skipLocationChange
+                    >
+                      Pay Fees
+                    </button>
                   </td>
                   <td>
-                    <button type="button" [routerLink]="[student._id, 'generate']" class="btn-edit" skipLocationChange>Pay Fees</button>                
-                  </td>
-                  <td>
-                    <button type="button" [routerLink]="[student._id, 'receipts']" class="btn-edit" skipLocationChange>Receipts</button>                
+                    <button
+                      type="button"
+                      [routerLink]="[student._id, 'receipts']"
+                      class="btn-edit"
+                      skipLocationChange
+                    >
+                      Receipts
+                    </button>
                   </td>
                 </tr>
               </tbody>
@@ -83,7 +131,7 @@
           </div>
         </div>
         <ng-template #empty_students>
-          <h5 class="pl-3">{{noStudent}}</h5>
+          <h5 class="pl-3">{{ noStudent }}</h5>
         </ng-template>
       </div>
     </div>

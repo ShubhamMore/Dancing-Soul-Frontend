@@ -7,11 +7,10 @@ import { throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class GalleryService {
-
-  constructor(private httpService: HttpService) { }
+  constructor(private httpService: HttpService) {}
 
   addImages(images: FormData) {
-    const data = { api : "addImages", data : images }       
+    const data = { api: 'addImages', data: images };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -23,7 +22,7 @@ export class GalleryService {
   }
 
   getImages(category: string) {
-    const data = { api: "getImages", data: {category}}        
+    const data = { api: 'getImages', data: { category } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -35,7 +34,7 @@ export class GalleryService {
   }
 
   getAllImages() {
-    const data = { api : "getAllImages", data : {}}        
+    const data = { api: 'getAllImages', data: {} };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -46,8 +45,8 @@ export class GalleryService {
     );
   }
 
-  removeImage(public_id: string) {
-    const data = { api : "removeImage", data : {public_id}}         
+  removeImage(publicId: string) {
+    const data = { api: 'removeImage', data: { public_id: publicId } };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -59,7 +58,7 @@ export class GalleryService {
   }
 
   addVideo(video: any) {
-    const data = { api : "addVideo", data : video }       
+    const data = { api: 'addVideo', data: video };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -71,7 +70,7 @@ export class GalleryService {
   }
 
   getVideos() {
-    const data = { api : "getVideos", data : {}}        
+    const data = { api: 'getVideos', data: {} };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -82,9 +81,8 @@ export class GalleryService {
     );
   }
 
-  
-  getVideo(_id: string) {
-    const data = { api : "getVideo", data : {_id}}        
+  getVideo(id: string) {
+    const data = { api: 'getVideo', data: { _id: id } };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -95,8 +93,8 @@ export class GalleryService {
     );
   }
 
-  removeVideo(_id: string) {
-    const data = { api : "removeVideo", data : {_id}}         
+  removeVideo(id: string) {
+    const data = { api: 'removeVideo', data: { _id: id } };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -106,5 +104,4 @@ export class GalleryService {
       })
     );
   }
-
 }

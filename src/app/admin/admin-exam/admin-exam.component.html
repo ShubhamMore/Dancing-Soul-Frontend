@@ -1,28 +1,30 @@
-  <img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
+<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading" />
 
-  <div class="row" *ngIf="!loading">
-    <div class="col-12">
-      <div class="row mt-2" *ngIf="!!error">
-        <div class="col-10 mx-auto">
+<div class="row" *ngIf="!loading">
+  <div class="col-12">
+    <div class="row mt-2" *ngIf="!!error">
+      <div class="col-md-10 col-12 mx-auto">
         <div class="alert alert-danger alert-dismissible">
-          <button type="button" class="close" (click)="clearError()" data-dismiss="alert">&times;</button>
-          <span>{{error}}</span>
-        </div>
+          <button type="button" class="close" (click)="clearError()" data-dismiss="alert">
+            &times;
+          </button>
+          <span>{{ error }}</span>
         </div>
       </div>
-      <div class="row mt-2">
-        <div class="col-12 mx-auto">
-          <div class="row">
-            <div class="col-6">
-              <h3>Exams</h3>
-            </div>
-            <div class="col-6">
-              <button class="new-btn float-right" (click)="onNewExam()">Create New exam</button>
-            </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-12 mx-auto">
+        <div class="row">
+          <div class="col-6">
+            <h3>Exams</h3>
           </div>
-          <hr>
-          <div class="table-responsive" *ngIf="exams.length > 0; else empty_exams">
-            <table class="table table-sm">
+          <div class="col-6">
+            <button class="new-btn float-right" (click)="onNewExam()">Create New exam</button>
+          </div>
+        </div>
+        <hr />
+        <div class="table-responsive" *ngIf="exams.length > 0; else empty_exams">
+          <table class="table table-sm">
             <thead>
               <tr>
                 <th>ID</th>
@@ -32,25 +34,34 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="exam" *ngFor="let exam of exams, let i = index">
-                <td>{{ i+1 }}</td>
+              <tr class="exam" *ngFor="let exam of exams; let i = index">
+                <td>{{ i + 1 }}</td>
                 <td>
-                  <a class="title" [routerLink]="exam._id" skipLocationChange>{{exam.title}} </a>
+                  <a class="title" [routerLink]="exam._id" skipLocationChange>{{ exam.title }} </a>
                 </td>
                 <td>
-                  <button type="button" [routerLink]="[exam._id, 'edit']" class="btn-edit float-left" skipLocationChange>Edit</button>
+                  <button
+                    type="button"
+                    [routerLink]="[exam._id, 'edit']"
+                    class="btn-edit float-left"
+                    skipLocationChange
+                  >
+                    Edit
+                  </button>
                 </td>
                 <td>
-                  <button type="button" class="btn-delete" (click)="deleteExam(exam._id)">Delete</button>
+                  <button type="button" class="btn-delete" (click)="deleteExam(exam._id)">
+                    Delete
+                  </button>
                 </td>
               </tr>
             </tbody>
           </table>
-          </div>
+        </div>
         <ng-template #empty_exams>
           <h5 class="pl-3">No Exams Available..</h5>
         </ng-template>
-        </div>
       </div>
     </div>
   </div>
+</div>

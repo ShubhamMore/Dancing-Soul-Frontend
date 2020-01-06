@@ -9,78 +9,83 @@ import { FacultyService } from '../../../services/faculty.service';
   styleUrls: ['./admin-show-faculty.component.css']
 })
 export class AdminShowFacultyComponent implements OnInit {
+  faculty: FacultyModel;
+  loading: boolean;
+  error: string;
 
-  faculty: FacultyModel = null;
-  loading: boolean = true;
-  error: string = null;
-
-  constructor(private facultyServce: FacultyService,
-              private route: ActivatedRoute,
-              private router: Router) { }
+  constructor(
+    private facultyServce: FacultyService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.route.params.
-    subscribe(
-      (params: Params) => {
-        const _id = params['id'];
-        this.facultyServce.getFaculty(_id)
-        .subscribe((responce: FacultyModel) => {
+    this.loading = true;
+    this.route.params.subscribe((params: Params) => {
+      // tslint:disable-next-line: no-string-literal
+      const id = params['id'];
+      this.facultyServce.getFaculty(id).subscribe(
+        (responce: FacultyModel) => {
           this.faculty = responce;
           this.loading = false;
         },
         (error: any) => {
           this.setError(error);
-        });
-      }
-    );
+        }
+      );
+    });
   }
 
-  changeStatus(_id: string, status: string) {
+  changeStatus(id: string, status: string) {
     let statusConfirm: any = true;
-    if (status === "0") {
-      statusConfirm = confirm("do you really want to Deactivate Faculty??");
-    }
-    else if (status === "1") {
-      statusConfirm = confirm("do you want to Activate this Faculty again??");
+    if (status === '0') {
+      statusConfirm = confirm('do you really want to Deactivate Faculty??');
+    } else if (status === '1') {
+      statusConfirm = confirm('do you want to Activate this Faculty again??');
     }
 
     if (statusConfirm) {
       this.loading = true;
-      this.facultyServce.changeFacultyStatus(_id, status)
-      .subscribe((responce: any) => {
-        this.cancel();
-      },
-      (error: any) => {
-        this.setError(error);
-      });
+      this.facultyServce.changeFacultyStatus(id, status).subscribe(
+        (responce: any) => {
+          this.cancel();
+        },
+        (error: any) => {
+          this.setError(error);
+        }
+      );
     }
   }
 
   deleteFaculty() {
-    const password = prompt("Please enter your Password");
-    if(password) {
+    const password = prompt('Please enter your Password');
+    if (password) {
       this.loading = true;
-      this.facultyServce.deleteFaculty(this.faculty._id, password)
-      .subscribe((responce: any) => {
-        this.cancel();
-      },
-      (error: any) => {
-        this.setError(error); 
-      });
+      this.facultyServce.deleteFaculty(this.faculty._id, password).subscribe(
+        (responce: any) => {
+          this.cancel();
+        },
+        (error: any) => {
+          this.setError(error);
+        }
+      );
     }
   }
 
   cancel() {
     this.loading = true;
-    this.router.navigate(['/admin', 'faculty'], {relativeTo: this.route, skipLocationChange: true});
+    this.router.navigate(['/admin', 'faculty'], {
+      relativeTo: this.route,
+      skipLocationChange: true
+    });
   }
 
   setError(err: string) {
-		this.error = err;
-		this.loading = false;
-	}
+    this.error = err;
+    this.loading = false;
+  }
 
-	clearErr() {
-		this.error = null;
-	}
+  clearErr() {
+    this.error = null;
+  }
 }

@@ -8,9 +8,8 @@ describe('AdminShowBranchComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminShowBranchComponent ]
-    })
-    .compileComponents();
+      declarations: [AdminShowBranchComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

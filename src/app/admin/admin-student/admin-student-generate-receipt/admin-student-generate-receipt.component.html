@@ -1,13 +1,15 @@
-<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
+<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading" />
 
 <div class="row" *ngIf="!loading">
   <div class="col-12">
     <div class="row mt-2" *ngIf="!!error">
       <div class="col-10 mx-auto">
-      <div class="alert alert-danger alert-dismissible">
-        <button type="button" class="close" (click)="clearError()" data-dismiss="alert">&times;</button>
-        <span>{{error}}</span>
-      </div>
+        <div class="alert alert-danger alert-dismissible">
+          <button type="button" class="close" (click)="clearError()" data-dismiss="alert">
+            &times;
+          </button>
+          <span>{{ error }}</span>
+        </div>
       </div>
     </div>
     <div class="row mt-2">
@@ -16,7 +18,6 @@
         <div class="row">
           <div class="col-12">
             <form class="" (submit)="payFees()" [formGroup]="form">
-
               <div class="row">
                 <div class="col-12">
                   <label for="feeType">Select Fee Type : </label>
@@ -37,7 +38,7 @@
                             <strong>Student Name : </strong>
                           </td>
                           <td>
-                            <p>{{student.name}}</p>
+                            <p>{{ student.name }}</p>
                           </td>
                         </tr>
                         <tr>
@@ -45,7 +46,7 @@
                             <strong>Branch : </strong>
                           </td>
                           <td>
-                            <p>{{studentMetaData.branch}}</p>
+                            <p>{{ studentMetaData.branch }}</p>
                           </td>
                         </tr>
                         <tr>
@@ -53,7 +54,9 @@
                             <strong>Batch : </strong>
                           </td>
                           <td>
-                            <p>{{student.batchType == "0" ? "Week Day Batch" : "Week End Batch"}}</p>
+                            <p>
+                              {{ student.batchType == '0' ? 'Week Day Batch' : 'Week End Batch' }}
+                            </p>
                           </td>
                         </tr>
                         <tr>
@@ -61,7 +64,7 @@
                             <strong>Batch Name : </strong>
                           </td>
                           <td>
-                            <p>{{studentMetaData.batch.batchName}}</p>
+                            <p>{{ studentMetaData.batch.batchName }}</p>
                           </td>
                         </tr>
                         <tr>
@@ -69,10 +72,21 @@
                             <strong>Fees : </strong>
                           </td>
                           <td>
-                            <p *ngIf="feeType == '0'">Rs. {{studentMetaData.batch.fees}}.00/-</p>   
+                            <p *ngIf="feeType == '0'">Rs. {{ studentMetaData.batch.fees }}.00/-</p>
 
-                            <input type="number" name="fees" id="fees" pattern="\d*" [value]="amount" (input)="addCustomAmount($event)" placeholder="Rs." *ngIf="feeType == '1'">
-                            <span *ngIf="(feeType == '1') && amountError">*Please Enter valid fee amount</span>
+                            <input
+                              type="number"
+                              name="fees"
+                              id="fees"
+                              pattern="\d*"
+                              [value]="amount"
+                              (input)="addCustomAmount($event)"
+                              placeholder="Rs."
+                              *ngIf="feeType == '1'"
+                            />
+                            <span *ngIf="feeType == '1' && amountError"
+                              >*Please Enter valid fee amount</span
+                            >
                           </td>
                         </tr>
                       </tbody>
@@ -80,11 +94,15 @@
                   </div>
                 </div>
               </div>
-    
-              <hr>
-  
-              <form class="monthsForm" (submit)="payFees()" [formGroup]="monthsForm" *ngIf="feeType == '0'">
-                
+
+              <hr />
+
+              <form
+                class="monthsForm"
+                (submit)="payFees()"
+                [formGroup]="monthsForm"
+                *ngIf="feeType == '0'"
+              >
                 <div class="row">
                   <div class="col-12">
                     <div class="form-group">
@@ -92,35 +110,66 @@
                       <div class="months-selector">
                         <div formArrayName="months">
                           <label *ngFor="let m of monthsForm.get('months').controls; let i = index">
-                            <input type="checkbox" [id]="month[i]" class="month" [formControlName]="i" (change)="addMonth($event, i)">
-                            <label [for]="month[i]">{{month[i]}}</label>
+                            <input
+                              type="checkbox"
+                              [id]="month[i]"
+                              class="month"
+                              [formControlName]="i"
+                              (change)="addMonth($event, i)"
+                            />
+                            <label [for]="month[i]">{{ month[i] }}</label>
                           </label>
                         </div>
-                      </div>  
-                      <span *ngIf="!monthsForm.get('months').valid && monthsTouched">*Please Select Months</span>
+                      </div>
+                      <span *ngIf="!monthsForm.get('months').valid && monthsTouched"
+                        >*Please Select Months</span
+                      >
                     </div>
                   </div>
                 </div>
-  
               </form>
 
               <div class="row" *ngIf="feeType == '1'">
                 <div class="col-12">
                   <label for="feeDescription">Description : </label>
-                  <textarea name="feeDescription" id="feeDescription" rows="3" (input)="addfeeDescription($event)"></textarea>
-                  <span class="input-error" *ngIf="feeDescriptionError">*Please enter Fees Description</span>
+                  <textarea
+                    name="feeDescription"
+                    id="feeDescription"
+                    rows="3"
+                    (input)="addfeeDescription($event)"
+                  ></textarea>
+                  <span class="input-error" *ngIf="feeDescriptionError"
+                    >*Please enter Fees Description</span
+                  >
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-md-6 col-12">
-                  <label class="pointer" for="lateFeeCheckBox">Click here to {{ lateFee ? 'Remove' : 'Add '}} Late Fee</label>
-                  <input class="lateFeeCheckBox" type="checkbox" name="lateFeeCheckBox" id="lateFeeCheckBox" (change)="addLateFee($event)" hidden>
+                  <label class="pointer" for="lateFeeCheckBox"
+                    >Click here to {{ lateFee ? 'Remove' : 'Add ' }} Late Fee</label
+                  >
+                  <input
+                    class="lateFeeCheckBox"
+                    type="checkbox"
+                    name="lateFeeCheckBox"
+                    id="lateFeeCheckBox"
+                    (change)="addLateFee($event)"
+                    hidden
+                  />
                 </div>
 
                 <div class="col-md-6 col-12" *ngIf="lateFee">
-                  <input type="number" name="lateFee" id="lateFee" [value]="lateFeeAmount" (input)="addLateFeeAmount($event)">
-                  <span class="input-error" *ngIf="lateFeeError">*Please enter valid late fee amount</span>
+                  <input
+                    type="number"
+                    name="lateFee"
+                    id="lateFee"
+                    [value]="lateFeeAmount"
+                    (input)="addLateFeeAmount($event)"
+                  />
+                  <span class="input-error" *ngIf="lateFeeError"
+                    >*Please enter valid late fee amount</span
+                  >
                 </div>
               </div>
 
@@ -130,7 +179,13 @@
                     <label for="paymentMode">Payment Mode : </label>
                   </div>
                   <div class="col-md-6 col-sm-12">
-                    <select class="paymentMode" type="text" name="paymentMode" id="paymentMode" formControlName="payment_mode">
+                    <select
+                      class="paymentMode"
+                      type="text"
+                      name="paymentMode"
+                      id="paymentMode"
+                      formControlName="payment_mode"
+                    >
                       <option value="">Select Payment Mode</option>
                       <option value="cash">Cash</option>
                       <option value="cheque">Cheque</option>
@@ -141,14 +196,22 @@
                 </div>
                 <div class="row">
                   <div class="col-12">
-                    <span *ngIf="!form.get('payment_mode').valid && form.get('payment_mode').touched">*Please Select Payment Mode</span>
+                    <span
+                      *ngIf="!form.get('payment_mode').valid && form.get('payment_mode').touched"
+                      >*Please Select Payment Mode</span
+                    >
                   </div>
                 </div>
               </div>
 
               <div class="row pt-2">
                 <div class="col-12">
-                  <label>Amount : Rs. {{!!amount ? amount + (!!lateFeeAmount ? lateFeeAmount : 0) : '0'}}.00/-</label>
+                  <label
+                    >Amount : Rs.
+                    {{
+                      !!amount ? amount + (!!lateFeeAmount ? lateFeeAmount : 0) : '0'
+                    }}.00/-</label
+                  >
                 </div>
               </div>
 
@@ -158,18 +221,19 @@
                 </div>
               </div>
 
-              <hr>
+              <hr />
 
               <div class="row">
                 <div class="col-6">
                   <button type="submit" class="btn-pay">Pay</button>
                 </div>
                 <div class="col-6">
-                  <button type="button" class="btn-cancel float-right" (click)="cancel()">Cancel</button>
+                  <button type="button" class="btn-cancel float-right" (click)="cancel()">
+                    Cancel
+                  </button>
                 </div>
               </div>
-
-            </form> 
+            </form>
           </div>
         </div>
       </div>

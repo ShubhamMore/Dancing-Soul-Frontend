@@ -6,10 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin-gallary.component.css']
 })
 export class AdminGallaryComponent implements OnInit {
-
   constructor() {}
 
-  ngOnInit() {
-   
-  }
+  ngOnInit() {}
 }

@@ -9,37 +9,41 @@ import { FacultyService } from '../../services/faculty.service';
   styleUrls: ['./admin-faculty.component.css']
 })
 export class AdminFacultyComponent implements OnInit {
+  faculties: FacultyModel[];
+  loading: boolean;
+  error: string;
 
-  faculties : FacultyModel[] = [];
-  loading: boolean = true;
-  error: string = null;
-  
-  constructor(private facultyService: FacultyService,
-              private router: Router,
-              private route: ActivatedRoute) { }
+  constructor(
+    private facultyService: FacultyService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    this.facultyService.getFaculties()
-    .subscribe((responce: FacultyModel[]) => {
-      this.faculties = responce;
-      this.loading = false;
-    },
-    (error: any) => {
-      this.setError(error);
-    });
+    this.loading = true;
+    this.faculties = [];
+    this.facultyService.getFaculties().subscribe(
+      (responce: FacultyModel[]) => {
+        this.faculties = responce;
+        this.loading = false;
+      },
+      (error: any) => {
+        this.setError(error);
+      }
+    );
   }
 
   onNewFaculty() {
     this.loading = true;
-    this.router.navigate(['new'], {relativeTo: this.route, skipLocationChange: true});
+    this.router.navigate(['new'], { relativeTo: this.route, skipLocationChange: true });
   }
 
   setError(err: string) {
-		this.error = err;
-		this.loading = false;
-	}
+    this.error = err;
+    this.loading = false;
+  }
 
-	clearError() {
-		this.error = null;
-	}
+  clearError() {
+    this.error = null;
+  }
 }

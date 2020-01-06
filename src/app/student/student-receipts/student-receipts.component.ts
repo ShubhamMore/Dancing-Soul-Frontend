@@ -9,40 +9,42 @@ import { ReceiptModel } from '../../models/receipt.model';
   styleUrls: ['./student-receipts.component.css']
 })
 export class StudentReceiptsComponent implements OnInit {
+  receipts: ReceiptModel[];
 
-  receipts: ReceiptModel[] = [];
+  loading: boolean;
+  error: string;
+  id: string;
 
-  loading: boolean = true;
-  error: string = null;
-  _id: string;
+  constructor(
+    private receiptService: ReceiptService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
-  constructor(private receiptService: ReceiptService,
-              private route: ActivatedRoute,
-              private router: Router) { }
-                         
   ngOnInit() {
-    this.route.queryParams.
-    subscribe(
-      (params: Params) => {
-        this._id = params['id'];
-        this.receiptService.getReceipts(this._id)
-        .subscribe((responce: ReceiptModel[]) => {
-         this.receipts = responce;
-         this.loading = false;
+    this.loading = true;
+    this.receipts = [];
+    this.route.queryParams.subscribe((params: Params) => {
+      // tslint:disable-next-line: no-string-literal
+      this.id = params['id'];
+      this.receiptService.getReceipts(this.id).subscribe(
+        (responce: ReceiptModel[]) => {
+          this.receipts = responce;
+          this.loading = false;
         },
         (error: any) => {
           this.setError(error);
-        });
-      }
-    );
+        }
+      );
+    });
   }
-	
-	setError(err: string) {
-		this.error = err;
-		this.loading = false;
-	}
 
-	clearError() {
-		this.error = null;
-	}
+  setError(err: string) {
+    this.error = err;
+    this.loading = false;
+  }
+
+  clearError() {
+    this.error = null;
+  }
 }

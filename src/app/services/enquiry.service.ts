@@ -8,11 +8,10 @@ import { EnquiryModel } from '../models/enquiry.model';
   providedIn: 'root'
 })
 export class EnquiryService {
-
-  constructor(private httpService: HttpService) { }
+  constructor(private httpService: HttpService) {}
 
   getEnquiries() {
-    const data = { api: "getEnquiries", data: { }}
+    const data = { api: 'getEnquiries', data: {} };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -24,7 +23,7 @@ export class EnquiryService {
   }
 
   sendEnquiry(sendEmailData: any) {
-    const data = { api: "sendEnquiry", data: sendEmailData}
+    const data = { api: 'sendEnquiry', data: sendEmailData };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -35,8 +34,8 @@ export class EnquiryService {
     );
   }
 
-  getEnquiry(_id: string) {
-    const data = { api: "getEnquiry", data: { _id }}
+  getEnquiry(id: string) {
+    const data = { api: 'getEnquiry', data: { _id: id } };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -47,8 +46,8 @@ export class EnquiryService {
     );
   }
 
-  getEnquiryForReply(_id: string) {
-    const data = { api: "getEnquiryForReply", data: { _id }}
+  getEnquiryForReply(id: string) {
+    const data = { api: 'getEnquiryForReply', data: { _id: id } };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -60,7 +59,7 @@ export class EnquiryService {
   }
 
   getUnseenEnquiries() {
-    const data = { api: "getUnseenEnquiries", data: { }}
+    const data = { api: 'getUnseenEnquiries', data: {} };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -72,7 +71,7 @@ export class EnquiryService {
   }
 
   replyEnquiry(reply: any) {
-    const data = { api : "replyEnquiry", data : reply }
+    const data = { api: 'replyEnquiry', data: reply };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -82,5 +81,4 @@ export class EnquiryService {
       })
     );
   }
-
 }

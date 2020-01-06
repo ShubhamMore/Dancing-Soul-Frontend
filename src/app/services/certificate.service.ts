@@ -7,11 +7,10 @@ import { throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class CertificateService {
-
-  constructor(private httpService: HttpService) { }
+  constructor(private httpService: HttpService) {}
 
   saveCertificate(certificate: FormData) {
-    const data = {api: 'saveCertificate', data: certificate};
+    const data = { api: 'saveCertificate', data: certificate };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -23,7 +22,7 @@ export class CertificateService {
   }
 
   getCertificates(student: string) {
-    const data = {api: 'getCertificates', data: {student}};
+    const data = { api: 'getCertificates', data: { student } };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -34,8 +33,8 @@ export class CertificateService {
     );
   }
 
-  removeCertificate(_id: string, public_id: string) {
-    const data = {api: 'removeCertificate', data: {_id, public_id}};
+  removeCertificate(id: string, publicId: string) {
+    const data = { api: 'removeCertificate', data: { _id: id, public_id: publicId } };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;

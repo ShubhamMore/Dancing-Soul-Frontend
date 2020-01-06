@@ -1,63 +1,78 @@
-<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
+<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading" />
 
 <div class="row" *ngIf="!loading">
   <div class="col-12">
     <div class="row mt-2" *ngIf="!!error">
       <div class="col-10 mx-auto">
         <div class="alert alert-danger alert-dismissible">
-          <button type="button" class="close" (click)="clearError()" data-dismiss="alert">&times;</button>
-            <span>{{error}}</span>
+          <button type="button" class="close" (click)="clearError()" data-dismiss="alert">
+            &times;
+          </button>
+          <span>{{ error }}</span>
         </div>
       </div>
     </div>
     <div class="row mt-2">
       <div class="col-12 mx-auto">
         <button class="btn-close ml-2 float-right" type="button" (click)="cancle()">X</button>
-        <button class="btn-id-proof btn-save float-right" type="button" (click)="identity ? editIdentity() : addIdentity()">SAVE</button>
+        <button
+          class="btn-id-proof btn-save float-right"
+          type="button"
+          (click)="identity ? editIdentity() : addIdentity()"
+        >
+          SAVE
+        </button>
         <h3>ID Proof</h3>
-        <hr>
+        <hr />
 
         <div class="row">
           <div class="col-md-6 col-12">
             <h4>Aadhar Card</h4>
             <div *ngIf="aadharCard">
-              <img [src]="aadharCard" width="80%" alt="Aadhar Card">
+              <img [src]="aadharCard" width="80%" alt="Aadhar Card" />
             </div>
           </div>
           <div class="col-md-6 col-12">
             <h4>Birth Cirtificate</h4>
             <div *ngIf="birthCirtificate">
-              <img [src]="birthCirtificate" width="80%"   alt="Birth Cirtificate">
+              <img [src]="birthCirtificate" width="80%" alt="Birth Cirtificate" />
             </div>
           </div>
         </div>
 
-        <hr *ngIf="(!!aadharCard || !!birthCirtificate)">
+        <hr *ngIf="!!aadharCard || !!birthCirtificate" />
 
         <div class="row">
           <div class="col-md-6 col-12">
-
             <div class="row">
               <div class="col-12">
                 <div class="form-group">
-                  <input type="file" #aadharCardFilePicker (change)="onImagePicked($event, '0')">
-                  <button class="btn-add" type="button" id="images" (click)="aadharCardFilePicker.click()">Click Here to Pick Aadhar Card</button>
+                  <input type="file" #aadharCardFilePicker (change)="onImagePicked($event, '0')" />
+                  <button
+                    class="btn-add"
+                    type="button"
+                    id="images"
+                    (click)="aadharCardFilePicker.click()"
+                  >
+                    Click Here to Pick Aadhar Card
+                  </button>
                 </div>
                 <span *ngIf="invalidAadharCard">*Please Select a Valid Image File</span>
               </div>
             </div>
-              
+
             <div *ngIf="aadharCardPreview; else noAadharCard">
-              <h5>Aadhar Card To Upload : </h5>
+              <h5>Aadhar Card To Upload :</h5>
               <div class="row">
-                  <span class="m-2">
-                    <div class="preview-image">
-                      <img [src]="aadharCardPreview" alt="Preview">
-                      <a class="remove-image"(click)="cancelImage('0')"><i class="fa fa-remove remove"></i></a>
-                    </div>
-                  </span>
+                <span class="m-2">
+                  <div class="preview-image">
+                    <img [src]="aadharCardPreview" alt="Preview" />
+                    <a class="remove-image" (click)="cancelImage('0')"
+                      ><i class="fa fa-remove remove"></i
+                    ></a>
+                  </div>
+                </span>
               </div>
-            
             </div>
             <ng-template #noAadharCard><p>No Aadhar Card Picked yet</p></ng-template>
           </div>
@@ -66,30 +81,41 @@
             <div class="row">
               <div class="col-12">
                 <div class="form-group">
-                  <input type="file" #birthCirtificateFilePicker (change)="onImagePicked($event, '1')">
-                  <button class="btn-add" type="button" id="images" (click)="birthCirtificateFilePicker.click()">Click Here to Pick Birth Cirtificate</button>
+                  <input
+                    type="file"
+                    #birthCirtificateFilePicker
+                    (change)="onImagePicked($event, '1')"
+                  />
+                  <button
+                    class="btn-add"
+                    type="button"
+                    id="images"
+                    (click)="birthCirtificateFilePicker.click()"
+                  >
+                    Click Here to Pick Birth Cirtificate
+                  </button>
                 </div>
                 <span *ngIf="invalidBirthCirtificate">*Please Select a Valid Image File</span>
               </div>
             </div>
-              
+
             <div *ngIf="birthCirtificatePreview; else noBirthCirtificate">
-              <h5>Birth Cirtificate To Upload : </h5>
+              <h5>Birth Cirtificate To Upload :</h5>
               <div class="row">
-                  <span class="m-2">
-                    <div class="preview-image">
-                      <img [src]="birthCirtificatePreview" alt="Preview">
-                      <a class="remove-image"(click)="cancelImage('1')"><i class="fa fa-remove remove"></i></a>
-                    </div>
-                  </span>
+                <span class="m-2">
+                  <div class="preview-image">
+                    <img [src]="birthCirtificatePreview" alt="Preview" />
+                    <a class="remove-image" (click)="cancelImage('1')"
+                      ><i class="fa fa-remove remove"></i
+                    ></a>
+                  </div>
+                </span>
               </div>
-            
             </div>
             <ng-template #noBirthCirtificate><p>No Birth Cirtificate Picked yet</p></ng-template>
           </div>
-         
         </div>
       </div>
     </div>
-  </div> 
+  </div>
 </div>

@@ -8,9 +8,8 @@ describe('AdminAddVideosComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminAddVideosComponent ]
-    })
-    .compileComponents();
+      declarations: [AdminAddVideosComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
