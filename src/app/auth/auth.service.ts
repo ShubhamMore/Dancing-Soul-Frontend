@@ -5,7 +5,7 @@ import { catchError, tap, map } from 'rxjs/operators';
 import { throwError, BehaviorSubject } from 'rxjs';
 
 import { User } from './user.model';
-import { EnvVar } from '../shared/config';
+import { environment } from '../../environments/environment';
 
 export interface AuthResponseData {
   _id: string;
@@ -38,7 +38,7 @@ export class AuthService {
       email,
       password
     };
-    return this.http.post<AuthResponseData>(EnvVar.url + 'login', data).pipe(
+    return this.http.post<AuthResponseData>(environment.url + 'login', data).pipe(
       catchError(this.handleError),
       tap(resData => {
         this.handleAuthentication(
@@ -89,7 +89,7 @@ export class AuthService {
       token = 'Bearer ' + JSON.parse(localStorage.getItem('userData'))._token;
     }
     const headers = new HttpHeaders().set('Authorization', token);
-    return this.http.post(EnvVar.url + 'autoLogin', {}, { headers }).pipe(
+    return this.http.post(environment.url + 'autoLogin', {}, { headers }).pipe(
       map((response: any) => {
         return response;
       }),
@@ -113,7 +113,7 @@ export class AuthService {
       token = 'Bearer ' + JSON.parse(localStorage.getItem('userData'))._token;
     }
     const headers = new HttpHeaders().set('Authorization', token);
-    this.http.post(EnvVar.url + 'logout', {}, { headers }).subscribe(
+    this.http.post(environment.url + 'logout', {}, { headers }).subscribe(
       resData => {
         this.user.next(null);
         this.router.navigate(['/login']);
@@ -143,7 +143,7 @@ export class AuthService {
     }
     const headers = new HttpHeaders().set('Authorization', token);
 
-    return this.http.post(EnvVar.url + 'logoutAll', {}, { headers }).subscribe(
+    return this.http.post(environment.url + 'logoutAll', {}, { headers }).subscribe(
       resData => {
         this.user.next(null);
         this.router.navigate(['/login']);
