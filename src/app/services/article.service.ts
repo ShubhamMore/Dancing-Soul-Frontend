@@ -69,8 +69,8 @@ export class ArticleService {
     );
   }
 
-  deleteArticleImage(id: string, publicId: string) {
-    const data = { api: 'deleteArticleImage', data: { _id: id, public_id: publicId } };
+  deleteArticleFile(id: string, publicId: string) {
+    const data = { api: 'deleteArticleFile', data: { _id: id, public_id: publicId } };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;

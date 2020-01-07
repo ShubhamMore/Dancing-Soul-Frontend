@@ -54,33 +54,66 @@
             </div>
           </div>
 
-          <div class="row">
+          <div class="row" *ngIf="!article.file">
             <div class="col-md-6 col-12">
               <div class="form-group">
-                <label for="images">Pick Article Image to Upload : </label><br />
+                <label for="images">Pick Article File to Upload : </label><br />
                 <input type="file" #filePicker (change)="onImagePicked($event)" />
                 <button class="btn-add" type="button" id="images" (click)="filePicker.click()">
-                  Click Here to Pick Image
+                  Click Here to Pick File
                 </button>
-                <span *ngIf="invalidImage">*Please Select a Valid Image File</span>
+                <span *ngIf="invalidImage">*Please Select a Valid File</span>
               </div>
             </div>
             <div class="col-md-6 col-12">
-              <div *ngIf="imagePreview; else noImagePicked">
-                <h5>Image To Upload :</h5>
-                <div class="row">
-                  <span class="m-2">
-                    <div class="preview-image">
-                      <img [src]="imagePreview" alt="Preview" />
-                      <a class="remove-image" (click)="cancelImage()"
-                        ><i class="fa fa-remove remove"></i
-                      ></a>
-                    </div>
-                  </span>
+              <div class="row" *ngIf="imagePreview; else noImagePicked">
+                <h5>File To Upload :</h5>
+                <span class="m-2">
+                  <div class="preview-image">
+                    <img
+                      [src]="imagePreview"
+                      alt="Preview"
+                      *ngIf="ext === 'jpg' || ext === 'png'"
+                    />
+                    <img
+                      src="../../../../assets/images/pdf.png"
+                      alt="Preview"
+                      *ngIf="ext === 'pdf'"
+                    />
+                    <a class="remove-image" (click)="cancelImage()"
+                      ><i class="fa fa-remove remove"></i
+                    ></a>
+                  </div>
+                  <p class="file-name text-center">{{ uploadImage.name }}</p>
+                </span>
+              </div>
+              <ng-template #noImagePicked><p>No File Picked yet</p></ng-template>
+            </div>
+          </div>
+
+          <div class="row" *ngIf="article.file">
+            <span class="m-2">
+              <div class="image-container">
+                <img
+                  [src]="article.file.secure_url"
+                  class="image"
+                  [alt]="article.file.file_name"
+                  *ngIf="ext === 'jpg' || ext === 'png'"
+                />
+                <img
+                  src="../../../../assets/images/pdf.png"
+                  class="image"
+                  [alt]="article.file.file_name"
+                  *ngIf="ext === 'pdf'"
+                />
+                <div class="middle">
+                  <a class="delete" (click)="deleteArticleFile(article.file.public_id)"
+                    ><i class="fa fa-trash-o trash"></i
+                  ></a>
                 </div>
               </div>
-              <ng-template #noImagePicked><p>No Image Picked yet</p></ng-template>
-            </div>
+            </span>
+            <p class="file-name text-center">{{ article.file.file_name }}</p>
           </div>
 
           <div class="row" *ngIf="formError">

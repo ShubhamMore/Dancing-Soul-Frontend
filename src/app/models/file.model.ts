@@ -1,10 +1,9 @@
-export class ImageModel {
+export class FileModel {
   constructor(
     // tslint:disable-next-line: variable-name
     public _id: string,
-    public category: string,
     // tslint:disable-next-line: variable-name
-    public image_name: string,
+    public file_name: string,
     // tslint:disable-next-line: variable-name
     public secure_url: string,
     // tslint:disable-next-line: variable-name

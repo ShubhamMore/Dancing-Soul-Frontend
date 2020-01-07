@@ -20,8 +20,7 @@ export class AdminAddArticleComponent implements OnInit {
   uploadImage: File;
 
   invalidImage: boolean;
-
-  imgExt: string[];
+  ext: string;
 
   constructor(
     private articleService: ArticleService,
@@ -35,13 +34,12 @@ export class AdminAddArticleComponent implements OnInit {
     this.formError = false;
     this.invalidImage = false;
 
-    this.imgExt = ['jpg', 'png'];
     this.form = new FormGroup({
       title: new FormControl(null, {
         validators: [Validators.required]
       }),
       body: new FormControl(null, {
-        validators: [Validators.required]
+        validators: []
       })
     });
 
@@ -50,12 +48,12 @@ export class AdminAddArticleComponent implements OnInit {
 
   onImagePicked(event: Event) {
     const files = (event.target as HTMLInputElement).files;
-    const imgExt: string[] = ['jpg', 'png'];
-    let ext: string = null;
+    const imgExt: string[] = ['jpg', 'png', 'pdf'];
+    this.ext = null;
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < files.length; i++) {
-      ext = files[i].name.substring(files[i].name.lastIndexOf('.') + 1).toLowerCase();
-      if (!(imgExt.indexOf(ext) !== -1)) {
+      this.ext = files[i].name.substring(files[i].name.lastIndexOf('.') + 1).toLowerCase();
+      if (!(imgExt.indexOf(this.ext) !== -1)) {
         return (this.invalidImage = true);
       }
     }

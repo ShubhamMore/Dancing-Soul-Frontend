@@ -57,29 +57,39 @@
           <div class="row">
             <div class="col-md-6 col-12">
               <div class="form-group">
-                <label for="images">Pick Article Image to Upload : </label><br />
+                <label for="images">Pick Article File to Upload : </label><br />
                 <input type="file" #filePicker (change)="onImagePicked($event)" />
                 <button class="btn-add" type="button" id="images" (click)="filePicker.click()">
-                  Click Here to Pick Image
+                  Click Here to Pick File
                 </button>
-                <span *ngIf="invalidImage">*Please Select a Valid Image File</span>
+                <span *ngIf="invalidImage">*Please Select a Valid File</span>
               </div>
             </div>
             <div class="col-md-6 col-12">
               <div *ngIf="imagePreview; else noImagePicked">
-                <h5>Image To Upload :</h5>
+                <h5>File To Upload :</h5>
                 <div class="row">
                   <span class="m-2">
                     <div class="preview-image">
-                      <img [src]="imagePreview" alt="Preview" />
+                      <img
+                        [src]="imagePreview"
+                        alt="Preview"
+                        *ngIf="ext === 'jpg' || ext === 'png'"
+                      />
+                      <img
+                        src="../../../../assets/images/pdf.png"
+                        alt="Preview"
+                        *ngIf="ext === 'pdf'"
+                      />
                       <a class="remove-image" (click)="cancelImage()"
                         ><i class="fa fa-remove remove"></i
                       ></a>
                     </div>
+                    <p class="file-name text-center">{{ uploadImage.name }}</p>
                   </span>
                 </div>
               </div>
-              <ng-template #noImagePicked><p>No Image Picked yet</p></ng-template>
+              <ng-template #noImagePicked><p>No File Picked yet</p></ng-template>
             </div>
           </div>
 

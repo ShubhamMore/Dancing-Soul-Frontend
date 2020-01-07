@@ -26,21 +26,33 @@
 
           <div class="row">
             <div class="col-12">
-              <div *ngIf="image; else noImages">
+              <div *ngIf="article.file; else noFile">
                 <div class="row">
                   <span class="m-2">
                     <div class="image-container">
-                      <img [src]="image.secure_url" class="image" [alt]="image.image_name" />
-                      <div class="middle" *ngIf="image.public_id !== 'shared/1569750534235'">
-                        <a class="delete" (click)="deleteArticleImage(image.public_id)"
+                      <img
+                        [src]="article.file.secure_url"
+                        class="image"
+                        [alt]="article.file.file_name"
+                        *ngIf="ext === 'jpg' || ext === 'png'"
+                      />
+                      <img
+                        src="../../../../assets/images/pdf.png"
+                        class="image"
+                        [alt]="article.file.file_name"
+                        *ngIf="ext === 'pdf'"
+                      />
+                      <div class="middle">
+                        <a class="delete" (click)="deleteArticleFile(article.file.public_id)"
                           ><i class="fa fa-trash-o trash"></i
                         ></a>
                       </div>
                     </div>
                   </span>
+                  <p class="file-name text-center">{{ article.file.file_name }}</p>
                 </div>
               </div>
-              <ng-template #noImages><p>No Images Available</p></ng-template>
+              <ng-template #noFile><p>No File Available</p></ng-template>
             </div>
           </div>
 

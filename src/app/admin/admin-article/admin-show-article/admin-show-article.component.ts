@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ArticleModel } from '../../../models/articles.model';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ArticleService } from '../../../services/article.service';
-import { ImageModel } from '../../../models/image.model';
+import { FileModel } from '../../../models/file.model';
 
 @Component({
   selector: 'app-admin-show-article',
@@ -15,7 +15,7 @@ export class AdminShowArticleComponent implements OnInit {
   loading: boolean;
   error: string;
 
-  image: ImageModel;
+  ext: string;
 
   constructor(
     private articleService: ArticleService,
@@ -32,7 +32,11 @@ export class AdminShowArticleComponent implements OnInit {
       this.articleService.getArticle(id).subscribe(
         (responce: ArticleModel) => {
           this.article = responce;
-          this.image = this.article.image;
+          if (this.article.file) {
+            this.ext = this.article.file.file_name
+              .substring(this.article.file.file_name.lastIndexOf('.') + 1)
+              .toLowerCase();
+          }
           this.loading = false;
         },
         (error: any) => {
@@ -47,18 +51,21 @@ export class AdminShowArticleComponent implements OnInit {
     this.router.navigate(['edit'], { relativeTo: this.route, skipLocationChange: true });
   }
 
-  deleteArticleImage() {
-    this.loading = true;
-    this.articleService
-      .deleteArticleImage(this.article._id, this.article.image.public_id)
-      .subscribe(
-        (responce: any) => {
-          this.ngOnInit();
-        },
-        (error: any) => {
-          this.setError(error);
-        }
-      );
+  deleteArticleFile() {
+    const dltConfirm = confirm('do you really want to delete this Article File??');
+    if (dltConfirm) {
+      this.loading = true;
+      this.articleService
+        .deleteArticleFile(this.article._id, this.article.file.public_id)
+        .subscribe(
+          (responce: any) => {
+            this.ngOnInit();
+          },
+          (error: any) => {
+            this.setError(error);
+          }
+        );
+    }
   }
 
   delete() {
@@ -78,11 +85,11 @@ export class AdminShowArticleComponent implements OnInit {
   }
 
   cancel() {
-    this.loading = true;
     this.router.navigate(['/admin', 'article'], {
       relativeTo: this.route,
       skipLocationChange: true
     });
+    this.loading = false;
   }
 
   setError(err: string) {

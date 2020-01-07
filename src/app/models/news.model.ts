@@ -1,4 +1,11 @@
+import { FileModel } from './file.model';
+
 export class NewsModel {
-  // tslint:disable-next-line: variable-name
-  constructor(public _id: string, public title: string, public body: string) {}
+  constructor(
+    // tslint:disable-next-line: variable-name
+    public _id: string,
+    public title: string,
+    public body: string,
+    public file: FileModel
+  ) {}
 }

@@ -1,4 +1,4 @@
-import { ImageModel } from './image.model';
+import { FileModel } from './file.model';
 
 export class ArticleModel {
   constructor(
@@ -6,6 +6,6 @@ export class ArticleModel {
     public _id: string,
     public title: string,
     public body: string,
-    public image: ImageModel
+    public file: FileModel
   ) {}
 }

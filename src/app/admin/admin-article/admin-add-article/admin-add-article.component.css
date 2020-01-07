@@ -6,6 +6,11 @@ hr {
   margin: 5px 0;
 }
 
+.file-name {
+  font-size: 100%;
+  color: #000;
+}
+
 input[type='file'] {
   visibility: hidden;
 }

@@ -122,6 +122,7 @@ section {
   color: #fff;
 }
 .btn-edit,
+.btn-add-images,
 .btn-save,
 .btn-add,
 .reply-btn,
@@ -140,6 +141,7 @@ section {
 }
 
 .btn-edit:hover,
+.btn-add-images:hover,
 .btn-save:hover,
 .btn-add:hover,
 .reply-btn:hover,
@@ -201,6 +203,7 @@ section {
   color: #fff;
 }
 .btn-edit:focus,
+.btn-add-images:focus,
 .btn-save:focus,
 .btn-add:focus,
 .btn-cancel:focus,

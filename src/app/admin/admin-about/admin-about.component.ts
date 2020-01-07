@@ -52,6 +52,7 @@ export class AdminAboutComponent implements OnInit {
       this.aboutService.saveAbout(about).subscribe(
         (responce: any) => {
           this.form.reset();
+          this.about = about;
           this.cancel();
         },
         (error: any) => {
@@ -67,6 +68,7 @@ export class AdminAboutComponent implements OnInit {
 
   cancel() {
     this.editing = false;
+    this.loading = false;
   }
 
   setError(err: string) {

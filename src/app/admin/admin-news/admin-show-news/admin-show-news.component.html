@@ -26,6 +26,38 @@
 
           <div class="row">
             <div class="col-12">
+              <div *ngIf="news.file; else noFile">
+                <div class="row">
+                  <span class="m-2">
+                    <div class="image-container">
+                      <img
+                        [src]="news.file.secure_url"
+                        class="image"
+                        [alt]="news.file.file_name"
+                        *ngIf="ext === 'jpg' || ext === 'png'"
+                      />
+                      <img
+                        src="../../../../assets/images/pdf.png"
+                        class="image"
+                        [alt]="news.file.file_name"
+                        *ngIf="ext === 'pdf'"
+                      />
+                      <div class="middle">
+                        <a class="delete" (click)="deleteNewsFile(news.file.public_id)"
+                          ><i class="fa fa-trash-o trash"></i
+                        ></a>
+                      </div>
+                    </div>
+                  </span>
+                  <p class="file-name text-center">{{ news.file.file_name }}</p>
+                </div>
+              </div>
+              <ng-template #noFile><p>No File Available</p></ng-template>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
               <p>{{ news.body }}</p>
             </div>
           </div>
