@@ -64,6 +64,11 @@ import { AdminStudentCertificateComponent } from './admin/admin-student/admin-st
 import { AdminStudentShowProgressComponent } from './admin/admin-student/admin-student-show-progress/admin-student-show-progress.component';
 import { AdminStudentAddProgressComponent } from './admin/admin-student/admin-student-add-progress/admin-student-add-progress.component';
 
+import { AdminWorkComponent } from './admin/admin-work/admin-work.component';
+import { AdminWorkContentComponent } from './admin/admin-work/admin-work-content/admin-work-content.component';
+import { AdminShowWorkComponent } from './admin/admin-work/admin-show-work/admin-show-work.component';
+import { AdminShowWorkAttachmentComponent } from './admin/admin-work/admin-show-work-attachment/admin-show-work-attachment.component';
+
 import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 
@@ -134,6 +139,7 @@ const appRoutes: Routes = [
 
       { path: 'about', redirectTo: 'about/aim', pathMatch: 'full' },
       { path: 'about/aim', component: AdminAimComponent, canActivate: [AdminAuthGuard] },
+      { path: 'about/content', component: AdminAboutComponent, canActivate: [AdminAuthGuard] },
       { path: 'about/aim/edit', component: AdminEditAimComponent, canActivate: [AdminAuthGuard] },
       { path: 'about/history', component: AdminHistoryComponent, canActivate: [AdminAuthGuard] },
       {
@@ -247,6 +253,27 @@ const appRoutes: Routes = [
       {
         path: 'student/:id/receipts',
         component: AdminStudentReceiptsComponent,
+        canActivate: [AdminAuthGuard]
+      },
+
+      {
+        path: 'work',
+        component: AdminWorkComponent,
+        canActivate: [AdminAuthGuard]
+      },
+      {
+        path: 'work/contnet',
+        component: AdminWorkContentComponent,
+        canActivate: [AdminAuthGuard]
+      },
+      {
+        path: 'work/:id',
+        component: AdminShowWorkComponent,
+        canActivate: [AdminAuthGuard]
+      },
+      {
+        path: 'work/:id/:attach',
+        component: AdminShowWorkAttachmentComponent,
         canActivate: [AdminAuthGuard]
       },
 

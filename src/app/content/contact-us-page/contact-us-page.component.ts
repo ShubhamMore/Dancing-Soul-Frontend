@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { EnquiryService } from '../../services/enquiry.service';
-import { sendRequest } from 'selenium-webdriver/http';
 
 @Component({
   selector: 'app-contact-us-page',
@@ -8,17 +7,16 @@ import { sendRequest } from 'selenium-webdriver/http';
   styleUrls: ['./contact-us-page.component.css']
 })
 export class ContactUsPageComponent implements OnInit {
-
   contactDetailsJson = {
-    "phone": "9876543210",
-    "email": "dancingSoul@gmail.com",
-    "address": "kasarvadavali,Thane"
+    phone: '9876543210',
+    email: 'dancingSoul@gmail.com',
+    address: 'kasarvadavali,Thane'
   };
 
-  yourName = "your name";
-  yourPhone = "your phone";
-  yourEmail = "your e-mail";
-  yourMessage = "message";
+  yourName = 'your name';
+  yourPhone = 'your phone';
+  yourEmail = 'your e-mail';
+  yourMessage = 'message';
 
   latitude = -28.68352;
   longitude = -147.20785;
@@ -29,56 +27,55 @@ export class ContactUsPageComponent implements OnInit {
   message = this.yourMessage;
   contact = this.yourPhone;
 
-  constructor(private enquiryService: EnquiryService) { }
+  constructor(private enquiryService: EnquiryService) {}
 
-  ngOnInit() { 
-  }
-  
+  ngOnInit() {}
+
   inputUserName(userName: string) {
     this.userName = userName;
   }
-  
+
   inputEmailId(emailId: string) {
     this.emailId = emailId;
   }
-  
+
   inputMessage(message: string) {
     this.message = message;
   }
-  
+
   inputContact(contact: string) {
     this.contact = contact;
   }
-  
+
   clearText(event) {
-    if(this.yourName === event.srcElement.innerHTML) {
-      this.userName = "";
+    if (this.yourName === event.srcElement.innerHTML) {
+      this.userName = '';
     }
-    if(this.yourPhone === event.srcElement.innerHTML) {
-      this.contact = "";
-    }  
-    if(this.yourEmail === event.srcElement.innerHTML) {
-      this.emailId = "";
-    }  
-    if(this.yourMessage === event.srcElement.innerHTML) {
-      this.message = "";
-    }    
+    if (this.yourPhone === event.srcElement.innerHTML) {
+      this.contact = '';
+    }
+    if (this.yourEmail === event.srcElement.innerHTML) {
+      this.emailId = '';
+    }
+    if (this.yourMessage === event.srcElement.innerHTML) {
+      this.message = '';
+    }
   }
-  
+
   checkIfEmpty(event: any, inputName: string) {
     console.log(this.userName);
-    if(inputName === "userName" && event.srcElement.innerHTML === "") {
+    if (inputName === 'userName' && event.srcElement.innerHTML === '') {
       this.userName = this.yourName;
     }
-    if(inputName === "contact" && event.srcElement.innerHTML === "") {
+    if (inputName === 'contact' && event.srcElement.innerHTML === '') {
       this.contact = this.yourPhone;
     }
-    if(inputName === "emailId" && event.srcElement.innerHTML === "") {
+    if (inputName === 'emailId' && event.srcElement.innerHTML === '') {
       this.emailId = this.yourEmail;
-    }  
-    if(inputName === "message" && event.srcElement.innerHTML === "") {
+    }
+    if (inputName === 'message' && event.srcElement.innerHTML === '') {
       this.message = this.yourMessage;
-    }    
+    }
   }
 
   reset() {
@@ -89,7 +86,12 @@ export class ContactUsPageComponent implements OnInit {
   }
 
   formSubmit() {
-    if (this.userName === this.yourName && this.contact === this.yourPhone && this.emailId === this.yourEmail && this.message === this.yourMessage) {
+    if (
+      this.userName === this.yourName &&
+      this.contact === this.yourPhone &&
+      this.emailId === this.yourEmail &&
+      this.message === this.yourMessage
+    ) {
       return;
     }
     const sendEmailData = {
@@ -97,16 +99,13 @@ export class ContactUsPageComponent implements OnInit {
       email: this.emailId,
       phone: this.contact,
       message: this.message,
-      seen: "0"
-    }
+      seen: '0'
+    };
 
-    this.enquiryService.sendEnquiry(sendEmailData)
-    .subscribe((responce: any) => {
-      console.log(responce)
-    },
-    (error: any) => {
-      console.log(error)
-    });
+    this.enquiryService.sendEnquiry(sendEmailData).subscribe(
+      (responce: any) => {},
+      (error: any) => {}
+    );
     this.reset();
   }
 }

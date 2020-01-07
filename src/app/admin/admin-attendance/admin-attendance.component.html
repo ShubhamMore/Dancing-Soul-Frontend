@@ -78,7 +78,7 @@
             </div>
             <div class="col-md-6 col-sm-12">
               <br />
-              <button type="submit" class="btn-submit">Submit</button>
+              <button type="submit" class="btn-submit float-right">Submit</button>
             </div>
           </div>
         </form>
@@ -90,7 +90,7 @@
                 <tr>
                   <th>ID</th>
                   <th>Student</th>
-                  <th>Mark Attendance</th>
+                  <th class=" text-center">Mark Attendance</th>
                 </tr>
               </thead>
               <tbody>
@@ -100,7 +100,7 @@
                     {{ student.name }}
                   </td>
                   <td>
-                    <div class="attendance-selector">
+                    <div class="attendance-selector text-center">
                       <input
                         type="checkbox"
                         [id]="student._id"

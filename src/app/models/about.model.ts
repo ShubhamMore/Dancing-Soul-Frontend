@@ -4,6 +4,7 @@ export class AboutModel {
     public _id: string,
     public aim: string,
     public history: string,
-    public philosophy: string
+    public philosophy: string,
+    public content: string
   ) {}
 }

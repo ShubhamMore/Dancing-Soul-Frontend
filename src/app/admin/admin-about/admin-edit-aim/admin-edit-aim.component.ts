@@ -11,11 +11,8 @@ import { AboutModel } from '../../../models/about.model';
 })
 export class AdminEditAimComponent implements OnInit {
   form: FormGroup;
-
   about: AboutModel;
-
   loading: boolean;
-
   error: string;
 
   constructor(
@@ -51,7 +48,8 @@ export class AdminEditAimComponent implements OnInit {
         _id: this.about._id,
         aim: this.form.value.aim,
         history: this.about.history,
-        philosophy: this.about.philosophy
+        philosophy: this.about.philosophy,
+        content: this.about.content
       };
 
       this.aboutService.saveAbout(about).subscribe(

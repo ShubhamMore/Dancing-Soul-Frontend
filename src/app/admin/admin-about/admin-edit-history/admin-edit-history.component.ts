@@ -51,7 +51,8 @@ export class AdminEditHistoryComponent implements OnInit {
         _id: this.about._id,
         aim: this.about.aim,
         history: this.form.value.history,
-        philosophy: this.about.philosophy
+        philosophy: this.about.philosophy,
+        content: this.about.content
       };
 
       this.aboutService.saveAbout(about).subscribe(

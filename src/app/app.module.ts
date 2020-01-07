@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { AgmCoreModule } from '@agm/core';
 import { Angular2ImageGalleryModule } from 'angular2-image-gallery';
 
 // ROUTES
@@ -103,6 +102,11 @@ import { AdminStudentIdentityComponent } from './admin/admin-student/admin-stude
 import { AdminStudentCertificateComponent } from './admin/admin-student/admin-student-certificate/admin-student-certificate.component';
 import { AdminStudentAddProgressComponent } from './admin/admin-student/admin-student-add-progress/admin-student-add-progress.component';
 import { AdminStudentShowProgressComponent } from './admin/admin-student/admin-student-show-progress/admin-student-show-progress.component';
+
+import { AdminWorkComponent } from './admin/admin-work/admin-work.component';
+import { AdminWorkContentComponent } from './admin/admin-work/admin-work-content/admin-work-content.component';
+import { AdminShowWorkComponent } from './admin/admin-work/admin-show-work/admin-show-work.component';
+import { AdminShowWorkAttachmentComponent } from './admin/admin-work/admin-show-work-attachment/admin-show-work-attachment.component';
 
 import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
@@ -220,6 +224,11 @@ import { StudentService } from './services/student.service';
     AdminStudentCertificateComponent,
     AdminStudentAddProgressComponent,
     AdminStudentShowProgressComponent,
+    // ADMIN WORK COMPONENT
+    AdminWorkComponent,
+    AdminWorkContentComponent,
+    AdminShowWorkComponent,
+    AdminShowWorkAttachmentComponent,
     // ERROR COMPONENT
     PageNotFoundComponent,
     ServerErrorComponent,
@@ -242,10 +251,7 @@ import { StudentService } from './services/student.service';
     FormsModule,
     AppRoutes,
     HttpClientModule,
-    Angular2ImageGalleryModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCkUOdZ5y7hMm0yrcCQoCvLwzdM6M8s5qk'
-    })
+    Angular2ImageGalleryModule
   ],
 
   providers: [

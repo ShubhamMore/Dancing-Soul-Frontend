@@ -23,6 +23,11 @@
               >Philosophy</a
             >
           </li>
+          <li>
+            <a routerLink="/admin/about/content" routerLinkActive="active" skipLocationChange
+              >Content</a
+            >
+          </li>
         </ul>
       </li>
 
@@ -65,6 +70,7 @@
           </li>
         </ul>
       </li>
+
       <li>
         <a routerLink="/admin/exams" routerLinkActive="active" skipLocationChange>Exams</a>
       </li>
@@ -78,7 +84,25 @@
       </li>
 
       <li>
-        <a routerLink="/admin/enquiry" routerLinkActive="active" skipLocationChange>Enquiries</a>
+        <a
+          href="#enquirySubmenu"
+          data-toggle="collapse"
+          aria-expanded="false"
+          class="dropdown-toggle"
+          >Enquiries</a
+        >
+        <ul class="collapse list-unstyled" id="enquirySubmenu">
+          <li>
+            <a routerLink="/admin/enquiry" routerLinkActive="active" skipLocationChange
+              >Enquiries</a
+            >
+          </li>
+          <li>
+            <a routerLink="/admin/work" routerLinkActive="active" skipLocationChange
+              >Work Enquiries</a
+            >
+          </li>
+        </ul>
       </li>
     </ul>
   </nav>
