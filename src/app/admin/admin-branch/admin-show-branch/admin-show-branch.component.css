@@ -27,15 +27,16 @@ p {
 
 .image-container {
   position: relative;
-  width: 150px;
+  width: auto;
+  height: 150px;
 }
 
 .image {
   border-radius: 5px;
   opacity: 1;
   display: block;
-  width: 150px;
-  height: 100px;
+  width: auto;
+  height: 100%;
   transition: 0.5s ease;
   backface-visibility: hidden;
 }
