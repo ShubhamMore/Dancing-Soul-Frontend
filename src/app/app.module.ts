@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Angular2ImageGalleryModule } from 'angular2-image-gallery';
+import { PdfViewerModule } from 'ng2-pdf-viewer'; // <- import PdfViewerModule
 
 // ROUTES
 import { AppRoutes } from './app.routes.module';
@@ -251,7 +252,8 @@ import { StudentService } from './services/student.service';
     FormsModule,
     AppRoutes,
     HttpClientModule,
-    Angular2ImageGalleryModule
+    Angular2ImageGalleryModule,
+    PdfViewerModule
   ],
 
   providers: [

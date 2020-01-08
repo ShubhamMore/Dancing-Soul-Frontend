@@ -2,20 +2,11 @@
 
 <div class="row" *ngIf="!loading">
   <div class="col-12">
-    <div class="row mt-2" *ngIf="!!error">
-      <div class="col-10 mx-auto">
-        <div class="alert alert-danger alert-dismissible">
-          <button type="button" class="close" (click)="clearError()" data-dismiss="alert">
-            &times;
-          </button>
-          <span>{{ error }}</span>
-        </div>
-      </div>
-    </div>
+    <h2>Career</h2>
     <div class="row mt-2">
-      <!-- <div class="col-md-6 col-12">
+      <div class="col-md-6 col-12">
         <h3>{{ content }}</h3>
-      </div> -->
+      </div>
       <div class="col-md-6 col-12 mx-auto">
         <form class="add_title" (submit)="sendCareerEnquiry()" [formGroup]="form">
           <div class="row">

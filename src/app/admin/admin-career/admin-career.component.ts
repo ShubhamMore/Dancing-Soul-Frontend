@@ -21,6 +21,7 @@ export class AdminCareerComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
+    this.error = null;
     this.careers = [];
     this.careerService.getCareers().subscribe(
       (responce: any) => {
@@ -46,8 +47,7 @@ export class AdminCareerComponent implements OnInit {
       this.loading = true;
       this.careerService.deleteCareer(id).subscribe(
         (responce: any) => {
-          this.careers = responce;
-          this.loading = false;
+          this.ngOnInit();
         },
         (error: any) => {
           this.setError(error);

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CareerService } from '../../services/career.service';
+import { ContentService } from '../../services/content.service';
 
 @Component({
   selector: 'app-career-page',
@@ -26,6 +27,7 @@ export class CareerPageComponent implements OnInit {
 
   constructor(
     private careerService: CareerService,
+    private contentService: ContentService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -52,9 +54,9 @@ export class CareerPageComponent implements OnInit {
       })
     });
 
-    this.careerService.getCareerContent().subscribe(
+    this.contentService.getContent().subscribe(
       (resData: any) => {
-        this.content = resData.content;
+        this.content = resData.careerContent;
         this.loading = false;
       },
       (error: any) => {
