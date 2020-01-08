@@ -6,35 +6,11 @@ import { throwError } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class GalleryService {
+export class CareerService {
   constructor(private httpService: HttpService) {}
 
-  addImages(images: FormData) {
-    const data = { api: 'addImages', data: images };
-    return this.httpService.httpPostAuth(data).pipe(
-      map((response: any) => {
-        return response;
-      }),
-      catchError(err => {
-        return throwError(err);
-      })
-    );
-  }
-
-  getImages(category: string) {
-    const data = { api: 'getImages', data: { category } };
-    return this.httpService.httpPostAuth(data).pipe(
-      map((response: any) => {
-        return response;
-      }),
-      catchError(err => {
-        return throwError(err);
-      })
-    );
-  }
-
-  getAllImages() {
-    const data = { api: 'getAllImages', data: {} };
+  addCareer(career: any) {
+    const data = { api: 'addCareer', data: career };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -45,8 +21,8 @@ export class GalleryService {
     );
   }
 
-  removeImage(publicId: string) {
-    const data = { api: 'removeImage', data: { public_id: publicId } };
+  saveCareerContent(careerContent: string) {
+    const data = { api: 'saveCareerContent', data: { careerContent } };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -57,8 +33,20 @@ export class GalleryService {
     );
   }
 
-  addVideo(video: any) {
-    const data = { api: 'addVideo', data: video };
+  getCareerContent() {
+    const data = { api: 'getCareerContent', data: {} };
+    return this.httpService.httpPost(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError(err => {
+        return throwError(err);
+      })
+    );
+  }
+
+  getCareers() {
+    const data = { api: 'getCareers', data: {} };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
@@ -69,9 +57,9 @@ export class GalleryService {
     );
   }
 
-  getVideos() {
-    const data = { api: 'getVideos', data: {} };
-    return this.httpService.httpPost(data).pipe(
+  getCareer(id: string) {
+    const data = { api: 'getCareer', data: { _id: id } };
+    return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
       }),
@@ -81,20 +69,8 @@ export class GalleryService {
     );
   }
 
-  getVideo(id: string) {
-    const data = { api: 'getVideo', data: { _id: id } };
-    return this.httpService.httpPost(data).pipe(
-      map((response: any) => {
-        return response;
-      }),
-      catchError(err => {
-        return throwError(err);
-      })
-    );
-  }
-
-  removeVideo(id: string) {
-    const data = { api: 'removeVideo', data: { _id: id } };
+  deleteCareer(id: string) {
+    const data = { api: 'deleteCareer', data: { _id: id } };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;

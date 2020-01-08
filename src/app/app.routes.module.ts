@@ -64,10 +64,9 @@ import { AdminStudentCertificateComponent } from './admin/admin-student/admin-st
 import { AdminStudentShowProgressComponent } from './admin/admin-student/admin-student-show-progress/admin-student-show-progress.component';
 import { AdminStudentAddProgressComponent } from './admin/admin-student/admin-student-add-progress/admin-student-add-progress.component';
 
-import { AdminWorkComponent } from './admin/admin-work/admin-work.component';
-import { AdminWorkContentComponent } from './admin/admin-work/admin-work-content/admin-work-content.component';
-import { AdminShowWorkComponent } from './admin/admin-work/admin-show-work/admin-show-work.component';
-import { AdminShowWorkAttachmentComponent } from './admin/admin-work/admin-show-work-attachment/admin-show-work-attachment.component';
+import { AdminCareerComponent } from './admin/admin-career/admin-career.component';
+import { AdminCareerContentComponent } from './admin/admin-career/admin-career-content/admin-career-content.component';
+import { AdminShowCareerComponent } from './admin/admin-career/admin-show-career/admin-show-career.component';
 
 import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
@@ -98,6 +97,7 @@ import { FacultyComponent } from './faculty/faculty.component';
 import { HomePageComponent } from './content/home-page/home-page.component';
 import { AboutPageComponent } from './content/about-page/about-page.component';
 import { ContactUsPageComponent } from './content/contact-us-page/contact-us-page.component';
+import { CareerPageComponent } from './content/career-page/career-page.component';
 import { BranchesPageComponent } from './content/branches-page/branches-page.component';
 import { GalleryPageComponent } from './content/gallery-page/gallery-page.component';
 import { NewsShelterPageComponent } from './content/news-shelter-page/news-shelter-page.component';
@@ -110,6 +110,7 @@ const appRoutes: Routes = [
   { path: 'home', component: HomePageComponent, canActivate: [LoginAuthGuard] },
   { path: 'about', component: AboutPageComponent, canActivate: [LoginAuthGuard] },
   { path: 'contactUs', component: ContactUsPageComponent, canActivate: [LoginAuthGuard] },
+  { path: 'career', component: CareerPageComponent, canActivate: [LoginAuthGuard] },
   { path: 'branches', component: BranchesPageComponent, canActivate: [LoginAuthGuard] },
   { path: 'gallery', component: GalleryPageComponent, canActivate: [LoginAuthGuard] },
   { path: 'articles', component: ArticlesPageComponent, canActivate: [LoginAuthGuard] },
@@ -257,23 +258,18 @@ const appRoutes: Routes = [
       },
 
       {
-        path: 'work',
-        component: AdminWorkComponent,
+        path: 'career',
+        component: AdminCareerComponent,
         canActivate: [AdminAuthGuard]
       },
       {
-        path: 'work/contnet',
-        component: AdminWorkContentComponent,
+        path: 'career/content',
+        component: AdminCareerContentComponent,
         canActivate: [AdminAuthGuard]
       },
       {
-        path: 'work/:id',
-        component: AdminShowWorkComponent,
-        canActivate: [AdminAuthGuard]
-      },
-      {
-        path: 'work/:id/:attach',
-        component: AdminShowWorkAttachmentComponent,
+        path: 'career/:id',
+        component: AdminShowCareerComponent,
         canActivate: [AdminAuthGuard]
       },
 

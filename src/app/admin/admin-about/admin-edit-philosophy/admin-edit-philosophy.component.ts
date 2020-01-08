@@ -52,8 +52,7 @@ export class AdminEditPhilosophyComponent implements OnInit {
         _id: this.about._id,
         aim: this.about.aim,
         history: this.about.history,
-        philosophy: this.form.value.philosophy,
-        content: this.about.content
+        philosophy: this.form.value.philosophy
       };
 
       this.aboutService.saveAbout(about).subscribe(

@@ -30,6 +30,7 @@ import { FooterComponent } from './footer/footer.component';
 import { ContentComponent } from './content/content.component';
 import { HomePageComponent } from './content/home-page/home-page.component';
 import { AboutPageComponent } from './content/about-page/about-page.component';
+import { CareerPageComponent } from './content/career-page/career-page.component';
 import { ContactUsPageComponent } from './content/contact-us-page/contact-us-page.component';
 import { GalleryPageComponent } from './content/gallery-page/gallery-page.component';
 import { BranchesPageComponent } from './content/branches-page/branches-page.component';
@@ -103,10 +104,9 @@ import { AdminStudentCertificateComponent } from './admin/admin-student/admin-st
 import { AdminStudentAddProgressComponent } from './admin/admin-student/admin-student-add-progress/admin-student-add-progress.component';
 import { AdminStudentShowProgressComponent } from './admin/admin-student/admin-student-show-progress/admin-student-show-progress.component';
 
-import { AdminWorkComponent } from './admin/admin-work/admin-work.component';
-import { AdminWorkContentComponent } from './admin/admin-work/admin-work-content/admin-work-content.component';
-import { AdminShowWorkComponent } from './admin/admin-work/admin-show-work/admin-show-work.component';
-import { AdminShowWorkAttachmentComponent } from './admin/admin-work/admin-show-work-attachment/admin-show-work-attachment.component';
+import { AdminCareerComponent } from './admin/admin-career/admin-career.component';
+import { AdminCareerContentComponent } from './admin/admin-career/admin-career-content/admin-career-content.component';
+import { AdminShowCareerComponent } from './admin/admin-career/admin-show-career/admin-show-career.component';
 
 import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
@@ -154,6 +154,7 @@ import { StudentService } from './services/student.service';
     HomePageComponent,
     AboutPageComponent,
     ContactUsPageComponent,
+    CareerPageComponent,
     BranchesPageComponent,
     GalleryPageComponent,
     ArticlesPageComponent,
@@ -224,11 +225,10 @@ import { StudentService } from './services/student.service';
     AdminStudentCertificateComponent,
     AdminStudentAddProgressComponent,
     AdminStudentShowProgressComponent,
-    // ADMIN WORK COMPONENT
-    AdminWorkComponent,
-    AdminWorkContentComponent,
-    AdminShowWorkComponent,
-    AdminShowWorkAttachmentComponent,
+    // ADMIN CARIER COMPONENT
+    AdminCareerComponent,
+    AdminCareerContentComponent,
+    AdminShowCareerComponent,
     // ERROR COMPONENT
     PageNotFoundComponent,
     ServerErrorComponent,

@@ -17,16 +17,19 @@
         <div class="about">
           <div class="row">
             <div class="col-12">
-              <button type="button" class="btn-edit float-right" (click)="edit()">
+              <button type="button" class="btn-cancel float-right" (click)="back()">
+                X
+              </button>
+              <button type="button" class="btn-edit float-right mr-2" (click)="edit()">
                 Edit
               </button>
-              <h3>Content</h3>
+              <h3>Career Content</h3>
             </div>
           </div>
         </div>
         <hr />
         <div class="about-body">
-          <p>{{ content.content }}</p>
+          <p>{{ content.careerContent }}</p>
         </div>
       </div>
     </div>
@@ -34,7 +37,7 @@
       <div class="edit-content col-md-10 col-12 mx-auto">
         <form (submit)="saveContent()" [formGroup]="form">
           <div class="header">
-            <h3>Content</h3>
+            <h3>Career Content</h3>
           </div>
           <hr />
           <div class="body">
