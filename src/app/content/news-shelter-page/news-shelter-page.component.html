@@ -1,34 +1,51 @@
-<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
+<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading" />
 
 <h2 style="padding-top: 20px">News Shelter</h2>
 <div class="news-page" *ngIf="!loading">
-  <div class="container" *ngFor = "let news of newsList;let i = index">
+  <div class="container" *ngFor="let news of newsList; let i = index">
     <div class="row news-container">
-        <div class="col-md-12">
-          <div class="news-data"  [ngStyle]="{'min-height: 470px;':news.file&&news.file.secure_url}">
-            <img *ngIf='news.file && !news.file.secure_url.toUpperCase().endsWith(".PDF")' src="{{news.file.secure_url}}" alt="news Image" (click)="openImageModal(news.file.secure_url)">
-            <h3>{{news.title}}</h3>
-            <p>{{news.body}}</p>
-            <button class="btn" data-toggle="collapse" [attr.data-target]="'#collapse'+i" aria-expanded="true" [attr.aria-controls]="'collapse'+i">
-                    Toggle PDF View
-            </button>
-                <div class="collapse show" id="{{'collapse'+i}}">
-                  <div class="card card-body">
-                        <div class="pdfBlock" *ngIf='news.file && news.file.secure_url.toUpperCase().endsWith(".PDF")'>
-                                <pdf-viewer 
-                                  [src]="news.file.secure_url"
-                                  [render-text]="false"
-                                  [original-size]="false"
-                                ></pdf-viewer>
-                        </div>
-                  </div>
-                </div>
+      <div class="col-md-12">
+        <div
+          class="news-data"
+          [ngStyle]="{ 'min-height: 470px;': news.file && news.file.secure_url }"
+        >
+          <img
+            *ngIf="news.file && !news.file.secure_url.toUpperCase().endsWith('.PDF')"
+            src="{{ news.file.secure_url }}"
+            alt="news Image"
+            (click)="openImageModal(news.file.secure_url)"
+          />
+          <h3>{{ news.title }}</h3>
+          <p>{{ news.body }}</p>
+          <button
+            class="btn"
+            data-toggle="collapse"
+            [attr.data-target]="'#collapse' + i"
+            aria-expanded="true"
+            [attr.aria-controls]="'collapse' + i"
+          >
+            Toggle PDF View
+          </button>
+          <div class="collapse show" id="{{ 'collapse' + i }}">
+            <div class="card card-body">
+              <div
+                class="pdfBlock"
+                *ngIf="news.file && news.file.secure_url.toUpperCase().endsWith('.PDF')"
+              >
+                <pdf-viewer
+                  [src]="news.file.secure_url"
+                  [render-text]="false"
+                  [original-size]="false"
+                ></pdf-viewer>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
     </div>
   </div>
 </div>
 <div id="myModal" class="modal">
-  <span class="close" (click)='closeModal()'>&times;</span>
-  <img class="modal-content" [src]="modelImageSrc" id="img01">
+  <span class="close" (click)="closeModal()">&times;</span>
+  <img class="modal-content" [src]="modelImageSrc" id="img01" />
 </div>

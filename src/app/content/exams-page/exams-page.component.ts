@@ -8,37 +8,38 @@ import { ExamService } from '../../services/exam.service';
   styleUrls: ['./exams-page.component.css']
 })
 export class ExamsPageComponent implements OnInit {
+  exams: ExamModel[];
+  modelPdfSrc: string;
+  loading: boolean;
 
-  exams: ExamModel[] = [];
-  modelPdfSrc:string;
-  loading: boolean = true;
-
-  constructor(private examService: ExamService) { }
+  constructor(private examService: ExamService) {}
 
   ngOnInit() {
-      this.examService.getExams()
-      .subscribe((responce: ExamModel[]) => {
+    this.loading = true;
+    this.exams = [];
+    this.examService.getExams().subscribe(
+      (responce: ExamModel[]) => {
         this.exams = responce;
         this.loading = false;
       },
-      (error: any) => {
-      });
+      (error: any) => {}
+    );
   }
-  openImageModal(url){
-    var modal = document.getElementById("myModal");
-    modal.style.display = "block";
+
+  openImageModal(url: any) {
+    const modal = document.getElementById('myModal');
+    modal.style.display = 'block';
     this.modelPdfSrc = url;
   }
-  closeModal(){
-    var modal = document.getElementById("myModal");
-    modal.style.display = "none";
+  closeModal() {
+    const modal = document.getElementById('myModal');
+    modal.style.display = 'none';
     this.modelPdfSrc = '';
   }
 
   @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent) {
-    var modal = document.getElementById("myModal");
-    modal.style.display = "none";
+    const modal = document.getElementById('myModal');
+    modal.style.display = 'none';
     this.modelPdfSrc = '';
   }
-
 }

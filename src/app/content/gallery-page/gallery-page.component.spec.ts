@@ -8,9 +8,8 @@ describe('GalleryPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GalleryPageComponent ]
-    })
-    .compileComponents();
+      declarations: [GalleryPageComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

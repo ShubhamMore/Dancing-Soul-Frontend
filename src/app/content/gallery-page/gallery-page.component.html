@@ -1,46 +1,34 @@
-<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
+<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading" />
 
 <div class="gallery-page" *ngIf="!loading">
-    <div *ngIf="gallery.mdp">
-        <h2>Moments During Performance</h2>
-        <gallery 
-            [flexBorderSize]="3" 
-            [flexImageSize]="7"
-            [maxRowsPerPage]="100"
-            [metadataUri]="mdpUrl">
-        </gallery>
-    </div>
-    
-    <div *ngIf="gallery.itc">
-        <h2>In the class</h2>
-        <gallery 
-            [flexBorderSize]="3" 
-            [flexImageSize]="7"
-            [maxRowsPerPage]="100"
-            [metadataUri]="itcUrl">
-        </gallery>
-    </div>
-    
-    <div *ngIf="gallery.mdm">
-        <h2>Music Drama and more</h2>
-        <gallery 
-            [flexBorderSize]="3" 
-            [flexImageSize]="7"
-            [maxRowsPerPage]="100"
-            [metadataUri]="mdmUrl">
-        </gallery>
-    </div>
-    
-    <div *ngIf="videos.length > 0">
-        <h2>Videos</h2>
-        <div class = "container">
-            <div class="row">
-                <div class="col-md-6" style="padding: 25px 0" *ngFor = "let videoUrl of videoLinks">
-                    <div class="iframe-container">
-                        <iframe id ='iframeid' [src]="videoUrl" frameborder="0" allowfullscreen></iframe> 
-                    </div>
-                </div>
-            </div>
+  <div *ngIf="gallery.mdp">
+    <h2>Moments During Performance</h2>
+    <gallery [flexBorderSize]="3" [flexImageSize]="7" [maxRowsPerPage]="100" [metadataUri]="mdpUrl">
+    </gallery>
+  </div>
+
+  <div *ngIf="gallery.itc">
+    <h2>In the class</h2>
+    <gallery [flexBorderSize]="3" [flexImageSize]="7" [maxRowsPerPage]="100" [metadataUri]="itcUrl">
+    </gallery>
+  </div>
+
+  <div *ngIf="gallery.mdm">
+    <h2>Music Drama and more</h2>
+    <gallery [flexBorderSize]="3" [flexImageSize]="7" [maxRowsPerPage]="100" [metadataUri]="mdmUrl">
+    </gallery>
+  </div>
+
+  <div *ngIf="videos.length > 0">
+    <h2>Videos</h2>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6" style="padding: 25px 0" *ngFor="let videoUrl of videoLinks">
+          <div class="iframe-container">
+            <iframe id="iframeid" [src]="videoUrl" frameborder="0" allowfullscreen></iframe>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>

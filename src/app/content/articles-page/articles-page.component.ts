@@ -8,37 +8,38 @@ import { ArticleModel } from '../../models/articles.model';
   styleUrls: ['./articles-page.component.css']
 })
 export class ArticlesPageComponent implements OnInit {
+  articles: any[];
+  modelImageSrc: string;
+  loading: boolean;
 
-  articles: any[] = [];
-  modelImageSrc:string;
-  loading: boolean = true;
-
-  constructor(private articleService: ArticleService) { }
+  constructor(private articleService: ArticleService) {}
 
   ngOnInit() {
-    this.articleService.getAllArticles()
-    .subscribe((responce: ArticleModel[]) => {
-      this.articles = responce;
-      this.loading = false;
-    },
-    (error: any) => {
-    });
+    this.loading = true;
+    this.articles = [];
+    this.articleService.getAllArticles().subscribe(
+      (responce: ArticleModel[]) => {
+        this.articles = responce;
+        this.loading = false;
+      },
+      (error: any) => {}
+    );
   }
 
-  openImageModal(url){
-    var modal = document.getElementById("myModal");
-    modal.style.display = "block";
+  openImageModal(url) {
+    const modal = document.getElementById('myModal');
+    modal.style.display = 'block';
     this.modelImageSrc = url;
   }
-  closeModal(){
-    var modal = document.getElementById("myModal");
-    modal.style.display = "none";
+  closeModal() {
+    const modal = document.getElementById('myModal');
+    modal.style.display = 'none';
     this.modelImageSrc = '';
   }
 
   @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent) {
-    var modal = document.getElementById("myModal");
-    modal.style.display = "none";
+    const modal = document.getElementById('myModal');
+    modal.style.display = 'none';
     this.modelImageSrc = '';
   }
 }

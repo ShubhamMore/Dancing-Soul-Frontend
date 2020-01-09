@@ -8,9 +8,8 @@ describe('BranchesPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BranchesPageComponent ]
-    })
-    .compileComponents();
+      declarations: [BranchesPageComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,72 +1,71 @@
-.articles-page{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    
+.articles-page {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
-.article-box{
-    padding: 20px;
-    flex-basis: 300px;
+.article-box {
+  padding: 20px;
+  flex-basis: 300px;
 }
-.article-data{
-    background-color:   aliceblue;
-    text-align: center;
+.article-data {
+  background-color: aliceblue;
+  text-align: center;
 }
 
-.article-data img{
-    height:350px;
-    float: left;
-    margin: 60px 20px 10px 20px;
-    cursor: pointer;
-    transition: 0.3s;
-   
-} 
+.article-data img {
+  height: 350px;
+  float: left;
+  margin: 60px 20px 10px 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
 
-.article-data img:hover{
-    opacity: 0.7;
+.article-data img:hover {
+  opacity: 0.7;
 }
-.article-data p{
-    padding: 20px;
-    margin-bottom: 50px;
-    text-align: center;  
+.article-data p {
+  padding: 20px;
+  margin-bottom: 50px;
+  text-align: center;
 }
-.article-data h3{
-    margin-bottom: 0px;
-    padding: 15px 10px;
-    font-weight: bold;
+.article-data h3 {
+  margin-bottom: 0px;
+  padding: 15px 10px;
+  font-weight: bold;
 }
-.article-data .pdfBlock{
+.article-data .pdfBlock {
   padding: 40px;
-
 }
-.article-container{
-    padding: 15px 0;
+.article-container {
+  padding: 15px 0;
 }
 
-  
-  @keyframes zoom {
-    from {transform:scale(0)}
-    to {transform:scale(1)}
+@keyframes zoom {
+  from {
+    transform: scale(0);
   }
-  
-  @media only screen and (max-width: 700px){
-    .modal-content {
-      width: 100%;
-    }
+  to {
+    transform: scale(1);
   }
+}
+
+@media only screen and (max-width: 700px) {
+  .modal-content {
+    width: 100%;
+  }
+}
 @media only screen and (max-width: 992px) {
-    .article-data img{
-        text-align: center;
-        width:100%;
-        height:auto;
-        margin: 40px 0 0 0 ;
-        padding: 0 10px 20px  10px;
-       
-    }
-    .article-data{
-        min-height: 0px;
-    }
-    .article-data .pdfBlock{
-      padding: 20px;
-    }
+  .article-data img {
+    text-align: center;
+    width: 100%;
+    height: auto;
+    margin: 40px 0 0 0;
+    padding: 0 10px 20px 10px;
+  }
+  .article-data {
+    min-height: 0px;
+  }
+  .article-data .pdfBlock {
+    padding: 20px;
+  }
 }

@@ -8,9 +8,8 @@ describe('NewsShelterPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NewsShelterPageComponent ]
-    })
-    .compileComponents();
+      declarations: [NewsShelterPageComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
