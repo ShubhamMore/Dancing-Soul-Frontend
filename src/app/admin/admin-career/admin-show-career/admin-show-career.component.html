@@ -1,0 +1,54 @@
+<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading" />
+
+<div class="row" *ngIf="!loading">
+  <div class="col-12">
+    <div class="row mt-2" *ngIf="!!error">
+      <div class="col-md-10 col-12 mx-auto">
+        <div class="alert alert-danger alert-dismissible">
+          <button type="button" class="close" (click)="clearError()" data-dismiss="alert">
+            &times;
+          </button>
+          <span>{{ error }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-2">
+      <div class="col-md-10 col-12 mx-auto">
+        <button type="button" class="btn-close float-right" (click)="cancel()">X</button>
+        <h3>Application Details</h3>
+        <hr />
+        <div class="row">
+          <div class="col-12">
+            <p><b>Name : </b>{{ career.name }}</p>
+            <p>
+              <b>Email : </b><a href="mailto:{{ career.email }}">{{ career.email }}</a>
+            </p>
+            <p><b>Phone : </b>{{ career.phone }}</p>
+            <h5>{{ career.description }}</h5>
+          </div>
+        </div>
+        <hr />
+        <div class="row">
+          <div class="col-md-10 col-12 mx-auto" *ngIf="career.coverLatter">
+            <h5 class="text-center">Cover Latter</h5>
+            <div class="img-container" *ngIf="ext !== 'pdf'">
+              <img [src]="career.coverLatter.secure_url" [alt]="career.coverLatter.file_name" />
+            </div>
+            <div class="pdf-container" *ngIf="ext === 'pdf'">
+              <pdf-viewer
+                [src]="career.coverLatter.secure_url"
+                [original-size]="false"
+              ></pdf-viewer>
+            </div>
+          </div>
+          <div class="col-md-10 col-12 mx-auto" *ngIf="career.resume">
+            <h5 class="text-center">Resume</h5>
+            <div class="pdf-container">
+              <pdf-viewer [src]="career.resume.secure_url" [original-size]="false"></pdf-viewer>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

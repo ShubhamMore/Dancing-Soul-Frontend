@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="row mt-2">
-      <div class="col-md-8 col-sm-10 mx-auto">
+      <div class="col-md-10 col-12 mx-auto">
         <div *ngIf="faculty !== null">
           <h4 class="text-center mb-3">
             Edit Faculty <strong>{{ faculty.name }}</strong>
@@ -92,7 +92,7 @@
             </div>
 
             <div class="row">
-              <div class="col-md-6 col-12">
+              <div class="col-12">
                 <div class="form-group">
                   <label for="description">Description : </label>
                   <textarea
@@ -109,7 +109,9 @@
                   >
                 </div>
               </div>
+            </div>
 
+            <div class="row">
               <div class="col-md-6 col-12">
                 <div class="form-group">
                   <label for="images">Pick Profile Image to Upload : </label><br />
@@ -120,10 +122,8 @@
                 </div>
                 <span *ngIf="invalidImage">*Please Select a Valid Image File</span>
               </div>
-            </div>
 
-            <div class="row">
-              <div class="col-12">
+              <div class="col-md-6 col-12">
                 <div *ngIf="imagePreview; else noImagePicked">
                   <h5>Image To Upload :</h5>
 

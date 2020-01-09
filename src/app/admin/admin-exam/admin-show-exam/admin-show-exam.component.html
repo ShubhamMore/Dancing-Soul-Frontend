@@ -26,6 +26,38 @@
 
           <div class="row">
             <div class="col-12">
+              <div *ngIf="exam.file; else noFile">
+                <div class="row">
+                  <span class="m-2">
+                    <div class="image-container">
+                      <img
+                        [src]="exam.file.secure_url"
+                        class="image"
+                        [alt]="exam.file.file_name"
+                        *ngIf="ext === 'jpg' || ext === 'png'"
+                      />
+                      <img
+                        src="../../../../assets/images/pdf.png"
+                        class="image"
+                        [alt]="exam.file.file_name"
+                        *ngIf="ext === 'pdf'"
+                      />
+                      <div class="middle">
+                        <a class="delete" (click)="deleteExamFile(exam.file.public_id)"
+                          ><i class="fa fa-trash-o trash"></i
+                        ></a>
+                      </div>
+                    </div>
+                  </span>
+                  <p class="file-name text-center">{{ exam.file.file_name }}</p>
+                </div>
+              </div>
+              <ng-template #noFile><p>No File Available</p></ng-template>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
               <p>{{ exam.body }}</p>
             </div>
           </div>

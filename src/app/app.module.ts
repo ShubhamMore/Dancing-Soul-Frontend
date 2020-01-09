@@ -4,8 +4,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { AgmCoreModule } from '@agm/core';
 import { Angular2ImageGalleryModule } from 'angular2-image-gallery';
+import { PdfViewerModule } from 'ng2-pdf-viewer'; // <- import PdfViewerModule
 
 // ROUTES
 import { AppRoutes } from './app.routes.module';
@@ -31,6 +31,7 @@ import { FooterComponent } from './footer/footer.component';
 import { ContentComponent } from './content/content.component';
 import { HomePageComponent } from './content/home-page/home-page.component';
 import { AboutPageComponent } from './content/about-page/about-page.component';
+import { CareerPageComponent } from './content/career-page/career-page.component';
 import { ContactUsPageComponent } from './content/contact-us-page/contact-us-page.component';
 import { GalleryPageComponent } from './content/gallery-page/gallery-page.component';
 import { BranchesPageComponent } from './content/branches-page/branches-page.component';
@@ -104,6 +105,10 @@ import { AdminStudentCertificateComponent } from './admin/admin-student/admin-st
 import { AdminStudentAddProgressComponent } from './admin/admin-student/admin-student-add-progress/admin-student-add-progress.component';
 import { AdminStudentShowProgressComponent } from './admin/admin-student/admin-student-show-progress/admin-student-show-progress.component';
 
+import { AdminCareerComponent } from './admin/admin-career/admin-career.component';
+import { AdminCareerContentComponent } from './admin/admin-career/admin-career-content/admin-career-content.component';
+import { AdminShowCareerComponent } from './admin/admin-career/admin-show-career/admin-show-career.component';
+
 import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 
@@ -150,6 +155,7 @@ import { StudentService } from './services/student.service';
     HomePageComponent,
     AboutPageComponent,
     ContactUsPageComponent,
+    CareerPageComponent,
     BranchesPageComponent,
     GalleryPageComponent,
     ArticlesPageComponent,
@@ -220,6 +226,10 @@ import { StudentService } from './services/student.service';
     AdminStudentCertificateComponent,
     AdminStudentAddProgressComponent,
     AdminStudentShowProgressComponent,
+    // ADMIN CARIER COMPONENT
+    AdminCareerComponent,
+    AdminCareerContentComponent,
+    AdminShowCareerComponent,
     // ERROR COMPONENT
     PageNotFoundComponent,
     ServerErrorComponent,
@@ -243,9 +253,7 @@ import { StudentService } from './services/student.service';
     AppRoutes,
     HttpClientModule,
     Angular2ImageGalleryModule,
-    AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCkUOdZ5y7hMm0yrcCQoCvLwzdM6M8s5qk'
-    })
+    PdfViewerModule
   ],
 
   providers: [

@@ -1,0 +1,21 @@
+input[type='file'] {
+  visibility: hidden;
+}
+
+.file {
+  font-size: 100%;
+}
+
+.file-name {
+  color: #000;
+}
+
+.cancel {
+  background-color: #f00;
+  border-radius: 50%;
+  padding: 2px 6px;
+  text-align: center;
+  cursor: pointer;
+  color: #fff;
+  font-size: 80%;
+}

@@ -12,13 +12,19 @@ import { NewsModel } from '../../../models/news.model';
 export class AdminEditNewsComponent implements OnInit {
   news: NewsModel;
 
+  form: FormGroup;
+
   loading: boolean;
   error: string;
 
-  imgExt: string[];
-
-  form: FormGroup;
   formError: boolean;
+
+  imagePreview: string;
+  uploadImage: File;
+
+  invalidImage: boolean;
+
+  ext: string;
 
   constructor(
     private newsService: NewsService,
@@ -29,15 +35,14 @@ export class AdminEditNewsComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     this.formError = false;
-
-    this.imgExt = ['jpg', 'png'];
+    this.invalidImage = false;
 
     this.form = new FormGroup({
       title: new FormControl(null, {
         validators: [Validators.required]
       }),
       body: new FormControl(null, {
-        validators: [Validators.required]
+        validators: []
       })
     });
 
@@ -47,6 +52,11 @@ export class AdminEditNewsComponent implements OnInit {
       this.newsService.getNews(id).subscribe(
         (responce: NewsModel) => {
           this.news = responce;
+          if (this.news.file) {
+            this.ext = this.news.file.file_name
+              .substring(this.news.file.file_name.lastIndexOf('.') + 1)
+              .toLowerCase();
+          }
           this.form.setValue({
             title: this.news.title,
             body: this.news.body
@@ -60,6 +70,49 @@ export class AdminEditNewsComponent implements OnInit {
     });
   }
 
+  onImagePicked(event: Event) {
+    const files = (event.target as HTMLInputElement).files;
+    const imgExt: string[] = ['jpg', 'png', 'pdf'];
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < files.length; i++) {
+      this.ext = files[i].name.substring(files[i].name.lastIndexOf('.') + 1).toLowerCase();
+      if (!(imgExt.indexOf(this.ext) !== -1)) {
+        return (this.invalidImage = true);
+      }
+    }
+    this.invalidImage = false;
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < files.length; i++) {
+      this.uploadImage = files[i];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result as string;
+      };
+      reader.readAsDataURL(files[i]);
+    }
+  }
+
+  cancelImage() {
+    this.imagePreview = null;
+    this.uploadImage = null;
+    this.invalidImage = false;
+  }
+
+  deleteNewsFile() {
+    const dltConfirm = confirm('do you really want to delete this News File??');
+    if (dltConfirm) {
+      this.loading = true;
+      this.newsService.deleteNewsFile(this.news._id, this.news.file.public_id).subscribe(
+        (responce: any) => {
+          this.ngOnInit();
+        },
+        (error: any) => {
+          this.setError(error);
+        }
+      );
+    }
+  }
+
   editNews() {
     if (this.form.invalid) {
       this.formError = true;
@@ -68,12 +121,16 @@ export class AdminEditNewsComponent implements OnInit {
     if (this.form.valid) {
       this.loading = true;
       this.formError = false;
-      const editednews = {
-        _id: this.news._id,
-        title: this.form.value.title,
-        body: this.form.value.body
-      };
-      this.newsService.editNews(editednews).subscribe(
+
+      const news = new FormData();
+      news.append('_id', this.news._id);
+      news.append('title', this.form.value.title);
+      news.append('body', this.form.value.body);
+      if (this.uploadImage) {
+        news.append('image', this.uploadImage, 'article');
+      }
+
+      this.newsService.editNews(news).subscribe(
         (responce: any) => {
           this.cancel();
         },

@@ -12,8 +12,9 @@ export class AdminShowExamComponent implements OnInit {
   exam: ExamModel;
 
   loading: boolean;
-
   error: string;
+
+  ext: string;
 
   constructor(
     private examService: ExamService,
@@ -29,6 +30,11 @@ export class AdminShowExamComponent implements OnInit {
       this.examService.getExam(id).subscribe(
         (responce: ExamModel) => {
           this.exam = responce;
+          if (this.exam.file) {
+            this.ext = this.exam.file.file_name
+              .substring(this.exam.file.file_name.lastIndexOf('.') + 1)
+              .toLowerCase();
+          }
           this.loading = false;
         },
         (error: any) => {
@@ -41,6 +47,21 @@ export class AdminShowExamComponent implements OnInit {
   edit() {
     this.loading = true;
     this.router.navigate(['edit'], { relativeTo: this.route, skipLocationChange: true });
+  }
+
+  deleteExamFile() {
+    const dltConfirm = confirm('do you really want to delete this Exam File??');
+    if (dltConfirm) {
+      this.loading = true;
+      this.examService.deleteExamFile(this.exam._id, this.exam.file.public_id).subscribe(
+        (responce: any) => {
+          this.ngOnInit();
+        },
+        (error: any) => {
+          this.setError(error);
+        }
+      );
+    }
   }
 
   delete() {
@@ -59,8 +80,8 @@ export class AdminShowExamComponent implements OnInit {
   }
 
   cancel() {
-    this.loading = true;
     this.router.navigate(['/admin', 'exams'], { relativeTo: this.route, skipLocationChange: true });
+    this.loading = false;
   }
 
   setError(err: string) {

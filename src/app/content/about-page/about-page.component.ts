@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AboutModel } from '../../models/about.model';
 import { AboutService } from '../../services/about.service';
 import { FacultyService } from '../../services/faculty.service';
@@ -10,32 +10,32 @@ declare var $: any;
   selector: 'app-about-page',
   templateUrl: './about-page.component.html',
   styleUrls: ['./about-page.component.css']
-}) 
-export class AboutPageComponent implements OnInit {
+})
+export class AboutPageComponent implements OnInit, OnDestroy {
+  faculties: FacultyModel[];
 
-  faculties: FacultyModel[] = [];
-  
   aboutUs: AboutModel;
 
-  loading: boolean = true;
+  loading: boolean;
 
-  constructor(private aboutService: AboutService,
-              private facultyService: FacultyService) { }
+  constructor(private aboutService: AboutService, private facultyService: FacultyService) {}
 
   ngOnInit() {
-    this.aboutService.getAbout()
-    .subscribe((responce: AboutModel) => {
-      this.aboutUs = responce;
-      this.facultyService.getActivateFaculties()
-      .subscribe((responce: FacultyModel[]) => {
-        this.faculties = responce;
-        this.loading = false;
+    this.loading = true;
+    this.faculties = [];
+    this.aboutService.getAbout().subscribe(
+      (responce: AboutModel) => {
+        this.aboutUs = responce;
+        this.facultyService.getActivateFaculties().subscribe(
+          (res: FacultyModel[]) => {
+            this.faculties = res;
+            this.loading = false;
+          },
+          (error: any) => {}
+        );
       },
-      (error: any) => {
-      });
-    },
-    (error: any) => {
-    });
+      (error: any) => {}
+    );
 
     document.body.classList.add('bg-about');
   }
@@ -46,8 +46,8 @@ export class AboutPageComponent implements OnInit {
 
   limitFacultyDescription(desc: string) {
     const descLen = desc.length;
-    if(descLen > 120) {
-      return desc.substr(0, 118) + "..";
+    if (descLen > 120) {
+      return desc.substr(0, 118) + '..';
     }
     return desc;
   }

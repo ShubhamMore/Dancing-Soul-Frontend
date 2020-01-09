@@ -46,8 +46,20 @@ export class NewsService {
     );
   }
 
-  editNews(news: NewsModel) {
+  editNews(news: any) {
     const data = { api: 'editNews', data: news };
+    return this.httpService.httpPostAuth(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError(err => {
+        return throwError(err);
+      })
+    );
+  }
+
+  deleteNewsFile(id: string, publicId: string) {
+    const data = { api: 'deleteNewsFile', data: { _id: id, public_id: publicId } };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;

@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  encKey: 'b417cf7714f5c803ac31ea7ea4ee3a11',
+  url: 'http://127.0.0.1:3000/'
 };
 
 /*

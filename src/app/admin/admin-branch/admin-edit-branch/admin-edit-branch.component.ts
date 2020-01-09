@@ -76,10 +76,10 @@ export class AdminEditBranchComponent implements OnInit {
         validators: [Validators.required]
       }),
       email: new FormControl(null, {
-        validators: [Validators.required, Validators.email]
+        validators: [Validators.email]
       }),
       phone: new FormControl(null, {
-        validators: [Validators.required]
+        validators: []
       }),
       description: new FormControl(null, {
         validators: [Validators.required]

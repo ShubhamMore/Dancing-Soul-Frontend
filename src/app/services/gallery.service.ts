@@ -23,7 +23,7 @@ export class GalleryService {
 
   getImages(category: string) {
     const data = { api: 'getImages', data: { category } };
-    return this.httpService.httpPost(data).pipe(
+    return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
       }),

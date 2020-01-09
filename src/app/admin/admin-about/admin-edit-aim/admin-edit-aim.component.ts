@@ -11,11 +11,8 @@ import { AboutModel } from '../../../models/about.model';
 })
 export class AdminEditAimComponent implements OnInit {
   form: FormGroup;
-
   about: AboutModel;
-
   loading: boolean;
-
   error: string;
 
   constructor(

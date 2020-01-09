@@ -2,6 +2,7 @@ export class ImageModel {
   constructor(
     // tslint:disable-next-line: variable-name
     public _id: string,
+    public category: string,
     // tslint:disable-next-line: variable-name
     public image_name: string,
     // tslint:disable-next-line: variable-name

@@ -64,6 +64,10 @@ import { AdminStudentCertificateComponent } from './admin/admin-student/admin-st
 import { AdminStudentShowProgressComponent } from './admin/admin-student/admin-student-show-progress/admin-student-show-progress.component';
 import { AdminStudentAddProgressComponent } from './admin/admin-student/admin-student-add-progress/admin-student-add-progress.component';
 
+import { AdminCareerComponent } from './admin/admin-career/admin-career.component';
+import { AdminCareerContentComponent } from './admin/admin-career/admin-career-content/admin-career-content.component';
+import { AdminShowCareerComponent } from './admin/admin-career/admin-show-career/admin-show-career.component';
+
 import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 
@@ -93,6 +97,7 @@ import { FacultyComponent } from './faculty/faculty.component';
 import { HomePageComponent } from './content/home-page/home-page.component';
 import { AboutPageComponent } from './content/about-page/about-page.component';
 import { ContactUsPageComponent } from './content/contact-us-page/contact-us-page.component';
+import { CareerPageComponent } from './content/career-page/career-page.component';
 import { BranchesPageComponent } from './content/branches-page/branches-page.component';
 import { GalleryPageComponent } from './content/gallery-page/gallery-page.component';
 import { NewsShelterPageComponent } from './content/news-shelter-page/news-shelter-page.component';
@@ -105,6 +110,7 @@ const appRoutes: Routes = [
   { path: 'home', component: HomePageComponent, canActivate: [LoginAuthGuard] },
   { path: 'about', component: AboutPageComponent, canActivate: [LoginAuthGuard] },
   { path: 'contactUs', component: ContactUsPageComponent, canActivate: [LoginAuthGuard] },
+  { path: 'career', component: CareerPageComponent, canActivate: [LoginAuthGuard] },
   { path: 'branches', component: BranchesPageComponent, canActivate: [LoginAuthGuard] },
   { path: 'gallery', component: GalleryPageComponent, canActivate: [LoginAuthGuard] },
   { path: 'articles', component: ArticlesPageComponent, canActivate: [LoginAuthGuard] },
@@ -134,6 +140,7 @@ const appRoutes: Routes = [
 
       { path: 'about', redirectTo: 'about/aim', pathMatch: 'full' },
       { path: 'about/aim', component: AdminAimComponent, canActivate: [AdminAuthGuard] },
+      { path: 'about/content', component: AdminAboutComponent, canActivate: [AdminAuthGuard] },
       { path: 'about/aim/edit', component: AdminEditAimComponent, canActivate: [AdminAuthGuard] },
       { path: 'about/history', component: AdminHistoryComponent, canActivate: [AdminAuthGuard] },
       {
@@ -247,6 +254,22 @@ const appRoutes: Routes = [
       {
         path: 'student/:id/receipts',
         component: AdminStudentReceiptsComponent,
+        canActivate: [AdminAuthGuard]
+      },
+
+      {
+        path: 'career',
+        component: AdminCareerComponent,
+        canActivate: [AdminAuthGuard]
+      },
+      {
+        path: 'career/content',
+        component: AdminCareerContentComponent,
+        canActivate: [AdminAuthGuard]
+      },
+      {
+        path: 'career/:id',
+        component: AdminShowCareerComponent,
         canActivate: [AdminAuthGuard]
       },
 

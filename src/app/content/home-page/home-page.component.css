@@ -1,20 +1,19 @@
-.home-page-text{
-    width: 50%;
-    color: #fff;
-    padding: 200px 0;
+.home-page-text {
+  width: 50%;
+  color: #fff;
+  padding: 200px 0;
 }
-.bg-home-img
-{
-    background-position: center;
-    background-repeat: no-repeat; 
-    background-image: linear-gradient(rgba(0, 0, 0, 0.0),rgba(0, 0, 0, 0.7)),url(src/assets/images/homePage.jpg);
-    background-size: cover;
-    background-attachment: fixed;
+.bg-home-img {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7)),
+    url(src/assets/images/homePage.jpg);
+  background-size: cover;
+  background-attachment: fixed;
 }
 
-@media only screen and (max-width: 1200px){
-    .home-page-text{
-        width: 100%;
-    }
-   
+@media only screen and (max-width: 1200px) {
+  .home-page-text {
+    width: 100%;
+  }
 }

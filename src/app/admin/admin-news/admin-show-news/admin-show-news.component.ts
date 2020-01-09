@@ -14,6 +14,8 @@ export class AdminShowNewsComponent implements OnInit {
   loading: boolean;
   error: string;
 
+  ext: string;
+
   constructor(
     private newsService: NewsService,
     private router: Router,
@@ -28,6 +30,11 @@ export class AdminShowNewsComponent implements OnInit {
       this.newsService.getNews(id).subscribe(
         (responce: NewsModel) => {
           this.news = responce;
+          if (this.news.file) {
+            this.ext = this.news.file.file_name
+              .substring(this.news.file.file_name.lastIndexOf('.') + 1)
+              .toLowerCase();
+          }
           this.loading = false;
         },
         (error: any) => {
@@ -40,6 +47,21 @@ export class AdminShowNewsComponent implements OnInit {
   edit() {
     this.loading = true;
     this.router.navigate(['edit'], { relativeTo: this.route, skipLocationChange: true });
+  }
+
+  deleteNewsFile() {
+    const dltConfirm = confirm('do you really want to delete this News File??');
+    if (dltConfirm) {
+      this.loading = true;
+      this.newsService.deleteNewsFile(this.news._id, this.news.file.public_id).subscribe(
+        (responce: any) => {
+          this.ngOnInit();
+        },
+        (error: any) => {
+          this.setError(error);
+        }
+      );
+    }
   }
 
   delete() {

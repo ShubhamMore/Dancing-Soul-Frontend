@@ -45,7 +45,7 @@
                   <span class="m-2" *ngFor="let image of images; let i = index">
                     <div class="image-container">
                       <img [src]="image.secure_url" class="image" [alt]="image.image_name" />
-                      <div class="middle" *ngIf="image.public_id !== 'shared/1569750534235'">
+                      <div class="middle" *ngIf="image.public_id !== 'shared/no_image.jpg'">
                         <a class="delete" (click)="deleteImage(image.public_id)"
                           ><i class="fa fa-trash-o trash"></i
                         ></a>

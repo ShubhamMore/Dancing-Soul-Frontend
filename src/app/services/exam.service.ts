@@ -46,8 +46,20 @@ export class ExamService {
     );
   }
 
-  editExam(exam: ExamModel) {
+  editExam(exam: any) {
     const data = { api: 'editExam', data: exam };
+    return this.httpService.httpPostAuth(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError(err => {
+        return throwError(err);
+      })
+    );
+  }
+
+  deleteExamFile(id: string, publicId: string) {
+    const data = { api: 'deleteExamFile', data: { _id: id, public_id: publicId } };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;

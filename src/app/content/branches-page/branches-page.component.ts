@@ -9,42 +9,41 @@ import { Angular2ImageGalleryModule } from 'angular2-image-gallery';
   styleUrls: ['./branches-page.component.css']
 })
 export class BranchesPageComponent implements OnInit {
+  branches: any[] = [];
+  loading: boolean;
+  weekEndBatch: any[];
+  weekDayBatch: any[];
 
-  branches: BranchModel[] = [];
-  loading: boolean = true;
-  weekEndBatch:any[];
-  weekDayBatch:any[];
+  constructor(private branchService: BranchService) {}
 
-  constructor(private branchService: BranchService) { }
-  
   ngOnInit() {
-    this.branchService.getActivateBranches()
-    .subscribe((responce: BranchModel[]) => {
-     this.branches = responce;
-     this.filterBatchType(this.branches);
-     this.loading = false;
-     console.log(this.branches)
-    },
-    (error: any) => {        
-    });
+    this.branchService.getActivateBranches().subscribe(
+      (responce: BranchModel[]) => {
+        this.loading = true;
+        this.branches = responce;
+        this.filterBatchType(this.branches);
+        this.loading = false;
+      },
+      (error: any) => {
+        this.loading = false;
+      }
+    );
   }
 
-  filterBatchType(branches){
-    for(var i=0;i<branches.length;i++){
-      var branch = branches[i];
+  filterBatchType(branches: any[]) {
+    for (let i = 0; i < branches.length; i++) {
+      const branch = branches[i];
       this.branches[i].weekDayBatch = [];
       this.branches[i].weekEndBatch = [];
-      for(var j=0;j<branch.batch.length;j++){
-        var batch = branch.batch[j];
-        if(batch.batchType=="0"){
+      // tslint:disable-next-line: prefer-for-of
+      for (let j = 0; j < branch.batch.length; j++) {
+        const batch = branch.batch[j];
+        if (batch.batchType === '0') {
           this.branches[i].weekDayBatch.push(batch);
-        }else if(batch.batchType=="1"){
+        } else if (batch.batchType === '1') {
           this.branches[i].weekEndBatch.push(batch);
         }
       }
     }
-
-      
-    
   }
 }

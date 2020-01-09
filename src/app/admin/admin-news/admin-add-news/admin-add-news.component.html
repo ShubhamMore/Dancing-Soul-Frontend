@@ -3,7 +3,7 @@
 <div class="row" *ngIf="!loading">
   <div class="col-12">
     <div class="row mt-2" *ngIf="!!error">
-      <div class="col-md-10 col-12 mx-auto">
+      <div class="col-10 mx-auto">
         <div class="alert alert-danger alert-dismissible">
           <button type="button" class="close" (click)="clearError()" data-dismiss="alert">
             &times;
@@ -13,46 +13,102 @@
       </div>
     </div>
     <div class="row mt-2">
-      <div class="col-10 mx-auto">
-        <h4 class="text-center mb-3">Add News</h4>
+      <div class="col-md-10 col-12 mx-auto">
+        <h4 class="text-center mb-3">Add New News</h4>
         <form class="add_title" (submit)="addNews()" [formGroup]="form">
-          <div class="form-group">
-            <label for="title">Title : </label>
-            <input
-              class="title"
-              type="text"
-              name="title"
-              id="title"
-              formControlName="title"
-              placeholder="Title"
-            />
-            <span *ngIf="!form.get('title').valid && form.get('title').touched"
-              >*Please enter Title</span
-            >
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="title">Title : </label>
+                <input
+                  class="title"
+                  type="text"
+                  name="title"
+                  id="title"
+                  formControlName="title"
+                  placeholder="Title"
+                />
+                <span *ngIf="!form.get('title').valid && form.get('title').touched"
+                  >*Please enter Title</span
+                >
+              </div>
+            </div>
           </div>
 
-          <div class="form-group">
-            <label for="body">Description : </label>
-            <textarea
-              class="body"
-              name="body"
-              id="body"
-              rows="8"
-              formControlName="body"
-              placeholder="Description"
-            ></textarea>
-            <span *ngIf="!form.get('body').valid && form.get('body').touched"
-              >*Please enter News Description</span
-            >
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="body">Description : </label>
+                <textarea
+                  class="body"
+                  name="body"
+                  id="body"
+                  rows="8"
+                  formControlName="body"
+                  placeholder="Description"
+                ></textarea>
+                <span *ngIf="!form.get('body').valid && form.get('body').touched"
+                  >*Please enter News Description</span
+                >
+              </div>
+            </div>
           </div>
 
-          <div class="row mt-1" *ngIf="formError">
-            <span>*Please Fill All Fields</span>
+          <div class="row">
+            <div class="col-md-6 col-12">
+              <div class="form-group">
+                <label for="images">Pick News File to Upload : </label><br />
+                <input type="file" #filePicker (change)="onImagePicked($event)" />
+                <button class="btn-add" type="button" id="images" (click)="filePicker.click()">
+                  Click Here to Pick File
+                </button>
+                <span *ngIf="invalidImage">*Please Select a Valid File</span>
+              </div>
+            </div>
+            <div class="col-md-6 col-12">
+              <div *ngIf="imagePreview; else noImagePicked">
+                <h5>File To Upload :</h5>
+                <div class="row">
+                  <span class="m-2">
+                    <div class="preview-image">
+                      <img
+                        [src]="imagePreview"
+                        alt="Preview"
+                        *ngIf="ext === 'jpg' || ext === 'png'"
+                      />
+                      <img
+                        src="../../../../assets/images/pdf.png"
+                        alt="Preview"
+                        *ngIf="ext === 'pdf'"
+                      />
+                      <a class="remove-image" (click)="cancelImage()"
+                        ><i class="fa fa-remove remove"></i
+                      ></a>
+                    </div>
+                    <p class="file-name text-center">{{ uploadImage.name }}</p>
+                  </span>
+                </div>
+              </div>
+              <ng-template #noImagePicked><p>No File Picked yet</p></ng-template>
+            </div>
+          </div>
+
+          <div class="row" *ngIf="formError">
+            <div class="col-12">
+              <span>*Please Fill All News Fields</span>
+            </div>
           </div>
 
           <hr />
-          <button type="submit" class="btn-add">Save</button>
-          <button type="button" class="btn-cancel float-right" (click)="cancel()">Cancel</button>
+
+          <div class="row">
+            <div class="col-12">
+              <button type="submit" class="btn-add">Save</button>
+              <button type="button" class="btn-cancel float-right" (click)="cancel()">
+                Cancel
+              </button>
+            </div>
+          </div>
         </form>
       </div>
     </div>
