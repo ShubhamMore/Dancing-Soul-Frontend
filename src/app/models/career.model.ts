@@ -8,6 +8,7 @@ export class CareerModel {
     public email: string,
     public phone: string,
     public description: string,
+    public date: string,
     public coverLatter: FileModel,
     public resume: FileModel
   ) {}
