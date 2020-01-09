@@ -42,6 +42,7 @@
 @media only screen and (max-width: 767px){
     .branches-page{
         padding: 2px;
+        margin-bottom: 20px;
     }
     .branch-card{
         margin: 2px;

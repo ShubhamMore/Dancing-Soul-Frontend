@@ -39,7 +39,8 @@ export class GalleryPageComponent implements OnInit {
             this.videoLinks = this.videos.map(video =>
               this.sanitizer.bypassSecurityTrustResourceUrl(
                 'https://www.youtube.com/embed/' +
-                  video.url.split('/')[video.url.split('/').length - 1]
+                  video.url.split('/')[video.url.split('/').length - 1] +
+                  '?rel=0'
               )
             );
             this.loading = false;
