@@ -18,10 +18,10 @@ export class CareerPageComponent implements OnInit {
 
   content: string;
 
-  coverLatter: File;
+  coverLetter: File;
   resume: File;
 
-  invalidCoverLatter: boolean;
+  invalidCoverLetter: boolean;
   invalidResume: boolean;
   ext: string;
 
@@ -36,7 +36,7 @@ export class CareerPageComponent implements OnInit {
     this.loading = true;
 
     this.formError = false;
-    this.invalidCoverLatter = false;
+    this.invalidCoverLetter = false;
     this.invalidResume = false;
 
     this.form = new FormGroup({
@@ -65,7 +65,7 @@ export class CareerPageComponent implements OnInit {
     );
   }
 
-  onCoverLatterPicked(event: Event) {
+  onCoverLetterPicked(event: Event) {
     const files = (event.target as HTMLInputElement).files;
     const imgExt: string[] = ['jpg', 'png', 'pdf'];
     this.ext = null;
@@ -73,13 +73,13 @@ export class CareerPageComponent implements OnInit {
     for (let i = 0; i < files.length; i++) {
       this.ext = files[i].name.substring(files[i].name.lastIndexOf('.') + 1).toLowerCase();
       if (!(imgExt.indexOf(this.ext) !== -1)) {
-        return (this.invalidCoverLatter = true);
+        return (this.invalidCoverLetter = true);
       }
     }
-    this.invalidCoverLatter = false;
+    this.invalidCoverLetter = false;
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < files.length; i++) {
-      this.coverLatter = files[i];
+      this.coverLetter = files[i];
     }
   }
 
@@ -106,9 +106,9 @@ export class CareerPageComponent implements OnInit {
     this.invalidResume = false;
   }
 
-  cancelCoverLatter() {
-    this.coverLatter = null;
-    this.invalidCoverLatter = false;
+  cancelCoverLetter() {
+    this.coverLetter = null;
+    this.invalidCoverLetter = false;
   }
 
   sendCareerEnquiry() {
@@ -128,14 +128,14 @@ export class CareerPageComponent implements OnInit {
       if (this.resume) {
         career.append('file', this.resume, 'resume');
       }
-      if (this.coverLatter) {
-        career.append('file', this.coverLatter, 'coverLatter');
+      if (this.coverLetter) {
+        career.append('file', this.coverLetter, 'coverLetter');
       }
 
       this.careerService.addCareer(career).subscribe(
         (responce: any) => {
           this.form.reset();
-          this.cancelCoverLatter();
+          this.cancelCoverLetter();
           this.cancelResume();
           this.loading = false;
         },
