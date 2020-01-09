@@ -7,7 +7,20 @@
                 <h5>{{exam.title}}</h5>
                 {{exam.body}}
             </div>
+            <div class="pdfButton" *ngIf='exam.file && exam.file.secure_url.toUpperCase().endsWith(".PDF")'>
+                <button class="btn" (click)="openImageModal(exam.file.secure_url)">View PDF</button>
+            </div>
         </div>
         </div>
+    </div>
+</div>
+<div id="myModal" class="modal">
+    <span class="close" (click)='closeModal()'>&times;</span>
+    <div class="pdfBlock">
+        <pdf-viewer 
+        [src]="modelPdfSrc"
+        [render-text]="false"
+        [original-size]="false"
+        ></pdf-viewer>
     </div>
 </div>

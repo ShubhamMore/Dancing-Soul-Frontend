@@ -3,6 +3,7 @@
     padding: 40px 0;
    }
    .exams-card{
+    position: relative;
     margin: 20px;
     background-color: #fff;
     flex-basis: 300px;
@@ -13,6 +14,13 @@
    .exams-card:hover,
    .exams-card:active{
     box-shadow: 0 .1rem 3rem rgba(0,0,0,0.175)!important;
+   }
+   .exams-card .pdfButton{
+       position: absolute;
+       bottom: 10px;
+       display: block;
+       left: 50%;
+       transform: translate(-50%,0)
    }
    .exams-desc{
     margin-top: 10px;
@@ -31,3 +39,12 @@
     margin: 0 auto;
     margin-top: 10px;
    }
+   .pdfBlock{
+       padding: 40px 100px;
+   }
+
+   @media only screen and (max-width: 992px) {
+    .pdfBlock{
+      padding: 20px;
+    }
+}
