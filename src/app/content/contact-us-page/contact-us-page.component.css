@@ -3,22 +3,21 @@
     padding:10px;
   } */
 
-  .image-box{
-    background-image: url('/assets/images/contactUsImage.jpg');
-    height: 40vh;
-    background-position: center;
-    flex-basis: 100%;
+.image-box {
+  background-image: url('/assets/images/contactUsImage.jpg');
+  height: 40vh;
+  background-position: center;
+  flex-basis: 100%;
 }
-.social-box{
-    flex: 1;
-    background: #f4f4f4;
-    padding:20px;
+.social-box {
+  flex: 1;
+  background: #f4f4f4;
+  padding: 20px;
 }
-.icon-box{
-    padding:20px;
-    display:inline-block;
-    float: left;
-    cursor: pointer;
+.icon-box {
+  padding: 20px;
+  display: inline-block;
+  cursor: pointer;
 }
 agm-map {
     height: 45vh;

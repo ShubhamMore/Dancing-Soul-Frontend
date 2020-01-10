@@ -1,89 +1,123 @@
-<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading">
+<img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading" />
 
 <div class="row" *ngIf="!loading">
   <div class="col-12">
     <div class="branches-page">
-        <h2>Our Branches</h2>
-        <div class="accordion" id="Branchaccordion">
-          <div class="card"  *ngFor="let branch of branches;let i=index">
-          <div class="card-header collapsed" id="headingOne" data-toggle="collapse" [attr.data-target]="'#collapse'+i" aria-expanded="true" [attr.aria-controls]="'collapse'+i">
-                  
-                    <i class="fa fa-map-marker"></i>{{branch.address}}  ({{branch.branch}})
-                
+      <h2>Our Branches</h2>
+      <div class="accordion" id="Branchaccordion">
+        <div class="card" *ngFor="let branch of branches; let i = index">
+          <div
+            class="card-header collapsed"
+            id="headingOne"
+            data-toggle="collapse"
+            [attr.data-target]="'#collapse' + i"
+            aria-expanded="true"
+            [attr.aria-controls]="'collapse' + i"
+          >
+            <i class="fa fa-map-marker"></i>{{ branch.address }} ({{ branch.branch }})
           </div>
-          <div id="{{'collapse'+i}}" class="collapse" [attr.aria-labelledby]="'heading'+i" data-parent="#Branchaccordion">
-              <div class="card-body">
-                <div class="branch-card">
-                    <div class="description">
-                        {{branch.description}}
-                      </div>
-                  <div class="flex-container">
-                    <div class="branch-img">
-                        <div id="{{'demo'+i}}" class="carousel slide" data-ride="carousel" >
-                            <ul class="carousel-indicators">
-                              <li [attr.data-target] ="'#demo'+i" *ngFor="let branchImg of branch.images;let j = index" [attr.data-slide-to]="j" [ngClass]="j == 0 ? 'active' : ''">{{i}}Sarvesh</li>
-                            </ul>
-                            
-                            <div class="carousel-inner">
-                              <div class="carousel-item" *ngFor="let branchImg of branch.images; let k = index"  [ngClass]="k == 0 ? 'item active' : 'item'">
-                                <img src="{{branchImg.secure_url}}" alt="Branch Image" width="1100" height="500">
-                              </div>
-                            </div>
-                            
-                            <a class="carousel-control-prev" href="{{'#demo'+i}}" data-slide="prev">
-                              <span class="carousel-control-prev-icon"></span>
-                            </a>
-                            <a class="carousel-control-next" href="{{'#demo'+i}}" data-slide="next">
-                              <span class="carousel-control-next-icon"></span>
-                            </a>
+          <div
+            id="{{ 'collapse' + i }}"
+            class="collapse"
+            [attr.aria-labelledby]="'heading' + i"
+            data-parent="#Branchaccordion"
+          >
+            <div class="card-body">
+              <div class="branch-card">
+                <div class="description">
+                  {{ branch.description }}
+                </div>
+                <div class="flex-container">
+                  <div class="branch-img">
+                    <div id="{{ 'demo' + i }}" class="carousel slide" data-ride="carousel">
+                      <ul class="carousel-indicators">
+                        <li
+                          [attr.data-target]="'#demo' + i"
+                          *ngFor="let branchImg of branch.images; let j = index"
+                          [attr.data-slide-to]="j"
+                          [ngClass]="j == 0 ? 'active' : ''"
+                        >
+                          {{ i }}Sarvesh
+                        </li>
+                      </ul>
+
+                      <div class="carousel-inner">
+                        <div
+                          class="carousel-item"
+                          *ngFor="let branchImg of branch.images; let k = index"
+                          [ngClass]="k == 0 ? 'item active' : 'item'"
+                        >
+                          <img
+                            src="{{ branchImg.secure_url }}"
+                            alt="Branch Image"
+                            width="1100"
+                            height="500"
+                          />
                         </div>
+                      </div>
+
+                      <a class="carousel-control-prev" href="{{ '#demo' + i }}" data-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                      </a>
+                      <a class="carousel-control-next" href="{{ '#demo' + i }}" data-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                      </a>
                     </div>
-                    <div class="branch-details">
-                      <div class="detail">
-                        <a *ngIf="branch.email" href="mailto:{{branch.email}}?subject=Class%20Enquiry"><i class="fa fa-envelope"></i>{{branch.email}}</a>
-                        <a *ngIf="branch.phone"><i class="fa fa-phone"></i>{{branch.phone}}</a>
-                        <!-- <a *ngIf="branch.address"><i class="fa fa-map-marker"></i>{{branch.address}}</a> -->
-                        <!-- <a *ngIf="branch.branch"><i class="fa fa-building"></i>{{branch.branch}}</a> -->
+                  </div>
+                  <div class="branch-details">
+                    <div class="detail">
+                      <a
+                        *ngIf="branch.email"
+                        href="mailto:{{ branch.email }}?subject=Class%20Enquiry"
+                        ><i class="fa fa-envelope"></i>{{ branch.email }}</a
+                      >
+                      <a *ngIf="branch.phone"><i class="fa fa-phone"></i>{{ branch.phone }}</a>
+                      <!-- <a *ngIf="branch.address"><i class="fa fa-map-marker"></i>{{branch.address}}</a> -->
+                      <!-- <a *ngIf="branch.branch"><i class="fa fa-building"></i>{{branch.branch}}</a> -->
+                    </div>
+                    <div class="batch-details">
+                      <div *ngIf="branch.weekDayBatch && branch.weekDayBatch.length > 0">
+                        <table>
+                          <tr>
+                            <td class="tableHeader" colspan="3">Weekdays</td>
+                          </tr>
+                          <tr>
+                            <th>Days</th>
+                            <th>Batch</th>
+                            <th>Timing</th>
+                          </tr>
+                          <tr *ngFor="let curBatch of branch.weekDayBatch; let i = index">
+                            <td>{{ curBatch.days }}</td>
+                            <td>{{ curBatch.batchName }}</td>
+                            <td>{{ curBatch.time }}</td>
+                          </tr>
+                        </table>
                       </div>
-                      <div class="batch-details">
-                        <div *ngIf="branch.weekDayBatch&&branch.weekDayBatch.length>0" >
-                          <table>
-                              <tr><td class="tableHeader" colspan="3">Weekdays</td></tr>
-                              <tr>
-                                <th>Days</th>
-                                <th>Batch</th>
-                                <th>Timing</th>
-                              </tr>
-                              <tr *ngFor="let curBatch of branch.weekDayBatch; let i = index">
-                                <td>{{curBatch.days}}</td>
-                                <td>{{curBatch.batchName}}</td>
-                                <td>{{curBatch.time}}</td>
-                              </tr>
-                          </table>
-                        </div>
-                        <div *ngIf="branch.weekEndBatch&&branch.weekEndBatch.length>0" >
-                          <table>
-                            <tr><td class="tableHeader"  colspan="3">Weekends</td></tr>
-                            <tr>
-                              <th>Days</th>
-                              <th>Batch</th>
-                              <th>Timing</th>
-                            </tr>
-                              <tr *ngFor="let curBatch of branch.weekEndBatch; let i = index">
-                                <td>{{curBatch.days}}</td>
-                                <td>{{curBatch.batchName}}</td>
-                                <td>{{curBatch.time}}</td>
-                              </tr>
-                          </table>   
-                        </div> 
+                      <div *ngIf="branch.weekEndBatch && branch.weekEndBatch.length > 0">
+                        <table>
+                          <tr>
+                            <td class="tableHeader" colspan="3">Weekends</td>
+                          </tr>
+                          <tr>
+                            <th>Days</th>
+                            <th>Batch</th>
+                            <th>Timing</th>
+                          </tr>
+                          <tr *ngFor="let curBatch of branch.weekEndBatch; let i = index">
+                            <td>{{ curBatch.days }}</td>
+                            <td>{{ curBatch.batchName }}</td>
+                            <td>{{ curBatch.time }}</td>
+                          </tr>
+                        </table>
                       </div>
                     </div>
                   </div>
                 </div>
+              </div>
             </div>
           </div>
-          </div>
         </div>
+      </div>
     </div>
   </div>
 </div>

@@ -1,69 +1,99 @@
 <div class="flex-container">
-    <div class="image-box">
-        
+  <div class="image-box"></div>
+  <div class="social-box">
+    <h1>Check us out on</h1>
+    <div class="icon-box">
+      <a href="https://www.facebook.com/thedancingsoul.k" target="_blank">
+        <img
+          src="../../../assets/images/facebook-icon.svg"
+          width="70px"
+          alt="Facebook"
+          title="Facebook"
+        />
+      </a>
     </div>
-    <div class="social-box">
-            <h1>Check us out on</h1>
-            <div class="icon-box">
-                <a href="https://www.facebook.com/thedancingsoul.k" target="_blank">
-                    <img src="../../../assets/images/facebook-icon.svg" width="70px"  alt="Facebook" title="Facebook">
-                </a>
-            </div>
-            <div class="icon-box">
-                <a href="https://www.instagram.com/thedancingsoul.k/" target="_blank">
-                    <img  src="../../../assets/images/instagram-icon.svg" width="70px"  alt="Instagram" title="Instagram">
-                </a>
-            </div>
-            <div class="icon-box">
-                <a  target="_blank">
-                    <img src="../../../assets/images/twitter-icon.svg" width="70px"  alt="Twitter" title="Twitter">
-                </a>
-            </div>
-            <div class="icon-box">
-                <a  target="_blank">
-                    <img src="../../../assets/images/linkedin-icon.svg" width="70px"  alt="Linked In" title="Linked in">
-                </a>
-            </div>
-        </div>
-    <div class="details-box">
-        <h1>Contact Us</h1>
-        <ul>
-            <li><i class="fa fa-phone" aria-hidden="true"></i>{{contactDetailsJson.phone}}</li>
-            <li> <i class="fa fa-envelope" aria-hidden="true"></i>{{contactDetailsJson.email}}</li>
-            <li><i class="fa fa-map-marker" aria-hidden="true"></i>{{contactDetailsJson.address}}</li>
-        </ul>
+    <div class="icon-box">
+      <a href="https://www.instagram.com/thedancingsoul.k/" target="_blank">
+        <img
+          src="../../../assets/images/instagram-icon.svg"
+          width="70px"
+          alt="Instagram"
+          title="Instagram"
+        />
+      </a>
     </div>
-    <div class="form-box">
-        <h1>GET IN TOUCH</h1>
-        Hello,<br>
-        <br>
-        <div style="float: left;">My name is&nbsp;</div>
-        <div contenteditable="true" class="input-box"
-             [textContent]="userName" (input)="inputUserName($event.target.textContent)" 
-             (click)="clearText($event)" 
-             (focusout)="checkIfEmpty($event,'userName')">
-        </div>
-        <div>&nbsp;, my contact is&nbsp;</div>
-        <div contenteditable="true" class="input-box"
-             [textContent]="contact" (input)="inputContact($event.target.textContent)"
-             (click)="clearText($event)"
-             (focusout)="checkIfEmpty($event,'contact')">
-        </div>
-        <div>&nbsp;and my email address is&nbsp;</div>
-        <div contenteditable="true" class="input-box"
-             [textContent]="emailId" (input)="inputEmailId($event.target.textContent)"
-             (click)="clearText($event)"
-             (focusout)="checkIfEmpty($event,'emailId')">
-        </div>
-        <div>&nbsp;and i would like to discuss about&nbsp;</div>
-        <div contenteditable="true" class="input-box"
-             [textContent]="message" (input)="inputMessage($event.target.textContent)" 
-             (click)="clearText($event)"
-             (focusout)="checkIfEmpty($event,'message')">
-        </div>
-        <div class="clearfix"></div>
-        <div class="btn" (click)="formSubmit()">
-            Submit
-        </div>
+    <div class="icon-box">
+      <a target="_blank">
+        <img
+          src="../../../assets/images/twitter-icon.svg"
+          width="70px"
+          alt="Twitter"
+          title="Twitter"
+        />
+      </a>
     </div>
+    <div class="icon-box">
+      <a target="_blank">
+        <img
+          src="../../../assets/images/linkedin-icon.svg"
+          width="70px"
+          alt="Linked In"
+          title="Linked in"
+        />
+      </a>
+    </div>
+  </div>
+  <div class="details-box">
+    <h1>Contact Us</h1>
+    <ul>
+      <li><i class="fa fa-phone" aria-hidden="true"></i>{{ contactDetailsJson.phone }}</li>
+      <li><i class="fa fa-envelope" aria-hidden="true"></i>{{ contactDetailsJson.email }}</li>
+      <li><i class="fa fa-map-marker" aria-hidden="true"></i>{{ contactDetailsJson.address }}</li>
+    </ul>
+  </div>
+  <div class="form-box">
+    <h1>GET IN TOUCH</h1>
+    Hello,<br />
+    <br />
+    <div style="float: left;">My name is&nbsp;</div>
+    <div
+      contenteditable="true"
+      class="input-box"
+      [textContent]="userName"
+      (input)="inputUserName($event.target.textContent)"
+      (click)="clearText($event)"
+      (focusout)="checkIfEmpty($event, 'userName')"
+    ></div>
+    <div>&nbsp;, my contact is&nbsp;</div>
+    <div
+      contenteditable="true"
+      class="input-box"
+      [textContent]="contact"
+      (input)="inputContact($event.target.textContent)"
+      (click)="clearText($event)"
+      (focusout)="checkIfEmpty($event, 'contact')"
+    ></div>
+    <div>&nbsp;and my email address is&nbsp;</div>
+    <div
+      contenteditable="true"
+      class="input-box"
+      [textContent]="emailId"
+      (input)="inputEmailId($event.target.textContent)"
+      (click)="clearText($event)"
+      (focusout)="checkIfEmpty($event, 'emailId')"
+    ></div>
+    <div>&nbsp;and i would like to discuss about&nbsp;</div>
+    <div
+      contenteditable="true"
+      class="input-box"
+      [textContent]="message"
+      (input)="inputMessage($event.target.textContent)"
+      (click)="clearText($event)"
+      (focusout)="checkIfEmpty($event, 'message')"
+    ></div>
+    <div class="clearfix"></div>
+    <div class="btn" (click)="formSubmit()">
+      Submit
+    </div>
+  </div>
 </div>
