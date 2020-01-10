@@ -72,6 +72,9 @@
         min-height: 0px;
     }
     .pdfBlock{
-      padding: 20px;
+      padding: 20px 5px;
+    }
+    .card-body{
+      padding:0;
     }
 }

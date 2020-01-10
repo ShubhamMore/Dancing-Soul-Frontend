@@ -45,3 +45,8 @@ agm-map {
     float: left;
     color: #e67e22;
 }
+@media only screen and (max-width: 658px) {
+    .form-box{
+        margin-bottom: 25px;
+    }
+}
