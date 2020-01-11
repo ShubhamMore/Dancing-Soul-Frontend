@@ -50,6 +50,8 @@ import { AdminShowVideosComponent } from './admin/admin-gallary/admin-show-video
 
 import { AdminAttendanceComponent } from './admin/admin-attendance/admin-attendance.component';
 
+import { AdminContactComponent } from './admin/admin-contact/admin-contact.component';
+
 import { AdminFacultyComponent } from './admin/admin-faculty/admin-faculty.component';
 import { AdminAddFacultyComponent } from './admin/admin-faculty/admin-add-faculty/admin-add-faculty.component';
 import { AdminShowFacultyComponent } from './admin/admin-faculty/admin-show-faculty/admin-show-faculty.component';
@@ -63,6 +65,9 @@ import { AdminStudentIdentityComponent } from './admin/admin-student/admin-stude
 import { AdminStudentCertificateComponent } from './admin/admin-student/admin-student-certificate/admin-student-certificate.component';
 import { AdminStudentShowProgressComponent } from './admin/admin-student/admin-student-show-progress/admin-student-show-progress.component';
 import { AdminStudentAddProgressComponent } from './admin/admin-student/admin-student-add-progress/admin-student-add-progress.component';
+import { AdminStudentReceiptsComponent } from './admin/admin-student/admin-student-receipts/admin-student-receipts.component';
+// tslint:disable-next-line: max-line-length
+import { AdminStudentGenerateReceiptComponent } from './admin/admin-student/admin-student-generate-receipt/admin-student-generate-receipt.component';
 
 import { AdminCareerComponent } from './admin/admin-career/admin-career.component';
 import { AdminCareerContentComponent } from './admin/admin-career/admin-career-content/admin-career-content.component';
@@ -70,10 +75,6 @@ import { AdminShowCareerComponent } from './admin/admin-career/admin-show-career
 
 import { PageNotFoundComponent } from './errors/page-not-found/page-not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
-
-import { AdminStudentReceiptsComponent } from './admin/admin-student/admin-student-receipts/admin-student-receipts.component';
-// tslint:disable-next-line: max-line-length
-import { AdminStudentGenerateReceiptComponent } from './admin/admin-student/admin-student-generate-receipt/admin-student-generate-receipt.component';
 
 import {
   AdminAuthGuard,
@@ -272,6 +273,8 @@ const appRoutes: Routes = [
         component: AdminShowCareerComponent,
         canActivate: [AdminAuthGuard]
       },
+
+      { path: 'contact', component: AdminContactComponent, canActivate: [AdminAuthGuard] },
 
       { path: 'attendance', component: AdminAttendanceComponent, canActivate: [AdminAuthGuard] },
 

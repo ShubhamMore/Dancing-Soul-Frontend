@@ -105,6 +105,8 @@ import { AdminStudentCertificateComponent } from './admin/admin-student/admin-st
 import { AdminStudentAddProgressComponent } from './admin/admin-student/admin-student-add-progress/admin-student-add-progress.component';
 import { AdminStudentShowProgressComponent } from './admin/admin-student/admin-student-show-progress/admin-student-show-progress.component';
 
+import { AdminContactComponent } from './admin/admin-contact/admin-contact.component';
+
 import { AdminCareerComponent } from './admin/admin-career/admin-career.component';
 import { AdminCareerContentComponent } from './admin/admin-career/admin-career-content/admin-career-content.component';
 import { AdminShowCareerComponent } from './admin/admin-career/admin-show-career/admin-show-career.component';
@@ -141,6 +143,9 @@ import { IdentityService } from './services/identity.service';
 import { NewsService } from './services/news.service';
 import { ReceiptService } from './services/receipt.service';
 import { StudentService } from './services/student.service';
+import { ContactService } from './services/contact.service';
+import { ContentService } from './services/content.service';
+import { CareerService } from './services/career.service';
 
 @NgModule({
   declarations: [
@@ -243,7 +248,8 @@ import { StudentService } from './services/student.service';
     StudentShowReceiptComponent,
     StudentIdentityComponent,
     StudentExamCertificateComponent,
-    StudentProgressComponent
+    StudentProgressComponent,
+    AdminContactComponent
   ],
 
   imports: [
@@ -265,6 +271,9 @@ import { StudentService } from './services/student.service';
     AttendanceService,
     BranchService,
     CertificateService,
+    CareerService,
+    ContentService,
+    ContactService,
     DashboardService,
     EnquiryService,
     ExamService,

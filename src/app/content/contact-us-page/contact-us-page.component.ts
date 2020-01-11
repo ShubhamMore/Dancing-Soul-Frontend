@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EnquiryService } from '../../services/enquiry.service';
+import { ContactService } from '../../services/contact.service';
+import { ContactModel } from '../../models/contact.module';
 
 @Component({
   selector: 'app-contact-us-page',
@@ -7,11 +9,7 @@ import { EnquiryService } from '../../services/enquiry.service';
   styleUrls: ['./contact-us-page.component.css']
 })
 export class ContactUsPageComponent implements OnInit {
-  contactDetailsJson = {
-    phone: '9876543210',
-    email: 'dancingSoul@gmail.com',
-    address: 'kasarvadavali,Thane'
-  };
+  contactDetailsJson: ContactModel;
 
   yourName = 'your name';
   yourPhone = 'your phone';
@@ -27,9 +25,22 @@ export class ContactUsPageComponent implements OnInit {
   message = this.yourMessage;
   contact = this.yourPhone;
 
-  constructor(private enquiryService: EnquiryService) {}
+  loading: boolean;
 
-  ngOnInit() {}
+  constructor(private enquiryService: EnquiryService, private contactService: ContactService) {}
+
+  ngOnInit() {
+    this.loading = true;
+    this.contactService.getContact().subscribe(
+      (resData: any) => {
+        this.contactDetailsJson = resData;
+        this.loading = false;
+      },
+      (error: any) => {
+        this.loading = false;
+      }
+    );
+  }
 
   inputUserName(userName: string) {
     this.userName = userName;

@@ -146,20 +146,10 @@
 
               <div class="row">
                 <div class="col-md-6 col-12">
-                  <label class="pointer" for="lateFeeCheckBox"
-                    >Click here to {{ lateFee ? 'Remove' : 'Add ' }} Late Fee</label
-                  >
-                  <input
-                    class="lateFeeCheckBox"
-                    type="checkbox"
-                    name="lateFeeCheckBox"
-                    id="lateFeeCheckBox"
-                    (change)="addLateFee($event)"
-                    hidden
-                  />
+                  <label class="pointer" for="lateFee">Late Fee</label>
                 </div>
 
-                <div class="col-md-6 col-12" *ngIf="lateFee">
+                <div class="col-md-6 col-12">
                   <input
                     type="number"
                     name="lateFee"

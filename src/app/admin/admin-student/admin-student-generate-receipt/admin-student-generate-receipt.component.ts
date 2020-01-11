@@ -24,7 +24,6 @@ export class AdminStudentGenerateReceiptComponent implements OnInit {
   feeDescriptionError: boolean;
   amountError: boolean;
 
-  lateFee: boolean;
   lateFeeAmount: number;
   lateFeeError: boolean;
 
@@ -53,7 +52,6 @@ export class AdminStudentGenerateReceiptComponent implements OnInit {
     this.feeDescriptionError = false;
     this.amountError = false;
 
-    this.lateFee = false;
     this.lateFeeError = false;
     this.lateFeeAmount = 0;
 
@@ -133,7 +131,7 @@ export class AdminStudentGenerateReceiptComponent implements OnInit {
       return (this.feeDescriptionError = true);
     } else if ((!this.amount || this.amount < 1) && this.feeType === '1') {
       return (this.amountError = true);
-    } else if ((!this.lateFeeAmount || this.lateFeeAmount < 1) && this.lateFee) {
+    } else if (this.lateFeeAmount < 0) {
       return (this.lateFeeError = true);
     } else if (this.monthsForm.invalid && this.feeType === '0') {
       return (this.formError = '*Please Fill All Fields of Receipt');
@@ -156,12 +154,7 @@ export class AdminStudentGenerateReceiptComponent implements OnInit {
         feeDescription = this.feeDescription;
       }
 
-      let amount: number;
-      if (this.lateFee) {
-        amount = this.amount + this.lateFeeAmount;
-      } else {
-        amount = this.amount;
-      }
+      const amount = this.amount + this.lateFeeAmount;
 
       const receipt = {
         student: this.student._id,
@@ -207,20 +200,12 @@ export class AdminStudentGenerateReceiptComponent implements OnInit {
     );
   }
 
-  addLateFee(event: any) {
-    if (event.target.checked) {
-      return (this.lateFee = true);
-    }
-    this.lateFeeAmount = 0;
-    return this.lateFee;
-  }
-
   addLateFeeAmount(event: any) {
     this.lateFeeAmount = +event.target.value;
-    if (!this.lateFeeAmount || this.lateFeeAmount < 1) {
+    if (!this.lateFeeAmount || this.lateFeeAmount < 0) {
       return (this.lateFeeError = true);
     }
-    return this.lateFeeError;
+    return (this.lateFeeError = false);
   }
 
   changeFeeType(event: any) {

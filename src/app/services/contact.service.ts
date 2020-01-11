@@ -6,11 +6,11 @@ import { throwError } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ContentService {
+export class ContactService {
   constructor(private httpService: HttpService) {}
 
-  getContent() {
-    const data = { api: 'getContent', data: {} };
+  getContact() {
+    const data = { api: 'getContact', data: {} };
     return this.httpService.httpPost(data).pipe(
       map((response: any) => {
         return response;
@@ -21,8 +21,8 @@ export class ContentService {
     );
   }
 
-  saveContent(content: any) {
-    const data = { api: 'saveContent', data: content };
+  saveContact(contact: any) {
+    const data = { api: 'saveContact', data: contact };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
