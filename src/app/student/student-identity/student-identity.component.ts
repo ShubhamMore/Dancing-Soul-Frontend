@@ -42,8 +42,15 @@ export class StudentIdentityComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
+
+    this.aadharCardPreview = null;
+    this.uploadAadharCard = null;
     this.invalidAadharCard = false;
+
+    this.birthCirtificatePreview = null;
+    this.uploadBirthCirtificate = null;
     this.invalidBirthCirtificate = false;
+
     this.identityError = false;
     this.imgExt = ['jpg', 'png'];
 
@@ -68,9 +75,9 @@ export class StudentIdentityComponent implements OnInit {
   prepareIdentityImages(images: ImageModel[]) {
     images.forEach(image => {
       if (image.image_name.includes('aadharcard')) {
-        this.aadharCard = image.secure_url;
+        this.aadharCard = image;
       } else if (image.image_name.includes('birthcirtificate')) {
-        this.birthCirtificate = image.secure_url;
+        this.birthCirtificate = image;
       }
     });
   }
@@ -181,6 +188,18 @@ export class StudentIdentityComponent implements OnInit {
     } else {
       this.identityError = true;
     }
+  }
+
+  deleteIdentity(publicId: string) {
+    this.loading = true;
+    this.identityService.removeIdentity(this.identity._id, publicId).subscribe(
+      (responce: any) => {
+        this.ngOnInit();
+      },
+      (error: any) => {
+        this.setError(error);
+      }
+    );
   }
 
   setError(err: string) {

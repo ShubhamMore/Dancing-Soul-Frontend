@@ -40,6 +40,8 @@ export class StudentExamCertificateComponent implements OnInit {
     this.loading = true;
     this.certificates = [];
     this.invalidCertificate = false;
+    this.certificatePreview = null;
+    this.uploadCertificate = null;
     this.certificateTitle = 'certificate';
     this.certificateError = false;
     this.imgExt = ['jpg', 'png'];

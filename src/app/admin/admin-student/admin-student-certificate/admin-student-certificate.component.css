@@ -97,3 +97,12 @@ input[type='file'] {
   transform: scale(1.2);
   color: #ff0000;
 }
+
+.download {
+  padding: 2px auto;
+  color: #555;
+}
+
+.download:hover {
+  color: #000;
+}

@@ -97,7 +97,7 @@ export class AdminShowArticleComponent implements OnInit {
     this.loading = false;
   }
 
-  clearErr() {
+  clearError() {
     this.error = null;
   }
 }

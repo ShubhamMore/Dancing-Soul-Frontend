@@ -97,7 +97,9 @@
                 <tr class="student-tr" *ngFor="let student of students; let i = index">
                   <td>{{ i + 1 }}</td>
                   <td>
-                    {{ student.name }}
+                    <a [routerLink]="student._id" class="student-name" skipLocationChange>{{
+                      student.name
+                    }}</a>
                   </td>
                   <td>
                     <div class="attendance-selector text-center">

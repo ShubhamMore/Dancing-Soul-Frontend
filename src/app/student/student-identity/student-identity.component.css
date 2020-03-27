@@ -45,9 +45,10 @@ input[type='file'] {
 }
 
 .image-container {
+  margin: auto;
   position: relative;
   width: auto;
-  height: 150px;
+  height: 200px;
 }
 
 .image {

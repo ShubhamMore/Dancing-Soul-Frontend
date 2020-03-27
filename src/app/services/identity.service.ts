@@ -44,4 +44,16 @@ export class IdentityService {
       })
     );
   }
+
+  removeIdentity(id: string, publicId: string) {
+    const data = { api: 'removeIdentity', data: { _id: id, public_id: publicId } };
+    return this.httpService.httpPostAuth(data).pipe(
+      map((response: any) => {
+        return response;
+      }),
+      catchError(err => {
+        return throwError(err);
+      })
+    );
+  }
 }

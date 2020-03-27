@@ -45,9 +45,10 @@ input[type='file'] {
 }
 
 .image-container {
+  margin: auto;
   position: relative;
   width: auto;
-  height: 150px;
+  height: 200px;
 }
 
 .image {
@@ -96,4 +97,13 @@ input[type='file'] {
 .trash:hover {
   transform: scale(1.2);
   color: #ff0000;
+}
+
+.download {
+  padding: 2px auto;
+  color: #555;
+}
+
+.download:hover {
+  color: #000;
 }

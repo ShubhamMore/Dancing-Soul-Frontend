@@ -49,6 +49,7 @@ import { AdminAddVideosComponent } from './admin/admin-gallary/admin-add-videos/
 import { AdminShowVideosComponent } from './admin/admin-gallary/admin-show-videos/admin-show-videos.component';
 
 import { AdminAttendanceComponent } from './admin/admin-attendance/admin-attendance.component';
+import { AdminShowAttendanceComponent } from './admin/admin-attendance/admin-show-attendance/admin-show-attendance.component';
 
 import { AdminContactComponent } from './admin/admin-contact/admin-contact.component';
 
@@ -277,6 +278,11 @@ const appRoutes: Routes = [
       { path: 'contact', component: AdminContactComponent, canActivate: [AdminAuthGuard] },
 
       { path: 'attendance', component: AdminAttendanceComponent, canActivate: [AdminAuthGuard] },
+      {
+        path: 'attendance/:id',
+        component: AdminShowAttendanceComponent,
+        canActivate: [AdminAuthGuard]
+      },
 
       { path: 'enquiry', component: AdminEnquiryComponent, canActivate: [AdminAuthGuard] },
       { path: 'enquiry/:id', component: AdminShowEnquiryComponent, canActivate: [AdminAuthGuard] },

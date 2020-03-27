@@ -85,7 +85,7 @@ export class AdminShowFacultyComponent implements OnInit {
     this.loading = false;
   }
 
-  clearErr() {
+  clearError() {
     this.error = null;
   }
 }

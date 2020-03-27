@@ -45,6 +45,9 @@ export class AdminStudentCertificateComponent implements OnInit {
     this.invalidCertificate = false;
     this.certificateError = false;
 
+    this.certificatePreview = null;
+    this.uploadCertificate = null;
+
     this.certificateTitle = 'cirtificate';
 
     this.route.params.subscribe((params: Params) => {

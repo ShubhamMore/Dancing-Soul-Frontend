@@ -27,14 +27,29 @@
         <div class="row">
           <div class="col-md-6 col-12">
             <h4>Aadhar Card</h4>
-            <div *ngIf="aadharCard">
-              <img [src]="aadharCard" width="80%" alt="Aadhar Card" />
+            <div class="row" *ngIf="aadharCard">
+              <div class="image-container">
+                <img [src]="aadharCard.secure_url" class="image" alt="Aadhar Card" />
+
+                <div class="middle">
+                  <a class="delete" (click)="deleteIdentity(aadharCard.public_id)"
+                    ><i class="fa fa-trash-o trash"></i
+                  ></a>
+                </div>
+              </div>
             </div>
           </div>
           <div class="col-md-6 col-12">
             <h4>Birth Cirtificate</h4>
-            <div *ngIf="birthCirtificate">
-              <img [src]="birthCirtificate" width="80%" alt="Birth Cirtificate" />
+            <div class="row" *ngIf="birthCirtificate">
+              <div class="image-container">
+                <img [src]="birthCirtificate.secure_url" class="image" alt="Birth Cirtificate" />
+                <div class="middle">
+                  <a class="delete" (click)="deleteIdentity(birthCirtificate.public_id)"
+                    ><i class="fa fa-trash-o trash"></i
+                  ></a>
+                </div>
+              </div>
             </div>
           </div>
         </div>

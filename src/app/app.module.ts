@@ -92,6 +92,7 @@ import { AdminShowVideosComponent } from './admin/admin-gallary/admin-show-video
 import { AdminAddVideosComponent } from './admin/admin-gallary/admin-add-videos/admin-add-videos.component';
 
 import { AdminAttendanceComponent } from './admin/admin-attendance/admin-attendance.component';
+import { AdminShowAttendanceComponent } from './admin/admin-attendance/admin-show-attendance/admin-show-attendance.component';
 
 import { AdminStudentComponent } from './admin/admin-student/admin-student.component';
 import { AdminAddStudentComponent } from './admin/admin-student/admin-add-student/admin-add-student.component';
@@ -215,6 +216,8 @@ import { CareerService } from './services/career.service';
     AdminShowVideosComponent,
     // ADMIN ATTENDANCE COMPONENT
     AdminAttendanceComponent,
+    AdminShowAttendanceComponent,
+
     // ADMIN FACULTY COMPONENT
     AdminFacultyComponent,
     AdminAddFacultyComponent,

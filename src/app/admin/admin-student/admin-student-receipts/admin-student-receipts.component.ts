@@ -31,6 +31,7 @@ export class AdminStudentReceiptsComponent implements OnInit {
       this.receiptService.getReceipts(this.id).subscribe(
         (responce: ReceiptModel[]) => {
           this.receipts = responce;
+          console.log(responce);
           this.loading = false;
         },
         (error: any) => {
