@@ -1,21 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ContentModel } from '../../../models/content.model';
 import { ContentService } from '../../../services/content.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { CKEditorConfig } from '../../../shared/ckeditor.config';
 
 @Component({
   selector: 'app-admin-career-content',
   templateUrl: './admin-career-content.component.html',
-  styleUrls: ['./admin-career-content.component.css']
+  styleUrls: ['./admin-career-content.component.css'],
 })
 export class AdminCareerContentComponent implements OnInit {
   loading: boolean;
   error: string;
   content: ContentModel;
+  careerContent: any;
   editing: boolean;
-
-  form: FormGroup;
+  ckeConfig: any;
+  @ViewChild('myckeditor') ckeditor: any;
 
   constructor(
     private contentService: ContentService,
@@ -26,30 +27,26 @@ export class AdminCareerContentComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     this.editing = false;
-    this.form = new FormGroup({
-      content: new FormControl(null, {
-        validators: [Validators.required]
-      })
-    });
+    this.ckeConfig = CKEditorConfig;
+
     this.contentService.getContent().subscribe(
       (responce: ContentModel) => {
         this.content = responce;
-        if (this.content) {
-          this.form.patchValue({ content: this.content.careerContent });
-        }
+        this.careerContent = this.content.careerContent;
         this.loading = false;
       },
       (error: any) => {
         this.setError(error);
+        this.loading = false;
       }
     );
   }
 
   saveContent() {
-    if (this.form.valid) {
+    if (this.careerContent) {
       this.loading = true;
       const content: any = {
-        careerContent: this.form.value.content
+        careerContent: this.careerContent,
       };
       if (this.content) {
         content._id = this.content._id;
@@ -58,9 +55,9 @@ export class AdminCareerContentComponent implements OnInit {
 
       this.contentService.saveContent(content).subscribe(
         (responce: any) => {
-          this.form.reset();
+          this.careerContent = null;
           this.content = content;
-          this.form.patchValue({ content: this.content.careerContent });
+          this.careerContent = this.content.careerContent;
           this.cancel();
         },
         (error: any) => {
@@ -77,7 +74,7 @@ export class AdminCareerContentComponent implements OnInit {
   back() {
     this.router.navigate(['/admin', 'career'], {
       relativeTo: this.route,
-      skipLocationChange: true
+      skipLocationChange: true,
     });
   }
 

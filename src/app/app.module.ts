@@ -7,6 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { Angular2ImageGalleryModule } from 'angular2-image-gallery';
 import { PdfViewerModule } from 'ng2-pdf-viewer'; // <- import PdfViewerModule
 
+// CK-EDITOR
+import { CKEditorModule } from 'ng2-ckeditor';
 // ROUTES
 import { AppRoutes } from './app.routes.module';
 
@@ -16,7 +18,7 @@ import {
   LoginAuthGuard,
   StudentAuthGuard,
   FacultuAuthGuard,
-  ChangePassswordGuard
+  ChangePassswordGuard,
 } from './auth/auth.guard';
 
 // SERVICES
@@ -147,6 +149,7 @@ import { StudentService } from './services/student.service';
 import { ContactService } from './services/contact.service';
 import { ContentService } from './services/content.service';
 import { CareerService } from './services/career.service';
+import { SafeHtmlPipe } from './pipe/safe-html.pipe';
 
 @NgModule({
   declarations: [
@@ -252,17 +255,20 @@ import { CareerService } from './services/career.service';
     StudentIdentityComponent,
     StudentExamCertificateComponent,
     StudentProgressComponent,
-    AdminContactComponent
+    AdminContactComponent,
+
+    SafeHtmlPipe,
   ],
 
   imports: [
     BrowserModule,
     ReactiveFormsModule,
+    CKEditorModule,
     FormsModule,
     AppRoutes,
     HttpClientModule,
     Angular2ImageGalleryModule,
-    PdfViewerModule
+    PdfViewerModule,
   ],
 
   providers: [
@@ -295,9 +301,9 @@ import { CareerService } from './services/career.service';
     // AUTH SERVICE
     AuthService,
     // FORM VALIDATOR
-    FormValidator
+    FormValidator,
   ],
 
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

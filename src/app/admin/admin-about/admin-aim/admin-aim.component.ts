@@ -5,7 +5,7 @@ import { AboutService } from '../../../services/about.service';
 @Component({
   selector: 'app-admin-aim',
   templateUrl: './admin-aim.component.html',
-  styleUrls: ['./admin-aim.component.css']
+  styleUrls: ['./admin-aim.component.css'],
 })
 export class AdminAimComponent implements OnInit {
   about: AboutModel;

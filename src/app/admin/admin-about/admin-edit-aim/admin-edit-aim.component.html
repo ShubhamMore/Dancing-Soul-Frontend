@@ -14,21 +14,27 @@
     </div>
     <div class="row mt-2">
       <div class="edit-aim col-md-10 col-12 mx-auto">
-        <form (submit)="saveAim()" [formGroup]="form">
+        <form role="form" (submit)="saveAim()" #myForm="ngForm" accept-charset="UTF-8" novalidate>
           <div class="header">
             <h3>Aim</h3>
           </div>
           <hr />
-          <div class="body">
-            <textarea
-              class="aim"
-              name="aim"
-              id="aim"
-              rows="6"
-              formControlName="aim"
-              placeholder="Enter Aim"
-            ></textarea>
-            <span *ngIf="!form.get('aim').valid && form.get('aim').touched">*Please Enter Aim</span>
+          <div
+            class="body form-group has-feedback"
+            [ngClass]="{ 'has-error': myckeditor.invalid && myckeditor.touched }"
+          >
+            <ckeditor
+              [(ngModel)]="aim"
+              #myckeditor="ngModel"
+              name="myckeditor"
+              required
+              [config]="ckeConfig"
+              debounce="500"
+            >
+            </ckeditor>
+            <div *ngIf="myckeditor.invalid && myckeditor.touched" class="help-block">
+              Required field.
+            </div>
           </div>
           <hr />
           <div class="footer">

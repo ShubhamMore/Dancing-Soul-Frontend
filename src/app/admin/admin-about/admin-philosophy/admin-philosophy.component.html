@@ -31,7 +31,7 @@
         </div>
         <hr />
         <div class="about-body">
-          <p>{{ about.philosophy }}</p>
+          <div [innerHTML]="about.philosophy | safeHtml"></div>
         </div>
       </div>
     </div>

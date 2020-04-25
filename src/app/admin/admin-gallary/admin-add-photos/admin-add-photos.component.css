@@ -1,28 +1,9 @@
-* {
-  margin: 0;
-}
-
-h3 {
-  font-size: 150%;
-}
-
-hr {
-  border-top: 2px solid #e67e22;
-  margin: 5px 0;
-  padding: 0;
-}
-
 input[type='file'] {
   visibility: hidden;
 }
 
 input.ng-invalid.ng-touched {
   border-color: #ff0000;
-}
-
-span {
-  font-size: 15px;
-  color: #ff0000;
 }
 
 .preview-image {

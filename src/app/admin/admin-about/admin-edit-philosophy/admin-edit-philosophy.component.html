@@ -14,23 +14,33 @@
     </div>
     <div class="row mt-2">
       <div class="edit-philosophy col-md-10 col-12 mx-auto">
-        <form (submit)="savePhilisophy()" [formGroup]="form">
+        <form
+          role="form"
+          (submit)="savePhilosophy()"
+          #myForm="ngForm"
+          accept-charset="UTF-8"
+          novalidate
+        >
           <div class="header">
-            <h3>philosophy</h3>
+            <h3>Philosophy</h3>
           </div>
           <hr />
-          <div class="body">
-            <textarea
-              class="philosophy"
-              name="philosophy"
-              id="philosophy"
-              rows="6"
-              formControlName="philosophy"
-              placeholder="Enter philosophy"
-            ></textarea>
-            <span *ngIf="!form.get('philosophy').valid && form.get('philosophy').touched"
-              >*Please Enter Philosophy</span
+          <div
+            class="body form-group has-feedback"
+            [ngClass]="{ 'has-error': myckeditor.invalid && myckeditor.touched }"
+          >
+            <ckeditor
+              [(ngModel)]="philosophy"
+              #myckeditor="ngModel"
+              name="myckeditor"
+              required
+              [config]="ckeConfig"
+              debounce="500"
             >
+            </ckeditor>
+            <div *ngIf="myckeditor.invalid && myckeditor.touched" class="help-block">
+              Required field.
+            </div>
           </div>
           <hr />
           <div class="footer">

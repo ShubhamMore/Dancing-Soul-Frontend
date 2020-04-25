@@ -1,22 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AboutService } from '../../../services/about.service';
 import { AboutModel } from '../../../models/about.model';
+import { CKEditorConfig } from '../../../shared/ckeditor.config';
 
 @Component({
   selector: 'app-admin-edit-history',
   templateUrl: './admin-edit-history.component.html',
-  styleUrls: ['./admin-edit-history.component.css']
+  styleUrls: ['./admin-edit-history.component.css'],
 })
 export class AdminEditHistoryComponent implements OnInit {
-  form: FormGroup;
-
   about: AboutModel;
-
+  history: string;
   loading: boolean;
-
   error: string;
+  ckeConfig: any;
+  @ViewChild('myckeditor') ckeditor: any;
 
   constructor(
     private aboutService: AboutService,
@@ -26,37 +25,33 @@ export class AdminEditHistoryComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-    this.form = new FormGroup({
-      history: new FormControl(null, {
-        validators: [Validators.required]
-      })
-    });
+    this.ckeConfig = CKEditorConfig;
 
     this.aboutService.getAbout().subscribe(
       (responce: AboutModel) => {
         this.about = responce;
-        this.form.patchValue({ history: this.about.history });
+        this.history = this.about.history;
         this.loading = false;
       },
-      error => {
+      (error: any) => {
         this.setError(error);
       }
     );
   }
 
   saveHistory() {
-    if (this.form.valid) {
+    if (this.history) {
       this.loading = true;
       const about: AboutModel = {
         _id: this.about._id,
         aim: this.about.aim,
-        history: this.form.value.history,
-        philosophy: this.about.philosophy
+        history: this.history,
+        philosophy: this.about.philosophy,
       };
 
       this.aboutService.saveAbout(about).subscribe(
         (responce: any) => {
-          this.form.reset();
+          this.history = null;
           this.cancel();
         },
         (error: any) => {
@@ -70,7 +65,7 @@ export class AdminEditHistoryComponent implements OnInit {
     this.loading = true;
     this.router.navigate(['/admin', 'about', 'history'], {
       relativeTo: this.route,
-      skipLocationChange: true
+      skipLocationChange: true,
     });
   }
 

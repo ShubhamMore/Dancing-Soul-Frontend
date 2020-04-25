@@ -7,21 +7,15 @@
       <div class="flex-container">
         <div class="info-box">
           <h2>AIM</h2>
-          <p>
-            {{ aboutUs.aim }}
-          </p>
+          <div [innerHTML]="aboutUs.aim | safeHtml"></div>
         </div>
         <div class="info-box">
           <h2>Our History</h2>
-          <p>
-            {{ aboutUs.history }}
-          </p>
+          <div [innerHTML]="aboutUs.history | safeHtml"></div>
         </div>
         <div class="info-box">
           <h2>Philosophy</h2>
-          <p>
-            {{ aboutUs.philosophy }}
-          </p>
+          <div [innerHTML]="aboutUs.philosophy | safeHtml"></div>
         </div>
       </div>
       <div class="faculty-container">

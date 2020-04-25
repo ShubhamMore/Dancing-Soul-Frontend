@@ -26,29 +26,33 @@
         </div>
         <hr />
         <div class="about-body">
-          <p>{{ content.content }}</p>
+          <div [innerHTML]="content.content | safeHtml"></div>
         </div>
       </div>
     </div>
     <div class="row mt-2" *ngIf="editing">
       <div class="edit-content col-md-10 col-12 mx-auto">
-        <form (submit)="saveContent()" [formGroup]="form">
+        <form (submit)="saveContent()" #myForm="ngForm" accept-charset="UTF-8" novalidate>
           <div class="header">
             <h3>Content</h3>
           </div>
           <hr />
-          <div class="body">
-            <textarea
-              class="content"
-              name="content"
-              id="content"
-              rows="6"
-              formControlName="content"
-              placeholder="Enter Content"
-            ></textarea>
-            <span *ngIf="!form.get('content').valid && form.get('content').touched"
-              >*Please Enter Content</span
+          <div
+            class="body form-group has-feedback"
+            [ngClass]="{ 'has-error': myckeditor.invalid && myckeditor.touched }"
+          >
+            <ckeditor
+              [(ngModel)]="contentData"
+              #myckeditor="ngModel"
+              name="myckeditor"
+              required
+              [config]="ckeConfig"
+              debounce="500"
             >
+            </ckeditor>
+            <div *ngIf="myckeditor.invalid && myckeditor.touched" class="help-block">
+              Required field.
+            </div>
           </div>
           <hr />
           <div class="footer">

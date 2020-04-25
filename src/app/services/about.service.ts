@@ -5,7 +5,7 @@ import { throwError } from 'rxjs';
 import { AboutModel } from '../models/about.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AboutService {
   constructor(private httpService: HttpService) {}
@@ -16,19 +16,20 @@ export class AboutService {
       map((response: any) => {
         return response;
       }),
-      catchError(err => {
+      catchError((err) => {
         return throwError(err);
       })
     );
   }
 
   saveAbout(about: AboutModel) {
+    console.log(about.aim);
     const data = { api: 'saveAbout', data: about };
     return this.httpService.httpPostAuth(data).pipe(
       map((response: any) => {
         return response;
       }),
-      catchError(err => {
+      catchError((err) => {
         return throwError(err);
       })
     );

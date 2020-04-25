@@ -6,9 +6,7 @@
       <div class="container">
         <div class="home-page-text">
           <h1>The Dancing Soul</h1>
-          <p>
-            {{ content }}
-          </p>
+          <div [innerHTML]="content | safeHtml"></div>
         </div>
       </div>
     </div>
