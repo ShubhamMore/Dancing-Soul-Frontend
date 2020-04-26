@@ -1,6 +1,6 @@
 <img class="loading" src="../../../assets/images/Reload-1.3s-78px.svg" *ngIf="loading" />
 
-<h2 style="padding-top: 20px">Articles</h2>
+<h2 style="padding-top: 20px;">Articles</h2>
 <div class="articles-page" *ngIf="!loading">
   <div class="container" *ngFor="let article of articles">
     <div class="row article-container">
@@ -26,7 +26,7 @@
             ></pdf-viewer>
           </div>
           <h3>{{ article.title }}</h3>
-          <p>{{ article.body }}</p>
+          <div [innerHTML]="article.body | safeHtml"></div>
         </div>
       </div>
     </div>

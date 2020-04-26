@@ -3,11 +3,12 @@ import { ArticleModel } from '../../../models/articles.model';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { ArticleService } from '../../../services/article.service';
+import { CKEditorConfig } from '../../../shared/ckeditor.config';
 
 @Component({
   selector: 'app-admin-edit-article',
   templateUrl: './admin-edit-article.component.html',
-  styleUrls: ['./admin-edit-article.component.css']
+  styleUrls: ['./admin-edit-article.component.css'],
 })
 export class AdminEditArticleComponent implements OnInit {
   article: ArticleModel;
@@ -23,6 +24,8 @@ export class AdminEditArticleComponent implements OnInit {
   uploadImage: File;
   invalidImage: boolean;
 
+  ckeConfig: any;
+
   ext: string;
 
   constructor(
@@ -33,17 +36,18 @@ export class AdminEditArticleComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
+    this.ckeConfig = CKEditorConfig;
 
     this.formError = false;
     this.invalidImage = false;
 
     this.form = new FormGroup({
       title: new FormControl(null, {
-        validators: [Validators.required]
+        validators: [Validators.required],
       }),
       body: new FormControl(null, {
-        validators: []
-      })
+        validators: [],
+      }),
     });
 
     this.route.params.subscribe((params: Params) => {
@@ -60,7 +64,7 @@ export class AdminEditArticleComponent implements OnInit {
           }
           this.form.setValue({
             title: this.article.title,
-            body: this.article.body
+            body: this.article.body,
           });
           this.loading = false;
         },
@@ -147,7 +151,7 @@ export class AdminEditArticleComponent implements OnInit {
   cancel() {
     this.router.navigate(['/admin', 'article', this.article._id], {
       relativeTo: this.route,
-      skipLocationChange: true
+      skipLocationChange: true,
     });
     this.loading = false;
   }

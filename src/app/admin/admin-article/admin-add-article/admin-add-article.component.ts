@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ArticleService } from '../../../services/article.service';
+import { CKEditorConfig } from '../../../shared/ckeditor.config';
 
 @Component({
   selector: 'app-admin-add-article',
   templateUrl: './admin-add-article.component.html',
-  styleUrls: ['./admin-add-article.component.css']
+  styleUrls: ['./admin-add-article.component.css'],
 })
 export class AdminAddArticleComponent implements OnInit {
   form: FormGroup;
@@ -19,6 +20,8 @@ export class AdminAddArticleComponent implements OnInit {
   imagePreview: string;
   uploadImage: File;
 
+  ckeConfig: any;
+
   invalidImage: boolean;
   ext: string;
 
@@ -30,17 +33,18 @@ export class AdminAddArticleComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
+    this.ckeConfig = CKEditorConfig;
 
     this.formError = false;
     this.invalidImage = false;
 
     this.form = new FormGroup({
       title: new FormControl(null, {
-        validators: [Validators.required]
+        validators: [Validators.required],
       }),
       body: new FormControl(null, {
-        validators: []
-      })
+        validators: [],
+      }),
     });
 
     this.loading = false;
@@ -108,7 +112,7 @@ export class AdminAddArticleComponent implements OnInit {
     this.cancelImage();
     this.router.navigate(['/admin', 'article'], {
       relativeTo: this.route,
-      skipLocationChange: true
+      skipLocationChange: true,
     });
   }
 

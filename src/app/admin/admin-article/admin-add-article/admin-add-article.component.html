@@ -39,14 +39,18 @@
             <div class="col-12">
               <div class="form-group">
                 <label for="body">Description : </label>
-                <textarea
+                <ckeditor
                   class="body"
                   name="body"
                   id="body"
                   rows="8"
                   formControlName="body"
                   placeholder="Description"
-                ></textarea>
+                  [config]="ckeConfig"
+                  debounce="500"
+                >
+                </ckeditor>
+
                 <span *ngIf="!form.get('body').valid && form.get('body').touched"
                   >*Please enter Article Description</span
                 >

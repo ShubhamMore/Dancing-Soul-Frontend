@@ -58,7 +58,7 @@
 
           <div class="row">
             <div class="col-12">
-              <p>{{ article.body }}</p>
+              <div [innerHTML]="article.body | safeHtml"></div>
             </div>
           </div>
 
