@@ -7,9 +7,10 @@
   background-position: center;
   background-repeat: no-repeat;
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7)),
-    url(src/assets/images/homePage.jpg);
+    url(src/assets/images/home_page.JPG);
   background-size: cover;
   background-attachment: fixed;
+  height: 90vh;
 }
 
 @media only screen and (max-width: 1200px) {

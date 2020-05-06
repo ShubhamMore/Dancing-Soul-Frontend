@@ -4,10 +4,13 @@
   } */
 
 .image-box {
-  background-image: url('/assets/images/contactUsImage.jpg');
+  background-image: url('/assets/images/contact_us-min.JPG');
   height: 40vh;
   background-position: center;
   flex-basis: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 30% 45%;   
 }
 .social-box {
   flex: 1;
