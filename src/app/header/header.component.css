@@ -34,6 +34,9 @@
 .main-nav li a:active {
   border-bottom: 2px solid #e67e22;
 }
+.headerActive{
+  border-bottom: 2px solid #e67e22;
+}
 .logo {
   height: 50px;
   width: 50px;
